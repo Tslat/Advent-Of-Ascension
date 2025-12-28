@@ -35,7 +35,7 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.world.teleporter.AoAPortal;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -78,7 +78,7 @@ public abstract class PortalBlock extends Block implements AoAPortal {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		if (state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.Z)
 			return Z_SHAPE;
 
@@ -149,8 +149,8 @@ public abstract class PortalBlock extends Block implements AoAPortal {
 
 			ParticleBuilder.forPosition(ParticleTypes.PORTAL, posX, posY, posZ)
 					.power(new Vec3(xVelocity, yVelocity, zVelocity))
-					.colourOverride(particleColour)
-					.spawnParticles(level);
+					.colourTint(particleColour)
+					.spawnClientParticles(level);
 		}
 	}
 

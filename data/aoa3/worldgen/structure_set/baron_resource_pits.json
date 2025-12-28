@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 183514709,
+    "separation": 20,
+    "spacing": 28
+  },
+  "structures": [
+    {
+      "structure": "aoa3:baron_resource_pit",
+      "weight": 1
+    }
+  ]
+}

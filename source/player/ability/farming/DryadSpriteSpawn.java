@@ -17,9 +17,9 @@ import net.tslat.aoa3.event.dynamic.DynamicEventSubscriber;
 import net.tslat.aoa3.player.ability.generic.ScalableModAbility;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.EntitySpawningUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
@@ -53,14 +53,14 @@ public class DryadSpriteSpawn extends ScalableModAbility {
 				if (dryad != null) {
 					dryad.setOwner((ServerPlayer)getPlayer());
 
-					TELParticlePacket packet = new TELParticlePacket();
+					TMEParticlePacket packet = new TMEParticlePacket();
 
 					for(int i = 0; i < 20; ++i) {
 						packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.HAPPY_VILLAGER, dryad)
-								.velocity(RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d)));
+								.velocity(RandomUtil.scaledGaussianValue(0.02d), RandomUtil.scaledGaussianValue(0.02d), RandomUtil.scaledGaussianValue(0.02d)));
 					}
 
-					packet.sendToAllPlayersTrackingEntity(serverLevel, ev.getPlayer());
+					packet.sendToAllPlayersTrackingEntity(ev.getPlayer());
 				}
 			}
 		}

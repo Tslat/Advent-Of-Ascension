@@ -10,63 +10,64 @@ import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ChargedProjectiles;
-import net.tslat.aoa3.common.registration.item.AoADataComponents;
-import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.common.registration.item.AoATools;
-import net.tslat.aoa3.common.registration.item.AoAWeapons;
-import net.tslat.aoa3.content.item.weapon.bow.BaseBow;
-import net.tslat.aoa3.content.item.weapon.crossbow.BaseCrossbow;
+import net.tslat.aoa3.common.registration.item.*;
+import net.tslat.aoa3.content.item.weapon.bow.AoABow;
+import net.tslat.aoa3.content.item.weapon.crossbow.AoACrossbow;
+import net.tslat.aoa3.library.object.container.AmmoVoidPouchComponent;
+import net.tslat.aoa3.library.object.container.CachedEntity;
 
 public final class ModelProperties {
 	public static void init() {
 		registerBows(
-				(BaseBow)AoAWeapons.ALACRITY_BOW.get(),
-				(BaseBow)AoAWeapons.ANCIENT_BOW.get(),
-				(BaseBow)AoAWeapons.ATLANTIC_BOW.get(),
-				(BaseBow)AoAWeapons.BARON_BOW.get(),
-				(BaseBow)AoAWeapons.BOREIC_BOW.get(),
-				(BaseBow)AoAWeapons.DAYBREAKER_BOW.get(),
-				(BaseBow)AoAWeapons.DEEP_BOW.get(),
-				(BaseBow)AoAWeapons.EXPLOSIVE_BOW.get(),
-				(BaseBow)AoAWeapons.HAUNTED_BOW.get(),
-				(BaseBow)AoAWeapons.ICE_BOW.get(),
-				(BaseBow)AoAWeapons.INFERNAL_BOW.get(),
-				(BaseBow)AoAWeapons.JUSTICE_BOW.get(),
-				(BaseBow)AoAWeapons.LUNAR_BOW.get(),
-				(BaseBow)AoAWeapons.MECHA_BOW.get(),
-				(BaseBow)AoAWeapons.NIGHTMARE_BOW.get(),
-				(BaseBow)AoAWeapons.POISON_BOW.get(),
-				(BaseBow)AoAWeapons.PREDATIOUS_BOW.get(),
-				(BaseBow)AoAWeapons.PRIMORDIAL_BOW.get(),
-				(BaseBow)AoAWeapons.ROSIDIAN_BOW.get(),
-				(BaseBow)AoAWeapons.RUNIC_BOW.get(),
-				(BaseBow)AoAWeapons.SCREAMER_BOW.get(),
-				(BaseBow)AoAWeapons.SHYREGEM_BOW.get(),
-				(BaseBow)AoAWeapons.SKELETAL_BOW.get(),
-				(BaseBow)AoAWeapons.SKYDRIVER_BOW.get(),
-				(BaseBow)AoAWeapons.SLINGSHOT.get(),
-				(BaseBow)AoAWeapons.SOULFIRE_BOW.get(),
-				(BaseBow)AoAWeapons.SPECTRAL_BOW.get(),
-				(BaseBow)AoAWeapons.SPEED_BOW.get(),
-				(BaseBow)AoAWeapons.SUNSHINE_BOW.get(),
-				(BaseBow)AoAWeapons.TOXIN_BOW.get(),
-				(BaseBow)AoAWeapons.VOID_BOW.get(),
-				(BaseBow)AoAWeapons.WEAKEN_BOW.get(),
-				(BaseBow)AoAWeapons.WITHER_BOW.get());
+				(AoABow)AoAWeapons.ALACRITY_BOW.get(),
+				(AoABow)AoAWeapons.ANCIENT_BOW.get(),
+				(AoABow)AoAWeapons.ATLANTIC_BOW.get(),
+				(AoABow)AoAWeapons.BARON_BOW.get(),
+				(AoABow)AoAWeapons.BOREIC_BOW.get(),
+				(AoABow)AoAWeapons.DAYBREAKER_BOW.get(),
+				(AoABow)AoAWeapons.DEEP_BOW.get(),
+				(AoABow)AoAWeapons.EXPLOSIVE_BOW.get(),
+				(AoABow)AoAWeapons.HAUNTED_BOW.get(),
+				(AoABow)AoAWeapons.ICE_BOW.get(),
+				(AoABow)AoAWeapons.INFERNAL_BOW.get(),
+				(AoABow)AoAWeapons.JUSTICE_BOW.get(),
+				(AoABow)AoAWeapons.LUNAR_BOW.get(),
+				(AoABow)AoAWeapons.MECHA_BOW.get(),
+				(AoABow)AoAWeapons.NIGHTMARE_BOW.get(),
+				(AoABow)AoAWeapons.POISON_BOW.get(),
+				(AoABow)AoAWeapons.PREDATIOUS_BOW.get(),
+				(AoABow)AoAWeapons.PRIMORDIAL_BOW.get(),
+				(AoABow)AoAWeapons.ROSIDIAN_BOW.get(),
+				(AoABow)AoAWeapons.RUNIC_BOW.get(),
+				(AoABow)AoAWeapons.SCREAMER_BOW.get(),
+				(AoABow)AoAWeapons.SHYREGEM_BOW.get(),
+				(AoABow)AoAWeapons.SKELETAL_BOW.get(),
+				(AoABow)AoAWeapons.SKYDRIVER_BOW.get(),
+				(AoABow)AoAWeapons.SLINGSHOT.get(),
+				(AoABow)AoAWeapons.SOULFIRE_BOW.get(),
+				(AoABow)AoAWeapons.SPECTRAL_BOW.get(),
+				(AoABow)AoAWeapons.SPEED_BOW.get(),
+				(AoABow)AoAWeapons.SUNSHINE_BOW.get(),
+				(AoABow)AoAWeapons.TOXIN_BOW.get(),
+				(AoABow)AoAWeapons.VOID_BOW.get(),
+				(AoABow)AoAWeapons.WEAKEN_BOW.get(),
+				(AoABow)AoAWeapons.WITHER_BOW.get());
 
 		registerCrossbows(
-				(BaseCrossbow)AoAWeapons.CORAL_CROSSBOW.get(),
-				(BaseCrossbow)AoAWeapons.LUNAR_CROSSBOW.get(),
-				(BaseCrossbow)AoAWeapons.MECHA_CROSSBOW.get(),
-				(BaseCrossbow)AoAWeapons.PYRO_CROSSBOW.get(),
-				(BaseCrossbow)AoAWeapons.ROSIDIAN_CROSSBOW.get(),
-				(BaseCrossbow)AoAWeapons.SKELETAL_CROSSBOW.get(),
-				(BaseCrossbow)AoAWeapons.SPECTRAL_CROSSBOW.get(),
-				(BaseCrossbow)AoAWeapons.TROLLS_CROSSBOW.get(),
-				(BaseCrossbow)AoAWeapons.VIRAL_CROSSBOW.get()
+				(AoACrossbow)AoAWeapons.CORAL_CROSSBOW.get(),
+				(AoACrossbow)AoAWeapons.LUNAR_CROSSBOW.get(),
+				(AoACrossbow)AoAWeapons.MECHA_CROSSBOW.get(),
+				(AoACrossbow)AoAWeapons.PYRO_CROSSBOW.get(),
+				(AoACrossbow)AoAWeapons.ROSIDIAN_CROSSBOW.get(),
+				(AoACrossbow)AoAWeapons.SKELETAL_CROSSBOW.get(),
+				(AoACrossbow)AoAWeapons.SPECTRAL_CROSSBOW.get(),
+				(AoACrossbow)AoAWeapons.TROLLS_CROSSBOW.get(),
+				(AoACrossbow)AoAWeapons.VIRAL_CROSSBOW.get()
 		);
 
 		registerExpFlask();
+		registerAmmoVoidPouch();
+		registerStasisCapsule();
 		registerParalyzer();
 		registerKnightsGuard();
 		registerGuardiansSword();
@@ -74,20 +75,20 @@ public final class ModelProperties {
 		registerHorns();
 	}
 
-	private static void registerBows(BaseBow... bows) {
-		for (BaseBow bow : bows) {
+	private static void registerBows(AoABow... bows) {
+		for (AoABow bow : bows) {
 			registerItemProperty(bow, "pull", (stack, world, entity, seed) -> {
 				if (entity == null || entity.getUseItem() != stack)
 					return 0;
 
-				return ((BaseBow)stack.getItem()).getDrawSpeedMultiplier(stack) * (float)(stack.getUseDuration(entity) - entity.getUseItemRemainingTicks()) / 20.0F;
+				return ((AoABow)stack.getItem()).getDrawSpeedMultiplier(stack) * (float)(stack.getUseDuration(entity) - entity.getUseItemRemainingTicks()) / 20.0F;
 			});
 			registerItemProperty(bow, "pulling", (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
 		}
 	}
 
-	private static void registerCrossbows(BaseCrossbow... crossbows) {
-		for (BaseCrossbow crossbow : crossbows) {
+	private static void registerCrossbows(AoACrossbow... crossbows) {
+		for (AoACrossbow crossbow : crossbows) {
 			registerItemProperty(crossbow, "pull", (stack, world, entity, seed) -> {
 				if (entity == null || CrossbowItem.isCharged(stack))
 					return 0;
@@ -110,7 +111,15 @@ public final class ModelProperties {
 	}
 
 	private static void registerExpFlask() {
-		registerItemProperty(AoATools.EXP_FLASK.get(), "filled", (stack, world, entity, seed) -> stack.getOrDefault(AoADataComponents.CHARGE, 0f) <= 0 ? 0 : 1);
+		registerItemProperty(AoAArtificeDevices.EXP_FLASK.get(), "filled", (stack, world, entity, seed) -> stack.getOrDefault(AoADataComponents.CHARGE, 0f) <= 0 ? 0 : 1);
+	}
+
+	private static void registerAmmoVoidPouch() {
+		registerItemProperty(AoAArtificeDevices.AMMO_VOID_POUCH.get(), "empty", (stack, world, entity, seed) -> stack.getOrDefault(AoADataComponents.AMMO_VOID_POUCH, AmmoVoidPouchComponent.EMPTY).contents().isEmpty() ? 1 : 0);
+	}
+
+	private static void registerStasisCapsule() {
+		registerItemProperty(AoAArtificeDevices.STASIS_CAPSULE.get(), "filled", (stack, world, entity, seed) -> stack.getOrDefault(AoADataComponents.STORED_ENTITY, CachedEntity.EMPTY).isEmpty() ? 0 : 1);
 	}
 
 	private static void registerParalyzer() {

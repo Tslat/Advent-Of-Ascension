@@ -5,7 +5,6 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -15,12 +14,15 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
-import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.tme.api.object.builder.EntityPredicateBuilder;
 import org.apache.logging.log4j.util.TriConsumer;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Predicate;
+
 public record ParticleEffectPacket(Type effectType, int senderId, int entityId) implements AoAPacket {
+	private static final Predicate<Entity> TARGETABLE_ENTITIES = EntityPredicateBuilder.builder().isTargetable().build();
 	public static final CustomPacketPayload.Type<ParticleEffectPacket> TYPE = new CustomPacketPayload.Type<>(AdventOfAscension.id("particle_effect"));
 	public static final StreamCodec<RegistryFriendlyByteBuf, ParticleEffectPacket> CODEC = StreamCodec.composite(
 			NeoForgeStreamCodecs.enumCodec(Type.class), ParticleEffectPacket::effectType,
@@ -58,9 +60,9 @@ public record ParticleEffectPacket(Type effectType, int senderId, int entityId) 
 	private static void doSandstormEffect(Level level, @Nullable Entity hitEntity, @Nullable Entity particleSource) {
 		switch (hitEntity) {
 			case LivingEntity livingTarget -> {
-				if (EntityPredicate.TARGETABLE_ENTITIES.test(livingTarget)) {
-					DamageSource source = particleSource == null ? DamageUtil.miscDamage(DamageTypes.STING, livingTarget.level()) :
-							DamageUtil.positionedEntityDamage(DamageTypes.MOB_ATTACK_NO_AGGRO, particleSource, livingTarget.position());
+				if (TARGETABLE_ENTITIES.test(livingTarget)) {
+					DamageSource source = particleSource == null ? DamageUtil.miscDamage(AoADamageTypes.SANDSTORM, livingTarget.level()) :
+							DamageUtil.positionedEntityDamage(AoADamageTypes.SANDSTORM, particleSource, livingTarget.position());
 
 					DamageUtil.safelyDealDamage(source, livingTarget, 4);
 				}

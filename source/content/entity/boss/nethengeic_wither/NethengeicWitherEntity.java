@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
@@ -40,13 +41,10 @@ import net.tslat.aoa3.content.entity.boss.AoABoss;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.FireballEntity;
-import net.tslat.aoa3.library.object.EntityDataHolder;
-import net.tslat.aoa3.library.object.explosion.StandardExplosion;
+import net.tslat.aoa3.library.builder.AoAExplosionBuilder;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PositionAndMotionUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
@@ -69,7 +67,11 @@ import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
 import net.tslat.smartbrainlib.registry.SBLMemoryTypes;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.explosion.StandardExplosion;
+import net.tslat.tme.api.object.builder.EffectBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
@@ -82,9 +84,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker {
-	public static final EntityDataHolder<Boolean> FLAME_AURA = EntityDataHolder.register(NethengeicWitherEntity.class, EntityDataSerializers.BOOLEAN, false, entity -> entity.flameAura, (entity, value) -> entity.flameAura = value);
-	public static final EntityDataHolder<Integer> SECOND_HEAD_TARGET = EntityDataHolder.register(NethengeicWitherEntity.class, EntityDataSerializers.INT, -1, entity -> entity.secondHeadTarget, (entity, value) -> entity.secondHeadTarget = value);
-	public static final EntityDataHolder<Integer> THIRD_HEAD_TARGET = EntityDataHolder.register(NethengeicWitherEntity.class, EntityDataSerializers.INT, -1, entity -> entity.thirdHeadTarget, (entity, value) -> entity.thirdHeadTarget = value);
+	public static final EntityDataAccessor<Boolean> FLAME_AURA = makeSynchedData(NethengeicWitherEntity.class, EntityDataSerializers.BOOLEAN);
+	public static final EntityDataAccessor<Integer> SECOND_HEAD_TARGET = makeSynchedData(NethengeicWitherEntity.class, EntityDataSerializers.INT);
+	public static final EntityDataAccessor<Integer> THIRD_HEAD_TARGET = makeSynchedData(NethengeicWitherEntity.class, EntityDataSerializers.INT);
 
 	private static final RawAnimation FLAMETHROWER_ANIM = RawAnimation.begin().thenLoop("attack.flamethrower.center");
 	private static final RawAnimation CORE_SPIN_ANIM = RawAnimation.begin().thenLoop("attack.core.spin");
@@ -94,16 +96,12 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 	private static final int FLAMETHROWER_STATE = 1;
 	private static final int FIRE_BOMB_STATE = 2;
 
-	private boolean flameAura = false;
 	private boolean doneFireBomb = false;
-	private int secondHeadTarget = -1;
-	private int thirdHeadTarget = -1;
 
 	public NethengeicWitherEntity(EntityType<? extends NethengeicWitherEntity> entityType, Level level) {
 		super(entityType, level);
 
-		this.moveControl = new AirborneMoveControl(this, 30, true);
-		setNoGravity(true);
+        this.moveControl = new AirborneMoveControl(this).canHover().withMaxTurn(30);
 	}
 
 	@Override
@@ -117,9 +115,9 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
 
-		registerDataParams(builder, FLAME_AURA);
-		registerDataParams(builder, SECOND_HEAD_TARGET);
-		registerDataParams(builder, THIRD_HEAD_TARGET);
+		builder.define(FLAME_AURA, false);
+		builder.define(SECOND_HEAD_TARGET, -1);
+		builder.define(THIRD_HEAD_TARGET, -1);
 	}
 
 	@Override
@@ -186,7 +184,7 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 		return BrainActivityGroup.idleTasks(
 				new TargetOrRetaliate<>()
 						.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
-						.attackablePredicate(target -> DamageUtil.isAttackable(target) && !isAlliedTo(target)),
+						.attackablePredicate(target -> DamageUtil.isAttackable(target) && EntityUtil.areProbablyEnemies(target, this)),
 				new SetRandomHoverTarget<>().speedModifier(0.9f));
 	}
 
@@ -194,21 +192,22 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 	public BrainActivityGroup<AoABoss> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
 				new InvalidateAttackTarget<AoABoss>()
-						.invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
+						.invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Mth.square(getAttributeValue(Attributes.FOLLOW_RANGE))),
 				new SetAdditionalAttackTargets<>()
 						.withMemories(AoABrainMemories.SECOND_ATTACK_TARGET.get(), AoABrainMemories.THIRD_ATTACK_TARGET.get())
+						.attackablePredicate((mob, memoryModuleType, livingEntity) -> DamageUtil.isAttackable(livingEntity) && EntityUtil.areProbablyEnemies(livingEntity, mob))
 						.allowDuplicateTargeting()
 						.whenTargeting((owner, memory, target) -> {
 							if (memory == AoABrainMemories.SECOND_ATTACK_TARGET.get()) {
-								SECOND_HEAD_TARGET.set(owner, target.getId());
+								setSynchedData(SECOND_HEAD_TARGET, target.getId());
 							}
 							else {
-								THIRD_HEAD_TARGET.set(owner, target.getId());
+								setSynchedData(THIRD_HEAD_TARGET, target.getId());
 							}
 						}),
 				new SetWalkTargetToAttackTarget<>()
 						.speedMod((entity, target) -> 1.25f)
-						.startCondition(entity -> hasAura() && !ATTACK_STATE.is(entity, FIRE_BOMB_STATE))
+						.startCondition(entity -> hasAura() && !isAttackState(FIRE_BOMB_STATE))
 						.stopIf(entity -> !hasAura()),
 				new StayWithinDistanceOfAttackTarget<>()
 						.startCondition(entity -> !hasAura())
@@ -221,7 +220,7 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 						new FlamethrowerAttack(),
 						new OneRandomBehaviour<AoABoss>(
 								Pair.of(new AnimatableRangedAttack(getSwingWarmupTicks(FIREBALL_STATE))
-												.attackInterval(entity -> rand().randomNumberBetween(getSwingDurationTicks(FIREBALL_STATE), getSwingDurationTicks(FIREBALL_STATE) * 2))
+												.attackInterval(entity -> rand().numberBetween(getSwingDurationTicks(FIREBALL_STATE), getSwingDurationTicks(FIREBALL_STATE) * 2))
 												.attackRadius((int)getAttributeValue(Attributes.FOLLOW_RANGE))
 												.whenStarting(entity -> triggerAnim("Middle Head", "fireball"))
 												.whenStopping(entity -> BrainUtils.setForgettableMemory((NethengeicWitherEntity)entity, SBLMemoryTypes.SPECIAL_ATTACK_COOLDOWN.get(), true, 21)),
@@ -248,8 +247,8 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 						.behaviours(
 								new InvalidateMemory<>(AoABrainMemories.SECOND_ATTACK_TARGET.get())
 										.invalidateIf((entity, target) -> {
-											if (!DamageUtil.isAttackable(target) || target.distanceToSqr(entity) > Math.pow((int)getAttributeValue(Attributes.FOLLOW_RANGE), 2)) {
-												SECOND_HEAD_TARGET.set(entity, -1);
+											if (!DamageUtil.isAttackable(target) || target.distanceToSqr(entity) > Mth.square((int)getAttributeValue(Attributes.FOLLOW_RANGE))) {
+												setSynchedData(SECOND_HEAD_TARGET, -1);
 
 												return true;
 											}
@@ -263,7 +262,7 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 											if (target != null)
 												doFireball(PositionAndMotionUtil.moveRelativeToFacing(entity.getEyePosition(), entity.getYRot(), -1.25f, 0, -0.25f), target);
 										})
-										.cooldownFor(entity -> rand().randomNumberBetween(getSwingDurationTicks(FIREBALL_STATE) * (ATTACK_STATE.is(entity, FIRE_BOMB_STATE) ? 6 : 3), getSwingDurationTicks(FIREBALL_STATE) * (ATTACK_STATE.is(entity, FIRE_BOMB_STATE) ? 10 : 5)))
+										.cooldownFor(entity -> rand().numberBetween(getSwingDurationTicks(FIREBALL_STATE) * (isAttackState(FIRE_BOMB_STATE) ? 6 : 3), getSwingDurationTicks(FIREBALL_STATE) * (isAttackState(FIRE_BOMB_STATE) ? 10 : 5)))
 										.whenStarting(entity -> triggerAnim("Left Head", "fireball"))
 										.startCondition(entity -> BrainUtils.hasMemory(entity, AoABrainMemories.SECOND_ATTACK_TARGET.get()))
 						)
@@ -274,8 +273,8 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 						.behaviours(
 								new InvalidateMemory<>(AoABrainMemories.THIRD_ATTACK_TARGET.get())
 										.invalidateIf((entity, target) -> {
-											if (!DamageUtil.isAttackable(target) || target.distanceToSqr(entity) > Math.pow((int)getAttributeValue(Attributes.FOLLOW_RANGE), 2)) {
-												THIRD_HEAD_TARGET.set(entity, -1);
+											if (!DamageUtil.isAttackable(target) || target.distanceToSqr(entity) > Mth.square((int)getAttributeValue(Attributes.FOLLOW_RANGE))) {
+												setSynchedData(THIRD_HEAD_TARGET, -1);
 
 												return true;
 											}
@@ -289,7 +288,7 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 											if (target != null)
 												doFireball(PositionAndMotionUtil.moveRelativeToFacing(entity.getEyePosition(), entity.getYRot(), 1.25f, -0.5f, -0.25f), target);
 										})
-										.cooldownFor(entity -> rand().randomNumberBetween(getSwingDurationTicks(FIREBALL_STATE) * (ATTACK_STATE.is(entity, FIRE_BOMB_STATE) ? 6 : 3), getSwingDurationTicks(FIREBALL_STATE) * (ATTACK_STATE.is(entity, FIRE_BOMB_STATE) ? 10 : 5)))
+										.cooldownFor(entity -> rand().numberBetween(getSwingDurationTicks(FIREBALL_STATE) * (isAttackState(FIRE_BOMB_STATE) ? 6 : 3), getSwingDurationTicks(FIREBALL_STATE) * (isAttackState(FIRE_BOMB_STATE) ? 10 : 5)))
 										.whenStarting(entity -> triggerAnim("Right Head", "fireball"))
 										.startCondition(entity -> BrainUtils.hasMemory(entity, AoABrainMemories.THIRD_ATTACK_TARGET.get()))
 						)
@@ -340,19 +339,19 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 				target.igniteForSeconds((int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 1);
 
 			if (RandomUtil.oneInNChance(4) && target instanceof LivingEntity livingEntity)
-				livingEntity.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 0));
+				EntityUtil.applyPotions(livingEntity, this, new EffectBuilder(MobEffects.WITHER, 100).level(1));
 		}
 		else {
 			float dmg = (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE);
 
-			if (ATTACK_STATE.is(this, FIRE_BOMB_STATE))
+			if (isAttackState(FIRE_BOMB_STATE))
 				dmg *= 1.5f;
 
 			if (DamageUtil.doProjectileAttack(this, projectile, target, dmg)) {
 				target.igniteForSeconds((int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 3);
 
 				if (target instanceof LivingEntity livingEntity)
-					livingEntity.addEffect(new MobEffectInstance(AoAMobEffects.NETHENGEIC_CURSE, 200, this.level().getDifficulty().getId() - 1));
+					EntityUtil.applyPotions(livingEntity, this, new EffectBuilder(AoAMobEffects.NETHENGEIC_CURSE, 200).level(level().getDifficulty().getId()));
 			}
 		}
 	}
@@ -362,8 +361,8 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 		if (projectile == null)
 			return;
 
-		if (level() instanceof ServerLevel serverLevel)
-			new StandardExplosion(AoAExplosions.NETHENGEIC_WITHER_FIREBALL, serverLevel, projectile, this).explode();
+		if (!level().isClientSide)
+			AoAExplosionBuilder.at(projectile, AoAExplosions.NETHENGEIC_WITHER_FIREBALL, StandardExplosion::new).explode();
 	}
 
 	@Override
@@ -373,7 +372,7 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 				if (source.getDirectEntity() instanceof LivingEntity attacker) {
 					DamageUtil.safelyDealDamage(DamageUtil.entityDamage(AoADamageTypes.MOB_FIRE_RECOIL, this), attacker, 5);
 					attacker.igniteForSeconds((int)Math.ceil(Math.max(0, attacker.getRemainingFireTicks()) / 20f) + 2);
-					attacker.addEffect(new MobEffectInstance(AoAMobEffects.NETHENGEIC_CURSE, 200, 2));
+					EntityUtil.applyPotions(attacker, this, new EffectBuilder(AoAMobEffects.NETHENGEIC_CURSE, 200).level(3));
 				}
 			}
 			else if (DamageUtil.isEnergyDamage(source)) {
@@ -398,11 +397,11 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 	protected void spawnSprintParticle() {}
 
 	public boolean hasAura() {
-		return FLAME_AURA.is(this, true);
+		return getSynchedData(FLAME_AURA);
 	}
 
 	public void toggleAura() {
-		FLAME_AURA.set(this, !FLAME_AURA.get(this));
+		setSynchedData(FLAME_AURA, !getSynchedData(FLAME_AURA));
 	}
 
 	@Override
@@ -412,27 +411,27 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 		if (level().isClientSide()) {
 			if (hasAura()) {
 				for (int i = 0; i < 3; i++) {
-					double cos = Math.cos(getX() * RandomUtil.randomValueBetween(-1, 1));
-					double sin = Math.sin(getZ() * RandomUtil.randomValueBetween(-1, 1));
+					double cos = Math.cos(getX() * RandomUtil.valueBetween(-1, 1));
+					double sin = Math.sin(getZ() * RandomUtil.valueBetween(-1, 1));
 					double startX = cos * getBbWidth() + getX();
 					double startZ = sin * getBbWidth() + getZ();
 					double startY = getRandomY();
 
 					ParticleBuilder.forPosition(EntityTrackingParticleOptions.fromEntity(AoAParticleTypes.FIRE_AURA, this), startX, startY, startZ)
 							.scaleMod(0.25f)
-							.colourOverride(1f, 1f, 1f, 0.75f)
+							.colourTint(1f, 1f, 1f, 0.75f)
 							.velocity(RandomUtil.fiftyFifty() ? -1 : 1, RandomUtil.fiftyFifty() ? -1 : 1, RandomUtil.fiftyFifty() ? -1 : 1)
-							.spawnParticles(level());
+							.spawnClientParticles(level());
 				}
 			}
 
-			ParticleBuilder.forPosition(ParticleTypes.FLAME, getX() + RandomUtil.randomValueBetween(-0.2f, 0.2f), getEyeY() - 1 + RandomUtil.randomValueBetween(-0.2f, 0.2f), getZ() + RandomUtil.randomValueBetween(-0.2f, 0.2f)).spawnParticles(level());
+			ParticleBuilder.forPosition(ParticleTypes.FLAME, getX() + RandomUtil.valueBetween(-0.2f, 0.2f), getEyeY() - 1 + RandomUtil.valueBetween(-0.2f, 0.2f), getZ() + RandomUtil.valueBetween(-0.2f, 0.2f)).spawnClientParticles(level());
 
 			if (getRandom().nextInt(10) == 0) {
-				ParticleBuilder.forPosition(ParticleTypes.SMOKE, getX(), getEyeY() - 1, getZ()).spawnParticles(level());
+				ParticleBuilder.forPosition(ParticleTypes.SMOKE, getX(), getEyeY() - 1, getZ()).spawnClientParticles(level());
 
 				if (getDeltaMovement().horizontalDistanceSqr() == 0)
-					ParticleBuilder.forPosition(ParticleTypes.DRIPPING_LAVA, getX(), getEyeY() - 1, getZ()).spawnParticles(level());
+					ParticleBuilder.forPosition(ParticleTypes.DRIPPING_LAVA, getX(), getEyeY() - 1, getZ()).spawnClientParticles(level());
 			}
 		}
 		else if (hasAura() && BrainUtils.getTargetOfEntity(this) == null) {
@@ -447,15 +446,15 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 				.flyingSpeed(0.6)
 				.projectileDamage(6)
 				.knockbackResist(1)
-				.followRange(100)
-				.aggroRange(64)
+				.followRange(128)
+				.aggroRange(128)
 				.knockback(1f);
 	}
 
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(new AnimationController<>(this, "living", 0, state -> {
-			if (ATTACK_STATE.is(this, FIRE_BOMB_STATE)) {
+			if (isAttackState(FIRE_BOMB_STATE)) {
 				state.getController().setAnimationSpeed(1);
 
 				return state.setAndContinue(CORE_SPIN_ANIM);
@@ -467,13 +466,13 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 			return PlayState.CONTINUE;
 		}));
 		controllers.add(new AnimationController<>(this, "Walk/Idle", 0, state -> {
-			if (ATTACK_STATE.is(this, FIRE_BOMB_STATE))
+			if (isAttackState(FIRE_BOMB_STATE))
 				return state.setAndContinue(FIRE_BOMB_ANIM);
 
 			return state.setAndContinue(state.isMoving() ? DefaultAnimations.WALK : DefaultAnimations.IDLE);
 		}));
 		controllers.add(new AnimationController<>(this, "Middle Head", 0, state -> {
-			if (ATTACK_STATE.is(this, FLAMETHROWER_STATE))
+			if (isAttackState(FLAMETHROWER_STATE))
 				state.setAndContinue(FLAMETHROWER_ANIM);
 
 			return PlayState.STOP;
@@ -510,7 +509,7 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 						this.fireballs.clear();
 					}
 
-					for (double angle = RandomUtil.randomValueBetween(-45, 45) * Mth.DEG_TO_RAD; angle <= 360 * Mth.DEG_TO_RAD; angle += 45 * Mth.DEG_TO_RAD) {
+					for (double angle = RandomUtil.valueBetween(-45, 45) * Mth.DEG_TO_RAD; angle <= 360 * Mth.DEG_TO_RAD; angle += 45 * Mth.DEG_TO_RAD) {
 						for (double offsetY = -2f; offsetY <= 2; offsetY += 1f) {
 							FireballEntity projectile = new FireballEntity(entity.level(), entity, BaseMobProjectile.Type.PHYSICAL);
 							double xAngle = Math.cos(angle);
@@ -544,12 +543,12 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 				entity.setZza(0);
 				entity.setDeltaMovement(Vec3.ZERO);
 				BrainUtils.clearMemory(entity, MemoryModuleType.PATH);
-				ATTACK_STATE.set(entity, FIRE_BOMB_STATE);
+				entity.setAttackState(FIRE_BOMB_STATE);
 			});
 			whenStopping(entity -> {
 				entity.doneFireBomb = true;
 
-				ATTACK_STATE.set(entity, FIREBALL_STATE);
+				entity.setAttackState(FIREBALL_STATE);
 				entity.triggerAnim("Middle Head", "fire_aura");
 				BrainUtils.setForgettableMemory(entity, SBLMemoryTypes.SPECIAL_ATTACK_COOLDOWN.get(), true, 25);
 
@@ -574,27 +573,27 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 
 	private static class FlamethrowerAttack extends ConditionlessHeldAttack<NethengeicWitherEntity> {
 		public FlamethrowerAttack() {
-			runFor(entity -> RandomUtil.randomNumberBetween(160, 240));
+			runFor(entity -> RandomUtil.numberBetween(160, 240));
 			requiresTarget();
 			onTick(entity -> {
 				Vec3 position = PositionAndMotionUtil.moveRelativeToFacing(entity.getEyePosition(), entity.getYRot(), 0, 1, 0);
 				double baseX = position.x;
 				double baseY = position.y;
 				double baseZ = position.z;
-				TELParticlePacket packet = new TELParticlePacket(ParticleBuilder.forPosition(ParticleTypes.LARGE_SMOKE, baseX, baseY, baseZ));
+				TMEParticlePacket packet = new TMEParticlePacket(ParticleBuilder.forPosition(ParticleTypes.LARGE_SMOKE, baseX, baseY, baseZ));
 
 				for (int i = 0; i < 5; i++) {
-					Vec3 velocity = this.target.getEyePosition().subtract(baseX + RandomUtil.randomScaledGaussianValue(0.5f), baseY + RandomUtil.randomScaledGaussianValue(0.5f), baseZ + RandomUtil.randomScaledGaussianValue(0.5f)).normalize().scale(0.75f);
+					Vec3 velocity = this.target.getEyePosition().subtract(baseX + RandomUtil.scaledGaussianValue(0.5f), baseY + RandomUtil.scaledGaussianValue(0.5f), baseZ + RandomUtil.scaledGaussianValue(0.5f)).normalize().scale(0.75f);
 
 					packet.particle(ParticleBuilder.forPosition(EntityTrackingParticleOptions.fromEntity(AoAParticleTypes.BURNING_FLAME, entity), baseX, baseY, baseZ)
-							.colourOverride(0f, 0f, 0f, 0f)
+							.colourTint(0f, 0f, 0f, 0f)
 							.scaleMod(0.35f)
 							.velocity(velocity));
 					packet.particle(ParticleBuilder.forPosition(RandomUtil.fiftyFifty() ? ParticleTypes.SMALL_FLAME : ParticleTypes.SQUID_INK, baseX, baseY, baseZ)
 							.velocity(velocity));
 				}
 
-				packet.sendToAllNearbyPlayers((ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
+				packet.sendToAllPlayersNearby((ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
 
 				if (getRunningTime() % 9 == 0 || getRunningTime() % 19 == 0)
 					entity.playSound(AoASounds.FLAMETHROWER.get(), 2, 1);
@@ -614,9 +613,9 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 
 				return target == null || !target.isAlive();
 			});
-			whenStarting(entity -> ATTACK_STATE.set(entity, FLAMETHROWER_STATE));
+			whenStarting(entity -> entity.setAttackState(FLAMETHROWER_STATE));
 			whenStopping(entity -> {
-				ATTACK_STATE.set(entity, FIREBALL_STATE);
+				entity.setAttackState(FIREBALL_STATE);
 
 				if (entity.hasAura())
 					entity.toggleAura();

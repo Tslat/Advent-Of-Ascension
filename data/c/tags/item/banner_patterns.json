@@ -1,0 +1,26 @@
+{
+  "values": [
+    "aoa3:compass_rune_banner_pattern",
+    "aoa3:distortion_rune_banner_pattern",
+    "aoa3:energy_rune_banner_pattern",
+    "aoa3:fire_rune_banner_pattern",
+    "aoa3:kinetic_rune_banner_pattern",
+    "aoa3:life_rune_banner_pattern",
+    "aoa3:lunar_rune_banner_pattern",
+    "aoa3:poison_rune_banner_pattern",
+    "aoa3:power_rune_banner_pattern",
+    "aoa3:storm_rune_banner_pattern",
+    "aoa3:strike_rune_banner_pattern",
+    "aoa3:water_rune_banner_pattern",
+    "aoa3:wind_rune_banner_pattern",
+    "aoa3:wither_rune_banner_pattern",
+    "minecraft:flower_banner_pattern",
+    "minecraft:creeper_banner_pattern",
+    "minecraft:skull_banner_pattern",
+    "minecraft:mojang_banner_pattern",
+    "minecraft:globe_banner_pattern",
+    "minecraft:piglin_banner_pattern",
+    "minecraft:flow_banner_pattern",
+    "minecraft:guster_banner_pattern"
+  ]
+}

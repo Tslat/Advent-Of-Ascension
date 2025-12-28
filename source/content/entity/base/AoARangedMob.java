@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,7 +31,7 @@ public abstract class AoARangedMob<T extends AoARangedMob<T>> extends AoAMonster
 	@Override
 	public BrainActivityGroup<T> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
+				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Mth.square(getAttributeValue(Attributes.FOLLOW_RANGE))),
 				(isStrafingMob() ? new StrafeTarget<>() : new StayWithinDistanceOfAttackTarget<>()),
 				new AnimatableRangedAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()));
 	}
@@ -53,10 +54,10 @@ public abstract class AoARangedMob<T extends AoARangedMob<T>> extends AoAMonster
 	public void doRangedAttackEntity(@Nullable BaseMobProjectile projectile, Entity target) {
 		if (projectile != null) {
 			final boolean success = switch (projectile.getProjectileType()) {
-				case MAGIC -> DamageUtil.doMagicProjectileAttack(this, projectile, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE));
+				case MAGIC -> DamageUtil.doMagicProjectileAttack(this, projectile, target, source -> (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE));
 				case GUN -> DamageUtil.doGunAttack(this, projectile, target, source -> (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE));
 				case PHYSICAL -> DamageUtil.doProjectileAttack(this, projectile, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE));
-				case ENERGY -> DamageUtil.doEnergyProjectileAttack(this, projectile, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE));
+				case ENERGY -> DamageUtil.doEnergyProjectileAttack(this, projectile, target, source -> (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE));
 			};
 
 			if (success)

@@ -9,7 +9,7 @@
       "tag": "c:feathers"
     },
     "S": {
-      "item": "minecraft:stick"
+      "tag": "c:rods/wooden"
     }
   },
   "pattern": [

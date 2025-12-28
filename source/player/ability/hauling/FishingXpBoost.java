@@ -11,7 +11,7 @@ import net.tslat.aoa3.event.custom.events.HaulingItemFishedEvent;
 import net.tslat.aoa3.event.dynamic.DynamicEventSubscriber;
 import net.tslat.aoa3.player.ability.generic.ScalableModAbility;
 import net.tslat.aoa3.player.skill.AoASkill;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
@@ -59,7 +59,7 @@ public class FishingXpBoost extends ScalableModAbility {
 		else {
 			Player player = ev.getEntity();
 
-			player.level().addFreshEntity(new ExperienceOrb(player.level(), player.getX() + 0.5d, player.getY() + 0.5d, player.getZ() + 0.5d, RandomUtil.randomNumberBetween(1, 6)));
+			player.level().addFreshEntity(new ExperienceOrb(player.level(), player.getX() + 0.5d, player.getY() + 0.5d, player.getZ() + 0.5d, RandomUtil.numberBetween(1, 6)));
 		}
 	}
 

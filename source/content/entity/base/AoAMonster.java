@@ -1,14 +1,9 @@
 package net.tslat.aoa3.content.entity.base;
 
-import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntArrayTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -19,10 +14,10 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -32,12 +27,13 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.common.CommonHooks;
-import net.tslat.aoa3.content.entity.ai.movehelper.MultiFluidSmoothGroundNavigation;
+import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyLivingEntitySensor;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
-import net.tslat.aoa3.library.object.EntityDataHolder;
+import net.tslat.aoa3.library.builder.MultipartBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
@@ -48,10 +44,11 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FloatToSurfaceOfFl
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.WalkOrRunToWalkTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
+import net.tslat.smartbrainlib.api.core.navigation.MultiFluidSmoothGroundNavigation;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.object.EasyRandom;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -60,52 +57,58 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 
-public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implements GeoEntity, SmartBrainOwner<T>, AoAMultipartEntity {
-	public static final EntityDataHolder<Integer> ATTACK_STATE = EntityDataHolder.register(AoAMonster.class, EntityDataSerializers.INT, 0, monster -> monster.attackState, (monster, value) -> monster.attackState = value);
-	public static final EntityDataHolder<Boolean> INVULNERABLE = EntityDataHolder.register(AoAMonster.class, EntityDataSerializers.BOOLEAN, false, Entity::isInvulnerable, AoAMonster::setInvulnerable);
-	public static final EntityDataHolder<Boolean> IMMOBILE = EntityDataHolder.register(AoAMonster.class, EntityDataSerializers.BOOLEAN, false, monster -> monster.immobile, (monster, value) -> monster.immobile = value);
+public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implements GeoEntity, SmartBrainOwner<T>, AoAMultipartEntity<T> {
+	public static final EntityDataAccessor<Integer> ATTACK_STATE = makeSynchedData(AoAMonster.class, EntityDataSerializers.INT);
+	public static final EntityDataAccessor<Boolean> INVULNERABLE = makeSynchedData(AoAMonster.class, EntityDataSerializers.BOOLEAN);
+	public static final EntityDataAccessor<Boolean> IMMOBILE = makeSynchedData(AoAMonster.class, EntityDataSerializers.BOOLEAN);
 
 	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
-	protected AoAEntityPart<?>[] parts = new AoAEntityPart[0];
-	private EntityDataHolder<?>[] dataParams;
+	private AoAEntityPart<T>[] parts = new AoAEntityPart[0];
 
 	protected boolean hasDrops = true;
-	private int attackState = 0;
-	private boolean immobile = false;
 
 	protected AoAMonster(EntityType<? extends AoAMonster> entityType, Level level) {
 		super(entityType, level);
 
+        this.moveControl = createMoveControl();
 		getNavigation().setCanFloat(true);
+		registerParts(ENTITY_COUNTER, this::setId, parts -> this.parts = parts);
 	}
 
+	@Nullable
 	@Override
-	protected PathNavigation createNavigation(Level level) {
-		return new MultiFluidSmoothGroundNavigation(this, level);
+	public MultipartBuilder<? extends T> definePartEntities() {
+		return null;
 	}
 
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
 
-		this.dataParams = new EntityDataHolder<?>[] {ATTACK_STATE, INVULNERABLE, IMMOBILE};
-
-		for (EntityDataHolder<?> dataHolder : this.dataParams) {
-			dataHolder.defineDefault(builder);
-		}
+		builder.define(ATTACK_STATE, 0);
+		builder.define(INVULNERABLE, false);
+		builder.define(IMMOBILE, false);
 	}
 
-	protected final void registerDataParams(SynchedEntityData.Builder builder, EntityDataHolder<?>... params) {
-		EntityDataHolder<?>[] newArray = new EntityDataHolder[this.dataParams.length + params.length];
+    protected MoveControl createMoveControl() {
+        return this.moveControl;
+    }
 
-		System.arraycopy(this.dataParams, 0, newArray, 0, this.dataParams.length);
-		System.arraycopy(params, 0, newArray, this.dataParams.length, params.length);
+	@Override
+	protected PathNavigation createNavigation(Level level) {
+		return new MultiFluidSmoothGroundNavigation(this, level);
+	}
 
-		for (EntityDataHolder<?> param : params) {
-			param.defineDefault(builder);
-		}
+	protected static <D> EntityDataAccessor<D> makeSynchedData(Class<? extends SyncedDataHolder> entityClass, EntityDataSerializer<D> serializer) {
+		return SynchedEntityData.defineId(entityClass, serializer);
+	}
 
-		this.dataParams = newArray;
+	protected <D> D getSynchedData(EntityDataAccessor<D> data) {
+		return getEntityData().get(data);
+	}
+
+	protected <D> void setSynchedData(EntityDataAccessor<D> data, D value) {
+		getEntityData().set(data, value);
 	}
 
 	@Nullable
@@ -143,8 +146,8 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 		return 240;
 	}
 
-	public final RandomUtil.EasyRandom rand() {
-		return new RandomUtil.EasyRandom(getRandom());
+	public final EasyRandom rand() {
+		return EasyRandom.wrap(getRandom());
 	}
 
 	@Override
@@ -173,7 +176,7 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 		return BrainActivityGroup.idleTasks(
 				new TargetOrRetaliate<>()
 						.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
-						.attackablePredicate(target -> DamageUtil.isAttackable(target) && !isAlliedTo(target)),
+						.attackablePredicate(target -> DamageUtil.isAttackable(target) && EntityUtil.areProbablyEnemies(target, this)),
 				new OneRandomBehaviour<>(
 						new SetRandomWalkTarget<>().speedModifier(0.9f),
 						new Idle<>().runFor(entity -> entity.getRandom().nextInt(30, 60))));
@@ -199,13 +202,19 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 		this.xpReward = calculateKillXp();
 
 		if (spawnType == MobSpawnType.SPAWNER)
-			this.xpReward *= 0.5d;
+			this.xpReward /= 2;
+
+		AoAAttributes.addSpawnVarianceHealthMod(this, difficulty.getSpecialMultiplier());
+		AoAAttributes.addSpawnVarianceSpeedMod(this, difficulty.getSpecialMultiplier());
 
 		return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
 	}
 
 	public int calculateKillXp() {
-		return !this.hasDrops ? 0 : (int)(5 + (getAttributeValue(Attributes.MAX_HEALTH) + getAttributeValue(Attributes.ARMOR) * 1.75f + getAttributeValue(Attributes.ARMOR_TOUGHNESS) * 1.5f) / 10f);
+		if (!this.hasDrops)
+			return 0;
+
+		return Mth.floor(5 + (getAttributeValue(Attributes.MAX_HEALTH) + getAttributeValue(Attributes.ARMOR) * 1.75f + getAttributeValue(Attributes.ARMOR_TOUGHNESS) * 1.5f) / 10f);
 	}
 
 	@Override
@@ -219,7 +228,7 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 			playStepSounds(stepSound, stepSoundOverlay);
 
 			if (isQuadruped() && !level().isClientSide)
-				AoAScheduler.scheduleSyncronisedTask(() -> playStepSounds(stepSound, stepSoundOverlay), 6);
+				AoAScheduler.schedule(6, tick -> playStepSounds(stepSound, stepSoundOverlay));
 		}
 	}
 
@@ -245,6 +254,18 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 		return time;
 	}
 
+	public int getAttackState() {
+		return getSynchedData(ATTACK_STATE);
+	}
+
+	public void setAttackState(int state) {
+		setSynchedData(ATTACK_STATE, state);
+	}
+
+	public boolean isAttackState(int state) {
+		return getAttackState() == state;
+	}
+
 	@Override
 	protected void customServerAiStep() {
 		tickBrain((T)this);
@@ -257,28 +278,19 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	}
 
 	public void setImmobile(boolean immobile) {
-		IMMOBILE.set(this, immobile);
+		setSynchedData(IMMOBILE, immobile);
 
-		if (this.immobile)
+		if (immobile)
 			getNavigation().stop();
 	}
 
 	public boolean isDoingStationaryActivity() {
-		return this.immobile;
+		return getSynchedData(IMMOBILE);
 	}
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (this.parts.length > 0 && source.getDirectEntity() instanceof AbstractArrow arrow && arrow.getPierceLevel() > 0) {
-			if (arrow.piercingIgnoreEntityIds == null)
-				arrow.piercingIgnoreEntityIds = new IntOpenHashSet(5);
-
-			for (AoAEntityPart<?> part : this.parts) {
-				arrow.piercingIgnoreEntityIds.add(part.getId());
-			}
-
-			arrow.piercingIgnoreEntityIds.add(getId());
-		}
+		onMultipartParentHurt(source);
 
 		return super.hurt(source, amount);
 	}
@@ -353,40 +365,11 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	}
 
 	@Override
-	public void setInvulnerable(boolean isInvulnerable) {
-		if (!INVULNERABLE.is(this, isInvulnerable))
-			INVULNERABLE.setRaw(this, isInvulnerable);
-
-		super.setInvulnerable(isInvulnerable);
-	}
-
-	@Override
-	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-		super.onSyncedDataUpdated(key);
-
-		for (EntityDataHolder<?> dataHolder : this.dataParams) {
-			if (dataHolder.checkSync(this, key))
-				break;
-		}
-	}
-
-	@Override
 	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 
 		compound.putBoolean("DropsLoot", this.hasDrops);
-
-		if (getParts().length > 0) {
-			List<Integer> disabledParts = new ObjectArrayList<>();
-
-			for (int i = 0; i < getParts().length; i++) {
-				if (!getParts()[i].isEnabled())
-					disabledParts.add(i);
-			}
-
-			if (!disabledParts.isEmpty())
-				compound.put("DisabledMultiparts", new IntArrayTag(disabledParts));
-		}
+		saveMultiparts(compound);
 	}
 
 	@Override
@@ -395,15 +378,14 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 
 		this.hasDrops = compound.getBoolean("DropsLoot");
 
-		if (compound.contains("DisabledMultiparts", Tag.TAG_INT_ARRAY)) {
-			final AoAEntityPart<?>[] parts = getParts();
+		loadMultiparts(compound);
+		setSynchedData(INVULNERABLE, isInvulnerable());
+	}
 
-			for (int i : compound.getIntArray("DisabledMultiparts")) {
-				parts[i].setEnabled(false);
-			}
-		}
-
-		INVULNERABLE.set(this, isInvulnerable());
+	@Override
+	public void setInvulnerable(boolean isInvulnerable) {
+		super.setInvulnerable(isInvulnerable);
+		setSynchedData(INVULNERABLE, isInvulnerable);
 	}
 
 	@Override
@@ -418,7 +400,7 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	}
 
 	@Override
-	public AoAEntityPart<?>[] getParts() {
+	public AoAEntityPart<T>[] getParts() {
 		return this.parts;
 	}
 
@@ -431,14 +413,6 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	public void refreshDimensions() {
 		super.refreshDimensions();
 		refreshMultipartDimensions();
-	}
-
-	@Override
-	public void setParts(AoAEntityPart<?>... parts) {
-		if (getParts().length > 0)
-			throw new IllegalStateException("Cannot add more parts after having already done so!");
-
-		defineParts(ENTITY_COUNTER, this::setId, this.parts = parts);
 	}
 
 	@Override

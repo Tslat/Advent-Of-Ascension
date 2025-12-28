@@ -1,6 +1,7 @@
 {
   "values": [
     "minecraft:tripwire_hook",
-    "minecraft:bow"
+    "#c:tools/bow",
+    "#c:tools/crossbow"
   ]
 }

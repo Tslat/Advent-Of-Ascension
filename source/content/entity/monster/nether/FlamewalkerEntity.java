@@ -1,12 +1,14 @@
 package net.tslat.aoa3.content.entity.monster.nether;
 
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.level.Level;
@@ -21,23 +23,23 @@ import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.api.util.EffectBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableRangedAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.StayWithinDistanceOfAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.object.EasyRandom;
+import net.tslat.tme.api.object.builder.EffectBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -115,7 +117,7 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
             attacker.igniteForSeconds(3);
 
             if (DamageUtil.safelyDealDamage(DamageUtil.entityDamage(AoADamageTypes.MOB_FIRE_RECOIL, this), attacker, 3) && rand().oneInNChance(15))
-                EntityUtil.applyPotions(attacker, new EffectBuilder(AoAMobEffects.BURNED, 600));
+                EntityUtil.applyPotions(attacker, this, new EffectBuilder(AoAMobEffects.BURNED, 600));
         }
     }
 
@@ -125,7 +127,7 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
             target.igniteForSeconds((int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 1);
 
        if (DamageUtil.safelyDealDamage(DamageUtil.positionedEntityDamage(AoADamageTypes.MOB_FLAMETHROWER, this, position()), target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE)) && rand().oneInNChance(10))
-           EntityUtil.applyPotions(target, new EffectBuilder(AoAMobEffects.BURNED, 600));
+           EntityUtil.applyPotions(target, this, new EffectBuilder(AoAMobEffects.BURNED, 600));
     }
 
     @Override
@@ -133,8 +135,8 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
         return true;
     }
 
-    public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-        return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT.noPeacefulSpawn().noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock();
+    public static SpawnPlacements.SpawnPredicate<FlamewalkerEntity> spawnRules(EntityType<FlamewalkerEntity> entityType) {
+        return EntitySpawnConditions.create(entityType).noPeacefulSpawn().noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock();
     }
 
     public static AoAEntityStats.AttributeBuilder entityStats(EntityType<FlamewalkerEntity> entityType) {
@@ -165,11 +167,13 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
             super.start(entity);
 
             this.targetingPosition = this.target.position().add(this.target.getBbWidth() * 0.5f, 0, this.target.getBbWidth() * 0.5f);
+            ParticleBuilder particleBuilder = ParticleBuilder.forPositions(ParticleTypes.SMALL_FLAME);
 
-            ParticleBuilder.forPositions(ParticleTypes.SMALL_FLAME,
-                    () -> new Vec3(targetingPosition.x + entity.rand().randomValueBetween(-1, 1f), targetingPosition.y + 0.1f, targetingPosition.z + entity.rand().randomValueBetween(-1, 1)), 10)
-                    .sendToAllPlayersTrackingEntity((ServerLevel)entity.level(), entity);
+            for (int i = 0; i < 10; i++) {
+                particleBuilder.addPosition(new Vec3(targetingPosition.x + entity.rand().valueBetween(-1, 1f), targetingPosition.y + 0.1f, targetingPosition.z + entity.rand().valueBetween(-1, 1)));
+            }
 
+            particleBuilder.sendToAllPlayersTrackingEntity(entity);
             entity.level().playSound(null, this.targetingPosition.x, this.targetingPosition.y, this.targetingPosition.z, AoASounds.ENTITY_FLAMEWALKER_FLARE.get(), SoundSource.HOSTILE, 1, 1);
         }
 
@@ -184,28 +188,28 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
             for (int tick = 1; tick < 12; tick++) {
                 final int thisTick = tick;
                 final Vec3 targetPos = this.targetingPosition;
-                final RandomUtil.EasyRandom random = entity.rand();
+                final EasyRandom random = entity.rand();
 
-                AoAScheduler.scheduleSyncronisedTask(() -> {
-                    TELParticlePacket packet = new TELParticlePacket(45);
+                AoAScheduler.schedule(thisTick, tick2 -> {
+                    TMEParticlePacket packet = new TMEParticlePacket(45);
 
                     for (int i = 0; i < 8; i++) {
                         if (thisTick == 1) {
-                            packet.particle(ParticleBuilder.forPositions(EntityTrackingParticleOptions.fromEntity(AoAParticleTypes.BURNING_FLAME, entity), targetPos.add(random.randomScaledGaussianValue(0.8f), random.randomValueBetween(-0.5f, 0), random.randomScaledGaussianValue(0.8f)))
-                                    .scaleMod((float)random.randomValueBetween(1, 3))
-                                    .lifespan(Mth.ceil(5 / random.randomValueBetween(0.2f, 1f)))
-                                    .velocity(random.randomScaledGaussianValue(0.05f), 0.5, random.randomScaledGaussianValue(0.05f)));
+                            packet.particle(ParticleBuilder.forPositions(EntityTrackingParticleOptions.fromEntity(AoAParticleTypes.BURNING_FLAME, entity), targetPos.add(random.scaledGaussianValue(0.8f), random.valueBetween(-0.5f, 0), random.scaledGaussianValue(0.8f)))
+                                    .scaleMod(random.valueBetween(1, 3))
+                                    .lifespan(Mth.ceil(5 / random.valueBetween(0.2f, 1f)))
+                                    .velocity(random.scaledGaussianValue(0.05f), 0.5, random.scaledGaussianValue(0.05f)));
                         }
 
-                        packet.particle(ParticleBuilder.forPositions(ParticleTypes.SMOKE, targetPos.add(random.randomScaledGaussianValue(1), random.randomValueBetween(-0.5f, 0), random.randomScaledGaussianValue(1)))
-                                .velocity(random.randomScaledGaussianValue(0.05f), 0.5, random.randomScaledGaussianValue(0.05f)));
-                        packet.particle(ParticleBuilder.forPositions(EntityTrackingParticleOptions.ambient(AoAParticleTypes.BURNING_FLAME), targetPos.add(random.randomScaledGaussianValue(0.5f), random.randomValueBetween(-0.5f, 0), random.randomScaledGaussianValue(0.5f)))
-                                .scaleMod((float)random.randomValueBetween(0.5f, 1.5f))
-                                .velocity(random.randomScaledGaussianValue(0.05f), 0.5, random.randomScaledGaussianValue(0.05f)));
+                        packet.particle(ParticleBuilder.forPositions(ParticleTypes.SMOKE, targetPos.add(random.scaledGaussianValue(1), random.valueBetween(-0.5f, 0), random.scaledGaussianValue(1)))
+                                .velocity(random.scaledGaussianValue(0.05f), 0.5, random.scaledGaussianValue(0.05f)));
+                        packet.particle(ParticleBuilder.forPositions(EntityTrackingParticleOptions.ambient(AoAParticleTypes.BURNING_FLAME), targetPos.add(random.scaledGaussianValue(0.5f), random.valueBetween(-0.5f, 0), random.scaledGaussianValue(0.5f)))
+                                .scaleMod(random.valueBetween(0.5f, 1.5f))
+                                .velocity(random.scaledGaussianValue(0.05f), 0.5, random.scaledGaussianValue(0.05f)));
                     }
 
-                    packet.sendToAllPlayersTrackingEntity((ServerLevel)entity.level(), entity);
-                }, thisTick);
+                    packet.sendToAllPlayersTrackingEntity(entity);
+                });
             }
 
             BrainUtils.setForgettableMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN, true, this.attackIntervalSupplier.apply(entity));

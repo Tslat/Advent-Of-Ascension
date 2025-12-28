@@ -25,10 +25,7 @@ import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
-import net.minecraft.world.level.levelgen.structure.pools.EmptyPoolElement;
-import net.minecraft.world.level.levelgen.structure.pools.JigsawJunction;
-import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
-import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.structure.pools.*;
 import net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
@@ -49,11 +46,12 @@ public class AoAJigsawAssembler {
 		return false;
 	}
 
-	protected BlockPos getStartPos(PoolElementStructurePiece startPiece, int x, int y, int z) {
-		return new BlockPos(x, y, z);
+	protected BlockPos getStartPos(PoolElementStructurePiece startPiece, BlockPos pos) {
+		return pos;
 	}
 
-	public Optional<Structure.GenerationStub> addPieces(Structure.GenerationContext genContext, Holder<StructureTemplatePool> templatePoolHolder, Optional<ResourceLocation> startJigsawName, int maxPieces, BlockPos startPos, Optional<Heightmap.Types> heightmap, int maxRadius, LiquidSettings liquidSettings) {
+	public Optional<Structure.GenerationStub> addPieces(Structure.GenerationContext genContext, Holder<StructureTemplatePool> templatePoolHolder, Optional<ResourceLocation> startJigsawName,
+														int maxPieces, BlockPos startPos, Optional<Heightmap.Types> heightmap, int maxRadius, DimensionPadding padding, LiquidSettings liquidSettings) {
 		StructureTemplateManager templateManager = genContext.structureTemplateManager();
 		WorldgenRandom rand = genContext.random();
 		Rotation rotation = ignoreRotations() ? Rotation.NONE : Rotation.getRandom(rand);
@@ -77,7 +75,8 @@ public class AoAJigsawAssembler {
 		}
 
 		BlockPos finalStartPos = startPos.subtract(startOffset);
-		PoolElementStructurePiece startPiece = new PoolElementStructurePiece(templateManager, poolElement, finalStartPos, poolElement.getGroundLevelDelta(), rotation, poolElement.getBoundingBox(templateManager, finalStartPos, rotation), liquidSettings);
+		PoolElementStructurePiece startPiece = new PoolElementStructurePiece(templateManager, poolElement, finalStartPos, poolElement.getGroundLevelDelta(), rotation,
+																			 poolElement.getBoundingBox(templateManager, finalStartPos, rotation), liquidSettings);
 		BoundingBox startPieceBounds = startPiece.getBoundingBox();
 		int structurePosX = (startPieceBounds.minX() + startPieceBounds.maxX()) / 2;
 		int structurePosZ = (startPieceBounds.minZ() + startPieceBounds.maxZ()) / 2;
@@ -88,12 +87,14 @@ public class AoAJigsawAssembler {
 
 		startPiece.move(0, startY - (startPieceBounds.minY() + startPiece.getGroundLevelDelta()), 0);
 
-		return buildGenerationStub(startPiece, startPieceBounds, genContext, structurePosX, startY + startOffset.getY(), structurePosZ, maxPieces, maxRadius, liquidSettings);
+		return buildGenerationStub(startPiece, startPieceBounds, genContext, new BlockPos(structurePosX, startY + startOffset.getY(), structurePosZ), startPos.getY(), maxPieces, maxRadius, padding, liquidSettings);
 	}
 
-	protected Optional<Structure.GenerationStub> buildGenerationStub(PoolElementStructurePiece startPiece, BoundingBox startPieceBounds, Structure.GenerationContext genContext, int startX, int startY, int startZ, int maxPieces, int maxRadius, LiquidSettings liquidSettings) {
-		return Optional.of(new Structure.GenerationStub(getStartPos(startPiece, startX, startY, startZ), pieceBuilder -> {
+	protected Optional<Structure.GenerationStub> buildGenerationStub(PoolElementStructurePiece startPiece, BoundingBox startPieceBounds, Structure.GenerationContext genContext,
+																	 BlockPos structureOrigin, int surfaceY, int maxPieces, int maxRadius, DimensionPadding padding, LiquidSettings liquidSettings) {
+		return Optional.of(new Structure.GenerationStub(getStartPos(startPiece, structureOrigin), pieceBuilder -> {
 			List<PoolElementStructurePiece> pieces = new ObjectArrayList<>();
+			LevelHeightAccessor heightAccessor = genContext.heightAccessor();
 
 			pieces.add(startPiece);
 
@@ -103,13 +104,14 @@ public class AoAJigsawAssembler {
 						maxPieces,
 						genContext.chunkGenerator(),
 						genContext.structureTemplateManager(),
-						genContext.heightAccessor(),
+						heightAccessor,
 						genContext.random(),
 						genContext.registryAccess().registryOrThrow(Registries.TEMPLATE_POOL),
 						startPiece,
 						pieces,
 						Shapes.join(
-								Shapes.create(new AABB(startX - maxRadius, -4000, startZ - maxRadius, startX + maxRadius + 1, 4000, startZ + maxRadius + 1)),
+								Shapes.create(new AABB(structureOrigin.getX() - maxRadius, Math.max(heightAccessor.getMinBuildHeight(), padding.bottom()), structureOrigin.getZ() - maxRadius,
+													   structureOrigin.getX() + maxRadius + 1, Math.min(heightAccessor.getMaxBuildHeight(), heightAccessor.getMaxBuildHeight() - padding.top()), structureOrigin.getZ() + maxRadius + 1)),
 								Shapes.create(AABB.of(startPieceBounds)), BooleanOp.ONLY_FIRST),
 						liquidSettings);
 				pieces.forEach(pieceBuilder::addPiece);
@@ -139,13 +141,13 @@ public class AoAJigsawAssembler {
 
 	}
 
-	public boolean generateJigsaw(ServerLevel level, Holder<StructureTemplatePool> templatePool, ResourceLocation startJigsawName, int maxPieces, BlockPos startPos, boolean keepJigsaws, LiquidSettings liquidSettings) {
+	public boolean generateJigsaw(ServerLevel level, Holder<StructureTemplatePool> templatePool, ResourceLocation startJigsawName, int maxPieces, BlockPos startPos, boolean keepJigsaws, DimensionPadding padding, LiquidSettings liquidSettings) {
 		ChunkGenerator chunkGen = level.getChunkSource().getGenerator();
 		StructureTemplateManager templateManager = level.getStructureManager();
 		StructureManager structureManager = level.structureManager();
 		RandomSource rand = level.getRandom();
 		Structure.GenerationContext genContext = new Structure.GenerationContext(level.registryAccess(), chunkGen, chunkGen.getBiomeSource(), level.getChunkSource().randomState(), templateManager, level.getSeed(), new ChunkPos(startPos), level, (p_227255_) -> true);
-		Optional<Structure.GenerationStub> pieceGen = addPieces(genContext, templatePool, Optional.of(startJigsawName), maxPieces, startPos, Optional.empty(), 128, liquidSettings);
+		Optional<Structure.GenerationStub> pieceGen = addPieces(genContext, templatePool, Optional.of(startJigsawName), maxPieces, startPos, Optional.empty(), 128, padding, liquidSettings);
 
 		if (pieceGen.isEmpty())
 			return false;

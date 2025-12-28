@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.armour;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +12,9 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.tslat.aoa3.common.registration.item.AoAArmour;
 import net.tslat.aoa3.common.registration.item.AoAArmourMaterials;
 import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -32,7 +33,7 @@ public class RunicArmour extends AdventArmour {
 	@Override
 	public void afterTakingDamage(LivingEntity entity, EnumSet<Piece> equippedPieces, LivingDamageEvent.Post ev) {
 		if (equippedPieces.contains(Piece.FULL_SET) && (!(entity instanceof Player player) || !isOnCooldown(player)) && DamageUtil.isMagicDamage(ev.getSource())) {
-			entity.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 200, 0, false, false));
+			EntityUtil.applyPotions(entity, entity, new EffectBuilder(MobEffects.ABSORPTION, 200).hideParticles());
 
 			if (entity instanceof Player player)
 				setArmourCooldown(player, AoAArmour.RUNIC_ARMOUR, 6000);

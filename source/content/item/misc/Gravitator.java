@@ -16,7 +16,7 @@ import net.tslat.aoa3.util.InventoryUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 

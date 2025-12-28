@@ -19,13 +19,13 @@ import net.tslat.aoa3.common.registration.block.AoAFluidTypes;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.common.registration.entity.AoAMonsters;
 import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.library.builder.MultipartBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.InventoryUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -33,12 +33,17 @@ import software.bernie.geckolib.constant.DefaultAnimations;
 public class WoundedTyrosaurEntity extends AoAMeleeMob<WoundedTyrosaurEntity> {
     public WoundedTyrosaurEntity(EntityType<? extends WoundedTyrosaurEntity> entityType, Level level) {
         super(entityType, level);
+    }
 
-        setParts(new AoAEntityPart<>(this, 14 / 16f, getBbHeight() - 0.625f, 0, 0.5f, -getBbWidth() * 0.5f - 7 / 16f),
-                new AoAEntityPart<>(this, 9 / 16f, 0.5625f, 0, 0.4375f, -getBbWidth() * 1.35f).setDamageMultiplier(0.85f),
-                new AoAEntityPart<>(this, 9 / 16f, 0.5625f, 0, 0.375f, -getBbWidth() * 1.75f).setDamageMultiplier(0.85f),
-                new AoAEntityPart<>(this, 14 / 16f, getBbHeight() - 0.625f, 0, 0.5f, getBbWidth() * 0.5f + 7 / 16f),
-                new AoAEntityPart<>(this, 11/ 16f, 1, 0, 0.5f, getBbWidth() * 1.4f));
+    @Nullable
+    @Override
+    public MultipartBuilder<? extends WoundedTyrosaurEntity> definePartEntities() {
+        return MultipartBuilder.of(this,
+                                   MultipartBuilder.Part.sized(0.875f, getBbHeight() - 0.5625f).up(0.3125f).adjacentBehind().then(
+                                           MultipartBuilder.Part.sized(0.5625f, 0.5f).down(0.125f).adjacentBehind().damageMod(0.85f).then(
+                                                   MultipartBuilder.Part.sized(0.5625f, 0.4375f).down(0.0625f).adjacentBehind().damageMod(0.5f))),
+                                   MultipartBuilder.Part.sized(0.9375f, getBbHeight() - 0.5f).up(0.375f).adjacentForward().then(
+                                           MultipartBuilder.Part.sized(0.625f, 0.75f).down(0.125f).adjacentForward()));
     }
 
     @Nullable
@@ -67,7 +72,7 @@ public class WoundedTyrosaurEntity extends AoAMeleeMob<WoundedTyrosaurEntity> {
     public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
         spawnGroupData = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
 
-        setHealth((float)RandomUtil.randomValueBetween(0.06f, 0.08f) * getMaxHealth());
+        setHealth((float)RandomUtil.valueBetween(0.06f, 0.08f) * getMaxHealth());
 
         return spawnGroupData;
     }
@@ -84,18 +89,18 @@ public class WoundedTyrosaurEntity extends AoAMeleeMob<WoundedTyrosaurEntity> {
     public void onDamageTaken(DamageContainer damageContainer) {
         if (level() instanceof ServerLevel level && damageContainer.getSource().is(DamageTypeTags.IS_FIRE) && level().getFluidState(BlockPos.containing(getEyePosition())).getFluidType() == AoAFluidTypes.TAR.get() && level().getFluidState(blockPosition().above()).getFluidType() == AoAFluidTypes.TAR.get()) {
             ParticleBuilder.forRandomPosInEntity(ParticleTypes.LARGE_SMOKE, this)
-                    .colourOverride(0xFFFFFF)
+                    .colourTint(0xFFFFFF)
                     .spawnNTimes(20)
-                    .sendToAllPlayersTrackingEntity(level, this);
+                    .sendToAllPlayersTrackingEntity(this);
 
             if (isDeadOrDying()) {
-                AoAScheduler.scheduleSyncronisedTask(() -> {
+                AoAScheduler.schedule(19 - this.deathTime, tick -> {
                     EntitySpawningUtil.spawnEntity(level, AoAMonsters.SKELETRON.get(), position(), MobSpawnType.CONVERSION, abomination -> {
                         abomination.setXRot(getXRot());
                         abomination.setYRot(getYRot());
                         abomination.setYHeadRot(getYHeadRot());
                     });
-                }, 19 - this.deathTime);
+                });
             }
         }
     }

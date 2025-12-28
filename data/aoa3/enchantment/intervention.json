@@ -13,6 +13,6 @@
     "per_level_above_first": 0
   },
   "slots": [],
-  "supported_items": "#minecraft:enchantable/vanishing",
+  "supported_items": "#aoa3:intervention_enchantment_compatible",
   "weight": 1
 }

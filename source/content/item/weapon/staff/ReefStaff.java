@@ -1,17 +1,15 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
 import com.google.common.base.Suppliers;
-import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -25,20 +23,20 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.TagUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 
-import java.util.*;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
-public class ReefStaff extends BaseStaff<Boolean> {
+public class ReefStaff extends AoAStaff<Boolean> {
 	private static final Supplier<Map<Block, Block>> CORALS = Suppliers.memoize(() -> Util.make(new IdentityHashMap<>(), map -> {
 		map.put(Blocks.DEAD_TUBE_CORAL_BLOCK, Blocks.TUBE_CORAL_BLOCK);
 		map.put(Blocks.DEAD_BRAIN_CORAL_BLOCK, Blocks.BRAIN_CORAL_BLOCK);
@@ -66,26 +64,13 @@ public class ReefStaff extends BaseStaff<Boolean> {
 		super(properties);
 	}
 
-	@Nullable
-	@Override
-	public SoundEvent getCastingSound() {
-		return AoASounds.ITEM_REEF_STAFF_CAST.get();
-	}
-
-	public static Object2IntMap<Item> getDefaultRunes() {
-		return Util.make(new Object2IntArrayMap<>(), runes -> {
-			runes.put(AoAItems.ENERGY_RUNE.get(), 2);
-			runes.put(AoAItems.WATER_RUNE.get(), 1);
-		});
-	}
-
 	@Override
 	public Optional<Boolean> checkPreconditions(LivingEntity caster, ItemStack staff) {
 		return Optional.ofNullable(WorldUtil.canPlaceBlock(caster.level(), caster.blockPosition(), caster, staff) && caster.isInWater() ? true : null);
 	}
 
 	@Override
-	public void cast(ServerLevel level, ItemStack staff, LivingEntity caster, Boolean args) {
+	public void cast(ServerLevel level, LivingEntity caster, ItemStack staff, InteractionHand hand, Boolean args) {
 		Vec3 lookAngle = caster.getLookAngle();
 
 		if (lookAngle.horizontalDistanceSqr() > 0.0000001d || lookAngle.y != -1) {
@@ -94,11 +79,11 @@ public class ReefStaff extends BaseStaff<Boolean> {
 
 			if (level instanceof ServerLevel serverLevel) {
 				for (int i = 0; i < 10; i++) {
-					AoAScheduler.scheduleSyncronisedTask(() ->
-							new TELParticlePacket(ParticleBuilder.forRandomPosInEntity(ParticleTypes.BUBBLE_COLUMN_UP, caster)
+					AoAScheduler.schedule(i + 1, tick ->
+							new TMEParticlePacket(ParticleBuilder.forRandomPosInEntity(ParticleTypes.BUBBLE_COLUMN_UP, caster)
 									.spawnNTimes(3))
-									.sendToAllPlayersTrackingEntity(serverLevel, caster),
-							i + 1);
+									.sendToAllPlayersTrackingEntity(caster)
+                    );
 				}
 			}
 		}
@@ -109,7 +94,7 @@ public class ReefStaff extends BaseStaff<Boolean> {
 
 	private static void doPlantGrowth(ServerLevel level, LivingEntity caster) {
 		final Map<Block, Block> coralMap = CORALS.get();
-		final TELParticlePacket packet = new TELParticlePacket();
+		final TMEParticlePacket packet = new TMEParticlePacket();
 
 		for (int i = 0; i < 50; i++) {
 			BlockPos pos = BlockPos.containing(caster.position().add(caster.getRandom().nextGaussian() * 3, caster.getRandom().nextGaussian() * 3, caster.getRandom().nextGaussian() * 3));
@@ -179,7 +164,7 @@ public class ReefStaff extends BaseStaff<Boolean> {
 		}
 
 		if (!packet.isEmpty())
-			packet.sendToAllPlayersTrackingEntity(level, caster);
+			packet.sendToAllPlayersTrackingEntity(caster);
 	}
 
 	@Override

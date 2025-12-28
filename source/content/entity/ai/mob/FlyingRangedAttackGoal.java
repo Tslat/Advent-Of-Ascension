@@ -3,15 +3,15 @@ package net.tslat.aoa3.content.entity.ai.mob;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMob;
+import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMobOld;
 
 public class FlyingRangedAttackGoal extends Goal {
-	private final AoAFlyingRangedMob taskOwner;
+	private final AoAFlyingRangedMobOld taskOwner;
 	private final int attackCooldownMin;
 	private final int attackCooldownMax;
 	public int attackCooldownTimer;
 
-	public FlyingRangedAttackGoal(AoAFlyingRangedMob creature, int attackCooldownMin, int attackCooldownMax) {
+	public FlyingRangedAttackGoal(AoAFlyingRangedMobOld creature, int attackCooldownMin, int attackCooldownMax) {
 		this.taskOwner = creature;
 		this.attackCooldownMin = attackCooldownMin;
 		this.attackCooldownMax = Math.max(attackCooldownMin + 1, attackCooldownMax);

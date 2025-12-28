@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.content.block.blockentity.InfusedPressBlockEntity;
-import net.tslat.aoa3.library.object.GenericItemStackHandler;
+import net.tslat.aoa3.library.object.extension.GenericItemStackHandler;
 
 public class InfusedPressRenderer implements BlockEntityRenderer<InfusedPressBlockEntity> {
 	public InfusedPressRenderer(BlockEntityRendererProvider.Context context) {}

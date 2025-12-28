@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.armour;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -12,7 +11,9 @@ import net.minecraft.world.item.TooltipFlag;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.item.AoAArmourMaterials;
 import net.tslat.aoa3.util.AttributeUtil;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -39,7 +40,7 @@ public class SubterraneanArmour extends AdventArmour {
 	@Override
 	public void onArmourTick(LivingEntity entity, EnumSet<Piece> equippedPieces) {
 		if (equippedPieces.contains(Piece.FULL_SET))
-			entity.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 2, 1, true, false));
+			EntityUtil.applyPotions(entity, entity, new EffectBuilder(MobEffects.DIG_SPEED, 2).level(2).hideParticles());
 	}
 
 	@Override

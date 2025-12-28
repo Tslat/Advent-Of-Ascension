@@ -78,7 +78,20 @@
     ]
   ],
   "has_precipitation": true,
-  "spawn_costs": {},
+  "spawn_costs": {
+    "aoa3:attercopus": {
+      "charge": 0.6000000238418579,
+      "energy_budget": 0.20000000298023224
+    },
+    "aoa3:scolopendis": {
+      "charge": 1.0,
+      "energy_budget": 0.01
+    },
+    "aoa3:spinoledon": {
+      "charge": 2.0,
+      "energy_budget": 0.01
+    }
+  },
   "spawners": {
     "ambient": [],
     "axolotls": [],

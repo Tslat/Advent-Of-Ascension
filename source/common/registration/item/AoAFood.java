@@ -3,7 +3,7 @@ package net.tslat.aoa3.common.registration.item;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 public final class AoAFood {
 	public static final FoodProperties BUBBLE_BERRIES = food(0, 0).alwaysEdible().build();

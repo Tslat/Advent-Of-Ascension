@@ -4,7 +4,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
-import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMob;
+import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMobOld;
 
 public class SkyShotEntity extends BaseMobProjectile {
 	public SkyShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
@@ -15,7 +15,7 @@ public class SkyShotEntity extends BaseMobProjectile {
 		super(AoAProjectiles.SKY_SHOT.get(), world);
 	}
 
-	public SkyShotEntity(AoAFlyingRangedMob shooter, Type projectileType) {
+	public SkyShotEntity(AoAFlyingRangedMobOld shooter, Type projectileType) {
 		super(AoAProjectiles.SKY_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 

@@ -5,7 +5,7 @@ import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.blaster.BeamerShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class BeamerShotRenderer extends ParticleProjectileRenderer<BeamerShotEntity> {
 	public BeamerShotRenderer(final EntityRendererProvider.Context manager) {
@@ -17,12 +17,12 @@ public class BeamerShotRenderer extends ParticleProjectileRenderer<BeamerShotEnt
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
 				.spawnNTimes(3)
 				.scaleMod(0.25f)
-				.colourOverride(ColourUtil.CYAN)
-				.spawnParticles(entity.level());
+				.colourTint(ColourUtil.CYAN)
+				.spawnClientParticles(entity.level());
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
 				.spawnNTimes(3)
 				.scaleMod(0.25f)
-				.colourOverride(0xFF69B4)
-				.spawnParticles(entity.level());
+				.colourTint(0xFF69B4)
+				.spawnClientParticles(entity.level());
 	}
 }

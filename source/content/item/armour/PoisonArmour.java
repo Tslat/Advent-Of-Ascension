@@ -13,8 +13,9 @@ import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.tslat.aoa3.common.registration.item.AoAArmourMaterials;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -30,7 +31,7 @@ public class PoisonArmour extends AdventArmour {
 			ev.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
 
 			if (!entity.level().isClientSide)
-				AoAScheduler.scheduleSyncronisedTask(() -> entity.addEffect(new EffectBuilder(MobEffects.DAMAGE_RESISTANCE, 60).isAmbient().hideEffectIcon().build()), 1);
+				AoAScheduler.schedule(1, tick -> EntityUtil.applyPotions(entity, entity, new EffectBuilder(MobEffects.DAMAGE_RESISTANCE, 60).isAmbient().hideEffectIcon()));
 		}
 	}
 

@@ -9,7 +9,7 @@
       "item": "aoa3:charged_rune"
     },
     "C": {
-      "item": "minecraft:ender_pearl"
+      "tag": "c:ender_pearls"
     }
   },
   "pattern": [

@@ -3,13 +3,13 @@ package net.tslat.aoa3.content.entity.monster.overworld;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.constant.DefaultAnimations;
 
@@ -33,8 +33,8 @@ public class BushBabyEntity extends AoAMeleeMob<BushBabyEntity> {
 		return 6;
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(65);
+	public static SpawnPlacements.SpawnPredicate<BushBabyEntity> spawnRules(EntityType<BushBabyEntity> entityType) {
+		return EntitySpawnConditions.createDayMonster(entityType).noLowerThanY(AoADimensions.OVERWORLD, 65);
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<BushBabyEntity> entityType) {

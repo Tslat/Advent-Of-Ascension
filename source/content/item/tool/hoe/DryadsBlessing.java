@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.tslat.aoa3.common.registration.item.AoATiers;
+import net.tslat.aoa3.common.registration.item.AoAItemStats;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.ItemUtil;
@@ -18,7 +18,7 @@ import java.util.ListIterator;
 
 public class DryadsBlessing extends BaseHoe implements LootModifyingItem {
 	public DryadsBlessing() {
-		super(AoATiers.DRYADS_BLESSING, 0, AttackSpeed.forAttacksPerSecond(4));
+		super(AoAItemStats.DRYADS_BLESSING, 0, AttackSpeed.forAttacksPerSecond(4));
 	}
 
 	@Override

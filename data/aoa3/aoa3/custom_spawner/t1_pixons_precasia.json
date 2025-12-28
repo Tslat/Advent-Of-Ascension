@@ -1,0 +1,60 @@
+{
+  "base_settings": {
+    "chance_per_player": 1.0,
+    "extra_delay_per_spawn": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 4000,
+      "min_inclusive": 2000
+    },
+    "in_dimensions": [
+      "aoa3:precasia"
+    ],
+    "not_in_biomes": "#c:is_dead",
+    "spawn_attempts_per_player": {
+      "type": "minecraft:biased_to_bottom",
+      "max_inclusive": 3,
+      "min_inclusive": 1
+    },
+    "spawn_in_flat_world": false,
+    "spawn_interval": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 27000,
+      "min_inclusive": 9000
+    }
+  },
+  "spawner": "aoa3:pixons",
+  "variants": [
+    {
+      "data": "aoa3:ambient",
+      "weight": 10
+    },
+    {
+      "data": "aoa3:glistening",
+      "weight": 40
+    },
+    {
+      "data": "aoa3:blooming",
+      "weight": 35
+    },
+    {
+      "data": "aoa3:shining",
+      "weight": 30
+    },
+    {
+      "data": "aoa3:gleaming",
+      "weight": 25
+    },
+    {
+      "data": "aoa3:glowing",
+      "weight": 20
+    },
+    {
+      "data": "aoa3:glaring",
+      "weight": 15
+    },
+    {
+      "data": "aoa3:radiant",
+      "weight": 10
+    }
+  ]
+}

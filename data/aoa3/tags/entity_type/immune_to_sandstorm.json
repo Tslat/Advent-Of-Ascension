@@ -2,6 +2,9 @@
   "values": [
     "aoa3:arkback",
     "aoa3:emperor_beast",
-    "aoa3:undead_herald"
+    "aoa3:undead_herald",
+    "aoa3:tharafly",
+    "aoa3:mason_beetle",
+    "#minecraft:arthropod"
   ]
 }

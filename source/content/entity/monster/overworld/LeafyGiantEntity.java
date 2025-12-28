@@ -19,17 +19,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.common.registration.entity.AoAMonsters;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.library.builder.EntityPredicate;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import net.tslat.aoa3.util.EntitySpawningUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.RandomUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
@@ -43,7 +43,7 @@ public class LeafyGiantEntity extends AoAMeleeMob<LeafyGiantEntity> {
 	public LeafyGiantEntity(EntityType<? extends LeafyGiantEntity> entityType, Level world) {
 		super(entityType, world);
 
-		this.nextBushBaby = RandomUtil.randomNumberBetween(150, 500);
+		this.nextBushBaby = RandomUtil.numberBetween(150, 500);
 	}
 
 	@Override
@@ -119,13 +119,13 @@ public class LeafyGiantEntity extends AoAMeleeMob<LeafyGiantEntity> {
 	@Override
 	protected void customServerAiStep() {
 		if (isInvulnerable() && tickCount % 30 == 0) {
-			List<BushBabyEntity> bushBabies = EntityRetrievalUtil.getEntities(this, 40, new EntityPredicate<>().isAlive().is(AoAMonsters.BUSH_BABY.get()));
+			List<BushBabyEntity> bushBabies = EntityRetrievalUtil.getEntities(this, 40, BushBabyEntity.class, Entity::isAlive);
 
 			if (bushBabies.isEmpty()) {
 				setInvulnerable(false);
 			}
 			else {
-				bushBabies.forEach(bushBaby -> bushBaby.addEffect(new EffectBuilder(MobEffects.GLOWING, 35).isAmbient().build()));
+				EntityUtil.applyPotions(bushBabies, this, new EffectBuilder(MobEffects.GLOWING, 35).isAmbient());
 			}
 		}
 
@@ -135,9 +135,9 @@ public class LeafyGiantEntity extends AoAMeleeMob<LeafyGiantEntity> {
 			if (target == null)
 				return;
 
-			nextBushBaby = tickCount + RandomUtil.randomNumberBetween(150, 500);
+			nextBushBaby = tickCount + RandomUtil.numberBetween(150, 500);
 
-			if (EntityRetrievalUtil.getEntities(this, 10, new EntityPredicate<>(this).isAlive().is(AoAMonsters.BUSH_BABY.get())).size() < 5)
+			if (EntityRetrievalUtil.getEntities(this, 10, BushBabyEntity.class, LivingEntity::isAlive).size() < 5)
 				spawnBushBaby(target);
 		}
 	}
@@ -160,7 +160,7 @@ public class LeafyGiantEntity extends AoAMeleeMob<LeafyGiantEntity> {
 
 		if (getHealth() < 0.5f * getMaxHealth()) {
 			setInvulnerable(true);
-			bushBaby.addEffect(new EffectBuilder(MobEffects.GLOWING, 35).isAmbient().build());
+			EntityUtil.applyPotions(bushBaby, this, new EffectBuilder(MobEffects.GLOWING, 35).isAmbient());
 		}
 	}
 
@@ -170,8 +170,8 @@ public class LeafyGiantEntity extends AoAMeleeMob<LeafyGiantEntity> {
 			target.igniteForSeconds(getRemainingFireTicks() / 20);
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 15f);
+	public static SpawnPlacements.SpawnPredicate<LeafyGiantEntity> spawnRules(EntityType<LeafyGiantEntity> entityType) {
+		return EntitySpawnConditions.createDayMonster(entityType).spawnChance(1 / 15f);
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<LeafyGiantEntity> entityType) {

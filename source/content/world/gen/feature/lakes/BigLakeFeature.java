@@ -15,8 +15,8 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-import net.tslat.aoa3.library.object.PositionTableMap;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.aoa3.library.object.container.PositionTableMap;
+import net.tslat.tme.api.object.EasyRandom;
 
 public class BigLakeFeature extends Feature<BigLakeFeature.Configuration> {
 	private static final int AIR = 1;
@@ -30,7 +30,7 @@ public class BigLakeFeature extends Feature<BigLakeFeature.Configuration> {
 	@Override
 	public boolean place(final FeaturePlaceContext<BigLakeFeature.Configuration> context) {
 		final WorldGenLevel level = context.level();
-		final RandomUtil.EasyRandom random = new RandomUtil.EasyRandom(context.random());
+		final EasyRandom random = EasyRandom.wrap(context.random());
 		final BigLakeFeature.Configuration config = context.config();
 		final int depth = config.maxFluidDepth().sample(random);
 		final BlockPos pos = context.origin().below(depth);

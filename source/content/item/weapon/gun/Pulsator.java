@@ -3,45 +3,36 @@ package net.tslat.aoa3.content.item.weapon.gun;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.api.object.RayTrace;
 
 import java.util.List;
 
-public class Pulsator extends BaseGun {
+public class Pulsator extends AoAGun {
 	public Pulsator(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_SPACE_GUN_FIRE.get();
-	}
+	protected void onDamageEntity(Level level, WeaponProjectile projectile, RayTrace<?> rayTrace, Entity hitEntity, float damage) {
+		if (level instanceof ServerLevel serverLevel && RandomUtil.oneInNChance(8)) {
+			List<LivingEntity> entities = EntityRetrievalUtil.getEntities(level, rayTrace.hitPos(), 7, LivingEntity.class, target -> EntityUtil.areProbablyEnemies(target, projectile.getShooter()));
 
-	@Override
-	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
-		if (target instanceof LivingEntity && target.level() instanceof ServerLevel) {
-			List<Mob> nearbyEntities = target.level().getEntitiesOfClass(Mob.class, new AABB(bullet.position(), bullet.position()).inflate(7, 5, 7), entity -> entity.isAlive() && entity instanceof Enemy);
+			if (!entities.isEmpty()) {
+				LivingEntity entity = RandomUtil.selection(entities);
 
-			if (!nearbyEntities.isEmpty() && RandomUtil.oneInNChance(8)) {
-				Mob entity = RandomUtil.getRandomSelection(nearbyEntities);
-
-				WorldUtil.spawnLightning((ServerLevel)target.level(), shooter instanceof ServerPlayer ? (ServerPlayer)shooter : null, entity.getX(), entity.getY(), entity.getZ(), true, false);
+				WorldUtil.spawnLightning(serverLevel, projectile.getShooter() instanceof ServerPlayer pl ? pl : null, entity.getX(), entity.getY(), entity.getZ(), true, false);
 			}
 		}
 	}

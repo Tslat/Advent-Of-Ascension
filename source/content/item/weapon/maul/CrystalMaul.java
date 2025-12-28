@@ -1,26 +1,27 @@
 package net.tslat.aoa3.content.item.weapon.maul;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
-import net.tslat.aoa3.library.constant.AttackSpeed;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 import java.util.List;
 
-public class CrystalMaul extends BaseMaul {
-	public CrystalMaul() {
-		super(23.5f, AttackSpeed.THIRD, 7.2f, 1400);
+public class CrystalMaul extends AoAMaul {
+	public CrystalMaul(Tier tier, Item.Properties properties) {
+		super(tier, properties);
 	}
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, Entity target, LivingEntity attacker, float attackCooldown) {
-		if (target instanceof LivingEntity)
-			((LivingEntity)target).addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1, true, true));
+		EntityUtil.applyPotions(target, attacker, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 40).level(2).isAmbient());
 	}
 
 	@Override

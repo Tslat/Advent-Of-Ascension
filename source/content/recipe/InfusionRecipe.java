@@ -20,7 +20,7 @@ import net.tslat.aoa3.common.menu.generic.GenericRecipeInput;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.util.RecipeUtil;
-import net.tslat.aoa3.util.CodecUtil;
+import net.tslat.tme.api.util.StreamCodecUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -141,7 +141,7 @@ public record InfusionRecipe(RecipeUtil.RecipeBookDetails recipeBookDetails, Non
 						.apply(builder, InfusionRecipe::new));
 		public static final StreamCodec<RegistryFriendlyByteBuf, InfusionRecipe> STREAM_CODEC = StreamCodec.composite(
 				RecipeUtil.RecipeBookDetails.STREAM_CODEC, InfusionRecipe::recipeBookDetails,
-				CodecUtil.streamNonNullList(Ingredient.CONTENTS_STREAM_CODEC, Ingredient.EMPTY), InfusionRecipe::ingredients,
+				StreamCodecUtil.nonNullList(Ingredient.CONTENTS_STREAM_CODEC, Ingredient.EMPTY), InfusionRecipe::ingredients,
 				Ingredient.CONTENTS_STREAM_CODEC, InfusionRecipe::input,
 				ItemStack.STREAM_CODEC, InfusionRecipe::output,
 				InfusionRecipe::new);

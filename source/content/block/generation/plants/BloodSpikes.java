@@ -11,7 +11,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 public class BloodSpikes extends StackablePlant {
 	public BloodSpikes() {

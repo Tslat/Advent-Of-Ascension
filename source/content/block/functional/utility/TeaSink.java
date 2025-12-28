@@ -29,7 +29,7 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.InventoryUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 
 

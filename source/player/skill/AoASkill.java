@@ -24,13 +24,13 @@ import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.event.custom.AoAEvents;
 import net.tslat.aoa3.event.dynamic.DynamicEventSubscriber;
-import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.tme.api.sound.SoundBuilder;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -98,6 +98,7 @@ public final class AoASkill {
 
 		protected Instance(AoASkill skill, CompoundTag instanceData) {
 			this.skill = skill;
+			this.level = instanceData.getInt("level");
 			this.xpModifier = instanceData.contains("xp_modifier") ? instanceData.getFloat("xp_modifier") : 1;
 
 			if (instanceData.contains("abilities")) {
@@ -287,10 +288,10 @@ public final class AoASkill {
 		private void levelUp(int oldLevel, int newLevel, boolean isNaturalLevel) {
 			ServerPlayer player = playerDataManager.getPlayer();
 
-			new SoundBuilder(AoASounds.PLAYER_LEVEL_UP).isPlayer().notInWorld().include(player).execute();
+			SoundBuilder.localAmbience(AoASounds.PLAYER_LEVEL_UP, player.level()).onlyFor(player).play();
 
 			if ((newLevel == 100 || newLevel == 1000) && oldLevel < newLevel)
-				AoAScheduler.scheduleSyncronisedTask(() -> new SoundBuilder(newLevel == 100 ? AoASounds.PLAYER_LEVEL_UP_100 : AoASounds.PLAYER_LEVEL_UP_1000).isPlayer().notInWorld().include(player).execute(), 40);
+				AoAScheduler.schedule(40, tick -> SoundBuilder.localAmbience(newLevel == 100 ? AoASounds.PLAYER_LEVEL_UP_100 : AoASounds.PLAYER_LEVEL_UP_1000, player.level()).onlyFor(player).play());
 
 			this.level = newLevel;
 			this.xp = 0f;

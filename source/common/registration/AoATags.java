@@ -37,6 +37,7 @@ public final class AoATags {
 		public static final TagKey<Block> INCORRECT_FOR_DRYADS_BLESSING_TOOL = aoaTag("incorrect_for_dryads_blessing_tool");
 		public static final TagKey<Block> INCORRECT_FOR_ROCK_PICK_TOOL = aoaTag("incorrect_for_rock_pick_tool");
 		public static final TagKey<Block> INCORRECT_FOR_TROLL_BASHER_TOOL = aoaTag("incorrect_for_troll_basher_tool");
+		public static final TagKey<Block> INCORRECT_FOR_MAUL = aoaTag("incorrect_for_maul");
 
 		public static final TagKey<Block> BARONYTE_ORE = commonTag("ores/baronyte");
 		public static final TagKey<Block> BLAZIUM_ORE = commonTag("ores/blazium");
@@ -90,14 +91,19 @@ public final class AoATags {
 
 		public static final TagKey<Block> CARVED_RUNE = aoaTag("carved_rune");
 		public static final TagKey<Block> LUNAR_ORB = aoaTag("lunar_orb");
-		public static final TagKey<Block> BASE_STONE_CREEPONIA = aoaTag("base_stone_creeponia");
 		public static final TagKey<Block> NOWHERE_SAFE_GUI_BLOCK = aoaTag("nowhere_safe_gui_block");
 
-		public static final TagKey<Block> BASE_STONE_PRECASIA = commonTag("base_stone_precasia");
+		public static final TagKey<Block> BASE_STONE_CREEPONIA = aoaTag("base_stone_creeponia");
+		public static final TagKey<Block> BASE_STONE_PRECASIA = aoaTag("base_stone_precasia");
+		public static final TagKey<Block> BASE_STONE_BARATHOS = aoaTag("base_stone_barathos");
 
-		public static final TagKey<Block> EXTRACTION_TRAINABLE = commonTag("extraction_trainable");
+		public static final TagKey<Block> EXTRACTION_TRAINABLE = aoaTag("extraction_trainable");
+		public static final TagKey<Block> NO_BONUS_MINING_RESULT = aoaTag("no_bonus_mining_result");
+		public static final TagKey<Block> NO_HARVEST_REPLANT = aoaTag("no_harvest_replant");
 
 		public static final TagKey<Block> INFINIBURN_BARATHOS = aoaTag("infiniburn_barathos");
+
+		public static final TagKey<Block> FAST_CLIMBABLE = aoaTag("fast_climbable");
 
 		private static TagKey<Block> aoaTag(String id) {
 			return BlockTags.create(AdventOfAscension.id(id));
@@ -110,6 +116,7 @@ public final class AoATags {
 
 	public static class Items {
 		public static final TagKey<Item> GRASS = commonTag("grass");
+		public static final TagKey<Item> BANNER_PATTERNS = commonTag("banner_patterns");
 
 		public static final TagKey<Item> BARONYTE_ORE = commonTag("ores/baronyte");
 		public static final TagKey<Item> BLAZIUM_ORE = commonTag("ores/blazium");
@@ -210,15 +217,15 @@ public final class AoATags {
 		public static final TagKey<Item> FAUNAMANCER_TOOL = aoaTag("faunamancer_tool");
 		public static final TagKey<Item> POWER_STONE = aoaTag("power_stones");
 
-		public static final TagKey<Item> CURRENCY = commonTag("currency");
+		public static final TagKey<Item> AOA_COINS = aoaTag("aoa_coins");
 		public static final TagKey<Item> FRUIT = commonTag("fruit");
 		public static final TagKey<Item> MILK = commonTag("milk");
 		public static final TagKey<Item> GINGERBREAD = commonTag("gingerbread");
 		public static final TagKey<Item> MINTS = commonTag("mints");
-		public static final TagKey<Item> FOOD = commonTag("food");
 		public static final TagKey<Item> SHULKER_BOXES = commonTag("shulker_boxes");
 		public static final TagKey<Item> IVORY = commonTag("ivory");
 		public static final TagKey<Item> RODS_METAL = commonTag("rods/metal");
+		public static final TagKey<Item> RODS_LIMONITE = commonTag("rods/limonite");
 		public static final TagKey<Item> AIRTIGHT = commonTag("armor/airtight");
 
 		public static final TagKey<Item> COMPASS_RUNE_CATALYST = aoaTag("compass_rune_catalyst");
@@ -241,24 +248,47 @@ public final class AoATags {
 		public static final TagKey<Item> MAULS = aoaTag("mauls");
 		public static final TagKey<Item> ONE_HANDED_GUNS = aoaTag("one_handed_guns");
 		public static final TagKey<Item> SHOTGUNS = aoaTag("shotguns");
+		public static final TagKey<Item> SNIPERS = aoaTag("snipers");
+		public static final TagKey<Item> CANNONS = aoaTag("cannons");
 		public static final TagKey<Item> BLASTERS = aoaTag("blasters");
 		public static final TagKey<Item> GREATBLADES = aoaTag("greatblades");
 		public static final TagKey<Item> BULLET_FIRING_GUNS = aoaTag("bullet_firing_guns");
 
 		public static final TagKey<Item> STAVES_ENCHANTABLE = aoaTag("staves_enchantable");
 		public static final TagKey<Item> GUNS_ENCHANTABLE = aoaTag("guns_enchantable");
+		public static final TagKey<Item> CANNONS_ENCHANTABLE = aoaTag("cannons_enchantable");
+		public static final TagKey<Item> SNIPERS_ENCHANTABLE = aoaTag("snipers_enchantable");
 		public static final TagKey<Item> SMALL_GUNS_ENCHANTABLE = aoaTag("small_guns_enchantable");
 		public static final TagKey<Item> SHOTGUNS_ENCHANTABLE = aoaTag("shotguns_enchantable");
 		public static final TagKey<Item> BLASTERS_ENCHANTABLE = aoaTag("blasters_enchantable");
 		public static final TagKey<Item> GREATBLADES_ENCHANTABLE = aoaTag("greatblades_enchantable");
 		public static final TagKey<Item> BULLET_FIRING_ENCHANTABLE = aoaTag("bullet_firing_enchantable");
 		public static final TagKey<Item> GREED_ENCHANTABLE = aoaTag("greed_enchantable");
+		public static final TagKey<Item> INTERVENTION_ENCHANTMENT_COMPATIBLE = aoaTag("intervention_enchantment_compatible");
 
 		public static final TagKey<Item> DEINOTHERIUM_FOOD = aoaTag("deinotherium_food");
 		public static final TagKey<Item> HORNDRON_FOOD = aoaTag("horndron_food");
 		public static final TagKey<Item> OPTERYX_FOOD = aoaTag("opteryx_food");
 
-		public static final TagKey<Item> INTERVENTION_ENCHANTMENT_COMPATIBLE = aoaTag("intervention_enchantment_compatible");
+		public static final TagKey<Item> NO_BONUS_SMELT_RESULT = aoaTag("no_bonus_smelt_result");
+
+		public static final TagKey<Item> AMMO = aoaTag("ammo");
+		public static final TagKey<Item> AMMO_VOID_POUCH_COMPATIBLE = aoaTag("ammo_void_pouch_compatible");
+
+		public static final TagKey<Item> ASHFERN_SEEDS = commonTag("seeds/ashfern");
+		public static final TagKey<Item> BUBBLE_BERRY_SEEDS = commonTag("seeds/bubble_berry");
+		public static final TagKey<Item> CHILLI_SEEDS = commonTag("seeds/chilli");
+		public static final TagKey<Item> FLORACLE_SEEDS = commonTag("seeds/floracle");
+		public static final TagKey<Item> GOLDICAP_SEEDS = commonTag("seeds/goldicap");
+		public static final TagKey<Item> GREEN_MANURE_SEEDS = commonTag("seeds/green_manure");
+		public static final TagKey<Item> HEART_FRUIT_SEEDS = commonTag("seeds/heart_fruit");
+		public static final TagKey<Item> LUNACRIKE_SEEDS = commonTag("seeds/lunacrike");
+		public static final TagKey<Item> LUNALON_SEEDS = commonTag("seeds/lunalon");
+		public static final TagKey<Item> LUNA_GLOBE_SEEDS = commonTag("seeds/luna_globe");
+		public static final TagKey<Item> ROSIDON_SEEDS = commonTag("seeds/rosidon");
+		public static final TagKey<Item> TEA_SEEDS = commonTag("seeds/tea");
+		public static final TagKey<Item> THORNY_PLANT_SEEDS = commonTag("seeds/thorny_plant");
+		public static final TagKey<Item> TRILLIAD_SEEDS = commonTag("seeds/trilliad");
 
 		private static TagKey<Item> aoaTag(String id) {
 			return ItemTags.create(AdventOfAscension.id(id));
@@ -303,6 +333,7 @@ public final class AoATags {
 
 	public static class Biomes {
 		public static final TagKey<Biome> NO_MOB_SPAWNS = commonTag("no_mob_spawns");
+
 		public static final TagKey<Biome> IS_ABYSS = aoaTag("is_abyss");
 		public static final TagKey<Biome> IS_BARATHOS = aoaTag("is_barathos");
 		public static final TagKey<Biome> IS_CELEVE = aoaTag("is_celeve");
@@ -313,9 +344,16 @@ public final class AoATags {
 		public static final TagKey<Biome> IS_LELYETIA = aoaTag("is_lelyetia");
 		public static final TagKey<Biome> IS_NOWHERE = aoaTag("is_nowhere");
 		public static final TagKey<Biome> IS_PRECASIA = aoaTag("is_precasia");
+
+		public static final TagKey<Biome> WATER_FISHING_BENEFICIAL = aoaTag("water_fishing_beneficial");
+		public static final TagKey<Biome> WATER_FISHING_DETRIMENTAL = aoaTag("water_fishing_detrimental");
+		public static final TagKey<Biome> LAVA_FISHING_BENEFICIAL = aoaTag("lava_fishing_beneficial");
+		public static final TagKey<Biome> LAVA_FISHING_DETRIMENTAL = aoaTag("lava_fishing_detrimental");
+
 		public static final TagKey<Biome> HAS_RUINED_TELEPORTER = aoaTag("has_structure/ruined_teleporter");
 		public static final TagKey<Biome> HAS_PRECASIAN_LOTTO_HOVEL = aoaTag("has_structure/precasian_lotto_hovel");
 		public static final TagKey<Biome> HAS_ATTERCOPUS_NEST = aoaTag("has_structure/attercopus_nest");
+		public static final TagKey<Biome> HAS_BARON_RESOURCE_PIT = aoaTag("has_structure/baron_resource_pit");
 
 		private static TagKey<Biome> aoaTag(String id) {
 			return create(AdventOfAscension.id(id));

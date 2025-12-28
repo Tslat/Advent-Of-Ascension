@@ -34,7 +34,7 @@ public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecip
 	private final IDrawable icon;
 
 	public FrameBenchRecipeCategory(IGuiHelper guiHelper) {
-		this.background = guiHelper.createDrawable(texture, 10, 12, 156, 60);
+		this.background = guiHelper.createDrawable(texture, 10, 12, getWidth(), getHeight());
 		this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(AoABlocks.FRAME_BENCH.get()));
 	}
 
@@ -45,23 +45,30 @@ public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecip
 
 	@Override
 	public Component getTitle() {
-		return title;
-	}
-
-	@Override
-	public IDrawable getBackground() {
-		return background;
+		return this.title;
 	}
 
 	@Override
 	public IDrawable getIcon() {
-		return icon;
+		return this.icon;
+	}
+
+	@Override
+	public int getWidth() {
+		return 156;
+	}
+
+	@Override
+	public int getHeight() {
+		return 60;
 	}
 
 	@Override
 	public void draw(FrameBenchRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
 		Minecraft mc = Minecraft.getInstance();
 		PoseStack poseStack = guiGraphics.pose();
+
+		this.background.draw(guiGraphics);
 
 		drawButton(poseStack, mc, AoAItems.CROSSBOW_FRAME.get(), recipe, 45, 1);
 		drawButton(poseStack, mc, AoAItems.BLASTER_FRAME.get(), recipe, 65, 1);

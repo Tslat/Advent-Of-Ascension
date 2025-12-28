@@ -15,7 +15,7 @@ import net.minecraft.world.entity.ai.memory.NearestVisibleLivingEntities;
 import net.minecraft.world.entity.player.Player;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 
 import java.util.List;
 import java.util.function.BiPredicate;
@@ -146,8 +146,8 @@ public class FixedTargetOrRetaliate<E extends Mob> extends ExtendedBehaviour<E> 
     protected void alertAllies(ServerLevel level, E owner) {
         double followRange = owner.getAttributeValue(Attributes.FOLLOW_RANGE);
 
-        for (LivingEntity ally : EntityRetrievalUtil.<LivingEntity>getEntities(level, owner.getBoundingBox().inflate(followRange, 10, followRange),
-                entity -> entity != owner && entity instanceof LivingEntity livingEntity && this.allyPredicate.test(owner, livingEntity))) {
+        for (LivingEntity ally : EntityRetrievalUtil.getEntities(level, owner.getBoundingBox().inflate(followRange, 10, followRange), LivingEntity.class,
+                entity -> entity != owner && this.allyPredicate.test(owner, entity))) {
             BrainUtils.setTargetOfEntity(ally, this.toTarget);
         }
     }

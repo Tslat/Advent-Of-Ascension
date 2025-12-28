@@ -47,8 +47,8 @@ import net.tslat.aoa3.integration.jei.recipe.upgradekit.UpgradeKitRecipeTransfer
 import net.tslat.aoa3.integration.jei.recipe.whitewashing.WhitewashingRecipeCategory;
 import net.tslat.aoa3.integration.jei.recipe.whitewashing.WhitewashingRecipeTransferInfo;
 import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
-import net.tslat.aoa3.util.CodecUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.tme.api.util.CodecUtil;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -165,7 +165,7 @@ public class JEIIntegration implements IModPlugin {
 
 	private List<StaffChargingRecipe> compileStaffChargingRecipes(RecipeManager recipeManager) {
 		return BuiltInRegistries.ITEM.stream()
-				.filter(item -> item.components().has(AoADataComponents.STORED_SPELL_CASTS.get()) && item.components().has(AoADataComponents.STAFF_RUNE_COST.get()))
+				.filter(item -> item.components().has(AoADataComponents.STORED_SPELL_CASTS.get()) && item.components().has(AoADataComponents.STAFF_STATS.get()))
 				.map(JEIStaffChargingRecipe::new)
 				.map(StaffChargingRecipe.class::cast)
 				.toList();

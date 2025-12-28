@@ -8,13 +8,17 @@ import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.particleoption.EntityTrackingParticleOptions;
-import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.object.builder.EntityPredicateBuilder;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public abstract class EntityAffectingParticle extends TextureSheetParticle {
+	protected static final Predicate<Entity> DAMAGEABLE_ENTITIES = EntityPredicateBuilder.builder().isDamageable().build();
+	protected static final Predicate<Entity> CAN_COLLIDE_WITH = EntityPredicateBuilder.builder().isTargetable().build();
+
 	protected EntityAffectingParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
 		super(level, x, y, z, xSpeed, ySpeed, zSpeed);
 	}
@@ -63,7 +67,7 @@ public abstract class EntityAffectingParticle extends TextureSheetParticle {
 
 	@Nullable
 	protected Entity getCollidedEntity(double xVelocity, double yVelocity, double zVelocity) {
-		return EntityRetrievalUtil.getNearestEntity(this.level, getBoundingBox().expandTowards(xVelocity, yVelocity, zVelocity), new Vec3(this.x, this.y, this.z), EntityPredicate.TARGETABLE_ENTITIES);
+		return EntityRetrievalUtil.getNearestEntity(this.level, getBoundingBox().expandTowards(xVelocity, yVelocity, zVelocity), new Vec3(this.x, this.y, this.z), CAN_COLLIDE_WITH);
 	}
 
 	@FunctionalInterface

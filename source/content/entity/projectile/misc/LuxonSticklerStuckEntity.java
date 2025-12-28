@@ -1,85 +1,31 @@
 package net.tslat.aoa3.content.entity.projectile.misc;
 
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
-import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
-public class LuxonSticklerStuckEntity extends ThrowableProjectile {
-	private LivingEntity target;
-	private LivingEntity shooter;
-	private int age;
-
-	public LuxonSticklerStuckEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
+public class LuxonSticklerStuckEntity extends AttachedSticklerEntity {
+	public LuxonSticklerStuckEntity(EntityType<? extends AttachedSticklerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
-	
-	public LuxonSticklerStuckEntity(Level world) {
-		super(AoAProjectiles.LUXON_STICKLER_STUCK.get(), world);
-	}
 
-	public LuxonSticklerStuckEntity(LivingEntity shooter, BaseGun gun, LivingEntity target, float bulletDmgMultiplier) {
-		super(AoAProjectiles.LUXON_STICKLER_STUCK.get(), shooter.level());
-		this.target = target;
-		this.shooter = shooter;
-		moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 0);
-		shoot(0, 0, 0, 0, 0);
+	public LuxonSticklerStuckEntity(Level level, Entity shooter, LivingEntity target, Vec3 stuckOffset, WeaponFiringContext context) {
+		super(AoAProjectiles.LUXON_STICKLER_STUCK.get(), level, shooter, target, stuckOffset, context);
 	}
-
-	public LuxonSticklerStuckEntity(Level world, double x, double y, double z) {
-		super(AoAProjectiles.LUXON_STICKLER_STUCK.get(), x, y, z, world);
-	}
-
-	@Override
-	public double getDefaultGravity() {
-		return 0.0f;
-	}
-
-	@Override
-	protected void onHit(HitResult result) {}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		age++;
-
-		if (level().isClientSide)
-			return;
-
-		if (target != null && target.isAlive()) {
-			moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 360);
-		}
-		else {
-			WorldUtil.createExplosion(getOwner(), level(), this, 2.0f);
-
-			if (!level().isClientSide)
-				discard();
-
-			return;
-		}
-
-		if (age >= 100) {
-			WorldUtil.createExplosion(getOwner(), level(), getX(), getY() + 1, getZ(), 2.0f);
-
-			if (!level().isClientSide)
-				discard();
-
-			return;
-		}
-
-		if (level().getGameTime() % 40 == 0)
-			EntityUtil.applyPotions(level().getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(7), EntityUtil::isHostileMob), new EffectBuilder(MobEffects.GLOWING, 45));
+		if (level().getGameTime() % 10 == 0)
+			EntityUtil.applyPotions(EntityRetrievalUtil.getEntities(this, 7, LivingEntity.class, target -> EntityUtil.areProbablyEnemies(target, getOwner())), getOwner(), new EffectBuilder(MobEffects.GLOWING, 15));
 	}
-
-	@Override
-	protected void defineSynchedData(SynchedEntityData.Builder builder) {}
 }

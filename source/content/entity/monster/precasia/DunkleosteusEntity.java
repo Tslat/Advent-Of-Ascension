@@ -2,19 +2,24 @@ package net.tslat.aoa3.content.entity.monster.precasia;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.OwnableEntity;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
-import net.tslat.aoa3.content.entity.base.AoAEntityPart;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMob;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyLivingEntitySensor;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
+import net.tslat.aoa3.library.builder.MultipartBuilder;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
@@ -30,18 +35,23 @@ import software.bernie.geckolib.constant.DefaultAnimations;
 
 import java.util.List;
 
+import static net.tslat.aoa3.library.builder.MultipartBuilder.Part;
+
 public class DunkleosteusEntity extends AoAWaterMeleeMob<DunkleosteusEntity> {
 	private static final int ATTACK_BITE = 0;
 	private static final int ATTACK_SHOOT = 1;
 
 	public DunkleosteusEntity(EntityType<? extends DunkleosteusEntity> entityType, Level level) {
 		super(entityType, level);
+	}
 
-		setParts(
-				new AoAEntityPart<>(this, getBbWidth(), getBbHeight(), 0, 0, getBbWidth()),
-				new AoAEntityPart<>(this, getBbWidth(), getBbHeight(), 0, 0, -getBbWidth()),
-				new AoAEntityPart<>(this, getBbWidth() - 0.25f, 1.125f, 0, 0.375f, -getBbWidth() * 2)
-		);
+	@Nullable
+	@Override
+	public MultipartBuilder<? extends DunkleosteusEntity> definePartEntities() {
+		return MultipartBuilder.of(this,
+										  Part.sized(getBbWidth(), getBbHeight()).adjacentForward(),
+										  Part.sized(getBbWidth(), getBbHeight()).adjacentBehind().then(
+												  Part.sized(getBbWidth() - 0.25f, 1.125f).up(0.375f).adjacentBehind()));
 	}
 
 	@Override
@@ -67,7 +77,7 @@ public class DunkleosteusEntity extends AoAWaterMeleeMob<DunkleosteusEntity> {
 	@Override
 	public BrainActivityGroup<? extends DunkleosteusEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || !target.isInWater() || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
+				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || !target.isInWater() || distanceToSqr(target.position()) > Mth.square(getAttributeValue(Attributes.FOLLOW_RANGE))),
 				new SetWalkTargetToAttackTarget<>()
 						.speedMod((entity, target) -> target instanceof Player ? 1.25f : 1),
 				new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration() + 2));
@@ -108,16 +118,16 @@ public class DunkleosteusEntity extends AoAWaterMeleeMob<DunkleosteusEntity> {
 
 	@Override
 	public int getCurrentSwingDuration() {
-		return ATTACK_STATE.is(this, ATTACK_BITE) ? 11 : 31;
+		return isAttackState(ATTACK_BITE) ? 11 : 31;
 	}
 
 	@Override
 	protected int getPreAttackTime() {
-		return ATTACK_STATE.is(this, ATTACK_BITE) ? 4 : 11;
+		return isAttackState(ATTACK_BITE) ? 4 : 11;
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.noHigherThanY(55).difficultyBasedSpawnChance(0.05f);
+	public static SpawnPlacements.SpawnPredicate<DunkleosteusEntity> spawnRules(EntityType<DunkleosteusEntity> entityType) {
+		return EntitySpawnConditions.createDayNightMonster(entityType).noHigherThanY(AoADimensions.PRECASIA, 55).difficultyBasedSpawnChance(0.05f);
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<DunkleosteusEntity> entityType) {
@@ -140,6 +150,6 @@ public class DunkleosteusEntity extends AoAWaterMeleeMob<DunkleosteusEntity> {
 
 			return PlayState.STOP;
 		}));
-		controllers.add(AoAAnimations.dynamicAttackController(this, state -> ATTACK_STATE.is(this, ATTACK_BITE) ? DefaultAnimations.ATTACK_BITE : DefaultAnimations.ATTACK_SHOOT));
+		controllers.add(AoAAnimations.dynamicAttackController(this, state -> isAttackState(ATTACK_BITE) ? DefaultAnimations.ATTACK_BITE : DefaultAnimations.ATTACK_SHOOT));
 	}
 }

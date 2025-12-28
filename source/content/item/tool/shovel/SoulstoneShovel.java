@@ -24,7 +24,7 @@ import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.TagUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
@@ -69,7 +69,7 @@ public class SoulstoneShovel extends BaseShovel implements LootModifyingItem {
 			blockDrop.setCount(blockDrop.getCount() * 2);
 
 			for (int i = 0; i < 5; i++) {
-				world.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, pos.x + RandomUtil.randomValueUpTo(1), pos.y + RandomUtil.randomValueUpTo(1), pos.z + RandomUtil.randomValueUpTo(1), 1, 0, 0, 0, 0);
+				world.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, pos.x + RandomUtil.valueUpTo(1), pos.y + RandomUtil.valueUpTo(1), pos.z + RandomUtil.valueUpTo(1), 1, 0, 0, 0, 0);
 			}
 		}
 	}

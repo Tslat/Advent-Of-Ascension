@@ -36,29 +36,27 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.common.registration.item.AoATools;
-import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.InventoryUtil;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.RandomUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.UUID;
 
-public class FishingCageEntity extends Entity implements OwnableEntity {
-	public static final EntityDataHolder<ItemStack> CAUGHT_STACK_1 = EntityDataHolder.register(FishingCageEntity.class, EntityDataSerializers.ITEM_STACK, ItemStack.EMPTY, cage -> cage.loot[0], (cage, stack) -> cage.loot[0] = stack);
-	public static final EntityDataHolder<ItemStack> CAUGHT_STACK_2 = EntityDataHolder.register(FishingCageEntity.class, EntityDataSerializers.ITEM_STACK, ItemStack.EMPTY, cage -> cage.loot[1], (cage, stack) -> cage.loot[1] = stack);
-	public static final EntityDataHolder<ItemStack> CAUGHT_STACK_3 = EntityDataHolder.register(FishingCageEntity.class, EntityDataSerializers.ITEM_STACK, ItemStack.EMPTY, cage -> cage.loot[2], (cage, stack) -> cage.loot[2] = stack);
+public class FishingCageEntity extends BasicMiscEntity implements OwnableEntity {
+	public static final EntityDataAccessor<ItemStack> CAUGHT_STACK_1 = makeSynchedData(FishingCageEntity.class, EntityDataSerializers.ITEM_STACK);
+	public static final EntityDataAccessor<ItemStack> CAUGHT_STACK_2 = makeSynchedData(FishingCageEntity.class, EntityDataSerializers.ITEM_STACK);
+	public static final EntityDataAccessor<ItemStack> CAUGHT_STACK_3 = makeSynchedData(FishingCageEntity.class, EntityDataSerializers.ITEM_STACK);
 
 	public static final ResourceKey<LootTable> FISHING_CAGE_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, AdventOfAscension.id("misc/fishing_cage_catches"));
 
 	private UUID ownerUUID = null;
 	private int damage;
-	private final ItemStack[] loot = new ItemStack[] {ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY};
 
 	public FishingCageEntity(Level world, Player player, ItemStack stack) {
 		this(AoAMiscEntities.FISHING_CAGE.get(), world);
@@ -84,24 +82,50 @@ public class FishingCageEntity extends Entity implements OwnableEntity {
 		return this.ownerUUID;
 	}
 
+	@NotNull
+	public ItemStack[] getLoot() {
+		return new ItemStack[] {getSynchedData(CAUGHT_STACK_1), getSynchedData(CAUGHT_STACK_2), getSynchedData(CAUGHT_STACK_3)};
+	}
+
+	@Override
+	public boolean isPushedByFluid() {
+		return false;
+	}
+
+	@Override
+	public boolean isPickable() {
+		return true;
+	}
+
+	@Override
+	public boolean canBeCollidedWith() {
+		return this.tickCount > 1 && super.canBeCollidedWith();
+	}
+
+	@Nullable
+	@Override
+	public ItemStack getPickResult() {
+		return AoATools.FISHING_CAGE.get().getDefaultInstance();
+	}
+
+	@Override
+	public boolean isInvulnerableTo(DamageSource source) {
+		return !source.is(Tags.DamageTypes.IS_TECHNICAL);
+	}
+
 	@Override
 	public InteractionResult interact(Player player, InteractionHand hand) {
-		if (player instanceof ServerPlayer pl && (ownerUUID == null || pl.getUUID().equals(ownerUUID))) {
+		if (player instanceof ServerPlayer pl && (this.ownerUUID == null || pl.getUUID().equals(this.ownerUUID))) {
 			ItemStack fishingCage = new ItemStack(AoATools.FISHING_CAGE.get());
-			int damage = this.damage + 1;
-
-			if (damage < fishingCage.getMaxDamage()) {
-				fishingCage.setDamageValue(damage);
-
-				if (!pl.getAbilities().instabuild)
-					InventoryUtil.giveItemTo(pl, fishingCage);
-			}
+			int damage = this.damage;
 
 			if (hasCatches()) {
 				AoASkill.Instance hauling = PlayerUtil.getAdventPlayer(pl).getSkill(AoASkills.HAULING.get());
+				ItemStack[] loot = getLoot();
+				damage += loot.length;
 
 				if (hauling.canGainXp(true)) {
-					float xp = PlayerUtil.getTimeBasedXpForLevel(hauling.getLevel(true), 1000) * Math.min(4, this.loot.length);
+					float xp = PlayerUtil.getTimeBasedXpForLevel(hauling.getLevel(true), 1000) * Math.min(4, loot.length);
 
 					hauling.adjustXp(xp, false, false);
 				}
@@ -114,6 +138,13 @@ public class FishingCageEntity extends Entity implements OwnableEntity {
 				}
 			}
 
+			if (damage < fishingCage.getMaxDamage()) {
+				fishingCage.setDamageValue(damage);
+
+				if (!pl.hasInfiniteMaterials())
+					InventoryUtil.giveItemTo(pl, fishingCage);
+			}
+
 			pl.awardStat(Stats.ITEM_USED.get(AoATools.FISHING_CAGE.get()));
 			discard();
 
@@ -124,23 +155,10 @@ public class FishingCageEntity extends Entity implements OwnableEntity {
 	}
 
 	@Override
-	public boolean canChangeDimensions(Level from, Level to) {
-		return false;
-	}
-
-	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
-		CAUGHT_STACK_1.defineDefault(builder);
-		CAUGHT_STACK_2.defineDefault(builder);
-		CAUGHT_STACK_3.defineDefault(builder);
-	}
-
-	@Override
-	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-		super.onSyncedDataUpdated(key);
-
-		if (!CAUGHT_STACK_1.checkSync(this, key) && !CAUGHT_STACK_2.checkSync(this, key))
-			CAUGHT_STACK_3.checkSync(this, key);
+		builder.define(CAUGHT_STACK_1, ItemStack.EMPTY);
+		builder.define(CAUGHT_STACK_2, ItemStack.EMPTY);
+		builder.define(CAUGHT_STACK_3, ItemStack.EMPTY);
 	}
 
 	@Override
@@ -151,10 +169,11 @@ public class FishingCageEntity extends Entity implements OwnableEntity {
 		compound.putInt("Damage", this.damage);
 
 		ListTag lootList = new ListTag();
+		ItemStack[] loot = getLoot();
 
 		for (int i = 0; i < 3; i++) {
-			if (!this.loot[i].isEmpty())
-				lootList.add(this.loot[i].save(registryAccess()));
+			if (!loot[i].isEmpty())
+				lootList.add(loot[i].save(registryAccess()));
 		}
 
 		if (!lootList.isEmpty())
@@ -173,56 +192,20 @@ public class FishingCageEntity extends Entity implements OwnableEntity {
 			ListTag lootList = compound.getList("loot", Tag.TAG_COMPOUND);
 
 			if (lootList.size() > 2)
-				CAUGHT_STACK_3.set(this, ItemStack.parseOptional(level().registryAccess(), lootList.getCompound(2)));
+				setSynchedData(CAUGHT_STACK_3, ItemStack.parseOptional(level().registryAccess(), lootList.getCompound(2)));
 
 			if (lootList.size() > 1)
-				CAUGHT_STACK_2.set(this, ItemStack.parseOptional(level().registryAccess(), lootList.getCompound(1)));
+				setSynchedData(CAUGHT_STACK_2, ItemStack.parseOptional(level().registryAccess(), lootList.getCompound(1)));
 
-			CAUGHT_STACK_1.set(this, ItemStack.parseOptional(level().registryAccess(), lootList.getCompound(0)));
+			setSynchedData(CAUGHT_STACK_1, ItemStack.parseOptional(level().registryAccess(), lootList.getCompound(0)));
 		}
 	}
 
-	@NotNull
-	public ItemStack[] getLoot() {
-		return this.loot;
-	}
-
-	@Override
-	public boolean isPushable() {
-		return true;
-	}
-
-	@Override
-	public boolean isPushedByFluid() {
-		return false;
-	}
-
-	@Override
-	public boolean isPickable() {
-		return true;
-	}
-
-	@Override
-	public boolean canBeCollidedWith() {
-		return tickCount > 1;
-	}
-
-	@Nullable
-	@Override
-	public ItemStack getPickResult() {
-		return AoATools.FISHING_CAGE.get().getDefaultInstance();
-	}
-
-	@Override
-	public boolean isInvulnerableTo(DamageSource source) {
-		return !source.is(Tags.DamageTypes.IS_TECHNICAL);
-	}
-
 	protected void doFishingCheckTick() {
-		if (level().isClientSide() || ownerUUID == null)
+		if (level().isClientSide() || this.ownerUUID == null)
 			return;
 
-		if (!CAUGHT_STACK_3.is(this, ItemStack.EMPTY))
+		if (!getSynchedData(CAUGHT_STACK_3).isEmpty())
 			return;
 
 		if (!onGround() || !isInWater())
@@ -255,14 +238,14 @@ public class FishingCageEntity extends Entity implements OwnableEntity {
 				List<ItemStack> loot = lootTable.getRandomItems(lootContext.create(LootContextParamSets.FISHING));
 
 				for (int i = 0; i < 3 && i < loot.size(); i++) {
-					if (CAUGHT_STACK_1.is(this, ItemStack.EMPTY)) {
-						CAUGHT_STACK_1.set(this, loot.get(i));
+					if (getSynchedData(CAUGHT_STACK_1).isEmpty()) {
+						setSynchedData(CAUGHT_STACK_1, loot.get(i));
 					}
-					else if (CAUGHT_STACK_2.is(this, ItemStack.EMPTY)) {
-						CAUGHT_STACK_2.set(this, loot.get(i));
+					else if (getSynchedData(CAUGHT_STACK_2).isEmpty()) {
+						setSynchedData(CAUGHT_STACK_2, loot.get(i));
 					}
 					else {
-						CAUGHT_STACK_3.set(this, loot.get(i));
+						setSynchedData(CAUGHT_STACK_3, loot.get(i));
 					}
 				}
 			}
@@ -383,7 +366,7 @@ public class FishingCageEntity extends Entity implements OwnableEntity {
 	@Override
 	public void remove(RemovalReason reason) {
 		if (!level().isClientSide() && hasCatches()) {
-			for (ItemStack stack : loot) {
+			for (ItemStack stack : getLoot()) {
 				spawnAtLocation(stack);
 			}
 		}
@@ -392,6 +375,6 @@ public class FishingCageEntity extends Entity implements OwnableEntity {
 	}
 
 	public boolean hasCatches() {
-		return !CAUGHT_STACK_1.is(this, ItemStack.EMPTY);
+		return !getSynchedData(CAUGHT_STACK_1).isEmpty();
 	}
 }

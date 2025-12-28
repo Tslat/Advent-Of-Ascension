@@ -19,6 +19,7 @@ import net.tslat.aoa3.content.entity.boss.smash.SmashEntity;
 import net.tslat.aoa3.content.entity.boss.tyrosaur.EliteTyrosaurEntity;
 import net.tslat.aoa3.content.entity.boss.tyrosaur.TyrosaurEntity;
 import net.tslat.aoa3.content.entity.boss.tyrosaur.WoundedTyrosaurEntity;
+import net.tslat.aoa3.content.entity.monster.barathos.EchodarEntity;
 import net.tslat.aoa3.content.entity.monster.barathos.NospikeEntity;
 import net.tslat.aoa3.content.entity.monster.barathos.TharaflyEntity;
 import net.tslat.aoa3.content.entity.monster.nether.*;
@@ -53,7 +54,8 @@ public final class AoAMonsters {
 	public static final DeferredHolder<EntityType<?>, EntityType<VoidWalkerEntity>> VOID_WALKER = register("void_walker", EntityTypeRegistrar.monster(VoidWalkerEntity::new).sized(0.875f, 1.375f, 1.15625f).spawnEgg(0x171717, 0x332B31));
 	public static final DeferredHolder<EntityType<?>, EntityType<YetiEntity>> YETI = register("yeti", EntityTypeRegistrar.monster(YetiEntity::new).sized(0.6875f, 2.25f, 1.9375f).spawnEgg(0xE0E2E2, 0x393D3D));
 	public static final DeferredHolder<EntityType<?>, EntityType<NospikeEntity>> NOSPIKE = register("nospike", EntityTypeRegistrar.monster(NospikeEntity::new).sized(0.9375f, 2.3125f, 3.03125f).spawnEgg(0x8C6B58, 0x312D2C));
-	public static final DeferredHolder<EntityType<?>, EntityType<TharaflyEntity>> THARAFLY = register("tharafly", EntityTypeRegistrar.monster(TharaflyEntity::new).sized(0.6f, 1.14f, 0.3125f).spawnEgg(0x4B3C38, 0xD86C41));
+	public static final DeferredHolder<EntityType<?>, EntityType<TharaflyEntity>> THARAFLY = register("tharafly", EntityTypeRegistrar.monster(TharaflyEntity::new).sized(0.6f, 1.14f, 0.3125f).spawnEgg(0x4B3C38, 0xD86C41).ridingOffset(-0.25f));
+	public static final DeferredHolder<EntityType<?>, EntityType<EchodarEntity>> ECHODAR = register("echodar", EntityTypeRegistrar.monster(EchodarEntity::new).sized(0.4f, 1.3125f, 1.21875f).spawnEgg(0x724242, 0x502A2A).fireImmune());
 
 	public static final DeferredHolder<EntityType<?>, EntityType<IceGiantEntity>> ICE_GIANT = register("ice_giant", EntityTypeRegistrar.monster(IceGiantEntity::new).sized(1.25f, 3.59375f, 2.65625f).spawnEgg(0x8AB5C7, 0x54819A));
 	public static final DeferredHolder<EntityType<?>, EntityType<LeafyGiantEntity>> LEAFY_GIANT = register("leafy_giant", EntityTypeRegistrar.monster(LeafyGiantEntity::new).sized(1.25f, 3.75f, 3f).spawnEgg(0x12680D, 0x392513));
@@ -63,7 +65,7 @@ public final class AoAMonsters {
 	public static final DeferredHolder<EntityType<?>, EntityType<NethengeicBeastEntity>> NETHENGEIC_BEAST = register("nethengeic_beast", EntityTypeRegistrar.monster(NethengeicBeastEntity::new).sized(1.25f, 3.75f, 3.375f).fireImmune().spawnEgg(0x1A1513, 0xD43D10));
 	public static final DeferredHolder<EntityType<?>, EntityType<SkeletalAbominationEntity>> SKELETAL_ABOMINATION = register("skeletal_abomination", EntityTypeRegistrar.monster(SkeletalAbominationEntity::new).sized(0.7f, 1.3125f, 1.65625f).fireImmune().spawnEgg(0xCFCCBE, 0xA69E8C));
 
-	public static final DeferredHolder<EntityType<?>, EntityType<WoundedTyrosaurEntity>> WOUNDED_TYROSAUR = register("wounded_tyrosaur", EntityTypeRegistrar.monster(WoundedTyrosaurEntity::new).sized(1.375f, 1.6875f, 1));
+	public static final DeferredHolder<EntityType<?>, EntityType<WoundedTyrosaurEntity>> WOUNDED_TYROSAUR = register("wounded_tyrosaur", EntityTypeRegistrar.monster(WoundedTyrosaurEntity::new).sized(1.375f, 1.5625f, 1));
 
 	public static final DeferredHolder<EntityType<?>, EntityType<SmashEntity>> SMASH = register("smash", EntityTypeRegistrar.monster(SmashEntity::new).sized(1.375f, 3.375f, 3.0625f).spawnEgg(0x644E31, 0x3C2E1E));
 	public static final DeferredHolder<EntityType<?>, EntityType<EliteSmashEntity>> ELITE_SMASH = register("elite_smash", EntityTypeRegistrar.monster(EliteSmashEntity::new).sized(1.375f, 3.375f, 3.0625f).spawnEgg(0x644E31, 0x3C2E1E));
@@ -72,7 +74,7 @@ public final class AoAMonsters {
 	public static final DeferredHolder<EntityType<?>, EntityType<KingBamBamBamEntity>> KING_BAMBAMBAM = register("king_bambambam", EntityTypeRegistrar.monster(KingBamBamBamEntity::new).sized(1.125f, 2.75f, 2.15625f).fireImmune().spawnEgg(0x211C1A, 0x4D352B));
 	public static final DeferredHolder<EntityType<?>, EntityType<EliteKingBamBamBamEntity>> ELITE_KING_BAMBAMBAM = register("elite_king_bambambam", EntityTypeRegistrar.monster(EliteKingBamBamBamEntity::new).sized(1.125f, 2.75f, 2.15625f).fireImmune().spawnEgg(0x211C1A, 0x4D352B));
 	public static final DeferredHolder<EntityType<?>, EntityType<TyrosaurEntity>> TYROSAUR = register("tyrosaur", EntityTypeRegistrar.monster(TyrosaurEntity::new).sized(1.375f, 1.6875f, 1).spawnEgg(0x5A4536, 0x252323));
-	public static final DeferredHolder<EntityType<?>, EntityType<EliteTyrosaurEntity>> ELITE_TYROSAUR = register("elite_tyrosaur", EntityTypeRegistrar.monster(EliteTyrosaurEntity::new).sized(1.375f, 1.6875f, 1).spawnEgg(0x5A4536, 0x252323));
+	public static final DeferredHolder<EntityType<?>, EntityType<EliteTyrosaurEntity>> ELITE_TYROSAUR = register("elite_tyrosaur", EntityTypeRegistrar.monster(EliteTyrosaurEntity::new).sized(1.71875f, 2.109375f, 1).spawnEgg(0x5A4536, 0x252323));
 	public static final DeferredHolder<EntityType<?>, EntityType<SkeletronEntity>> SKELETRON = register("skeletron", EntityTypeRegistrar.monster(SkeletronEntity::new).sized(1.375f, 1.6875f, 1.0625f).spawnEgg(0x5A4536, 0x252323));
 	public static final DeferredHolder<EntityType<?>, EntityType<EliteSkeletronEntity>> ELITE_SKELETRON = register("elite_skeletron", EntityTypeRegistrar.monster(EliteSkeletronEntity::new).sized(1.375f, 1.6875f, 1.0625f).spawnEgg(0x5A4536, 0x252323));
 
@@ -361,7 +363,7 @@ public final class AoAMonsters {
 		final DeferredHolder<EntityType<?>, EntityType<T>> registryObject = AoARegistries.ENTITIES.register(registryName, () -> builder.build(registryName));
 
 		if (builder.hasSpawnEgg())
-			AoAItems.registerItem(registryName + "_spawn_egg", () -> new DeferredSpawnEggItem(registryObject, builder.getSpawnEggBackgroundColour(), builder.getSpawnEggDotsColour(), new Item.Properties()), CreativeModeTabs.SPAWN_EGGS);
+			AoAItems.registerItem(registryName + "_spawn_egg", () -> new DeferredSpawnEggItem(registryObject, 0xFFFFFFFF/*builder.getSpawnEggBackgroundColour()*/, 0xFFFFFFFF/*builder.getSpawnEggDotsColour()*/, new Item.Properties()), CreativeModeTabs.SPAWN_EGGS);
 
 		return registryObject;
 	}

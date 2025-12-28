@@ -7,6 +7,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
@@ -57,7 +58,7 @@ public class JumpBoost extends ScalableModAbility {
 
 	private void updateMultipliers() {
 		this.baseBoostMultiplier = 1 + getScaledValue();
-		this.launchMultiplier = -0.0008 * Math.pow(this.baseBoostMultiplier, 4) + 0.00332 * Math.pow(this.baseBoostMultiplier, 3) - 0.05499 * Math.pow(baseBoostMultiplier, 2) + 0.62043 * baseBoostMultiplier + 0.27697;
+        this.launchMultiplier = -0.0008 * Math.pow(this.baseBoostMultiplier, 4) + 0.00332 * Math.pow(this.baseBoostMultiplier, 3) - 0.05499 * Mth.square(baseBoostMultiplier) + 0.62043 * baseBoostMultiplier + 0.27697;
 	}
 
 	private void handleLevelChange(PlayerLevelChangeEvent ev) {

@@ -1,0 +1,31 @@
+{
+  "feature": "aoa3:varsium_ore",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 3,
+        "min_inclusive": 1
+      }
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "max_inclusive": {
+          "absolute": 145
+        },
+        "min_inclusive": {
+          "absolute": 99
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

@@ -48,6 +48,7 @@ public final class AoAAbilities {
 	public static final DeferredHolder<AoAAbility, AoAAbility> BLOCK_CONVERSION = register("block_conversion", () -> new AoAAbility(BlockConversion::new, BlockConversion::new));
 	public static final DeferredHolder<AoAAbility, AoAAbility> HOE_AREA_HARVEST = register("hoe_area_harvest", () -> new AoAAbility(HoeAreaHarvest::new, HoeAreaHarvest::new));
 	public static final DeferredHolder<AoAAbility, AoAAbility> HARVEST_REPLANT = register("harvest_replant", () -> new AoAAbility(HarvestReplant::new, HarvestReplant::new));
+	public static final DeferredHolder<AoAAbility, AoAAbility> NO_TRAMPLING = register("no_trampling", () -> new AoAAbility(NoTrampling::new, NoTrampling::new));
 	public static final DeferredHolder<AoAAbility, AoAAbility> FERTILISE_FARMLAND = register("fertilise_farmland", () -> new AoAAbility(FertiliseFarmland::new, FertiliseFarmland::new));
 	public static final DeferredHolder<AoAAbility, AoAAbility> DRYAD_SPRITE_SPAWN = register("dryad_sprite_spawn", () -> new AoAAbility(DryadSpriteSpawn::new, DryadSpriteSpawn::new));
 	public static final DeferredHolder<AoAAbility, AoAAbility> BREEDING_BONUS = register("breeding_bonus", () -> new AoAAbility(BreedingBonus::new, BreedingBonus::new));

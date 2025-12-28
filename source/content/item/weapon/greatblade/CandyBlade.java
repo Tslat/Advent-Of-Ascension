@@ -13,7 +13,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class CandyBlade extends BaseGreatblade {
+public class CandyBlade extends AoAGreatblade {
 	public CandyBlade(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

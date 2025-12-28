@@ -32,7 +32,7 @@ import net.tslat.aoa3.util.WorldUtil;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public final class RestrictionEventHandler {
+public final class  RestrictionEventHandler {
 	public static void preInit() {
 		cancelEventIf(EntityTeleportEvent.EnderPearl.class, ev -> ev.getTargetY() >= ev.getEntity().level().dimensionType().logicalHeight());
 		cancelEventIf(LivingConversionEvent.Pre.class, ev -> ev.getEntity() instanceof AoATrader);

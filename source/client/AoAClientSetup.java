@@ -17,7 +17,6 @@ import net.tslat.aoa3.client.clientextension.fluid.ToxicWasteClientExtension;
 import net.tslat.aoa3.client.clientextension.item.AttuningBowlClientExtension;
 import net.tslat.aoa3.client.clientextension.item.LargeGunClientExtension;
 import net.tslat.aoa3.client.clientextension.item.SkillHelmetClientExtension;
-import net.tslat.aoa3.client.clientextension.item.SmallGunClientExtension;
 import net.tslat.aoa3.client.event.ClientEventHandler;
 import net.tslat.aoa3.client.gui.container.*;
 import net.tslat.aoa3.client.gui.hud.AoACameraModifications;
@@ -48,10 +47,10 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.block.AoAFluidTypes;
 import net.tslat.aoa3.common.registration.item.AoAArmour;
 import net.tslat.aoa3.common.registration.item.AoATools;
-import net.tslat.aoa3.content.item.weapon.cannon.BaseCannon;
-import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.content.item.weapon.sniper.BaseSniper;
-import net.tslat.aoa3.content.item.weapon.thrown.BaseThrownWeapon;
+import net.tslat.aoa3.content.item.weapon.blaster.AoABlaster;
+import net.tslat.aoa3.content.item.weapon.cannon.AoACannon;
+import net.tslat.aoa3.content.item.weapon.gun.AoAGun;
+import net.tslat.aoa3.content.item.weapon.sniper.AoASniper;
 import net.tslat.aoa3.data.client.AoAResourceReloadListeners;
 import net.tslat.aoa3.integration.IntegrationManager;
 
@@ -119,14 +118,8 @@ public final class AoAClientSetup {
         ev.registerItem(new AttuningBowlClientExtension(), AoATools.ATTUNING_BOWL.get());
 
         for (DeferredHolder<Item, ? extends Item> item : AoARegistries.ITEMS.getAllAoARegisteredObjects()) {
-            if (item.get() instanceof BaseGun gun && !(gun instanceof BaseThrownWeapon)) {
-                if (gun instanceof BaseCannon || gun instanceof BaseSniper) {
-                    ev.registerItem(new LargeGunClientExtension(), item);
-                }
-                else {
-                    ev.registerItem(new SmallGunClientExtension(), item);
-                }
-            }
+            if (item.get() instanceof AoABlaster || (item.get() instanceof AoAGun gun && (gun instanceof AoACannon || gun instanceof AoASniper)))
+                ev.registerItem(new LargeGunClientExtension(), item);
         }
 
         ev.registerFluidType(new ToxicWasteClientExtension(), AoAFluidTypes.TOXIC_WASTE.get());

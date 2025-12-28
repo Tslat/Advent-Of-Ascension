@@ -8,11 +8,11 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
-public class HarvesterSword extends BaseSword {
+public class HarvesterSword extends AoASword {
 	public HarvesterSword(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

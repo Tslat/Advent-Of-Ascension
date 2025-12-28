@@ -1,56 +1,36 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
-import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.object.builder.EffectBuilder;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 
 import java.util.List;
 import java.util.Optional;
 
-public class AtlanticStaff extends BaseStaff<List<LivingEntity>> {
+public class AtlanticStaff extends AoAStaff<List<LivingEntity>> {
 	public AtlanticStaff(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
-	@Override
-	public SoundEvent getCastingSound() {
-		return AoASounds.ITEM_ATLANTIC_STAFF_CAST.get();
-	}
-
-	public static Object2IntMap<Item> getDefaultRunes() {
-		return Util.make(new Object2IntArrayMap<>(), runes -> {
-			runes.put(AoAItems.DISTORTION_RUNE.get(), 1);
-			runes.put(AoAItems.ENERGY_RUNE.get(), 2);
-			runes.put(AoAItems.STORM_RUNE.get(), 2);
-		});
-	}
-
 	@Override
 	public Optional<List<LivingEntity>> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		List<LivingEntity> targets = EntityRetrievalUtil.getEntities(caster, 10, entity -> entity instanceof LivingEntity livingEntity && EntityUtil.isHostileMob(livingEntity));
+		List<LivingEntity> targets = EntityRetrievalUtil.getEntities(caster, 10, LivingEntity.class, entity -> EntityUtil.areProbablyEnemies(entity, caster));
 
 		return targets.isEmpty() ? Optional.empty() : Optional.of(targets);
 	}
 
 	@Override
-	public void cast(ServerLevel level, ItemStack staff, LivingEntity caster, List<LivingEntity> args) {
-		EntityUtil.applyPotions(args, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 100).level(2));
+	public void cast(ServerLevel level, LivingEntity caster, ItemStack staff, InteractionHand hand, List<LivingEntity> args) {
+		EntityUtil.applyPotions(args, caster, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 100).level(2));
 	}
 
 	@Override

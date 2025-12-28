@@ -6,10 +6,10 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.client.render.entity.projectile.TexturedProjectileRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.content.entity.projectile.cannon.BozoBallEntity;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.aoa3.content.entity.projectile.base.PhysicalWeaponProjectile;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
-public class BozoBallRenderer extends TexturedProjectileRenderer<BozoBallEntity> {
+public class BozoBallRenderer extends TexturedProjectileRenderer<PhysicalWeaponProjectile> {
 	private int counter = 12;
 	private boolean toggle;
 
@@ -18,7 +18,7 @@ public class BozoBallRenderer extends TexturedProjectileRenderer<BozoBallEntity>
 	}
 
 	@Override
-	public void render(BozoBallEntity entity, float entityYaw, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int packedLight) {
+	public void render(PhysicalWeaponProjectile entity, float entityYaw, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int packedLight) {
 		super.render(entity, entityYaw, partialTicks, matrix, buffer, packedLight);
 
 		for (int i = 0; i < 8; i++) {
@@ -33,13 +33,13 @@ public class BozoBallRenderer extends TexturedProjectileRenderer<BozoBallEntity>
 
 			if (toggle) {
 				ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
-						.colourOverride(colourMod, colourMod, 0, 1f)
-						.spawnParticles(entity.level());
+						.colourTint(colourMod, colourMod, 0, 1f)
+						.spawnClientParticles(entity.level());
 			}
 			else {
 				ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
-						.colourOverride(0, 0, colourMod, 1f)
-						.spawnParticles(entity.level());
+						.colourTint(0, 0, colourMod, 1f)
+						.spawnClientParticles(entity.level());
 			}
 		}
 	}

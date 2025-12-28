@@ -23,9 +23,9 @@ public class MultiplyingGrenadeRenderer extends TexturedProjectileRenderer<Multi
 		ParticleBuilder.forPositions(AoAParticleTypes.SPARKLER.get(), entity.position())
         .power(Vec3.ZERO)
         .scaleMod(0.75f)
-        .lifespan(Mth.ceil(3 / RandomUtil.randomValueBetween(0.2f, 1)))
-        .colourOverride(ColourUtil.YELLOW)
-        .spawnParticles(entity.level());
+        .lifespan(Mth.ceil(3 / RandomUtil.valueBetween(0.2f, 1)))
+        .colourTint(ColourUtil.YELLOW)
+        .spawnClientParticles(entity.level());
 	}
 }
 */

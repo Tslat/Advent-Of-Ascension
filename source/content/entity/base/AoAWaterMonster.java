@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.entity.base;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.OwnableEntity;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
@@ -33,8 +34,12 @@ public abstract class AoAWaterMonster<T extends AoAWaterMonster<T>> extends AoAM
 
         setPathfindingMalus(PathType.WATER, 0);
 
-        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 30, 1, 0.1f, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
+    }
+
+    @Override
+    protected MoveControl createMoveControl() {
+        return new SmoothSwimmingMoveControl(this, 85, 30, 1, 0.1f, true);
     }
 
     @Override

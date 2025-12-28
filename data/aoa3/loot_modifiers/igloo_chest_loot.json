@@ -6,12 +6,12 @@
       "terms": [
         {
           "condition": "neoforge:loot_table_id",
-          "loot_table_id": "minecraft:chests/ancient_city_ice_box"
+          "loot_table_id": "minecraft:chests/igloo_chest"
         }
       ]
     }
   ],
   "tables": [
-    "aoa3:misc/ancient_city_ice_box_loot"
+    "aoa3:misc/igloo_chest_loot"
   ]
 }

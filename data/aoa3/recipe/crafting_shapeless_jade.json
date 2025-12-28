@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:jade_block"
+      "tag": "c:storage_blocks/jade"
     }
   ],
   "result": {

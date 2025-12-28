@@ -9,7 +9,6 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -24,12 +23,11 @@ import net.tslat.aoa3.common.registration.entity.AoAMonsters;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.boss.tyrosaur.TyrosaurEntity;
 import net.tslat.aoa3.content.entity.boss.tyrosaur.WoundedTyrosaurEntity;
-import net.tslat.aoa3.library.builder.SoundBuilder;
-import net.tslat.aoa3.util.AttributeUtil;
+import net.tslat.tme.api.sound.SoundBuilder;
 import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
@@ -42,10 +40,7 @@ public class BoneHorn extends BossSpawningItem<TyrosaurEntity> {
 	public TyrosaurEntity spawnBoss(ServerLevel level, Vec3 position, ItemStack stack, int playerCount) {
 		TyrosaurEntity tyrosaur = EntitySpawningUtil.spawnEntity(level, AoAMonsters.TYROSAUR.get(), position, MobSpawnType.TRIGGERED);
 
-		if (playerCount > 1 && tyrosaur != null) {
-			AttributeUtil.applyPermanentModifier(tyrosaur, Attributes.MAX_HEALTH, getPerPlayerHealthBuff(playerCount));
-			tyrosaur.setHealth(tyrosaur.getMaxHealth());
-		}
+		applyMultiplayerHealthBoost(tyrosaur, playerCount);
 
 		return tyrosaur;
 	}
@@ -66,7 +61,7 @@ public class BoneHorn extends BossSpawningItem<TyrosaurEntity> {
 			return InteractionResultHolder.pass(player.getItemInHand(hand));
 
 		player.startUsingItem(hand);
-		new SoundBuilder(AoASounds.ITEM_BONE_HORN_CALL).followEntity(player).execute();
+		SoundBuilder.following(AoASounds.ITEM_BONE_HORN_CALL, player).play();
 
 		return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide);
 	}
@@ -87,7 +82,7 @@ public class BoneHorn extends BossSpawningItem<TyrosaurEntity> {
 		if (stack.isDamaged()) {
 			if (stack.getDamageValue() == 1) {
 				if (level.dimension() == AoADimensions.PRECASIA && level instanceof ServerLevel serverLevel) {
-					BlockPos spawnPos = RandomUtil.getRandomPositionWithinRange(entity.blockPosition(), 30, 10, 30, 10, 0, 10, true, level, 10, (state, pos) ->
+					BlockPos spawnPos = RandomUtil.positionWithinRange(entity.blockPosition(), 30, 10, 30, 10, 0, 10, true, level, 10, (state, pos) ->
 							level.getBlockState(pos.below()).isValidSpawn(level, pos.below(), AoAMonsters.WOUNDED_TYROSAUR.get()) && level.noCollision(AoAMonsters.WOUNDED_TYROSAUR.get().getSpawnAABB(pos.getX() + 0.5d, pos.getY(), pos.getZ() + 0.5d)));
 
 					if (spawnPos != entity.blockPosition()) {
@@ -95,7 +90,7 @@ public class BoneHorn extends BossSpawningItem<TyrosaurEntity> {
 
 						if (tyrosaur != null) {
 							BrainUtils.setTargetOfEntity(tyrosaur, entity);
-							new SoundBuilder(AoASounds.ENTITY_TYROSAUR_HURT).followEntity(tyrosaur).execute();
+							SoundBuilder.following(AoASounds.ENTITY_TYROSAUR_HURT, tyrosaur).play();
 						}
 					}
 				}
@@ -112,7 +107,7 @@ public class BoneHorn extends BossSpawningItem<TyrosaurEntity> {
 
 	@Override
 	public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeUsed) {
-		new SoundBuilder(AoASounds.ITEM_BONE_HORN_CALL).stopSound().execute();
+		SoundBuilder.stopSound(AoASounds.ITEM_BONE_HORN_CALL, level).play();
 	}
 
 	@Override

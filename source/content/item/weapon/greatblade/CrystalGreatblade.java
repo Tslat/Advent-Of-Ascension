@@ -12,12 +12,12 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
-public class CrystalGreatblade extends BaseGreatblade {
+public class CrystalGreatblade extends AoAGreatblade {
 	public CrystalGreatblade(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}
@@ -25,7 +25,7 @@ public class CrystalGreatblade extends BaseGreatblade {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
 		for (Entity enemy : EntityRetrievalUtil.<Entity>getEntities(target, 2.5f, target2 -> target2 instanceof Enemy)) {
-			DamageUtil.safelyDealDamage(DamageUtil.positionedEntityDamage(attacker instanceof Player ? DamageTypes.PLAYER_ATTACK : DamageTypes.MOB_ATTACK, attacker, enemy.position()), enemy, RandomUtil.randomValueUpTo(1.5f) * attackCooldown);
+			DamageUtil.safelyDealDamage(DamageUtil.positionedEntityDamage(attacker instanceof Player ? DamageTypes.PLAYER_ATTACK : DamageTypes.MOB_ATTACK, attacker, enemy.position()), enemy, RandomUtil.valueUpTo(1.5f) * attackCooldown);
 		}
 	}
 

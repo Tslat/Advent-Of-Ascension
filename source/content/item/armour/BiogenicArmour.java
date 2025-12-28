@@ -12,7 +12,9 @@ import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.common.registration.item.AoAArmourMaterials;
 import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -29,7 +31,7 @@ public class BiogenicArmour extends AdventArmour {
 				entity.setAirSupply(-10);
 
 			if (entity.isEyeInFluidType(NeoForgeMod.WATER_TYPE.value())) {
-				entity.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 300, 0, true, false));
+				EntityUtil.applyPotions(entity, entity, new EffectBuilder(MobEffects.NIGHT_VISION, 300).isAmbient().hideParticles());
 			}
 			else {
 				MobEffectInstance nightVision = entity.getEffect(MobEffects.NIGHT_VISION);
@@ -43,7 +45,7 @@ public class BiogenicArmour extends AdventArmour {
 	@Override
 	public void afterTakingDamage(LivingEntity entity, EnumSet<Piece> equippedPieces, LivingDamageEvent.Post ev) {
 		if (ev.getNewDamage() > 0 && DamageUtil.isMeleeDamage(ev.getSource()) && ev.getSource().getEntity() instanceof LivingEntity attacker)
-			attacker.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, Mth.ceil(ev.getNewDamage() * perPieceValue(equippedPieces, 3)), equippedPieces.size() >= 2 ? 1 : 0, false, true));
+			EntityUtil.applyPotions(attacker, entity, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, Mth.ceil(ev.getNewDamage() * perPieceValue(equippedPieces, 3))).level(equippedPieces.size() >= 2 ? 2 : 1));
 	}
 
 	@Override

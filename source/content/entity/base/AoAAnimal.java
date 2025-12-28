@@ -1,14 +1,13 @@
 package net.tslat.aoa3.content.entity.base;
 
-import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -17,7 +16,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -29,8 +27,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.common.CommonHooks;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.content.entity.brain.task.temp.FixedFollowParent;
-import net.tslat.aoa3.library.object.EntityDataHolder;
+import net.tslat.aoa3.library.builder.MultipartBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.AttributeUtil;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
@@ -51,7 +50,7 @@ import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.ItemTemptingSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.object.EasyRandom;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -61,44 +60,42 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implements GeoEntity, SmartBrainOwner<T>, AoAMultipartEntity {
+public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implements GeoEntity, SmartBrainOwner<T>, AoAMultipartEntity<T> {
 	protected static final AttributeModifier BABY_HEALTH_MOD = new AttributeModifier(AdventOfAscension.id("baby_health_mod"), -0.5f, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-	public static final EntityDataHolder<Boolean> IMMOBILE = EntityDataHolder.register(AoAAnimal.class, EntityDataSerializers.BOOLEAN, false, animal -> animal.immobile, (animal, value) -> animal.immobile = value);
+	public static final EntityDataAccessor<Boolean> IMMOBILE = makeSynchedData(AoAAnimal.class, EntityDataSerializers.BOOLEAN);
 
 	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
-	protected AoAEntityPart<?>[] parts = new AoAEntityPart[0];
-	private EntityDataHolder<?>[] dataParams;
-
-	private boolean immobile = false;
+	private AoAEntityPart<T>[] parts = new AoAEntityPart[0];
 
 	public AoAAnimal(EntityType<? extends Animal> entityType, Level world) {
 		super(entityType, world);
 
 		getNavigation().setCanFloat(true);
+		registerParts(ENTITY_COUNTER, this::setId, parts -> this.parts = parts);
+	}
+
+	@Override
+	public MultipartBuilder<? extends T> definePartEntities() {
+		return null;
 	}
 
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
 
-		this.dataParams = new EntityDataHolder<?>[] {IMMOBILE};
-
-		for (EntityDataHolder<?> dataHolder : this.dataParams) {
-			dataHolder.defineDefault(builder);
-		}
+		builder.define(IMMOBILE, false);
 	}
 
-	protected final void registerDataParams(SynchedEntityData.Builder builder, EntityDataHolder<?>... params) {
-		EntityDataHolder<?>[] newArray = new EntityDataHolder[this.dataParams.length + params.length];
+	protected static <D> EntityDataAccessor<D> makeSynchedData(Class<? extends SyncedDataHolder> entityClass, EntityDataSerializer<D> serializer) {
+		return SynchedEntityData.defineId(entityClass, serializer);
+	}
 
-		System.arraycopy(this.dataParams, 0, newArray, 0, this.dataParams.length);
-		System.arraycopy(params, 0, newArray, this.dataParams.length, params.length);
+	protected <D> D getSynchedData(EntityDataAccessor<D> data) {
+        return getEntityData().get(data);
+	}
 
-		for (EntityDataHolder<?> param : params) {
-			param.defineDefault(builder);
-		}
-
-		this.dataParams = newArray;
+	protected <D> void setSynchedData(EntityDataAccessor<D> data, D value) {
+		getEntityData().set(data, value);
 	}
 
 	@Nullable
@@ -129,11 +126,11 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 			playStepSounds(stepSound, stepSoundOverlay);
 
 			if (isQuadruped() && !level().isClientSide)
-				AoAScheduler.scheduleSyncronisedTask(() -> playStepSounds(stepSound, stepSoundOverlay), 6);
+				AoAScheduler.schedule(6, tick -> playStepSounds(stepSound, stepSoundOverlay));
 		}
 	}
 
-	private void playStepSounds(SoundEvent stepSound, @Nullable SoundEvent stepSoundOverlay) {
+	protected void playStepSounds(SoundEvent stepSound, @Nullable SoundEvent stepSoundOverlay) {
 		float stepWeight = getStepWeight() - 1;
 
 		playSound(stepSound, 5 * 0.15f + stepWeight * 0.15f, 1 - stepWeight * 0.1f);
@@ -160,8 +157,8 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 		return 240;
 	}
 
-	public final RandomUtil.EasyRandom rand() {
-		return new RandomUtil.EasyRandom(getRandom());
+	public final EasyRandom rand() {
+		return EasyRandom.wrap(getRandom());
 	}
 
 	@Override
@@ -235,36 +232,30 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 		if (isBaby())
 			AttributeUtil.applyPermanentModifier(this, Attributes.MAX_HEALTH, BABY_HEALTH_MOD);
 
+		AoAAttributes.addSpawnVarianceHealthMod(this, 1f);
+		AoAAttributes.addSpawnVarianceSpeedMod(this, 1f);
+
 		return super.finalizeSpawn(world, difficulty, reason, spawnData);
 	}
 
 	public int calculateKillXp() {
-		return (int)(getAttributeValue(Attributes.MAX_HEALTH) / 25f);
+		return Mth.floor(getAttributeValue(Attributes.MAX_HEALTH) / 25f);
 	}
 
 	public void setImmobile(boolean immobile) {
-		IMMOBILE.set(this, immobile);
+		setSynchedData(IMMOBILE, immobile);
 
-		if (this.immobile)
+		if (getSynchedData(IMMOBILE))
 			getNavigation().stop();
 	}
 
 	public boolean isDoingStationaryActivity() {
-		return this.immobile;
+		return getSynchedData(IMMOBILE);
 	}
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (this.parts.length > 0 && source.getDirectEntity() instanceof AbstractArrow arrow && arrow.getPierceLevel() > 0) {
-			if (arrow.piercingIgnoreEntityIds == null)
-				arrow.piercingIgnoreEntityIds = new IntOpenHashSet(5);
-
-			for (AoAEntityPart<?> part : this.parts) {
-				arrow.piercingIgnoreEntityIds.add(part.getId());
-			}
-
-			arrow.piercingIgnoreEntityIds.add(getId());
-		}
+		onMultipartParentHurt(source);
 
 		return super.hurt(source, amount);
 	}
@@ -320,22 +311,21 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 	}
 
 	@Override
-	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-		super.onSyncedDataUpdated(key);
+	public void addAdditionalSaveData(CompoundTag compound) {
+		super.addAdditionalSaveData(compound);
+		saveMultiparts(compound);
+	}
 
-		for (EntityDataHolder<?> dataHolder : this.dataParams) {
-			if (dataHolder.checkSync(this, key))
-				break;
-		}
+	@Override
+	public void readAdditionalSaveData(CompoundTag compound) {
+		super.readAdditionalSaveData(compound);
+		loadMultiparts(compound);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-
-		for (AoAEntityPart<?> part : getParts()) {
-			part.updatePosition();
-		}
+		updateMultipartPositions();
 	}
 
 	@Override
@@ -370,7 +360,7 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 	}
 
 	@Override
-	public AoAEntityPart<?>[] getParts() {
+	public AoAEntityPart<T>[] getParts() {
 		return this.parts;
 	}
 
@@ -383,14 +373,6 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 	public void refreshDimensions() {
 		super.refreshDimensions();
 		refreshMultipartDimensions();
-	}
-
-	@Override
-	public void setParts(AoAEntityPart<?>... parts) {
-		if (getParts().length > 0)
-			throw new IllegalStateException("Cannot add more parts after having already done so!");
-
-		defineParts(ENTITY_COUNTER, this::setId, this.parts = parts);
 	}
 
 	@Override

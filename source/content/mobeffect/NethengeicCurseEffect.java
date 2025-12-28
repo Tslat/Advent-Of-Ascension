@@ -13,7 +13,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.effectslib.api.ExtendedMobEffect;
+import net.tslat.tme.api.mobeffect.ExtendedMobEffect;
 
 public class NethengeicCurseEffect extends ExtendedMobEffect {
 	public NethengeicCurseEffect() {

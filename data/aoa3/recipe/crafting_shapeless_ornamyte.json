@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:ornamyte_block"
+      "tag": "c:storage_blocks/ornamyte"
     }
   ],
   "result": {

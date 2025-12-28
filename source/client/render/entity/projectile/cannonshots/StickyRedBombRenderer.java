@@ -8,7 +8,7 @@ import net.tslat.aoa3.client.render.entity.projectile.TexturedProjectileRenderer
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.cannon.StickyRedBombEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class StickyRedBombRenderer extends TexturedProjectileRenderer<StickyRedBombEntity> {
 	public StickyRedBombRenderer(final EntityRendererProvider.Context manager, final ResourceLocation textureResource) {
@@ -21,7 +21,7 @@ public class StickyRedBombRenderer extends TexturedProjectileRenderer<StickyRedB
 
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_SWIRL.get(), entity.position().add(0, 0.25f, 0))
 				.spawnNTimes(8)
-				.colourOverride(ColourUtil.RED)
-				.spawnParticles(entity.level());
+				.colourTint(ColourUtil.RED)
+				.spawnClientParticles(entity.level());
 	}
 }

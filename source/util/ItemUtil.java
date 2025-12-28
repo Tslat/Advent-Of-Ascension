@@ -2,8 +2,8 @@ package net.tslat.aoa3.util;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -73,7 +73,7 @@ public final class ItemUtil {
 
 	public static void damageItemForUser(Player player, ItemStack stack, int amount, InteractionHand hand) {
 		if (player instanceof ServerPlayer pl && !pl.hasInfiniteMaterials())
-			damageItemForUser(pl.serverLevel(), stack, amount, pl, EntityUtil.handToEquipmentSlotType(hand));
+			damageItemForUser(pl.serverLevel(), stack, amount, pl, LivingEntity.getSlotForHand(hand));
 	}
 
 	public static void damageItemForUser(Player player, ItemStack stack, int amount, EquipmentSlot slot) {
@@ -86,7 +86,7 @@ public final class ItemUtil {
 	}
 
 	public static void damageItemForUser(ServerLevel level, LivingEntity user, int amount, InteractionHand hand) {
-		final EquipmentSlot slot = EntityUtil.handToEquipmentSlotType(hand);
+		final EquipmentSlot slot = LivingEntity.getSlotForHand(hand);
 
 		damageItemForUser(level, user.getItemBySlot(slot), amount, user, slot);
 	}
@@ -104,11 +104,11 @@ public final class ItemUtil {
 	}
 
 	public static void damageItemForUser(ServerLevel level, ItemStack stack, LivingEntity user, InteractionHand hand) {
-		damageItemForUser(level, stack, 1, user, EntityUtil.handToEquipmentSlotType(hand));
+		damageItemForUser(level, stack, 1, user, LivingEntity.getSlotForHand(hand));
 	}
 
 	public static void damageItemForUser(ServerLevel level, ItemStack stack, int amount, LivingEntity user, InteractionHand hand) {
-		damageItemForUser(level, stack, amount, user, EntityUtil.handToEquipmentSlotType(hand));
+		damageItemForUser(level, stack, amount, user, LivingEntity.getSlotForHand(hand));
 	}
 
 	public static void damageItemForUser(ServerLevel level, ItemStack stack, int amount, LivingEntity user, EquipmentSlot slot) {
@@ -172,8 +172,8 @@ public final class ItemUtil {
 		return stack;
 	}
 
-	public static boolean findAndConsumeRunes(Object2IntMap<Item> runeMap, ServerPlayer player, boolean allowBuffs, @NotNull ItemStack heldItem) {
-		if (player.isCreative())
+	public static boolean findAndConsumeRunes(Reference2IntMap<Item> runeMap, ServerPlayer player, boolean allowBuffs, @NotNull ItemStack heldItem) {
+		if (player.hasInfiniteMaterials())
 			return true;
 
 		Reference2IntOpenHashMap<Item> requiredRunes = new Reference2IntOpenHashMap<>(runeMap);

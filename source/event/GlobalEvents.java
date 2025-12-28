@@ -40,8 +40,6 @@ public final class GlobalEvents {
 
 	private static void serverTick(final ServerTickEvent.Post ev) {
 		tick++;
-
-		AoAScheduler.handleSyncScheduledTasks(tick);
 	}
 
 	private static void addCustomSpawners(final ModifyCustomSpawnersEvent ev) {
@@ -61,8 +59,7 @@ public final class GlobalEvents {
 	}
 
 	private static void serverStarting(final ServerStartingEvent ev) {
-		AoAScheduler.scheduleAsyncTask(new UpdateHalosMapTask(), 1, TimeUnit.SECONDS);
-		AoAScheduler.serverStartupTasks();
+		AoAScheduler.scheduleAsync(1, TimeUnit.SECONDS, new UpdateHalosMapTask());
 	}
 
 	private static void serverStarted(final ServerStartedEvent ev) {
@@ -72,8 +69,6 @@ public final class GlobalEvents {
 	}
 
 	private static void serverStopping(final ServerStoppingEvent ev) {
-		AoAScheduler.serverShutdownTasks();
-
 		if (false && ev.getServer().isDedicatedServer())
 			SkillsLeaderboard.shutdown();
 	}

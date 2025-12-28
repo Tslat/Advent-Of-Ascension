@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.client.render.entity.projectile.TexturedProjectileRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.cannon.GhoulBallEntity;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class GhoulBallRenderer extends TexturedProjectileRenderer<GhoulBallEntity> {
 	public GhoulBallRenderer(final EntityRendererProvider.Context manager, final ResourceLocation textureResource) {
@@ -20,7 +20,7 @@ public class GhoulBallRenderer extends TexturedProjectileRenderer<GhoulBallEntit
 
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
 				.spawnNTimes(3)
-				.colourOverride(0xC140D7)
-				.spawnParticles(entity.level());
+				.colourTint(0xC140D7)
+				.spawnClientParticles(entity.level());
 	}
 }

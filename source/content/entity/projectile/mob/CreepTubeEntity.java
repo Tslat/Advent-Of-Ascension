@@ -3,9 +3,11 @@ package net.tslat.aoa3.content.entity.projectile.mob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
-import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.aoa3.library.builder.AoAExplosionBuilder;
+import net.tslat.tme.api.explosion.StandardExplosion;
 
 public class CreepTubeEntity extends BaseMobProjectile {
 	public CreepTubeEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
@@ -25,7 +27,7 @@ public class CreepTubeEntity extends BaseMobProjectile {
 		super.tick();
 
 		if (!level().isClientSide && tickCount % 4 == 0)
-			WorldUtil.createExplosion(getOwner(), level(), this, 2f);
+			AoAExplosionBuilder.at(this, AoAExplosions.CREEP_TUBE, StandardExplosion::new).explode();
 	}
 
 	@Override

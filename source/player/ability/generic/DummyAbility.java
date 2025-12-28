@@ -6,8 +6,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.util.GsonHelper;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
 import net.tslat.aoa3.event.dynamic.DynamicEventSubscriber;
@@ -59,13 +57,13 @@ public class DummyAbility extends AoAAbility.Instance {
 		return data;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	// Client Only
 	@Override
 	public boolean onGuiHover(int mouseX, int mouseY) {
 		return false;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	// Client Only
 	@Override
 	public boolean onGuiClick(int mouseX, int mouseY) {
 		return false;

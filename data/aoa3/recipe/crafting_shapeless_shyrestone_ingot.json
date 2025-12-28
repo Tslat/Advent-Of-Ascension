@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:shyrestone_block"
+      "tag": "c:storage_blocks/shyrestone"
     }
   ],
   "result": {

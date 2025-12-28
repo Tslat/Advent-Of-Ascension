@@ -9,7 +9,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.*;
@@ -24,10 +23,8 @@ import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.common.registration.AoAGameRules;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.misc.CustomisableLightningBolt;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -36,51 +33,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public final class WorldUtil {
-	public static boolean checkGameRule(Level world, GameRules.Key<GameRules.BooleanValue> gameRule) {
-		return world.getGameRules().getBoolean(gameRule);
-	}
-
-	public static Explosion createExplosion(@Nullable Entity exploder, Level world, BlockPos pos, float strength) {
-		return createExplosion(exploder, world, pos.getX(), pos.getY(), pos.getZ(), strength, AoAGameRules.checkDestructiveWeaponPhysics(world) ? Level.ExplosionInteraction.BLOCK : Level.ExplosionInteraction.NONE, false);
-	}
-
-	public static Explosion createExplosion(@NotNull Entity exploder, Level world, float strength) {
-		return createExplosion(exploder, world, exploder.getX(), exploder.getY(), exploder.getZ(), strength, EventHooks.canEntityGrief(world, exploder) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE, false);
-	}
-
-	public static Explosion createExplosion(@Nullable Entity exploder, Level world, @NotNull Entity explodingEntity, float strength) {
-		boolean doGriefing;
-
-		if (exploder instanceof Player) {
-			doGriefing = AoAGameRules.checkDestructiveWeaponPhysics(world);
-		}
-		else {
-			if (exploder == null)
-				exploder = explodingEntity;
-
-			if (exploder instanceof LivingEntity || explodingEntity instanceof LivingEntity) {
-				doGriefing = EventHooks.canEntityGrief(world, exploder);
-			}
-			else {
-				doGriefing = AoAGameRules.checkDestructiveWeaponPhysics(world);
-			}
-		}
-
-		return createExplosion(exploder, world, explodingEntity.getX(), explodingEntity.getY(), explodingEntity.getZ(), strength, doGriefing ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE, false);
-	}
-
-	public static Explosion createExplosion(@Nullable Entity exploder, Level world, double posX, double posY, double posZ, float strength) {
-		return createExplosion(exploder, world, posX, posY, posZ, strength, AoAGameRules.checkDestructiveWeaponPhysics(world) ? Level.ExplosionInteraction.BLOCK : Level.ExplosionInteraction.NONE, false);
-	}
-
-	public static Explosion createExplosion(@Nullable Entity exploder, Level world, double posX, double posY, double posZ, float strength, Level.ExplosionInteraction explosionType) {
-		return createExplosion(exploder, world, posX, posY, posZ, strength, explosionType, false);
-	}
-
-	public static Explosion createExplosion(@Nullable Entity exploder, Level world, double posX, double posY, double posZ, float strength, Level.ExplosionInteraction explosionType, boolean fieryExplosion) {
-		return world.explode(exploder, posX, posY, posZ, strength, fieryExplosion, explosionType);
-	}
-
 	public static int getLightLevel(ServerLevelAccessor world, BlockPos position, boolean ignoreSkyLight, boolean ignoreBlockLight) {
 		if (position.getY() > world.getMaxBuildHeight()) {
 			position = new BlockPos(position.getX(), world.getMaxBuildHeight(), position.getZ());
@@ -98,10 +50,10 @@ public final class WorldUtil {
 		return world.getMaxLocalRawBrightness(position);
 	}
 
-	public static void spawnLightning(ServerLevel world, @Nullable ServerPlayer caster, double x, double y, double z, boolean destructive, boolean createFire) {
+	public static void spawnLightning(ServerLevel world, @Nullable ServerPlayer caster, double x, double y, double z, boolean isDamaging, boolean createFire) {
 		CustomisableLightningBolt lightning = new CustomisableLightningBolt(world, x, y, z);
 
-		lightning.setVisualOnly(!destructive);
+		lightning.setVisualOnly(!isDamaging);
 
 		if (!createFire)
 			lightning.noFire();
@@ -251,8 +203,8 @@ public final class WorldUtil {
 		return true;
 	}
 
-	public static boolean canModifyBlock(LevelAccessor world, BlockPos pos, @Nullable Entity entity, @Nullable ItemStack stack) {
-		if (!(world instanceof Level activeWorld))
+	public static boolean canModifyBlock(LevelAccessor level, BlockPos pos, @Nullable Entity entity, @Nullable ItemStack stack) {
+		if (!(level instanceof Level activeWorld))
 			return true;
 
 		Player relevantPlayer = PlayerUtil.getPlayerOrOwnerIfApplicable(entity);
@@ -293,6 +245,7 @@ public final class WorldUtil {
 		}
 	}
 
+	// TODO BulkSectionAccess
 	public static List<BlockPos> getBlocksWithinAABB(Level world, AABB aabb, @Nullable BiPredicate<BlockState, BlockPos.MutableBlockPos> predicate) {
 		BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
 		List<BlockPos> matches = new ObjectArrayList<>();
@@ -311,7 +264,8 @@ public final class WorldUtil {
 		return matches;
 	}
 
-	public static boolean isWorld(ServerLevelAccessor world, ResourceKey<Level>... keys) {
+	@SafeVarargs
+    public static boolean isWorld(ServerLevelAccessor world, ResourceKey<Level>... keys) {
 		for (ResourceKey<Level> key : keys) {
 			if (world.getLevel().dimension() == key)
 				return true;
@@ -320,7 +274,8 @@ public final class WorldUtil {
 		return false;
 	}
 
-	public static boolean isWorld(Level world, ResourceKey<Level>... keys) {
+	@SafeVarargs
+    public static boolean isWorld(Level world, ResourceKey<Level>... keys) {
 		for (ResourceKey<Level> key : keys) {
 			if (world.dimension() == key)
 				return true;

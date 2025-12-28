@@ -1,14 +1,15 @@
 package net.tslat.aoa3.content.item.armour;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.tslat.aoa3.common.registration.item.AoAArmourMaterials;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -25,7 +26,7 @@ public class OceanusHelmet extends AdventArmour {
 
 	@Override
 	public void onArmourTick(LivingEntity entity, EnumSet<Piece> equippedPieces) {
-		entity.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 2, 1, true, false));
+		EntityUtil.applyPotions(entity, entity, new EffectBuilder(MobEffects.DOLPHINS_GRACE, 2).level(2).isAmbient().hideParticles());
 
 		if (entity.isInWater())
 			entity.setAirSupply(-10);

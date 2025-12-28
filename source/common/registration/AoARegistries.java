@@ -34,6 +34,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.enchantment.effects.EnchantmentEntityEffect;
 import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -111,7 +112,7 @@ public final class AoARegistries {
 	public static final RegistryHelper<EntityDataSerializer<?>> ENTITY_DATA_SERIALIZERS = new RegistryHelper<>(NeoForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS, AoAEntityDataSerializers::init);
 	public static final RegistryHelper<Block> BLOCKS = new RegistryHelper<>(Registries.BLOCK, (registryKey, modId) -> DeferredRegister.createBlocks(modId), AoABlocks::init);
 	public static final RegistryHelper<ArmorMaterial> ARMOUR_MATERIALS = new RegistryHelper<>(Registries.ARMOR_MATERIAL, AoAArmourMaterials::init);
-	public static final RegistryHelper<Item> ITEMS = new RegistryHelper<>(Registries.ITEM, (registryKey, modId) -> DeferredRegister.createItems(modId), AoAItems::init, AoAWeapons::init, AoATools::init, AoAArmour::init);
+	public static final RegistryHelper<Item> ITEMS = new RegistryHelper<>(Registries.ITEM, (registryKey, modId) -> DeferredRegister.createItems(modId), AoAItems::init, AoAWeapons::init, AoATools::init, AoAArtificeDevices::init, AoAArmour::init);
 	public static final RegistryHelper<Fluid> FLUIDS = new RegistryHelper<>(Registries.FLUID);
 	public static final RegistryHelper<EntityType<?>> ENTITIES = new RegistryHelper<>(Registries.ENTITY_TYPE, AoAMonsters::init, AoAAnimals::init, AoANpcs::init, AoAMiscEntities::init, AoAProjectiles::init);
 	public static final RegistryHelper<BlockEntityType<?>> BLOCK_ENTITIES = new RegistryHelper<>(Registries.BLOCK_ENTITY_TYPE, AoABlockEntities::init);
@@ -128,8 +129,10 @@ public final class AoARegistries {
 	public static final RegistryHelper<MemoryModuleType<?>> BRAIN_MEMORIES = new RegistryHelper<>(Registries.MEMORY_MODULE_TYPE, AoABrainMemories::init);
 	public static final RegistryHelper<FluidType> FLUID_TYPES = new RegistryHelper<>(NeoForgeRegistries.Keys.FLUID_TYPES, AoAFluidTypes::init);
 	public static final RegistryHelper<MobEffect> MOB_EFFECTS = new RegistryHelper<>(Registries.MOB_EFFECT, AoAMobEffects::init);
+
 	public static final RegistryHelper<DataComponentType<?>> ENCHANTMENT_EFFECT_COMPONENTS = new RegistryHelper<>(Registries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, AoAEnchantments::init);
 	public static final RegistryHelper<MapCodec<? extends EnchantmentValueEffect>> ENCHANTMENT_VALUE_EFFECTS = new RegistryHelper<>(Registries.ENCHANTMENT_VALUE_EFFECT_TYPE, AoAEnchantments::init);
+	public static final RegistryHelper<MapCodec<? extends EnchantmentEntityEffect>> ENCHANTMENT_ENTITY_EFFECTS = new RegistryHelper<>(Registries.ENCHANTMENT_ENTITY_EFFECT_TYPE, AoAEnchantments::init);
 
 	public static final RegistryHelper<DataComponentType<?>> DATA_COMPONENTS = new RegistryHelper<>(Registries.DATA_COMPONENT_TYPE, AoADataComponents::init);
 	public static final RegistryHelper<AttachmentType<?>> DATA_ATTACHMENTS = new RegistryHelper<>(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, AoADataAttachments::init);
@@ -207,7 +210,7 @@ public final class AoARegistries {
 		}
 
 		private RegistryHelper(ResourceKey<Registry<T>> registryKey, BiFunction<ResourceKey<Registry<T>>, String, DeferredRegister<T>> defRegFactory, Runnable... registrations) {
-			this(Suppliers.memoize(() -> (Registry<T>)BuiltInRegistries.REGISTRY.get(registryKey.location())), defRegFactory.apply(registryKey, AdventOfAscension.MOD_ID), () -> Arrays.asList(registrations).forEach(Runnable::run));
+			this(Suppliers.memoize(() -> (Registry<T>)BuiltInRegistries.REGISTRY.get(registryKey.location())), defRegFactory.apply(registryKey, AdventOfAscension.MOD_ID), () -> List.of(registrations).forEach(Runnable::run));
 
 			REGISTRY_INIT_TASKS.add(() -> deferredRegister().register(AdventOfAscension.getModEventBus()));
 			REGISTRY_INIT_TASKS.add(this.registrationTasks);

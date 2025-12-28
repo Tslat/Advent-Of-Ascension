@@ -1,54 +1,35 @@
 package net.tslat.aoa3.content.item.weapon.blaster;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.AoAExplosions;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
 import net.tslat.aoa3.content.entity.projectile.blaster.GoldShotEntity;
-import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.WorldUtil;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class GoldBringer extends BaseBlaster {
+public class GoldBringer extends AoABlaster<WeaponProjectile> {
 	public GoldBringer(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_DOOM_GUN_FIRE.get();
-	}
-
-	@Override
-	public void fireBlaster(ServerLevel level, LivingEntity shooter, ItemStack blaster) {
-		shooter.level().addFreshEntity(new GoldShotEntity(shooter, this, 60));
-	}
-
-	@Override
-	public void doBlockImpact(BaseEnergyShot shot, Vec3 hitPos, LivingEntity shooter) {
-		WorldUtil.createExplosion(shooter, shot.level(), shot, 1.25f);
-	}
-
-	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		WorldUtil.createExplosion(shooter, shot.level(), shot, 1.25f);
-
-		return true;
+	void fireBlaster(ServerLevel level, WeaponFiringContext context) {
+		fireBlasterProjectile(level, context, GoldShotEntity::new);
 	}
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.appendHoverText(stack, context, tooltip, flag);
+
+		for (MutableComponent component : LocaleUtil.getExplosionInfoLocale(AoAExplosions.GOLD_BRINGER, true, flag.isAdvanced(), false)) {
+			tooltip.add(1, component);
+		}
 	}
 }

@@ -18,7 +18,7 @@ import net.tslat.aoa3.content.block.blockentity.ImbuingChamberBlockEntity;
 import net.tslat.aoa3.content.item.misc.AspectFocusItem;
 import net.tslat.aoa3.content.item.misc.PowerStone;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 import java.util.List;
 
@@ -45,12 +45,12 @@ public class ImbuingChamberRenderer implements BlockEntityRenderer<ImbuingChambe
 
 			if (!Minecraft.getInstance().isPaused()) {
 				ParticleBuilder.forPositions(ParticleTypes.WARPED_SPORE, pos)
-						.colourOverride(ColourUtil.getRed(colour), ColourUtil.getGreen(colour), ColourUtil.getBlue(colour), 255)
+						.colourTint(ColourUtil.getRed(colour), ColourUtil.getGreen(colour), ColourUtil.getBlue(colour), 255)
 						.cutoffDistance(16)
 						.scaleMod(0.25f)
 						.isAmbient()
 						.lifespan(3)
-						.spawnParticles(Minecraft.getInstance().level);
+						.spawnClientParticles(Minecraft.getInstance().level);
 			}
 		}
 

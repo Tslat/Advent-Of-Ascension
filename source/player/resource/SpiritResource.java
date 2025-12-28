@@ -17,6 +17,10 @@ import java.util.List;
 
 
 public class SpiritResource extends AoAResource.Instance {
+	public static final float DEFAULT_MAX_VALUE = 200;
+	public static final float DEFAULT_REGEN_PER_DAMAGE = 0.4f;
+	public static final float DEFAULT_INVERSE_HEALTH_REGEN_MOD = 3.5f;
+	public static final float DEFAULT_REGEN_PER_TICK = 0.04f;
 	private final List<DynamicEventSubscriber<?>> eventSubscribers = List.of(
 			afterAttacking(this::handleAfterAttacking),
 			listener(PlayerTickEvent.Pre.class, PlayerTickEvent.Pre::getEntity, this::handlePlayerTick));
@@ -31,10 +35,10 @@ public class SpiritResource extends AoAResource.Instance {
 	public SpiritResource(ServerPlayerDataManager plData, JsonObject jsonData) {
 		super(AoAResources.SPIRIT.get(), plData);
 
-		this.maxValue = Math.max(0, GsonHelper.getAsFloat(jsonData, "max_value"));
-		this.regenPerTick = GsonHelper.getAsFloat(jsonData, "regen_per_tick", 0.04f);
-		this.regenPerDamage = GsonHelper.getAsFloat(jsonData, "regen_per_damage", 0.4f);
-		this.healthModMax = GsonHelper.getAsFloat(jsonData, "inverse_health_regen_mod", 3.5f);
+		this.maxValue = Math.max(0, GsonHelper.getAsFloat(jsonData, "max_value", DEFAULT_MAX_VALUE));
+		this.regenPerDamage = GsonHelper.getAsFloat(jsonData, "regen_per_damage", DEFAULT_REGEN_PER_DAMAGE);
+		this.healthModMax = GsonHelper.getAsFloat(jsonData, "inverse_health_regen_mod", DEFAULT_INVERSE_HEALTH_REGEN_MOD);
+		this.regenPerTick = GsonHelper.getAsFloat(jsonData, "regen_per_tick", DEFAULT_REGEN_PER_TICK);
 	}
 
 	public SpiritResource(CompoundTag nbtData) {
@@ -59,6 +63,7 @@ public class SpiritResource extends AoAResource.Instance {
 	@Override
 	public void setValue(float amount) {
 		this.value = Mth.clamp(amount, 0, getMaxValue());
+		this.needsSync = true;
 	}
 
 	@Override
@@ -106,6 +111,9 @@ public class SpiritResource extends AoAResource.Instance {
 		else {
 			data.putFloat("value", getCurrentValue());
 		}
+
+		if (!forClientSetup)
+			this.needsSync = false;
 
 		return data;
 	}

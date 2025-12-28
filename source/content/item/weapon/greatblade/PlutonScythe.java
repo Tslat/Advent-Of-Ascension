@@ -20,7 +20,7 @@ import net.tslat.aoa3.util.PlayerUtil;
 import java.util.List;
 import java.util.UUID;
 
-public class PlutonScythe extends BaseGreatblade {
+public class PlutonScythe extends AoAGreatblade {
 	public static final UUID LUCK_BUFF = UUID.fromString("e446949b-1792-4a66-8f83-5037d6dcce9b");
 
 	public PlutonScythe(Tier tier, Item.Properties properties) {
@@ -28,7 +28,7 @@ public class PlutonScythe extends BaseGreatblade {
 	}
 
 	public static Item.Properties baseProperties(Tier tier, float attackSpeed) {
-		return new Item.Properties().attributes(BaseGreatblade.createAttributes(tier, 0f, attackSpeed).withModifierAdded(Attributes.LUCK, new AttributeModifier(AdventOfAscension.id("pluton_scythe"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND));
+		return new Item.Properties().attributes(AoAGreatblade.createAttributes(tier, 0f, attackSpeed).withModifierAdded(Attributes.LUCK, new AttributeModifier(AdventOfAscension.id("pluton_scythe"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND));
 	}
 
 	@Override

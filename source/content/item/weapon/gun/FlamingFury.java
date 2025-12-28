@@ -1,11 +1,9 @@
 package net.tslat.aoa3.content.item.weapon.gun;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AreaEffectCloud;
@@ -16,47 +14,48 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.object.RayTrace;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
-public class FlamingFury extends BaseGun {
+public class FlamingFury extends AoAGun {
 	public FlamingFury(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_GUN_GENERIC_FIRE_2.get();
-	}
+	protected void doFiringEffects(ServerLevel level, WeaponFiringContext context, WeaponProjectile projectile) {
+		super.doFiringEffects(level, context, projectile);
 
-	@Override
-	protected void doFiringEffects(ServerLevel level, LivingEntity shooter, BaseBullet bullet, ItemStack stack, InteractionHand hand) {
-		if (getFiringSound() != null)
-			shooter.level().playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), getFiringSound(), SoundSource.PLAYERS, 1.0f, 1.0f);
+		TMEParticlePacket packet = new TMEParticlePacket();
+		Vec3 pos = projectile.asEntity().position();
 
 		for (int i = 0; i < 6; i++) {
-			((ServerLevel)shooter.level()).sendParticles(ParticleTypes.DRAGON_BREATH, bullet.getX() + RandomUtil.randomScaledGaussianValue(0.2f), bullet.getY() + RandomUtil.randomScaledGaussianValue(0.2f), bullet.getZ() + RandomUtil.randomScaledGaussianValue(0.2f), 1, 0, 0, 0, 0d);
+			packet.particle(ParticleBuilder.forPositions(ParticleTypes.DRAGON_BREATH, pos.add(RandomUtil.scaledGaussianValue(0.2f), RandomUtil.scaledGaussianValue(0.2f), RandomUtil.scaledGaussianValue(0.2f))));
 		}
+
+		packet.sendToAllPlayersTrackingBlock(level, BlockPos.containing(pos));
 	}
 
 	@Override
-	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
-		AreaEffectCloud cloud = new AreaEffectCloud(bullet.level(), (target.getX() + bullet.getX()) / 2d, (target.getY() + bullet.getY()) / 2d, (target.getZ() + bullet.getZ()) / 2d);
+	protected void onDamageEntity(Level level, WeaponProjectile projectile, RayTrace<?> rayTrace, Entity hitEntity, float damage) {
+		Vec3 pos = rayTrace.hitPos();
+		AreaEffectCloud cloud = new AreaEffectCloud(level, pos.x, pos.y, pos.z);
 
-		cloud.setOwner(shooter);
+		cloud.setOwner((LivingEntity)projectile.getShooter());
 		cloud.setParticle(ParticleTypes.DRAGON_BREATH);
 		cloud.setRadius(1f);
 		cloud.setDuration(20);
 		cloud.setRadiusPerTick((5.0F - cloud.getRadius()) / (float)cloud.getDuration());
 		cloud.addEffect(new MobEffectInstance(MobEffects.HARM, 1, 0));
 
-		bullet.level().addFreshEntity(cloud);
+		level.addFreshEntity(cloud);
 	}
 
 	@Override

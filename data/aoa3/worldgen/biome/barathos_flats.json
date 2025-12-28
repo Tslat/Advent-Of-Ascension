@@ -24,16 +24,59 @@
     [],
     [
       "aoa3:loose_sand_patch"
+    ],
+    [],
+    [],
+    [
+      "aoa3:false_baron_oasis",
+      "aoa3:baron_fossil_sites"
+    ],
+    [],
+    [
+      "aoa3:varsium_ore",
+      "aoa3:baronyte_ore"
+    ],
+    [],
+    [],
+    [
+      "aoa3:barathos_shrubs",
+      "aoa3:barathos_stone_shrubs",
+      "aoa3:barathos_sand_shrubs"
     ]
   ],
   "has_precipitation": false,
-  "spawn_costs": {},
+  "spawn_costs": {
+    "aoa3:tharafly": {
+      "charge": 5.0,
+      "energy_budget": 0.10000000149011612
+    }
+  },
   "spawners": {
     "ambient": [],
     "axolotls": [],
-    "creature": [],
+    "creature": [
+      {
+        "type": "aoa3:emperor_beast",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 25
+      },
+      {
+        "type": "aoa3:arkback",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 100
+      }
+    ],
     "misc": [],
-    "monster": [],
+    "monster": [
+      {
+        "type": "aoa3:tharafly",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 100
+      }
+    ],
     "underground_water_creature": [],
     "water_ambient": [],
     "water_creature": []

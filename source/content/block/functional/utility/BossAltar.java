@@ -31,7 +31,7 @@ import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.InteractionResults;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -103,7 +103,7 @@ public class BossAltar extends Block implements EntityBlock {
 					}
 
 					bossAltar.updateEntity(entityType);
-					AoAScheduler.scheduleSyncronisedTask(() -> bossAltar.updateEntity(null), 95);
+					AoAScheduler.schedule(95, tick -> bossAltar.updateEntity(null));
 				}
 
 				arena.placePlayersAndBoss(serverLevel, players, pl -> pl.level() == level && pl.isAlive() && teleportBounds.contains(pl.position()), heldItem, entityType, bossItem::spawnBoss);

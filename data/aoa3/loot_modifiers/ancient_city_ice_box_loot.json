@@ -1,0 +1,17 @@
+{
+  "type": "aoa3:roll_extra_tables",
+  "conditions": [
+    {
+      "condition": "minecraft:any_of",
+      "terms": [
+        {
+          "condition": "neoforge:loot_table_id",
+          "loot_table_id": "minecraft:chests/ancient_city_ice_box"
+        }
+      ]
+    }
+  ],
+  "tables": [
+    "aoa3:misc/ancient_city_ice_box_loot"
+  ]
+}

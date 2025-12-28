@@ -2,48 +2,37 @@ package net.tslat.aoa3.content.item.weapon.blaster;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.projectile.blaster.OdiousEntity;
-import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.object.RayTrace;
 
 import java.util.List;
 
-public class Odious extends BaseBlaster {
+public class Odious extends AoABlaster<WeaponProjectile> {
 	public Odious(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_SPRAYER_FIRE.get();
+	void fireBlaster(ServerLevel level, WeaponFiringContext context) {
+		fireBasicBlasterProjectile(level, context, AoAProjectiles.ODIOUS_SHOT);
 	}
 
 	@Override
-	public void fireBlaster(ServerLevel level, LivingEntity shooter, ItemStack blaster) {
-		shooter.level().addFreshEntity(new OdiousEntity(shooter, this, 60));
-	}
+	protected void onDamageEntity(Level level, WeaponProjectile effect, WeaponFiringContext context, RayTrace<?> rayTrace, Entity hitEntity, float damage) {
+		hitEntity = EntityUtil.getPartOrPartOwner(hitEntity);
 
-	@Override
-	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		if (!EntityUtil.isImmuneToSpecialAttacks(target)) {
-			double motionY = target.getDeltaMovement().y();
-
-			EntityUtil.pullEntityIn(shooter, target, 0.25f, true);
-
-			motionY = Math.min(target.getDeltaMovement().y(), motionY + 0.9);
-
-
-		}
+		if (!EntityUtil.isImmuneToSpecialAttacks(hitEntity) && context.getShooter() instanceof LivingEntity shooter)
+			EntityUtil.pullEntityIn(shooter, hitEntity, 0.25f, true);
 	}
 
 	@Override

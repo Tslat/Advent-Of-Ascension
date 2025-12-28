@@ -3,47 +3,32 @@ package net.tslat.aoa3.content.entity.misc;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.fluids.FluidType;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.common.registration.entity.AoAMonsters;
-import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.object.builder.EntityPredicateBuilder;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.constant.DefaultAnimations;
 
-public class SandGiantSpikeTrapEntity extends BasicMiscEntity {
-	private static final EntityPredicate<Entity> damagePredicate = new EntityPredicate<>().isAlive().isNot(AoAMonsters.SAND_GIANT.get()).isDamageable();
+import java.util.function.Predicate;
 
-	public SandGiantSpikeTrapEntity(EntityType<?> entityType, Level level) {
-		super(entityType, level);
-	}
+public class SandGiantSpikeTrapEntity extends BasicMiscEntity {
+	private static final Predicate<Entity> VALID_TARGET = EntityPredicateBuilder.builder().isAlive().isNot(AoAMonsters.SAND_GIANT).isDamageable().build();
 
 	public SandGiantSpikeTrapEntity(Level level, Vec3 pos) {
-		super(AoAMiscEntities.SAND_GIANT_SPIKE_TRAP.get(), level);
+		this(AoAMiscEntities.SAND_GIANT_SPIKE_TRAP.get(), level);
 
 		setPos(pos);
 	}
 
-	@Override
-	public boolean isPushable() {
-		return false;
-	}
+	public SandGiantSpikeTrapEntity(EntityType<?> entityType, Level level) {
+		super(entityType, level);
 
-	@Override
-	public boolean isPushedByFluid(FluidType type) {
-		return false;
-	}
-
-	@Override
-	public boolean canBeCollidedWith() {
-		return false;
-	}
-
-	@Override
-	public boolean isPickable() {
-		return false;
+		this.isUnmoveable = true;
+		this.lifespan = 6000;
 	}
 
 	@Override
@@ -57,14 +42,8 @@ public class SandGiantSpikeTrapEntity extends BasicMiscEntity {
 		super.tick();
 
 		if (!level().isClientSide()) {
-			if (tickCount > 6000) {
-				discard();
-
-				return;
-			}
-
-			if (tickCount > 28 && tickCount % 10 == 0) {
-				for (Entity entity : EntityRetrievalUtil.<Entity>getEntities(level(), getBoundingBox(), damagePredicate)) {
+			if (this.tickCount > 28 && this.tickCount % 10 == 0) {
+				for (Entity entity : EntityRetrievalUtil.getEntities(level(), getBoundingBox(), LivingEntity.class, VALID_TARGET)) {
 					entity.hurt(level().damageSources().stalagmite(), 3);
 				}
 			}

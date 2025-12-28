@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:lyon_block"
+      "tag": "c:storage_blocks/lyon"
     }
   ],
   "result": {

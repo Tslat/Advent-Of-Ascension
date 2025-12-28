@@ -3,76 +3,104 @@ package net.tslat.aoa3.content.entity.ai.movehelper;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
 
-public class AirborneMoveControl extends MoveControl {
-	private final int maxTurn;
-	private final boolean hoversInPlace;
+/**
+ * MoveControl wrapper utilising the ExtendedMoveControl base, specifically for flying/airborne entities
+ */
+public class AirborneMoveControl extends ExtendedMoveControl {
+    public static final float MIN_Y_DELTA = 1E-5f;
 
-	public AirborneMoveControl(Mob mob, int maxTurn, boolean hoversInPlace) {
-		super(mob);
+    protected boolean canHover = false;
 
-		this.maxTurn = maxTurn;
-		this.hoversInPlace = hoversInPlace;
-	}
+    public AirborneMoveControl(Mob mob) {
+        super(mob);
+    }
 
-	@Override
-	public void strafe(float pForward, float pStrafe) {
-		this.operation = MoveControl.Operation.STRAFE;
-		this.strafeForwards = pForward;
-		this.strafeRight = pStrafe;
-		this.speedModifier = 0.5d;
-	}
+    /**
+     * Set this Airborne MoveControl to hover when not moving
+     */
+    public AirborneMoveControl canHover() {
+        return canHover(true);
+    }
 
-	@Override
-	public void tick() {
-		if (this.operation == Operation.STRAFE) {
-			this.mob.setNoGravity(true);
+    /**
+     * Set this Airborne MoveControl to hover when not moving
+     */
+    public AirborneMoveControl canHover(boolean hover) {
+        this.canHover = hover;
 
-			this.operation = Operation.WAIT;
-			float moveSpeed = (float)(this.speedModifier * this.mob.getAttributeValue((this.mob.onGround() ? Attributes.MOVEMENT_SPEED : Attributes.FLYING_SPEED)));
+        return this;
+    }
 
-			this.mob.setSpeed(moveSpeed);
-			this.mob.setZza(this.strafeForwards);
-			this.mob.setXxa(this.strafeRight);
-		}
-		else if (this.operation == Operation.MOVE_TO) {
-			this.mob.setNoGravity(true);
+    /**
+     * @return The mob's effective movement speed, taking into account its movement attribute(s) and this MoveControl's speed modifier
+     */
+    @Override
+    protected float getMoveSpeed() {
+        return (float)(this.speedModifier * (this.mob.getAttributeValue(this.mob.onGround() || !this.mob.getAttributes().hasAttribute(Attributes.FLYING_SPEED) ? Attributes.MOVEMENT_SPEED : Attributes.FLYING_SPEED)));
+    }
 
-			this.operation = Operation.WAIT;
-			double distX = this.wantedX - this.mob.getX();
-			double distY = this.wantedY - this.mob.getY();
-			double distZ = this.wantedZ - this.mob.getZ();
-			double distSq = distX * distX + distY * distY + distZ * distZ;
+    /**
+     * Tick the MoveControl while it is not currently moving
+     */
+    @Override
+    protected void tickWait() {
+        super.tickWait();
+        this.mob.setYya(0);
 
-			if (distSq < 0.00000025d) {
-				this.mob.setYya(0);
-				this.mob.setZza(0);
+        if (!this.canHover)
+            this.mob.setNoGravity(false);
+    }
 
-				return;
-			}
+    /**
+     * Tick the MoveControl while it is in the strafing state<p>
+     * This is normally only used for specific behaviours such as Skeletons or Piglins strafing evasively
+     */
+    @Override
+    protected void tickStrafe() {
+        this.operation = Operation.WAIT;
+        float speed = getMoveSpeed() * this.strafeSpeedModifier;
 
-			this.mob.setYRot(rotlerp(this.mob.getYRot(), (float)(Mth.atan2(distZ, distX) * Mth.RAD_TO_DEG) - 90, 90));
+        this.mob.setNoGravity(true);
+        this.mob.setSpeed(speed);
+        this.mob.setZza(this.strafeForwards);
+        this.mob.setXxa(this.strafeRight);
+    }
 
-			float moveSpeed = (float)(this.speedModifier * this.mob.getAttributeValue((this.mob.onGround() ? Attributes.MOVEMENT_SPEED : Attributes.FLYING_SPEED)));
+    /**
+     * Tick the MoveControl while it is moving to a target position
+     * <p>
+     * This state is somewhat special in MoveControl; the state gets set to WAIT after ticking, every tick.<br>
+     * This is done because the PathNavigator will continuously set the operation to MOVE_TO as it navigates
+     */
+    @Override
+    protected void tickMoveTo() {
+        this.operation = Operation.WAIT;
+        double xDelta = this.wantedX - this.mob.getX();
+        double yDelta = this.wantedY - this.mob.getY();
+        double zDelta = this.wantedZ - this.mob.getZ();
 
-			double lateralDist = Math.sqrt(distX * distX + distZ * distZ);
+        if (xDelta * xDelta + yDelta * yDelta + zDelta * zDelta < MIN_MOVEMENT_SPEED) {
+            this.mob.setYya(0);
+            this.mob.setZza(0);
 
-			this.mob.setSpeed(moveSpeed);
+            return;
+        }
 
-			if (Math.abs(distY) > (double)0.00001f || Math.abs(lateralDist) > (double)0.00001f) {
-				float angle = (float)(-(Mth.atan2(distY, lateralDist) * Mth.RAD_TO_DEG));
+        float yRot = (float)(Mth.atan2(zDelta, xDelta) * Mth.RAD_TO_DEG) - 90;
+        float moveSpeed = getMoveSpeed();
 
-				this.mob.setXRot(rotlerp(this.mob.getXRot(), angle, (float)this.maxTurn));
-				this.mob.setYya(distY > 0 ? moveSpeed : -moveSpeed);
-			}
-		}
-		else {
-			if (!this.hoversInPlace)
-				this.mob.setNoGravity(false);
+        this.mob.setNoGravity(true);
+        this.mob.setSpeed(moveSpeed);
+        this.mob.setYRot(rotClamped(this.mob.getYRot(), yRot, 90f));
 
-			this.mob.setYya(0);
-			this.mob.setZza(0);
-		}
-	}
+        double lateralDist = Math.sqrt(xDelta * xDelta + zDelta * zDelta);
+
+        if (Math.abs(yDelta) > MIN_Y_DELTA || Math.abs(lateralDist) > MIN_Y_DELTA) {
+            double angle = Mth.atan2(yDelta, lateralDist) * -Mth.RAD_TO_DEG;
+
+            this.mob.setXRot(rotClamped(this.mob.getXRot(), (float)angle, this.maxTurn));
+            this.mob.setYya(yDelta > 0 ? moveSpeed : -moveSpeed);
+        }
+    }
 }

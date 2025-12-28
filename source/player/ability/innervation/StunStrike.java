@@ -1,6 +1,7 @@
 package net.tslat.aoa3.player.ability.innervation;
 
 import com.google.gson.JsonObject;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
@@ -26,7 +27,7 @@ import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -73,8 +74,8 @@ public class StunStrike extends AoAAbility.Instance {
 			}
 
 			@Override
-			public int getKeycode() {
-				return AoAKeybinds.ABILITY_ACTION.getKey().getValue();
+			public KeyMapping getKeybind() {
+				return AoAKeybinds.ABILITY_ACTION;
 			}
 
 			@Override
@@ -105,20 +106,20 @@ public class StunStrike extends AoAAbility.Instance {
 				ServerPlayer player = (ServerPlayer)getPlayer();
 				LivingEntity target = ev.getEntity();
 
-				AoAScheduler.scheduleSyncronisedTask(() -> {
+				AoAScheduler.schedule(player.getCurrentSwingDuration() - 1, tick -> {
 					player.swing(InteractionHand.OFF_HAND, true);
 
 					if (target != null && target.isAlive()) {
 						if (player.distanceToSqr(target) < 36 && player.hasLineOfSight(target)) {
 							DamageUtil.doScaledKnockback(target, player, 0.3f, 1, 1, 1);
-							EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, this.stunDuration).level(127), new EffectBuilder(MobEffects.DIG_SLOWDOWN, this.stunDuration).level(127));
+							EntityUtil.applyPotions(target, player, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, this.stunDuration).level(127), new EffectBuilder(MobEffects.DIG_SLOWDOWN, this.stunDuration).level(127));
 							activatedActionKey(player);
 
 							if (skill.canGainXp(true))
 								PlayerUtil.giveTimeBasedXpToPlayer(player, this.skill.type(), 39,  false);
 						}
 					}
-				}, player.getCurrentSwingDuration() - 1);
+				});
 			}
 		}
 	}

@@ -6,7 +6,10 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.OwnableEntity;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.level.Level;
@@ -14,20 +17,15 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.tslat.aoa3.common.networking.AoANetworking;
-import net.tslat.aoa3.common.networking.packets.AoASoundBuilderPacket;
 import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
-import net.tslat.aoa3.library.builder.SoundBuilder;
-import net.tslat.aoa3.library.object.explosion.StandardExplosion;
+import net.tslat.aoa3.library.builder.AoAExplosionBuilder;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.ConditionlessAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
@@ -36,6 +34,10 @@ import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
 import net.tslat.smartbrainlib.util.BrainUtils;
+import net.tslat.tme.api.explosion.StandardExplosion;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.sound.SoundBuilder;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -85,11 +87,11 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 	@Override
 	public BrainActivityGroup<LittleBamEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
+				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Mth.square(getAttributeValue(Attributes.FOLLOW_RANGE))),
 				new SetWalkTargetToAttackTarget<>(),
 				new ConditionlessAttack<LittleBamEntity>(getAttackSwingDuration())
 						.attack(mob -> {
-							new StandardExplosion(AoAExplosions.LITTLE_BAM_OVERLOAD, (ServerLevel)level(), this, getX(0.5), getY(1), getZ(0.5)).explode();
+							AoAExplosionBuilder.at(this, AoAExplosions.LITTLE_BAM_OVERLOAD, StandardExplosion::new).explode();
 							discard();
 						})
 						.requiresTarget()
@@ -101,7 +103,7 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 						.whenStarting(entity -> {
 							setImmobile(true);
 
-							TELParticlePacket packet = new TELParticlePacket();
+							TMEParticlePacket packet = new TMEParticlePacket();
 							double targetX = getX(0.5f);
 							double targetY = getY(1.25f);
 							double targetZ = getZ(0.5f);
@@ -116,12 +118,12 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 								packet.particle(ParticleBuilder.forPosition(AoAParticleTypes.GENERIC_DUST.get(), x, y, z)
 										.scaleMod(0.25f)
 										.lifespan(Mth.ceil(25 * (this.random.nextFloat() * 0.8f + 0.2f)))
-										.colourOverride(colourMod * 124 / 255f, 0, 0, 1f)
+										.colourTint(colourMod * 124 / 255f, 0, 0, 1f)
 										.velocity((x - targetX) * 2, (y - targetY) * 2, (z - targetZ) * 2));
 							}
 
-							packet.sendToAllNearbyPlayers((ServerLevel)level(), position(), 64);
-							AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(AoASounds.ENTITY_LITTLE_BAM_CHARGE.get()).followEntity(this)), this);
+							packet.sendToAllPlayersNearby((ServerLevel)level(), position(), 64);
+							SoundBuilder.following(AoASounds.ENTITY_LITTLE_BAM_CHARGE, this).play();
 						})
 		);
 	}
@@ -136,8 +138,8 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 		return 61;
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT.noPeacefulSpawn().spawnChance(1 / 2f).noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock();
+	public static SpawnPlacements.SpawnPredicate<LittleBamEntity> spawnRules(EntityType<LittleBamEntity> entityType) {
+		return EntitySpawnConditions.create(entityType).noPeacefulSpawn().spawnChance(1 / 2f).noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock();
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<LittleBamEntity> entityType) {

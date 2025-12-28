@@ -8,7 +8,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class BaronBow extends BaseBow {
+public class BaronBow extends AoABow {
 	public BaronBow(Item.Properties properties) {
 		super(properties);
 	}

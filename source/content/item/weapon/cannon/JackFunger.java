@@ -1,34 +1,18 @@
 package net.tslat.aoa3.content.item.weapon.cannon;
 
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Blocks;
-import net.tslat.aoa3.common.registration.AoASounds;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
 import net.tslat.aoa3.content.entity.projectile.cannon.FungalRockFragmentEntity;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
-import org.jetbrains.annotations.Nullable;
 
-public class JackFunger extends BaseCannon {
+public class JackFunger extends AoACannon {
 	public JackFunger(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_JACK_ROCKER_FIRE.get();
-	}
-
-	@Override
-	public Item getAmmoItem() {
-		return Blocks.COBBLESTONE.asItem();
-	}
-
-	@Override
-	public BaseBullet createProjectileEntity(LivingEntity shooter, ItemStack gunStack, InteractionHand hand) {
-		return new FungalRockFragmentEntity(shooter, this, hand, 120, 0);
+	public WeaponProjectile createProjectileEntity(Level level, WeaponFiringContext context) {
+		return new FungalRockFragmentEntity(level, context);
 	}
 }

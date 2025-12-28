@@ -12,7 +12,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class ShroomicGreatblade extends BaseGreatblade {
+public class ShroomicGreatblade extends AoAGreatblade {
 	public ShroomicGreatblade(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

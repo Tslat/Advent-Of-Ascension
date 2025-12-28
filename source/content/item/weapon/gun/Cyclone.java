@@ -2,42 +2,33 @@ package net.tslat.aoa3.content.item.weapon.gun;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.projectile.gun.LimoniteBulletEntity;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
-public class Cyclone extends BaseGun {
+public class Cyclone extends AoAGun {
 	public Cyclone(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_GUN_GENERIC_FIRE_4.get();
-	}
+	protected void onGunFire(ServerLevel level, WeaponFiringContext context, WeaponProjectile projectile) {
+		if (RandomUtil.oneInNChance(5)) {
+			WeaponProjectile projectile2 = findAndConsumeAmmo(level, context);
 
-	@Override
-	protected boolean fireGun(ServerLevel level, LivingEntity shooter, ItemStack stack, InteractionHand hand) {
-		if (super.fireGun(level, shooter, stack, hand)) {
-			if (RandomUtil.oneInNChance(5))
-				shooter.level().addFreshEntity(new LimoniteBulletEntity(shooter, this, hand, 120, 1.0f, 0, 0f, 0.05f, 0f));
+			if (projectile2 == null || !(projectile2.asEntity() instanceof Entity bullet))
+				return;
 
-			return true;
+			projectile2.fromArmPosWithOffset(0, 0.1f).shootingAtTarget(context.velocity(), context.inaccuracy());
+			level.addFreshEntity(bullet);
 		}
-
-		return false;
 	}
 
 	@Override

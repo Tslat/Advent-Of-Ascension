@@ -8,9 +8,9 @@
     },
     "in_dimensions": [
       "aoa3:greckon",
+      "aoa3:dustopia",
       "aoa3:lborean",
-      "aoa3:runandor",
-      "aoa3:dustopia"
+      "aoa3:runandor"
     ],
     "not_in_biomes": "#c:is_dead",
     "spawn_attempts_per_player": {

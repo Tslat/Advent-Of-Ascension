@@ -13,8 +13,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-
 public class EnergyResource extends AoAResource.Instance {
+	public static final float DEFAULT_MAX_VALUE = 100;
+	public static final int DEFAULT_DELAY_ON_EMPTY = 100;
+	public static final int DEFAULT_DELAY_ON_HIT = 40;
+	public static final float DEFAULT_REGEN_PER_TICK = 0.3f;
 	private final List<DynamicEventSubscriber<?>> eventSubscribers = List.of(
 			afterTakingDamage(this::handleAfterDamaged),
 			listener(PlayerTickEvent.Pre.class, PlayerTickEvent.Pre::getEntity, this::handlePlayerTick));
@@ -30,10 +33,10 @@ public class EnergyResource extends AoAResource.Instance {
 	public EnergyResource(ServerPlayerDataManager plData, JsonObject jsonData) {
 		super(AoAResources.ENERGY.get(), plData);
 
-		this.maxValue = Math.max(0, GsonHelper.getAsFloat(jsonData, "max_value"));
-		this.dischargeDelay = GsonHelper.getAsInt(jsonData, "delay_on_empty");
-		this.hitDelay = GsonHelper.getAsInt(jsonData, "delay_on_hit");
-		this.regenAmount = GsonHelper.getAsFloat(jsonData, "regen_per_tick");
+		this.maxValue = Math.max(0, GsonHelper.getAsFloat(jsonData, "max_value", DEFAULT_MAX_VALUE));
+		this.dischargeDelay = GsonHelper.getAsInt(jsonData, "delay_on_empty", DEFAULT_DELAY_ON_EMPTY);
+		this.hitDelay = GsonHelper.getAsInt(jsonData, "delay_on_hit", DEFAULT_DELAY_ON_HIT);
+		this.regenAmount = GsonHelper.getAsFloat(jsonData, "regen_per_tick", DEFAULT_REGEN_PER_TICK);
 	}
 
 	public EnergyResource(CompoundTag nbtData) {
@@ -76,21 +79,22 @@ public class EnergyResource extends AoAResource.Instance {
 	@Override
 	public void setValue(float amount) {
 		this.value = Mth.clamp(amount, 0, getMaxValue());
+		this.needsSync = true;
 	}
 
 	@Override
 	public float getMaxValue() {
-		return maxValue;
+		return this.maxValue;
 	}
 
 	@Override
 	public float getPerTickRegen() {
-		return regenAmount;
+		return this.regenAmount;
 	}
 
 	private void handlePlayerTick(final PlayerTickEvent.Pre ev) {
-		if (currentDelay > 0) {
-			currentDelay--;
+		if (this.currentDelay > 0) {
+			this.currentDelay--;
 		}
 		else if (this.value < getMaxValue()) {
 			addValue(getPerTickRegen());
@@ -126,6 +130,9 @@ public class EnergyResource extends AoAResource.Instance {
 			data.putFloat("value", getCurrentValue());
 			data.putInt("current_delay", getCurrentDelay());
 		}
+
+		if (!forClientSetup)
+			this.needsSync = false;
 
 		return data;
 	}

@@ -12,8 +12,6 @@ import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
@@ -123,13 +121,13 @@ public class LevelRestriction extends AoAAbility.Instance {
 		return false;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	// Client Only
 	@Override
 	public boolean onGuiHover(int mouseX, int mouseY) {
 		return false;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	// Client Only
 	@Override
 	public boolean onGuiClick(int mouseX, int mouseY) {
 		return false;

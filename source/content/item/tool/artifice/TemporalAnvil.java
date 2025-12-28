@@ -10,7 +10,7 @@ import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.library.builder.SoundBuilder;
+import net.tslat.tme.api.sound.SoundBuilder;
 import net.tslat.aoa3.util.LocaleUtil;
 
 public class TemporalAnvil extends ArtificeItem {
@@ -24,7 +24,7 @@ public class TemporalAnvil extends ArtificeItem {
                 @Override
                 protected void onTake(Player player, ItemStack stack) {
                     super.onTake(player, stack);
-                    new SoundBuilder(SoundEvents.ANVIL_USE).atPos(level, player.position()).include(player).pitch(0.9f + player.getRandom().nextFloat() * 0.1f).execute();
+                    SoundBuilder.at(SoundEvents.ANVIL_USE, level, player.position()).onlyFor(player).pitch(0.95f).varyPitch(0.05f).play();
                 }
             }, Component.translatable(LocaleUtil.createContainerLocaleKey("temporal_anvil"))));
 

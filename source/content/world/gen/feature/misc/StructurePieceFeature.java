@@ -14,7 +14,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.object.EasyRandom;
 
 import java.util.Arrays;
 import java.util.List;
@@ -96,7 +96,7 @@ public class StructurePieceFeature extends Feature<StructurePieceFeature.Configu
 			}
 
 			public Configuration build() {
-				return new Configuration(templatePaths, doMirroring, doRotations, spawnEntities, requireGround, Holder.direct(new StructureProcessorList(this.processors)));
+				return new Configuration(this.templatePaths, this.doMirroring, this.doRotations, this.spawnEntities, this.requireGround, Holder.direct(new StructureProcessorList(this.processors)));
 			}
 		}
 
@@ -107,14 +107,14 @@ public class StructurePieceFeature extends Feature<StructurePieceFeature.Configu
 		}
 
 		public StructurePlaceSettings getPlacementSettings(RandomSource rand) {
-			RandomUtil.EasyRandom random = new RandomUtil.EasyRandom(rand);
+			EasyRandom random = EasyRandom.wrap(rand);
 			StructurePlaceSettings settings = new StructurePlaceSettings();
 
 			if (doMirroring)
-				settings.setMirror(random.getRandomSelection(Mirror.values()));
+				settings.setMirror(random.selection(Mirror.values()));
 
 			if (doRotations)
-				settings.setRotation(random.getRandomSelection(Rotation.values()));
+				settings.setRotation(random.selection(Rotation.values()));
 
 			settings.setIgnoreEntities(!spawnEntities);
 			settings.setFinalizeEntities(spawnEntities);

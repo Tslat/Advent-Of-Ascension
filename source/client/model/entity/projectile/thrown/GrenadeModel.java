@@ -9,9 +9,9 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.util.Mth;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.content.entity.projectile.base.ThrownItemProjectile;
 
-public class GrenadeModel extends EntityModel<BaseBullet> {
+public class GrenadeModel extends EntityModel<ThrownItemProjectile> {
 	private final ModelPart root;
 
 	public GrenadeModel(ModelPart meshDefRoot) {
@@ -32,7 +32,7 @@ public class GrenadeModel extends EntityModel<BaseBullet> {
 	}
 
 	@Override
-	public void setupAnim(BaseBullet grenade, float pLimbSwing, float partialTicks, float tickAge, float pNetHeadYaw, float pHeadPitch) {
+	public void setupAnim(ThrownItemProjectile grenade, float pLimbSwing, float partialTicks, float tickAge, float pNetHeadYaw, float pHeadPitch) {
 		if (grenade.getDeltaMovement().x() != 0 || grenade.getDeltaMovement().y() != 0 || grenade.getDeltaMovement().z() != 0) {
 			root.yRot = Mth.lerp(partialTicks, tickAge - 1 % 360, tickAge % 360);
 			root.xRot = Mth.lerp(partialTicks, tickAge % 360, tickAge + 1 % 360);

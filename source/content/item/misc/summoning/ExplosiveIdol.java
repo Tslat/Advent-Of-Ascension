@@ -4,14 +4,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.entity.AoAMonsters;
 import net.tslat.aoa3.content.entity.boss.king_bambambam.KingBamBamBamEntity;
-import net.tslat.aoa3.util.AttributeUtil;
 import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import org.jetbrains.annotations.Nullable;
@@ -27,10 +25,8 @@ public class ExplosiveIdol extends BossSpawningItem<KingBamBamBamEntity> {
 	public KingBamBamBamEntity spawnBoss(ServerLevel level, Vec3 position, ItemStack stack, int playerCount) {
 		KingBamBamBamEntity kingBamBamBam = EntitySpawningUtil.spawnEntity(level, AoAMonsters.KING_BAMBAMBAM.get(), position, MobSpawnType.TRIGGERED);
 
-		if (playerCount > 1 && kingBamBamBam != null) {
-			AttributeUtil.applyPermanentModifier(kingBamBamBam, Attributes.MAX_HEALTH, getPerPlayerHealthBuff(playerCount));
-			kingBamBamBam.setHealth(kingBamBamBam.getMaxHealth());
-		}
+
+		applyMultiplayerHealthBoost(kingBamBamBam, playerCount);
 
 		return kingBamBamBam;
 	}

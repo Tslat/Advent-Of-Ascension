@@ -4,15 +4,16 @@ import com.google.common.base.Suppliers;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceArrayMap;
 import net.minecraft.Util;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.entity.AoAMonsters;
 import net.tslat.aoa3.common.registration.item.AoADataComponents;
 import net.tslat.aoa3.content.item.misc.summoning.BossTokenItem;
-import net.tslat.aoa3.util.AttributeUtil;
 import net.tslat.aoa3.util.EntitySpawningUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,14 +33,18 @@ public class GoldTrophyBlock extends TrophyBlock implements BossTokenItem {
 		super(properties);
 	}
 
+	@Nullable
 	@Override
 	public Entity spawnBoss(ServerLevel level, Vec3 position, ItemStack itemStack, int playerCount) {
-		Entity boss = EntitySpawningUtil.spawnEntity(level, getEntityType(itemStack), position, MobSpawnType.TRIGGERED);
+		EntityType<?> entityType = getEntityType(itemStack);
 
-		if (playerCount > 1 && boss instanceof LivingEntity entity) {
-			AttributeUtil.applyPermanentModifier(entity, Attributes.MAX_HEALTH, getPerPlayerHealthBuff(playerCount));
-			entity.setHealth(entity.getMaxHealth());
-		}
+		if (entityType == null)
+			return null;
+
+		Entity boss = EntitySpawningUtil.spawnEntity(level, entityType, position, MobSpawnType.TRIGGERED);
+
+		if (boss instanceof LivingEntity entity)
+			applyMultiplayerHealthBoost(entity, playerCount);
 
 		return boss;
 	}

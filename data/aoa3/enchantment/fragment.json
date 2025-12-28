@@ -1,0 +1,47 @@
+{
+  "anvil_cost": 3,
+  "description": {
+    "translate": "enchantment.aoa3.fragment"
+  },
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "damaging_entity",
+        "effect": {
+          "type": "aoa3:shrapnel_blast",
+          "blockDamage": {
+            "type": "minecraft:linear",
+            "base": 5.0,
+            "per_level_above_first": 5.0
+          },
+          "entityDamage": {
+            "type": "minecraft:linear",
+            "base": 2.0,
+            "per_level_above_first": 1.0
+          },
+          "radius": {
+            "type": "minecraft:linear",
+            "base": 1.0,
+            "per_level_above_first": 1.5
+          }
+        },
+        "enchanted": "damaging_entity"
+      }
+    ]
+  },
+  "exclusive_set": "#minecraft:exclusive_set/damage",
+  "max_cost": {
+    "base": 26,
+    "per_level_above_first": 5
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 6,
+    "per_level_above_first": 5
+  },
+  "slots": [
+    "hand"
+  ],
+  "supported_items": "#aoa3:cannons_enchantable",
+  "weight": 4
+}

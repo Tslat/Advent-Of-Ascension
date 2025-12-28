@@ -6,7 +6,7 @@ import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.cannon.PlutonSticklerShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class PlutonSticklerShotRenderer extends ParticleProjectileRenderer<PlutonSticklerShotEntity> {
 	private final ResourceLocation texture;
@@ -20,7 +20,7 @@ public class PlutonSticklerShotRenderer extends ParticleProjectileRenderer<Pluto
 	protected void addParticles(PlutonSticklerShotEntity entity, float partialTicks) {
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
 				.spawnNTimes(14)
-				.colourOverride(ColourUtil.YELLOW)
-				.spawnParticles(entity.level());
+				.colourTint(ColourUtil.YELLOW)
+				.spawnClientParticles(entity.level());
 	}
 }

@@ -12,12 +12,14 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.tslat.aoa3.util.ColourUtil;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 import java.util.List;
 import java.util.Optional;
 
-public class NoxiousGreatblade extends BaseGreatblade {
+public class NoxiousGreatblade extends AoAGreatblade {
 	public NoxiousGreatblade(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}
@@ -35,7 +37,7 @@ public class NoxiousGreatblade extends BaseGreatblade {
 			target.level().addFreshEntity(cloud);
 		}
 		else {
-			target.addEffect(new MobEffectInstance(MobEffects.POISON, (int)(40 * attackCooldown), 1, true, true));
+			EntityUtil.applyPotions(target, attacker, new EffectBuilder(MobEffects.POISON, (int)(40 * attackCooldown)).level(2).isAmbient().hideParticles());
 		}
 	}
 

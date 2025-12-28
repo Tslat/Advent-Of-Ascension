@@ -8,8 +8,6 @@ import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.content.recipe.ImbuingRecipe;
 import net.tslat.aoa3.event.dynamic.DynamicEventSubscriber;
@@ -60,13 +58,13 @@ public class ImbuingLevelRestriction extends AoAAbility.Instance {
 		return data;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	// Client Only
 	@Override
 	public boolean onGuiHover(int mouseX, int mouseY) {
 		return false;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	// Client Only
 	@Override
 	public boolean onGuiClick(int mouseX, int mouseY) {
 		return false;

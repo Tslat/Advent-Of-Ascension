@@ -38,7 +38,11 @@ public class PatchouliIntegration {
 	}
 
 	public static ItemStack getBook(ResourceLocation id) {
-		return BookRegistry.INSTANCE.books.get(id).getBookItem();
+		ItemStack book = BookRegistry.INSTANCE.books.get(id).getBookItem();
+
+		book.set(PatchouliDataComponents.BOOK, id);
+
+		return book;
 	}
 
 	public static boolean isValidBook(ItemStack stack) {

@@ -626,7 +626,6 @@ public final class AoASounds {
 	public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_ROCK_RIDER_SWITCH = registerSound("entity.rock_rider.switch");
 	public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_RUNIC_GOLEM_CHARGE = registerSound("entity.runic_golem.charge");
 	public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_TYROSAUR_CHARGE = registerSound("entity.tyrosaur.charge");
-	public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_TYROSAUR_READY_STOMP = registerSound("entity.tyrosaur.ready_stomp");
 	public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_TYROSAUR_STOMP = registerSound("entity.tyrosaur.stomp");
 	public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_XXEUS_DASH = registerSound("entity.xxeus.dash");
 

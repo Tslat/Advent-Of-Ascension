@@ -2,15 +2,20 @@ package net.tslat.aoa3.content.entity.monster.overworld;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
@@ -50,14 +55,14 @@ public class YetiEntity extends AoAMeleeMob<YetiEntity> {
 	@Override
 	public BrainActivityGroup<YetiEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
+				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Mth.square(getAttributeValue(Attributes.FOLLOW_RANGE))),
 				new SetWalkTargetToAttackTarget<>(),
 				new OneRandomBehaviour<>(
 						Pair.of(new AnimatableMeleeAttack<>(7).attackInterval(entity -> 16)
-								.whenStarting(entity -> ATTACK_STATE.set(entity, ATTACK_STRIKE))
+								.whenStarting(entity -> setAttackState(ATTACK_STRIKE))
 								.whenStopping(entity -> BrainUtils.setSpecialCooldown(this, 16)), 3),
 						Pair.of(new AnimatableMeleeAttack<>(4).attackInterval(entity -> 14)
-								.whenStarting(entity -> ATTACK_STATE.set(entity, ATTACK_SWING))
+								.whenStarting(entity -> setAttackState(ATTACK_SWING))
 								.whenStopping(entity -> BrainUtils.setSpecialCooldown(this, 14)), 1)
 				).startCondition(entity -> !BrainUtils.isOnSpecialCooldown(this))
 		);
@@ -67,22 +72,22 @@ public class YetiEntity extends AoAMeleeMob<YetiEntity> {
 	protected void onAttack(Entity target) {
 		super.onAttack(target);
 
-		if (ATTACK_STATE.is(this, ATTACK_SWING) && target instanceof LivingEntity livingTarget)
+		if (isAttackState(ATTACK_SWING) && target instanceof LivingEntity livingTarget)
 			DamageUtil.doScaledKnockback(livingTarget, this, 1.1f, 1, 1.25f, 1);
 	}
 
 	@Override
 	protected int getAttackSwingDuration() {
-		return ATTACK_STATE.is(this, ATTACK_STRIKE) ? 16 : 14;
+		return isAttackState(ATTACK_STRIKE) ? 16 : 14;
 	}
 
 	@Override
 	protected int getPreAttackTime() {
-		return ATTACK_STATE.is(this, ATTACK_STRIKE) ? 7 : 4;
+		return isAttackState(ATTACK_STRIKE) ? 7 : 4;
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(45).spawnChance(1 / 2f);
+	public static SpawnPlacements.SpawnPredicate<YetiEntity> spawnRules(EntityType<YetiEntity> entityType) {
+		return EntitySpawnConditions.createDayMonster(entityType).noLowerThanY(AoADimensions.OVERWORLD, 45).spawnChance(1 / 2f);
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<YetiEntity> entityType) {
@@ -99,7 +104,7 @@ public class YetiEntity extends AoAMeleeMob<YetiEntity> {
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(
 				DefaultAnimations.genericWalkController(this),
-				AoAAnimations.dynamicAttackController(this, state -> ATTACK_STATE.is(this, ATTACK_STRIKE) ? DefaultAnimations.ATTACK_STRIKE : DefaultAnimations.ATTACK_SWING)
+				AoAAnimations.dynamicAttackController(this, state -> isAttackState(ATTACK_STRIKE) ? DefaultAnimations.ATTACK_STRIKE : DefaultAnimations.ATTACK_SWING)
 		);
 	}
 }

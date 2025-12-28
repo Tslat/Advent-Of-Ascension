@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:skeletal_ingot_block"
+      "tag": "c:storage_blocks/skeletal"
     }
   ],
   "result": {

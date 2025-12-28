@@ -1,64 +1,46 @@
 package net.tslat.aoa3.content.item.weapon.cannon;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.projectile.cannon.EnergyShotEntity;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
+import net.tslat.aoa3.content.entity.projectile.base.PhysicalWeaponProjectile;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
+import net.tslat.aoa3.library.object.extension.MutableFloat;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.object.RayTrace;
 
 import java.util.List;
 
-public class EnergyCannon extends BaseCannon {
+public class EnergyCannon extends AoACannon {
 	public EnergyCannon(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_ENERGY_CANNON_FIRE.get();
+	public WeaponProjectile createProjectileEntity(Level level, WeaponFiringContext context) {
+		return new PhysicalWeaponProjectile(AoAProjectiles.ENERGY_SHOT.get(), level, context);
 	}
 
 	@Override
-	public BaseBullet createProjectileEntity(LivingEntity shooter, ItemStack gunStack, InteractionHand hand) {
-		return new EnergyShotEntity(shooter, this, hand, 120, 0);
+	protected void modifyImpactDamage(ServerLevel level, WeaponProjectile projectile, RayTrace<?> rayTrace, Entity hitEntity, DamageSource source, MutableFloat damage) {
+		super.modifyImpactDamage(level, projectile, rayTrace, hitEntity, source, damage);
+
+		damage.multiply(1 / 3f);
 	}
 
 	@Override
-	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPosition, float bulletDmgMultiplier) {
-		if (target != null) {
-			if (target instanceof LivingEntity)
-				bulletDmgMultiplier *= 1 + (((LivingEntity)target).getAttribute(Attributes.ARMOR).getValue() * 1.50) / 100;
+	protected void onDamageEntity(Level level, WeaponProjectile projectile, RayTrace<?> rayTrace, Entity hitEntity, float damage) {
+		super.onDamageEntity(level, projectile, rayTrace, hitEntity, damage);
 
-			ItemStack stack = shooter.getItemInHand(bullet.getHand());
-
-			if (!stack.is(this))
-				stack = getDefaultInstance();
-
-			float damage = getGunDamage(stack) * bulletDmgMultiplier * 0.75f;
-
-			if (DamageUtil.doHeavyGunAttack(shooter, bullet, target, source -> damage)) {
-				if (target instanceof Player pl && pl.isBlocking())
-					pl.disableShield();
-
-				if (target instanceof LivingEntity livingTarget)
-					DamageUtil.doScaledKnockback(livingTarget, shooter, damage / 20f, 1, 1, 1);
-			}
-
-			DamageUtil.doEnergyProjectileAttack(shooter, bullet, target, damage / 3f);
-		}
+		DamageUtil.doEnergyProjectileAttack(projectile.getShooter(), projectile.asEntity(), hitEntity, source -> damage / 2f);
 	}
 
 	@Override

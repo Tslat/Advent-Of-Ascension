@@ -19,8 +19,8 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +59,7 @@ public class EmberstoneAxe extends BaseAxe implements LootModifyingItem {
 				.spawnNTimes(5)
 				.sendToAllPlayersTrackingBlock(level, pos);
 
-		block.popExperience(level, pos, RandomUtil.randomNumberBetween(1, 3));
+		block.popExperience(level, pos, RandomUtil.numberBetween(1, 3));
 	}
 
 	@Override

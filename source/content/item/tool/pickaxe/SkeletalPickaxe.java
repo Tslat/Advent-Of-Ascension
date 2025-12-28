@@ -9,7 +9,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
@@ -27,11 +27,11 @@ public class SkeletalPickaxe extends BasePickaxe implements LootModifyingItem {
 			return;
 
 		if (RandomUtil.oneInNChance(10)) {
-			int dropChoice = RandomUtil.randomNumberUpTo(50);
+			int dropChoice = RandomUtil.numberUpTo(50);
 			ItemStack drop;
 
 			if (dropChoice == 0) {
-				drop = new ItemStack(RandomUtil.getRandomSelection(
+				drop = new ItemStack(RandomUtil.selection(
 						AoAItems.SKULLBONE_FRAGMENT.get(),
 						AoAItems.CHESTBONE_FRAGMENT.get(),
 						AoAItems.LEGBONE_FRAGMENT.get(),

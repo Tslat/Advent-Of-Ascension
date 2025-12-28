@@ -3,6 +3,7 @@ package net.tslat.aoa3.common.registration.entity.variant;
 import com.google.common.base.Suppliers;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.MobSpawnType;
@@ -33,6 +34,15 @@ public record VeloraptorVariant(String name, boolean isPriorityVariant, Optional
     }
 
     private static final Supplier<VeloraptorVariant[]> SORTED_VARIANTS = Suppliers.memoize(() -> AoARegistries.VELORAPTOR_VARIANTS.getAllRegisteredObjects().filter(variant -> variant != GREEN.get()).sorted(Comparator.comparing(VeloraptorVariant::isPriorityVariant).reversed()).toArray(VeloraptorVariant[]::new));
+
+    public static VeloraptorVariant getOrDefault(ResourceLocation id) {
+        if (id == null)
+            return GREEN.get();
+
+        VeloraptorVariant variant = AoARegistries.VELORAPTOR_VARIANTS.getEntry(id);
+
+        return variant == null ? GREEN.get() : variant;
+    }
 
     public static VeloraptorVariant getVariantForSpawn(ServerLevel level, DifficultyInstance difficulty, MobSpawnType spawnReason, VeloraptorEntity veloraptor, Supplier<Holder<Biome>> biome, @Nullable SpawnGroupData spawnData) {
         VeloraptorVariant variant = VeloraptorVariant.GREEN.get();

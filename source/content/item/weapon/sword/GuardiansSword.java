@@ -28,7 +28,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class GuardiansSword extends BaseSword implements ChargeableItem {
+public class GuardiansSword extends AoASword implements ChargeableItem {
 	public GuardiansSword(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

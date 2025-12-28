@@ -6,6 +6,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.NetherWartBlock;
+import net.minecraft.world.level.block.StemBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -35,11 +37,13 @@ public class FarmingSkill extends AoASkill.Instance {
 	}
 
 	private void handleBlockBreak(final BlockEvent.BreakEvent ev) {
-		if (canGainXp(true) && BlockUtil.canPlayerHarvest(ev.getState(), ev.getPlayer(), ev.getLevel(), ev.getPos())) {
-			int xpTime = switch (ev.getState().getBlock()) {
-				case CropBlock crop -> crop.isMaxAge(ev.getState()) ? 7 * crop.getMaxAge() : 0;
-				case NetherWartBlock netherWart -> ev.getState().getValue(NetherWartBlock.AGE) == 3 ? 21 : 0;
-				default -> ev.getState().is(BlockTags.CROPS) ? 12 : 0;
+		final BlockState state = ev.getState();
+
+		if (canGainXp(true) && BlockUtil.canPlayerHarvest(state, ev.getPlayer(), ev.getLevel(), ev.getPos())) {
+			int xpTime = switch (state.getBlock()) {
+				case CropBlock crop -> crop.isMaxAge(state) ? 7 * crop.getMaxAge() : 0;
+				case NetherWartBlock netherWart -> state.getValue(NetherWartBlock.AGE) == 3 ? 21 : 0;
+				default -> state.is(BlockTags.CROPS) && !(state.getBlock() instanceof StemBlock) ? 12 : 0;
 			};
 
 			if (xpTime > 0)

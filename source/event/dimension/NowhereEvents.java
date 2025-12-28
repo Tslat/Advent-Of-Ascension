@@ -33,15 +33,15 @@ import net.tslat.aoa3.content.block.functional.misc.CheckpointBlock;
 import net.tslat.aoa3.content.block.functional.portal.NowhereActivityPortal;
 import net.tslat.aoa3.content.block.functional.utility.TeaSink;
 import net.tslat.aoa3.content.entity.boss.AoABoss;
-import net.tslat.aoa3.library.builder.SoundBuilder;
-import net.tslat.aoa3.library.object.PositionAndRotation;
+import net.tslat.tme.api.sound.SoundBuilder;
+import net.tslat.aoa3.library.object.container.PositionAndRotation;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.InventoryUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 
 import java.util.List;
 
@@ -76,13 +76,13 @@ public final class NowhereEvents {
 				}
 			}
 			else if (isInBossRegion(pl.blockPosition())) {
-				List<AoABoss> bosses = EntityRetrievalUtil.getEntities(pl, 80, entity -> entity instanceof AoABoss);
+				List<AoABoss> bosses = EntityRetrievalUtil.getEntities(pl, 80, AoABoss.class);
 
 				if (!bosses.isEmpty()) {
 					AoABoss boss = bosses.getFirst();
 
 					if (boss.getMusic() != null)
-						new SoundBuilder(boss.getMusic()).isMusic().include(pl).execute();
+						SoundBuilder.asMusic(boss.getMusic(), boss.level()).onlyFor(pl).play();
 				}
 			}
 		}
@@ -95,12 +95,12 @@ public final class NowhereEvents {
 
 					if (pl instanceof ServerPlayer serverPlayer) {
 						if (!AdvancementUtil.isAdvancementCompleted(serverPlayer, AdventOfAscension.id("nowhere/root"))) {
-							AoAScheduler.scheduleSyncronisedTask(() -> {
+							AoAScheduler.schedule(1, tick -> {
 								PlayerUtil.resetToDefaultStatus(serverPlayer);
 								InventoryUtil.clearItems(serverPlayer, AoAItems.RETURN_CRYSTAL);
 								serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("deathScreen.title", ChatFormatting.DARK_RED));
 								serverPlayer.connection.teleport(17.5d, 452.5d, 3.5d, 0, serverPlayer.getXRot());
-							}, 1);
+							});
 						}
 						else {
 							ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(serverPlayer);
@@ -108,18 +108,22 @@ public final class NowhereEvents {
 
 							if (checkpoint != null) {
 								if (CheckpointBlock.isValidCheckpoint(serverPlayer.level(), checkpoint)) {
-									AoAScheduler.scheduleSyncronisedTask(() -> {
+									AoAScheduler.schedule(1, tick -> {
 										if (NowhereEvents.isInBossRegion(serverPlayer.blockPosition()))
 											InventoryUtil.clearItems(serverPlayer, AoAItems.RETURN_CRYSTAL);
 
 										PlayerUtil.resetToDefaultStatus(serverPlayer);
 
-										if (!NowhereEvents.isInParkourRegion(serverPlayer.blockPosition()))
+										if (!NowhereEvents.isInParkourRegion(serverPlayer.blockPosition())) {
 											serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("deathScreen.title", ChatFormatting.DARK_RED));
+										}
+										else if (!InventoryUtil.hasItem(serverPlayer, AoAItems.RETURN_CRYSTAL)) {
+											InventoryUtil.giveItemTo(serverPlayer, AoAItems.RETURN_CRYSTAL);
+										}
 
 										serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("checkpoint.respawn"), ChatFormatting.GREEN), true);
 										checkpoint.applyToEntity(serverPlayer);
-									}, 1);
+									});
 
 									return;
 								}
@@ -154,7 +158,7 @@ public final class NowhereEvents {
 			ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 
 			if (ev.getFrom() == AoADimensions.NOWHERE) {
-				plData.storage.restoreFoodData();
+				plData.storage.restoreStats();
 				plData.storage.returnStoredItems();
 				plData.storage.clearActiveCheckpoint();
 
@@ -162,13 +166,17 @@ public final class NowhereEvents {
 				pl.gameMode.getGameModeForPlayer().updatePlayerAbilities(pl.getAbilities());
 			}
 			else {
-				plData.storage.saveFoodData();
+				plData.storage.saveStats();
 			}
 		}
 	}
 
 	public static void doDeathPrevention(final LivingDamageEvent.Pre ev, ServerPlayerDataManager plData) {
 		ServerPlayer player = plData.getPlayer();
+
+		if (player.server.isHardcore() && NowhereEvents.isInBossRegion(player.blockPosition()))
+			return;
+
 		LivingEntity killer = player.getKillCredit();
 
 		player.getScoreboard().forAllObjectives(ObjectiveCriteria.DEATH_COUNT, player, ScoreAccess::increment);
@@ -183,12 +191,12 @@ public final class NowhereEvents {
 		player.resetStat(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
 
 		if (!AdvancementUtil.isAdvancementCompleted(player, AdventOfAscension.id("nowhere/root"))) {
-			AoAScheduler.scheduleSyncronisedTask(() -> {
+			AoAScheduler.schedule(1, tick -> {
 				PlayerUtil.resetToDefaultStatus(player);
 				player.connection.teleport(17.5d, 452.5d, 3.5d, 0, player.getXRot());
 				InventoryUtil.clearItems(player, AoAItems.RETURN_CRYSTAL);
 				PlayerUtil.getAdventPlayer(player).storage.returnStoredItems();
-			}, 1);
+			});
 		}
 		else {
 			NowhereActivityPortal.Activity.RETURN.activate(plData.getPlayer());
@@ -233,11 +241,11 @@ public final class NowhereEvents {
 		}
 		else if (block == Blocks.WATER_CAULDRON) {
 			ev.setUseItem(TriState.FALSE);
-			AoAScheduler.scheduleSyncronisedTask(() -> ev.getLevel().setBlock(ev.getPos(), blockState.setValue(LayeredCauldronBlock.LEVEL, LayeredCauldronBlock.MAX_FILL_LEVEL), Block.UPDATE_CLIENTS), 1);
+			AoAScheduler.schedule(1, tick -> ev.getLevel().setBlock(ev.getPos(), blockState.setValue(LayeredCauldronBlock.LEVEL, LayeredCauldronBlock.MAX_FILL_LEVEL), Block.UPDATE_CLIENTS));
 		}
 		else if (block == AoABlocks.TEA_SINK.get()) {
 			ev.setUseItem(TriState.FALSE);
-			AoAScheduler.scheduleSyncronisedTask(() -> ev.getLevel().setBlock(ev.getPos(), blockState.setValue(TeaSink.FILLED, true), Block.UPDATE_CLIENTS), 1);
+			AoAScheduler.schedule(1, tick -> ev.getLevel().setBlock(ev.getPos(), blockState.setValue(TeaSink.FILLED, true), Block.UPDATE_CLIENTS));
 		}
 		else if (heldItem == AoAItems.LOTTO_TOTEM.get()) {
 			ev.setUseItem(TriState.TRUE);

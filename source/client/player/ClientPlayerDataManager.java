@@ -1,7 +1,9 @@
 package net.tslat.aoa3.client.player;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.Util;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -29,6 +31,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 import static net.tslat.aoa3.player.AoAPlayerEventListener.ListenerState.REMOVED;
@@ -42,7 +45,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 	private final ConcurrentSkipListMap<AoAResource, AoAResource.Instance> resources = new ConcurrentSkipListMap<>(Comparator.comparing(AoARegistries.AOA_RESOURCES::getKey));
 	private final ObjectArrayList<AoAPlayerEventListener> eventListeners = new ObjectArrayList<>();
 
-	private final ConcurrentHashMap<Integer, List<AoAPlayerKeybindListener>> keyListeners = new ConcurrentHashMap<>(1);
+	private final ConcurrentMap<KeyMapping, List<AoAPlayerKeybindListener>> keyListeners = new ConcurrentHashMap<>(2);
 
 	private boolean isLegitimate = true;
 	private int totalLevel = 0;
@@ -118,19 +121,24 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 		return resources.getOrDefault(resource, AoAResources.DEFAULT);
 	}
 
-	public void handleKeyInput(int keycode) {
-		if (ClientOperations.getPlayer() == null || keyListeners.isEmpty() || !keyListeners.containsKey(keycode))
+	public void handleKeyInput(InputConstants.Key key) {
+		if (ClientOperations.getPlayer() == null || this.keyListeners.isEmpty())
 			return;
 
-		List<AoAPlayerKeybindListener> listeners = keyListeners.get(keycode);
-		List<String> abilities = new ObjectArrayList<>(listeners.size());
+		List<String> abilities = null;
 
-		for (AoAPlayerKeybindListener listener : listeners) {
-			if (listener.isListenerActive() && listener.shouldSendKeyPress() && listener.getEventListener() instanceof AoAAbility.Instance abilityInstance)
-				abilities.add(abilityInstance.getUniqueIdentifier());
+		for (KeyMapping keyMap : KeyMapping.MAP.getAll(key)) {
+			for (AoAPlayerKeybindListener listener : this.keyListeners.getOrDefault(keyMap, List.of())) {
+				if (listener.isListenerActive() && listener.getEventListener() instanceof AoAAbility.Instance abilityInstance && listener.shouldSendKeyPress()) {
+					if (abilities == null)
+						abilities = new ObjectArrayList<>(1);
+
+					abilities.add(abilityInstance.getUniqueIdentifier());
+				}
+			}
 		}
 
-		if (!abilities.isEmpty())
+		if (abilities != null && !abilities.isEmpty())
 			AoANetworking.sendToServer(new PlayerAbilityKeybindTriggerPacket(abilities));
 	}
 
@@ -236,7 +244,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 		if (this.player != ClientOperations.getPlayer())
 			return;
 
-		listener.createKeybindListener(keyListener -> this.keyListeners.computeIfAbsent(keyListener.getKeycode(), keyCode -> new ObjectArrayList<>(1)).add(keyListener));
+		listener.createKeybindListener(keyListener -> this.keyListeners.computeIfAbsent(keyListener.getKeybind(), keyCode -> new ObjectArrayList<>(1)).add(keyListener));
 		this.eventListeners.add(listener);
 
 		if (!ClientOperations.isLocalServer())

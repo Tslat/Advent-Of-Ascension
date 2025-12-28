@@ -39,7 +39,7 @@ public final class ScreenEffectRenderer {
 	}
 
 	private static void onEffectRender(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
-		if (Minecraft.getInstance().options.getCameraType() != CameraType.FIRST_PERSON || effects.isEmpty() || Minecraft.getInstance().level == null)
+		if (effects.isEmpty() || Minecraft.getInstance().level == null)
 			return;
 
 		Tesselator tesselator = Tesselator.getInstance();

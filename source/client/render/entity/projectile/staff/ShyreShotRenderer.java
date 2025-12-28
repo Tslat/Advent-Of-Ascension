@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.staff.ShyreShotEntity;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class ShyreShotRenderer extends ParticleProjectileRenderer<ShyreShotEntity> {
 	public ShyreShotRenderer(final EntityRendererProvider.Context manager) {
@@ -17,8 +17,8 @@ public class ShyreShotRenderer extends ParticleProjectileRenderer<ShyreShotEntit
 			float colourMod = entity.level().random.nextFloat() * 0.7f + 0.3f;
 
 			ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position().add(0, 0.25f, 0))
-				.colourOverride(0, colourMod, colourMod, 1f)
-				.spawnParticles(entity.level());
+				.colourTint(0, colourMod, colourMod, 1f)
+				.spawnClientParticles(entity.level());
 		}
 	}
 }

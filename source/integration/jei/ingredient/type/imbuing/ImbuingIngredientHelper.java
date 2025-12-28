@@ -15,6 +15,7 @@ import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.tslat.aoa3.advent.Logging;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,8 +36,15 @@ public record ImbuingIngredientHelper(IIngredientType<EnchantmentInstance> ingre
     }
 
     @Override
-    public String getUniqueId(EnchantmentInstance ingredient, UidContext context) {
+    public Object getUid(EnchantmentInstance ingredient, UidContext context) {
         return "enchantment:" + getResourceLocation(ingredient) + "_" + ingredient.level;
+    }
+
+    // TODO
+    @SuppressWarnings("removal")
+    @Override
+    public String getUniqueId(EnchantmentInstance ingredient, UidContext context) {
+        return null;
     }
 
     @NotNull
@@ -47,7 +55,9 @@ public record ImbuingIngredientHelper(IIngredientType<EnchantmentInstance> ingre
         if (id == null) {
             String ingredientInfo = getErrorInfo(ingredient);
 
-            throw new IllegalStateException("Found unregistered enchantment: " + ingredientInfo);
+            Logging.error("Found unregistered enchantment: " + ingredientInfo);
+
+            return ResourceLocation.withDefaultNamespace("");
         }
 
         return id;
@@ -68,7 +78,7 @@ public record ImbuingIngredientHelper(IIngredientType<EnchantmentInstance> ingre
     @NotNull
     @Override
     public EnchantmentInstance normalizeIngredient(EnchantmentInstance ingredient) {
-        return new EnchantmentInstance(ingredient.enchantment, 1);
+        return ingredient;
     }
 
     @NotNull

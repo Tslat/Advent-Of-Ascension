@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LightningBoltRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.TippableArrowRenderer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -42,6 +41,7 @@ import net.tslat.aoa3.client.render.entity.AnimatedMobRenderer;
 import net.tslat.aoa3.client.render.entity.AnimatedProjectileRenderer;
 import net.tslat.aoa3.client.render.entity.AoAMobRenderer;
 import net.tslat.aoa3.client.render.entity.animal.barathos.ArkbackModel;
+import net.tslat.aoa3.client.render.entity.animal.barathos.MasonBeetleRenderer;
 import net.tslat.aoa3.client.render.entity.animal.generic.BasicLavaFishRenderer;
 import net.tslat.aoa3.client.render.entity.animal.generic.BasicWaterFishRenderer;
 import net.tslat.aoa3.client.render.entity.animal.generic.ShinySquidRenderer;
@@ -122,6 +122,7 @@ public final class AoAEntityRendering {
 
 	public static final EntityRendererPackage<?> ARKBACK = new GeckoLibRendererPackage<>(AoAAnimals.ARKBACK).model(new ArkbackModel()).scale(2);
 	public static final EntityRendererPackage<?> EMPEROR_BEAST = new GeckoLibRendererPackage<>(AoAAnimals.EMPEROR_BEAST).path("animal/barathos/emperor_beast", true).scale(2);
+	public static final EntityRendererPackage<?> MASON_BEETLE = new GeckoLibRendererPackage<>(AoAAnimals.MASON_BEETLE).renderer(MasonBeetleRenderer::new);
 
 	public static final EntityRendererPackage<?> ANCIENT_GOLEM = new GeckoLibRendererPackage<>(AoAMonsters.ANCIENT_GOLEM).path("mob/overworld/ancient_golem");
 	//public static final EntityRendererPackage<?> ANGLER = new GeckoLibRendererPackage<>(AoAMonsters.ANGLER).path("mob/lborean/angler");
@@ -176,6 +177,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> YETI = new GeckoLibRendererPackage<>(AoAMonsters.YETI).path("mob/overworld/yeti");
 	public static final EntityRendererPackage<?> NOSPIKE = new GeckoLibRendererPackage<>(AoAMonsters.NOSPIKE).path("mob/barathos/nospike");
 	public static final EntityRendererPackage<?> THARAFLY = new GeckoLibRendererPackage<>(AoAMonsters.THARAFLY).path("mob/barathos/tharafly");
+	public static final EntityRendererPackage<?> ECHODAR = new GeckoLibRendererPackage<>(AoAMonsters.ECHODAR).path("mob/barathos/echodar").emissive();
 
 	public static final EntityRendererPackage<?> SMASH = new GeckoLibRendererPackage<>(AoAMonsters.SMASH).model(new SmashModel());
 	public static final EntityRendererPackage<?> ELITE_SMASH = new GeckoLibRendererPackage<>(AoAMonsters.ELITE_SMASH).model(new EliteSmashModel());
@@ -188,7 +190,7 @@ public final class AoAEntityRendering {
 
 	public static final EntityRendererPackage<?> WOUNDED_TYROSAUR = new GeckoLibRendererPackage<>(AoAMonsters.WOUNDED_TYROSAUR).renderer(WoundedTyrosaurRenderer::new);
 	public static final EntityRendererPackage<?> TYROSAUR = new GeckoLibRendererPackage<>(AoAMonsters.TYROSAUR).path("boss/tyrosaur/tyrosaur").renderer(TyrosaurRenderer::new);
-	public static final EntityRendererPackage<?> ELITE_TYROSAUR = new GeckoLibRendererPackage<>(AoAMonsters.ELITE_TYROSAUR).path("boss/tyrosaur/elite_tyrosaur", true);
+	public static final EntityRendererPackage<?> ELITE_TYROSAUR = new GeckoLibRendererPackage<>(AoAMonsters.ELITE_TYROSAUR).path("boss/tyrosaur/elite_tyrosaur", true).scale(1.25f);
 
 	public static final EntityRendererPackage<?> SKELETRON = new GeckoLibRendererPackage<>(AoAMonsters.SKELETRON).path("boss/skeletron/skeletron");
 	public static final EntityRendererPackage<?> ELITE_SKELETRON = new GeckoLibRendererPackage<>(AoAMonsters.ELITE_SKELETRON).path("boss/skeletron/elite_skeletron", true);
@@ -235,13 +237,12 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> EARTHQUAKE_BLOCK = new EntityRendererPackage<>(AoAMiscEntities.EARTHQUAKE_BLOCK).provider(EarthquakeBlockRenderer::new);
 	public static final EntityRendererPackage<?> FAKE_TNT = new EntityRendererPackage<>(AoAMiscEntities.FAKE_TNT).provider(FakeTntRenderer::new);
 
-	public static final EntityRendererPackage<?> PIXON = new EntityRendererPackage<>(AoAMiscEntities.PIXON).provider(PixonRenderer::new);
+	public static final EntityRendererPackage<?> PIXON = new EntityRendererPackage<>(AoAMiscEntities.PIXON).provider(NoRenderRenderer::new);
 
 	public static final EntityRendererPackage<?> ANEMIA_BOMB = new EntityRendererPackage<>(AoAProjectiles.ANEMIA_BOMB).provider(AnemiaBombRenderer::new);
+	public static final EntityRendererPackage<?> CANNON_GRENADE = new EntityRendererPackage<>(AoAProjectiles.CANNON_GRENADE).provider(context -> new ModelledProjectileRenderer<>(context, AoAEntityRendering.GRENADE.getMainLayerLocation(), GrenadeModel::new, AdventOfAscension.id("textures/entity/projectile/thrown/grenade.png")));
 	public static final EntityRendererPackage<?> AQUABALL = new EntityRendererPackage<>(AoAProjectiles.AQUABALL).provider(AquaballRenderer::new);
 	public static final EntityRendererPackage<?> AQUATIC_SHOT = new EntityRendererPackage<>(AoAProjectiles.AQUATIC_SHOT).provider(AquaticShotRenderer::new);
-	public static final EntityRendererPackage<?> ARROW = new EntityRendererPackage<>(AoAProjectiles.ARROW).provider(TippableArrowRenderer::new);
-	public static final EntityRendererPackage<?> ATOMIZER_BOUNCE = new EntityRendererPackage<>(AoAProjectiles.ATOMIZER_BOUNCE).provider(AtomizerBounceRenderer::new);
 	public static final EntityRendererPackage<?> ATOMIZER_SHOT = new EntityRendererPackage<>(AoAProjectiles.ATOMIZER_SHOT).provider(AtomizerShotRenderer::new);
 	public static final EntityRendererPackage<?> BALLOON_BOMB = new EntityRendererPackage<>(AoAProjectiles.BALLOON_BOMB).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/balloon_bomb.png")));
 	public static final EntityRendererPackage<?> BARONESS_SHOT = new EntityRendererPackage<>(AoAProjectiles.BARONESS_SHOT).provider(BaronessShotRenderer::new);
@@ -256,13 +257,13 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> BONE_PELLET = new EntityRendererPackage<>(AoAProjectiles.BONE_PELLET).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/bullets/bone_pellet.png")));
 	public static final EntityRendererPackage<?> BOZO_BALL = new EntityRendererPackage<>(AoAProjectiles.BOZO_BALL).provider(context -> new BozoBallRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 	public static final EntityRendererPackage<?> BUBBLE_SHOT = new EntityRendererPackage<>(AoAProjectiles.BUBBLE_SHOT).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/misc/bubble_shot.png")));
-	public static final EntityRendererPackage<?> BULLET = new EntityRendererPackage<>(AoAProjectiles.BULLET).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/bullets/limonite_bullet.png")));
+	public static final EntityRendererPackage<?> BULLET = new EntityRendererPackage<>(AoAProjectiles.LIMONITE_BULLET).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/bullets/limonite_bullet.png")));
 	public static final EntityRendererPackage<?> BULLET_SHOT = new EntityRendererPackage<>(AoAProjectiles.BULLET_SHOT).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/bullets/limonite_bullet.png")));
 	public static final EntityRendererPackage<?> CANNONBALL = new EntityRendererPackage<>(AoAProjectiles.CANNONBALL).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 	public static final EntityRendererPackage<?> CARROT_BALL = new EntityRendererPackage<>(AoAProjectiles.CARROT_BALL).provider(context -> new CarrotBallRenderer(context, AdventOfAscension.id("textures/entity/projectile/bullets/carrot_shot.png")));
 	public static final EntityRendererPackage<?> CELESTIAL_FALL = new EntityRendererPackage<>(AoAProjectiles.CELESTIAL_FALL).provider(CelestialFallRenderer::new);
 	public static final EntityRendererPackage<?> CHERRY_SHOT = new EntityRendererPackage<>(AoAProjectiles.CHERRY_SHOT).provider(CherryShotRenderer::new);
-	public static final EntityRendererPackage<?> CHILLI_SHOT = new EntityRendererPackage<>(AoAProjectiles.CHILLI_SHOT).provider(context -> new ChilliShotRenderer(context, AdventOfAscension.id("textures/entity/projectile/bullets/chilli_shot.png")));
+	public static final EntityRendererPackage<?> CHILLI_SHOT = new EntityRendererPackage<>(AoAProjectiles.CHILLI_SHOT).provider(context -> new ColouredTexturedProjectileRenderer(context, ColourUtil.RED, AdventOfAscension.id("textures/entity/projectile/bullets/chilli_shot.png")));
 	public static final EntityRendererPackage<?> CLOWN_BALL = new EntityRendererPackage<>(AoAProjectiles.CLOWN_BALL).provider(context -> new ClownBallRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 	public static final EntityRendererPackage<?> CLOWN_SHOT = new EntityRendererPackage<>(AoAProjectiles.CLOWN_SHOT).provider(ClownShotRenderer::new);
 	public static final EntityRendererPackage<?> CONFETTI_CLUSTER = new EntityRendererPackage<>(AoAProjectiles.CONFETTI_CLUSTER).provider(ConfettiClusterRenderer::new);
@@ -278,6 +279,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> DESTROYER_SHOT = new EntityRendererPackage<>(AoAProjectiles.DESTROYER_SHOT).provider(DestroyerShotRenderer::new);
 	public static final EntityRendererPackage<?> DESTRUCTION_SHOT = new EntityRendererPackage<>(AoAProjectiles.DESTRUCTION_SHOT).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/misc/destruction_ball.png")));
 	public static final EntityRendererPackage<?> DISCHARGE_SHOT = new EntityRendererPackage<>(AoAProjectiles.DISCHARGE_SHOT).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/bullets/discharge_shot.png")));
+	public static final EntityRendererPackage<?> DISCHARGE_PELLET = new EntityRendererPackage<>(AoAProjectiles.DISCHARGE_PELLET).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/bullets/discharge_shot.png")));
 	public static final EntityRendererPackage<?> DISCHARGE_SLUG = new EntityRendererPackage<>(AoAProjectiles.DISCHARGE_SLUG).provider(DischargeSlugRenderer::new);
 	public static final EntityRendererPackage<?> DOOM_SHOT = new EntityRendererPackage<>(AoAProjectiles.DOOM_SHOT).provider(DoomShotRenderer::new);
 	public static final EntityRendererPackage<?> ENERGY_SHOT = new EntityRendererPackage<>(AoAProjectiles.ENERGY_SHOT).provider(EnergyShotRenderer::new);
@@ -305,19 +307,15 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> HEAVY_BLUE_CANNONBALL = new EntityRendererPackage<>(AoAProjectiles.HEAVY_BLUE_CANNONBALL).provider(context -> new HeavyBlueCannonballRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 	public static final EntityRendererPackage<?> HEAVY_BONE_CANNONBALL = new EntityRendererPackage<>(AoAProjectiles.HEAVY_BONE_CANNONBALL).provider(context -> new HeavyBoneBallRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 	public static final EntityRendererPackage<?> HEAVY_CANNONBALL = new EntityRendererPackage<>(AoAProjectiles.HEAVY_CANNONBALL).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
-	public static final EntityRendererPackage<?> HEAVY_GRENADE = new EntityRendererPackage<>(AoAProjectiles.HEAVY_GRENADE).provider(context -> new ModelledProjectileRenderer<>(context, AoAEntityRendering.GRENADE.getMainLayerLocation(), GrenadeModel::new, AdventOfAscension.id("textures/entity/projectile/thrown/grenade.png")));
-	public static final EntityRendererPackage<?> HEAVY_RED_BULLET = new EntityRendererPackage<>(AoAProjectiles.HEAVY_RED_BULLET).provider(context -> new ColouredTexturedProjectileRenderer<>(context, ColourUtil.RED, AdventOfAscension.id("textures/entity/projectile/bullets/limonite_bullet.png")));
 	public static final EntityRendererPackage<?> HEAVY_RED_CANNONBALL = new EntityRendererPackage<>(AoAProjectiles.HEAVY_RED_CANNONBALL).provider(context -> new HeavyRedCannonballRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 	public static final EntityRendererPackage<?> HEAVY_RUNIC_GUARDIAN_SHOT = new EntityRendererPackage<>(AoAProjectiles.HEAVY_RUNIC_GUARDIAN_SHOT).provider(RunicGuardianShotHeavyRenderer::new);
 	public static final EntityRendererPackage<?> HEAVY_SHADOWBALL = new EntityRendererPackage<>(AoAProjectiles.HEAVY_SHADOWBALL).provider(context -> new HeavyShadowBallRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 	public static final EntityRendererPackage<?> HEAVY_SHOWER_SHOT = new EntityRendererPackage<>(AoAProjectiles.HEAVY_SHOWER_SHOT).provider(ShowerShotRenderer::new);
-	public static final EntityRendererPackage<?> HEAVY_TRI_DISCHARGE_SHOT = new EntityRendererPackage<>(AoAProjectiles.HEAVY_TRI_DISCHARGE_SHOT).provider(context -> new HeavyTriDischargeShotRenderer(context, AdventOfAscension.id("textures/entity/projectile/bullets/discharge_shot.png")));
 	public static final EntityRendererPackage<?> HEAVY_WITHER_BALL = new EntityRendererPackage<>(AoAProjectiles.HEAVY_WITHER_BALL).provider(context -> new HeavyWitherBallRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 	public static final EntityRendererPackage<?> HELLFIRE_TAIL = new EntityRendererPackage<>(AoAProjectiles.HELLFIRE_TAIL).provider(HellfireProjectileRenderer::new);
 	public static final EntityRendererPackage<?> HELL_BUBBLE_SHOT = new EntityRendererPackage<>(AoAProjectiles.HELL_BUBBLE_SHOT).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/misc/red_bubble_shot.png")));
 	public static final EntityRendererPackage<?> HIVE_BALL = new EntityRendererPackage<>(AoAProjectiles.HIVE_BALL).provider(context -> new HiveBallRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 	public static final EntityRendererPackage<?> HOT_SHOT = new EntityRendererPackage<>(AoAProjectiles.HOT_SHOT).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/bullets/hot_shot.png")));
-	public static final EntityRendererPackage<?> ICE_SHOT = new EntityRendererPackage<>(AoAProjectiles.ICE_SHOT).provider(IceShotRenderer::new);
 	public static final EntityRendererPackage<?> ILLUSION_SHOT = new EntityRendererPackage<>(AoAProjectiles.ILLUSION_SHOT).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/bullets/illusion_shot.png")));
 	public static final EntityRendererPackage<?> ION_SHOT = new EntityRendererPackage<>(AoAProjectiles.ION_SHOT).provider(IonShotRenderer::new);
 	public static final EntityRendererPackage<?> IRO_MINER_SHOT = new EntityRendererPackage<>(AoAProjectiles.IRO_MINER_SHOT).provider(IroMinerShotRenderer::new);
@@ -325,7 +323,6 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> LIGHT_BLASTER_SHOT = new EntityRendererPackage<>(AoAProjectiles.LIGHT_BLASTER_SHOT).provider(LightBlasterShotRenderer::new);
 	public static final EntityRendererPackage<?> LIGHT_IRON_SHOT = new EntityRendererPackage<>(AoAProjectiles.LIGHT_IRON_SHOT).provider(context -> new LightIronShotRenderer(context, AdventOfAscension.id("textures/entity/projectile/bullets/metal_slug.png")));
 	public static final EntityRendererPackage<?> LIGHT_RUNIC_GUARDIAN_SHOT = new EntityRendererPackage<>(AoAProjectiles.LIGHT_RUNIC_GUARDIAN_SHOT).provider(RunicGuardianShotLightRenderer::new);
-	public static final EntityRendererPackage<?> LIGHT_SPARK = new EntityRendererPackage<>(AoAProjectiles.LIGHT_SPARK).provider(LightSparkRenderer::new);
 	public static final EntityRendererPackage<?> LUNAR_FALL = new EntityRendererPackage<>(AoAProjectiles.LUNAR_FALL).provider(context -> new LunarFallRenderer(context, AdventOfAscension.id("textures/entity/projectile/misc/star_fall.png")));
 	public static final EntityRendererPackage<?> LUNA_SHOT = new EntityRendererPackage<>(AoAProjectiles.LUNA_SHOT).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/bullets/luna_shot.png")));
 	public static final EntityRendererPackage<?> LUXON_STICKLER_SHOT = new EntityRendererPackage<>(AoAProjectiles.LUXON_STICKLER_SHOT).provider(LuxonSticklerShotRenderer::new);
@@ -342,7 +339,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> MOON_MAKER = new EntityRendererPackage<>(AoAProjectiles.MOON_MAKER).provider(context -> new MoonMakerRenderer(context, AdventOfAscension.id("textures/entity/projectile/bullets/metal_slug.png")));
 	public static final EntityRendererPackage<?> MOON_SHINER_SHOT = new EntityRendererPackage<>(AoAProjectiles.MOON_SHINER_SHOT).provider(MoonShinerRenderer::new);
 	public static final EntityRendererPackage<?> MOON_SHOT = new EntityRendererPackage<>(AoAProjectiles.MOON_SHOT).provider(MoonShotRenderer::new);
-	public static final EntityRendererPackage<?> MULTIPLYING_GRENADE = new EntityRendererPackage<>(AoAProjectiles.MULTIPLYING_GRENADE).provider(context -> new ModelledProjectileRenderer<>(context, AoAEntityRendering.GRENADE.getMainLayerLocation(), GrenadeModel::new, AdventOfAscension.id("textures/entity/projectile/thrown/grenade.png")));
+	public static final EntityRendererPackage<?> MISSILE_MAKER = new EntityRendererPackage<>(AoAProjectiles.MISSILE_MAKER).provider(context -> new ModelledProjectileRenderer<>(context, AoAEntityRendering.GRENADE.getMainLayerLocation(), GrenadeModel::new, AdventOfAscension.id("textures/entity/projectile/thrown/grenade.png")));
 	public static final EntityRendererPackage<?> NIGHTMARE_FALL = new EntityRendererPackage<>(AoAProjectiles.NIGHTMARE_FALL).provider(NightmareFallRenderer::new);
 	public static final EntityRendererPackage<?> NOXIOUS_SHOT = new EntityRendererPackage<>(AoAProjectiles.NOXIOUS_SHOT).provider(NoxiousShotRenderer::new);
 	public static final EntityRendererPackage<?> ODIOUS_SHOT = new EntityRendererPackage<>(AoAProjectiles.ODIOUS_SHOT).provider(OdiousRenderer::new);
@@ -354,9 +351,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> PHANTOM_SHOT = new EntityRendererPackage<>(AoAProjectiles.PHANTOM_SHOT).provider(PhantomShotRenderer::new);
 	public static final EntityRendererPackage<?> PLUTON_STICKLER_SHOT = new EntityRendererPackage<>(AoAProjectiles.PLUTON_STICKLER_SHOT).provider(context -> new PlutonSticklerShotRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 	public static final EntityRendererPackage<?> PLUTON_STICKLER_STUCK = new EntityRendererPackage<>(AoAProjectiles.PLUTON_STICKLER_STUCK).provider(PlutonSticklerStuckRenderer::new);
-	public static final EntityRendererPackage<?> POISON_PLUNGER_SHOT = new EntityRendererPackage<>(AoAProjectiles.POISON_PLUNGER_SHOT).provider(PoisonPlungerShotRenderer::new);
 	public static final EntityRendererPackage<?> POISON_SHOT = new EntityRendererPackage<>(AoAProjectiles.POISON_SHOT).provider(PoisonShotRenderer::new);
-	public static final EntityRendererPackage<?> POLYMORPH_SHOT = new EntityRendererPackage<>(AoAProjectiles.POLYMORPH_SHOT).provider(PolymorphShotRenderer::new);
 	public static final EntityRendererPackage<?> POLYTOM_SHOT = new EntityRendererPackage<>(AoAProjectiles.POLYTOM_SHOT).provider(PolytomShotRenderer::new);
 	public static final EntityRendererPackage<?> POP_SHOT = new EntityRendererPackage<>(AoAProjectiles.POP_SHOT).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/arrows/pop_shot.png")));
 	public static final EntityRendererPackage<?> POWER_RAY = new EntityRendererPackage<>(AoAProjectiles.POWER_RAY).provider(PowerRayRenderer::new);
@@ -389,13 +384,11 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> SMILE_BLASTER = new EntityRendererPackage<>(AoAProjectiles.SMILE_BLASTER).provider(context -> new SmileBlasterShotRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/smiley_cannonball.png")));
 	public static final EntityRendererPackage<?> SNIPER_SLUG = new EntityRendererPackage<>(AoAProjectiles.SNIPER_SLUG).provider(SniperSlugRenderer::new);
 	public static final EntityRendererPackage<?> SOUL_DRAINER_SHOT = new EntityRendererPackage<>(AoAProjectiles.SOUL_DRAINER_SHOT).provider(SoulDrainerRenderer::new);
-	public static final EntityRendererPackage<?> SOUL_SPARK = new EntityRendererPackage<>(AoAProjectiles.SOUL_SPARK).provider(SoulSparkRenderer::new);
 	public static final EntityRendererPackage<?> SOUL_STORM_SHOT = new EntityRendererPackage<>(AoAProjectiles.SOUL_STORM_SHOT).provider(SoulStormRenderer::new);
 	public static final EntityRendererPackage<?> SPECTRAL_SHOT = new EntityRendererPackage<>(AoAProjectiles.SPECTRAL_SHOT).provider(SpectralShotRenderer::new);
 	public static final EntityRendererPackage<?> SPIRITUAL_SHOT = new EntityRendererPackage<>(AoAProjectiles.SPIRITUAL_SHOT).provider(SpiritualShotRenderer::new);
 	public static final EntityRendererPackage<?> STICKY_COOL_BOMB = new EntityRendererPackage<>(AoAProjectiles.STICKY_COOL_BOMB).provider(context -> new StickyCoolBombRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 	public static final EntityRendererPackage<?> STICKY_RED_BOMB = new EntityRendererPackage<>(AoAProjectiles.STICKY_RED_BOMB).provider(context -> new StickyRedBombRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
-	public static final EntityRendererPackage<?> SUNSET_BULLET = new EntityRendererPackage<>(AoAProjectiles.SUNSET_BULLET).provider(context -> new SunsetBulletRenderer(context, AdventOfAscension.id("textures/entity/projectile/bullets/limonite_bullet.png")));
 	public static final EntityRendererPackage<?> SUN_SHOT = new EntityRendererPackage<>(AoAProjectiles.SUN_SHOT).provider(SunShotRenderer::new);
 	public static final EntityRendererPackage<?> SUPER_GREEN_BALL = new EntityRendererPackage<>(AoAProjectiles.SUPER_GREEN_BALL).provider(context -> new GreenBallRenderer(context, 2f, AdventOfAscension.id("textures/entity/projectile/cannonshots/green_ball.png")));
 	public static final EntityRendererPackage<?> SWARM_SHOT = new EntityRendererPackage<>(AoAProjectiles.SWARM_SHOT).provider(SwarmShotRenderer::new);
@@ -410,8 +403,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> VALKYRIE_SHOT = new EntityRendererPackage<>(AoAProjectiles.VALKYRIE_SHOT).provider(ValkyrieShotRenderer::new);
 	public static final EntityRendererPackage<?> VINE_WIZARD_SHOT = new EntityRendererPackage<>(AoAProjectiles.VINE_WIZARD_SHOT).provider(VineWizardShotRenderer::new);
 	public static final EntityRendererPackage<?> VOLATILE_CANNONBALL = new EntityRendererPackage<>(AoAProjectiles.VOLATILE_CANNONBALL).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
-	public static final EntityRendererPackage<?> VORTEX_BLAST = new EntityRendererPackage<>(AoAProjectiles.VORTEX_BLAST).provider(VortexBlastRenderer::new);
-	public static final EntityRendererPackage<?> VOX_CANNON = new EntityRendererPackage<>(AoAProjectiles.VOX_CANNON).provider(context -> new VoxCannonShotRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
+	public static final EntityRendererPackage<?> VOX_CANNON = new EntityRendererPackage<>(AoAProjectiles.VOX_CANNONBALL).provider(context -> new VoxCannonShotRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 	public static final EntityRendererPackage<?> WART_DART = new EntityRendererPackage<>(AoAProjectiles.WART_DART).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/bullets/wart_dart.png")));
 	public static final EntityRendererPackage<?> WATER_BALLOON_BOMB = new EntityRendererPackage<>(AoAProjectiles.WATER_BALLOON_BOMB).provider(context -> new WaterBalloonBombRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/balloon_bomb.png")));
 	public static final EntityRendererPackage<?> WATER_SHOT = new EntityRendererPackage<>(AoAProjectiles.WATER_SHOT).provider(WaterShotRenderer::new);

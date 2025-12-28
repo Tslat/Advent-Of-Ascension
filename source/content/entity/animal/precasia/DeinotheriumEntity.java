@@ -19,11 +19,11 @@ import net.neoforged.neoforge.common.Tags;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.entity.AoAAnimals;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.content.entity.base.AoAAnimal;
-import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.brain.task.temp.FixedFollowParent;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
+import net.tslat.aoa3.library.builder.MultipartBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
@@ -51,17 +51,21 @@ import software.bernie.geckolib.constant.DefaultAnimations;
 import java.util.List;
 import java.util.Map;
 
+import static net.tslat.aoa3.library.builder.MultipartBuilder.Part;
+
 public class DeinotheriumEntity extends AoAAnimal<DeinotheriumEntity> {
 	private static final RawAnimation EAT_ANIM = RawAnimation.begin().thenPlay("misc.eat");
 
 	public DeinotheriumEntity(EntityType<? extends DeinotheriumEntity> entityType, Level world) {
 		super(entityType, world);
+	}
 
-		setParts(
-				new AoAEntityPart<>(this, getBbWidth(), 1.625f, 0, 1.3125f, getBbWidth()),
-				new AoAEntityPart<>(this, 1, 1, 0, 1.9375f, getBbWidth() + 1.5f).setDamageMultiplier(1.25f),
-				new AoAEntityPart<>(this, getBbWidth(), 1.75f, 0, 1.3125f, -getBbWidth() * 0.5f).setDamageMultiplier(0.9f)
-		);
+	@Override
+	public MultipartBuilder<? extends DeinotheriumEntity> definePartEntities() {
+		return MultipartBuilder.of(this,
+										  Part.sized(getBbWidth(), 1.625f).up(1.3125f).adjacentForward().then(
+												  Part.sized(1, 1).up(0.616f).adjacentForward().damageMod(1.25f)),
+										  Part.sized(getBbWidth(), 1.75f).up(1.3125f).back(0).damageMod(0.5f));
 	}
 
 	@Override
@@ -147,10 +151,10 @@ public class DeinotheriumEntity extends AoAAnimal<DeinotheriumEntity> {
 																entity.getNavigation().stop();
 																BrainUtils.clearMemory(entity, MemoryModuleType.PATH);
 
-																AoAScheduler.scheduleSyncronisedTask(() -> {
+																AoAScheduler.schedule(40, tick -> {
 																	if (pos.distSqr(entity.blockPosition()) <= 20 && level().getBlockState(pos).is(BlockTags.LEAVES))
 																		level().destroyBlock(pos, false, entity);
-																}, 40);
+																});
 															}
 														}
 													}
@@ -195,8 +199,8 @@ public class DeinotheriumEntity extends AoAAnimal<DeinotheriumEntity> {
 		return new DeinotheriumEntity(AoAAnimals.DEINOTHERIUM.get(), level);
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Entity> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT.and((entityType, level, spawnType, pos, rand) -> {
+	public static SpawnPlacements.SpawnPredicate<DeinotheriumEntity> spawnRules(EntityType<DeinotheriumEntity> entityType) {
+		return EntitySpawnConditions.create(entityType).and((entityType2, level, spawnType, pos, rand) -> {
 			if (!MobSpawnType.ignoresLightRequirements(spawnType) && level.getRawBrightness(pos, 0) <= 8)
 				return false;
 

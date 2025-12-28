@@ -11,7 +11,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class PrimordialGreatblade extends BaseGreatblade {
+public class PrimordialGreatblade extends AoAGreatblade {
 	public PrimordialGreatblade(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

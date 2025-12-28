@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.OreFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
-import net.tslat.aoa3.library.object.PositionTableSet;
+import net.tslat.aoa3.library.object.container.PositionTableSet;
 
 public class FluidOreFeature extends OreFeature {
     public FluidOreFeature(Codec<OreConfiguration> codec) {

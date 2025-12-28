@@ -18,8 +18,8 @@ import net.tslat.aoa3.event.dynamic.DynamicEventSubscriber;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 
 import java.util.List;
 import java.util.Optional;
@@ -71,14 +71,14 @@ public class EnchantEntityEquipment extends AoAAbility.Instance {
 
 				level.playSound(null, target.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1, 1);
 
-				TELParticlePacket packet = new TELParticlePacket();
+				TMEParticlePacket packet = new TMEParticlePacket();
 
 				for (int i = 0; i < 100; i++) {
 					packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.GLOW, target)
-							.colourOverride(player.getRandom().nextIntBetweenInclusive(100, 220), 0, 255, 255));
+							.colourTint(player.getRandom().nextIntBetweenInclusive(100, 220), 0, 255, 255));
 				}
 
-				packet.sendToAllPlayersTrackingEntity(level, target);
+				packet.sendToAllPlayersTrackingEntity(target);
 
 				ev.setCanceled(true);
 			}

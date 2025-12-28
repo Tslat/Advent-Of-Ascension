@@ -14,7 +14,7 @@ import net.minecraft.world.phys.AABB;
 import net.tslat.aoa3.content.entity.misc.LottoTotemEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -52,7 +52,7 @@ public class LottoTotem extends Item {
 			if (populateSpawnPositions(world, pos, spawnPositions)) {
 				player.getItemInHand(context.getHand()).shrink(1);
 
-				int selectedWinner = RandomUtil.randomNumberUpTo(5);
+				int selectedWinner = RandomUtil.numberUpTo(5);
 				UUID winningUUID = Mth.createInsecureUUID();
 
 				for (BlockPos spawnPos : spawnPositions) {

@@ -8,7 +8,7 @@ import net.tslat.aoa3.client.render.entity.projectile.TexturedProjectileRenderer
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.cannon.HeavyRedCannonballEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class HeavyRedCannonballRenderer extends TexturedProjectileRenderer<HeavyRedCannonballEntity> {
 	public HeavyRedCannonballRenderer(final EntityRendererProvider.Context manager, final ResourceLocation textureResource) {
@@ -21,7 +21,7 @@ public class HeavyRedCannonballRenderer extends TexturedProjectileRenderer<Heavy
 
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
 				.spawnNTimes(8)
-				.colourOverride(ColourUtil.RED)
-				.spawnParticles(entity.level());
+				.colourTint(ColourUtil.RED)
+				.spawnClientParticles(entity.level());
 	}
 }

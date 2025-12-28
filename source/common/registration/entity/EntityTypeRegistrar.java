@@ -128,7 +128,7 @@ public class EntityTypeRegistrar<T extends Entity> extends EntityType.Builder<T>
 
     @Override
     public EntityTypeRegistrar<T> vehicleAttachment(Vec3 pAttachPoint) {
-        return this.attach(EntityAttachment.VEHICLE, pAttachPoint);
+        return this.attach(EntityAttachment.VEHICLE, pAttachPoint.multiply(1, -1, 1));
     }
 
     @Override

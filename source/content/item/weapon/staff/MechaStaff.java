@@ -1,12 +1,9 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
-import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import net.minecraft.Util;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -14,61 +11,42 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.phys.AABB;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
-import net.tslat.aoa3.content.entity.projectile.staff.LyonicShotEntity;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
 import net.tslat.aoa3.util.AttributeUtil;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.object.RayTrace;
+import net.tslat.tme.api.particle.ParticleBuilder;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MechaStaff extends BaseStaff<Object> {
+public class MechaStaff extends AoAStaff<Object> {
 	private static final AttributeModifier DEBUFF = new AttributeModifier(AdventOfAscension.id("mecha_staff_debuff"), -0.5, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
 
 	public MechaStaff(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getCastingSound() {
-		return AoASounds.ITEM_STAFF_CAST.get();
-	}
-
-	public static Object2IntMap<Item> getDefaultRunes() {
-		return Util.make(new Object2IntArrayMap<>(), runes -> {
-			runes.put(AoAItems.WIND_RUNE.get(), 2);
-			runes.put(AoAItems.DISTORTION_RUNE.get(), 1);
-			runes.put(AoAItems.POWER_RUNE.get(), 1);
-		});
+	public void cast(ServerLevel level, LivingEntity caster, ItemStack staff, InteractionHand hand, Object args) {
+		fireProjectile(level, caster, staff, hand, AoAProjectiles.LYONIC_SHOT);
 	}
 
 	@Override
-	public void cast(ServerLevel level, ItemStack staff, LivingEntity caster, Object args) {
-		level.addFreshEntity(new LyonicShotEntity(caster, this, 60));
-	}
+	protected void onDamageEntity(ServerLevel level, @Nullable WeaponProjectile projectile, @Nullable WeaponFiringContext context, @Nullable RayTrace<?> rayTrace, Entity hitEntity, float damage) {
+		if (level instanceof ServerLevel serverLevel && hitEntity instanceof LivingEntity target && EntityUtil.areProbablyEnemies(hitEntity, projectile.getShooter())) {
+			if (AttributeUtil.getAttribute(target, Attributes.ARMOR).filter(instance -> instance.getValue() > 0 && !instance.hasModifier(DEBUFF.id())).isPresent()) {
+				AttributeUtil.applyTransientModifier(target, Attributes.ARMOR, DEBUFF);
 
-	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		if (target instanceof LivingEntity entity) {
-			if (!entity.level().isClientSide && AttributeUtil.getAttribute(entity, Attributes.ARMOR).filter(instance -> instance.getValue() > 0 && !instance.hasModifier(DEBUFF.id())).isPresent()) {
-				AttributeUtil.applyTransientModifier(entity, Attributes.ARMOR, DEBUFF);
-				AABB bounds = entity.getBoundingBox();
-
-				for (int i = 0; i < 8; i++) {
-					((ServerLevel)entity.level()).sendParticles(ParticleTypes.TOTEM_OF_UNDYING, bounds.minX + RandomUtil.randomValueUpTo(entity.getBbWidth()), bounds.maxY + 0.1d, bounds.minZ + RandomUtil.randomValueUpTo(entity.getBbWidth()), 1, 0, 0, 0, 0);
-				}
+				ParticleBuilder.forRandomPosInCircleRadius(ParticleTypes.TOTEM_OF_UNDYING, target.position().add(0, target.getBbHeight() + 0.1f, 0), target.getBbWidth())
+						.spawnNTimes(8)
+						.sendToAllPlayersTrackingEntity(target);
 			}
-
-			return true;
 		}
-
-		return false;
 	}
 
 	@Override

@@ -1,45 +1,35 @@
 package net.tslat.aoa3.content.item.weapon.cannon;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoASounds;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
 import net.tslat.aoa3.content.entity.projectile.cannon.HeavyShadowballEntity;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.object.builder.EffectBuilder;
+import net.tslat.tme.api.object.RayTrace;
 
 import java.util.List;
 
-public class GhastBlaster extends BaseCannon {
+public class GhastBlaster extends AoACannon {
 	public GhastBlaster(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_LIGHT_CANNON_FIRE.get();
+	public WeaponProjectile createProjectileEntity(Level level, WeaponFiringContext context) {
+		return new HeavyShadowballEntity(level, context);
 	}
 
 	@Override
-	public BaseBullet createProjectileEntity(LivingEntity shooter, ItemStack gunStack, InteractionHand hand) {
-		return new HeavyShadowballEntity(shooter, this, hand, 120, 0);
-	}
-
-	@Override
-	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
-		if (target instanceof LivingEntity)
-			EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WITHER, 100).level(2));
+	protected void onDamageEntity(Level level, WeaponProjectile projectile, RayTrace<?> rayTrace, Entity hitEntity, float damage) {
+		EntityUtil.applyPotions(hitEntity, projectile.getShooter(), new EffectBuilder(MobEffects.WITHER, 100).level(2));
 	}
 
 	@Override

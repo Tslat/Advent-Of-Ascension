@@ -22,7 +22,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.WhiteBallEntity;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 
 
@@ -74,7 +74,7 @@ public class MiskelEntity extends AoARangedMob<MiskelEntity> {
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		EntityUtil.applyPotions(target, RandomUtil.getRandomSelection(
+		EntityUtil.applyPotions(target, RandomUtil.getselection(
 				new EffectBuilder(MobEffects.BLINDNESS, 120),
 				new EffectBuilder(MobEffects.WITHER, 80).level(7)
 		));

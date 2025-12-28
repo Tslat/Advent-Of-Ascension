@@ -9,7 +9,7 @@
       "item": "aoa3:unpowered_rune"
     },
     "C": {
-      "item": "minecraft:ender_pearl"
+      "tag": "c:ender_pearls"
     }
   },
   "pattern": [

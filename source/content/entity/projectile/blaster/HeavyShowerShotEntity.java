@@ -1,28 +1,22 @@
 package net.tslat.aoa3.content.entity.projectile.blaster;
 
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
-import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
-import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
+import net.tslat.aoa3.content.entity.projectile.base.NonPhysicalWeaponProjectile;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
 
-public class HeavyShowerShotEntity extends BaseEnergyShot {
-	public HeavyShowerShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
-		super(entityType, world);
-	}
-	
-	public HeavyShowerShotEntity(Level world) {
-		super(AoAProjectiles.HEAVY_SHOWER_SHOT.get(), world);
+public class HeavyShowerShotEntity extends NonPhysicalWeaponProjectile {
+	public HeavyShowerShotEntity(EntityType<? extends HeavyShowerShotEntity> entityType, Level level) {
+		super(entityType, level);
 	}
 
-	public HeavyShowerShotEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, int maxAge) {
-		super(AoAProjectiles.HEAVY_SHOWER_SHOT.get(), shooter, weapon, maxAge);
+	public HeavyShowerShotEntity(EntityType<? extends HeavyShowerShotEntity> entityType, Level level, WeaponFiringContext context) {
+		super(entityType, level, context);
 	}
 
-	public HeavyShowerShotEntity(Level world, double x, double y, double z) {
-		super(AoAProjectiles.HEAVY_SHOWER_SHOT.get(), world, x, y, z);
+	public HeavyShowerShotEntity(Level level, WeaponFiringContext context) {
+		this(AoAProjectiles.HEAVY_SHOWER_SHOT.get(), level, context);
 	}
 
 	@Override

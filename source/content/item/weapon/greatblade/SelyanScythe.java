@@ -14,7 +14,7 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import java.util.List;
 
-public class SelyanScythe extends BaseGreatblade {
+public class SelyanScythe extends AoAGreatblade {
 	public SelyanScythe(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

@@ -3,31 +3,31 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:baronyte_nugget"
+      "tag": "c:nuggets/baronyte"
     },
     {
-      "item": "aoa3:baronyte_nugget"
+      "tag": "c:nuggets/baronyte"
     },
     {
-      "item": "aoa3:baronyte_nugget"
+      "tag": "c:nuggets/baronyte"
     },
     {
-      "item": "aoa3:baronyte_nugget"
+      "tag": "c:nuggets/baronyte"
     },
     {
-      "item": "aoa3:baronyte_nugget"
+      "tag": "c:nuggets/baronyte"
     },
     {
-      "item": "aoa3:baronyte_nugget"
+      "tag": "c:nuggets/baronyte"
     },
     {
-      "item": "aoa3:baronyte_nugget"
+      "tag": "c:nuggets/baronyte"
     },
     {
-      "item": "aoa3:baronyte_nugget"
+      "tag": "c:nuggets/baronyte"
     },
     {
-      "item": "aoa3:baronyte_nugget"
+      "tag": "c:nuggets/baronyte"
     }
   ],
   "result": {

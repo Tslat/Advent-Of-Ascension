@@ -16,7 +16,7 @@ import net.tslat.aoa3.common.menu.generic.GenericRecipeInput;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.block.AoABlockEntities;
 import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.library.object.GenericItemStackHandler;
+import net.tslat.aoa3.library.object.extension.GenericItemStackHandler;
 import net.tslat.aoa3.util.LocaleUtil;
 
 public class InfusedPressBlockEntity extends GenericContainerBlockEntity {

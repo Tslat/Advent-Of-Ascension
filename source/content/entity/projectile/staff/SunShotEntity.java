@@ -1,32 +1,31 @@
 package net.tslat.aoa3.content.entity.projectile.staff;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
-import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
+import net.tslat.aoa3.content.entity.projectile.base.NonPhysicalWeaponProjectile;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.library.builder.AoAExplosionBuilder;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.tme.api.explosion.StandardExplosion;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 
-public class SunShotEntity extends BaseEnergyShot {
-	public SunShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
-		super(entityType, world);
-	}
-	
-	public SunShotEntity(Level world) {
-		super(AoAProjectiles.SUN_SHOT.get(), world);
+public class SunShotEntity extends NonPhysicalWeaponProjectile {
+	public SunShotEntity(EntityType<? extends SunShotEntity> entityType, Level level) {
+		super(entityType, level);
 	}
 
-	public SunShotEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, int maxAge) {
-		super(AoAProjectiles.SUN_SHOT.get(), shooter, weapon, maxAge);
+	public SunShotEntity(EntityType<? extends SunShotEntity> entityType, Level level, WeaponFiringContext context) {
+		super(entityType, level, context);
 	}
 
-	public SunShotEntity(Level world, double x, double y, double z) {
-		super(AoAProjectiles.SUN_SHOT.get(), world, x, y, z);
+	public SunShotEntity(Level level, WeaponFiringContext context) {
+		this(AoAProjectiles.SUN_SHOT.get(), level, context);
 	}
 
 	@Override
@@ -35,19 +34,20 @@ public class SunShotEntity extends BaseEnergyShot {
 
 		setDeltaMovement(getDeltaMovement().multiply(0.3d, 0.3d, 0.3d));
 
-		for (LivingEntity e : level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(10), EntityUtil::isHostileMob)) {
-			if (!e.isOnFire() && !e.fireImmune())
-				e.igniteForSeconds(2);
-		}
+		if (level() instanceof ServerLevel level) {
+			for (LivingEntity entity : EntityRetrievalUtil.getEntities(this, 10, LivingEntity.class, target -> !target.fireImmune() && !target.isOnFire() && EntityUtil.areProbablyEnemies(target, getShooter()))) {
+				entity.igniteForSeconds(2);
+			}
 
-		if (getAge() >= 260) {
-			WorldUtil.createExplosion(getOwner(), level(), this, 3.5f);
-			discard();
+			if (this.tickCount >= 260) {
+				AoAExplosionBuilder.at(this, AoAExplosions.SUN_STAFF, StandardExplosion::new).explode();
+				discard();
+			}
 		}
 	}
 
 	@Override
 	protected void onHit(HitResult result) {
-		setDeltaMovement(new Vec3(0, level().getBlockState(blockPosition().below()).getBlock() != Blocks.AIR ? 1 : getDeltaMovement().y(), 0));
+		setDeltaMovement(new Vec3(0, !level().getBlockState(blockPosition().below()).isAir() ? 1 : getDeltaMovement().y(), 0));
 	}
 }

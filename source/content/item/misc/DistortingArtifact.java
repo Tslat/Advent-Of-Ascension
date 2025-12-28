@@ -15,7 +15,7 @@ import net.neoforged.neoforge.event.EventHooks;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class DistortingArtifact extends Item {
 				entity.fallDistance = -255;
 
 				if (entity instanceof LivingEntity) {
-					EntityUtil.applyPotions(entity, new EffectBuilder(MobEffects.BLINDNESS, 40).isAmbient().hideParticles());
+					EntityUtil.applyPotions(entity, entity, new EffectBuilder(MobEffects.BLINDNESS, 40).isAmbient().hideParticles());
 
 					if (entity instanceof ServerPlayer pl)
 						ItemUtil.damageItemForUser(pl.serverLevel(), stack, 1, pl, item -> {

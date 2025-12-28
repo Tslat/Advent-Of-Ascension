@@ -5,7 +5,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,7 +16,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.block.generation.log.LogBlock;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 public class Chainsaw extends BaseAxe {
 	public Chainsaw(Tier tier, Item.Properties properties) {
@@ -35,7 +36,7 @@ public class Chainsaw extends BaseAxe {
 			entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(), AoASounds.ITEM_CHAINSAW_USE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 
 			if (state.getBlock() instanceof LogBlock || state.is(BlockTags.LOGS))
-				entity.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 10, 30, true, false));
+				EntityUtil.applyPotions(entity, entity, new EffectBuilder(MobEffects.DIG_SPEED, 10).level(30).isAmbient().hideParticles().hideEffectIcon());
 		}
 
 		return super.mineBlock(stack, level, state, pos, entity);

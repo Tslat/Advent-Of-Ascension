@@ -5,7 +5,7 @@ import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.mob.GreenGuardianShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class GreenGuardianShotRenderer extends ParticleProjectileRenderer<GreenGuardianShotEntity> {
 	public GreenGuardianShotRenderer(final EntityRendererProvider.Context manager) {
@@ -15,7 +15,7 @@ public class GreenGuardianShotRenderer extends ParticleProjectileRenderer<GreenG
 	@Override
 	protected void addParticles(GreenGuardianShotEntity entity, float partialTicks) {
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
-				.colourOverride(ColourUtil.GREEN)
-				.spawnParticles(entity.level());
+				.colourTint(ColourUtil.GREEN)
+				.spawnClientParticles(entity.level());
 	}
 }

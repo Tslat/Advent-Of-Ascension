@@ -27,6 +27,16 @@
     [],
     [
       "aoa3:baron_stone_pillars"
+    ],
+    [],
+    [
+      "aoa3:varsium_ore",
+      "aoa3:baronyte_ore"
+    ],
+    [],
+    [],
+    [
+      "aoa3:barathos_sand_shrubs"
     ]
   ],
   "has_precipitation": false,

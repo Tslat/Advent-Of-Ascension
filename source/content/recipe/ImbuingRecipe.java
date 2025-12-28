@@ -30,8 +30,8 @@ import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.content.item.misc.AspectFocusItem;
-import net.tslat.aoa3.util.CodecUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.tme.api.util.StreamCodecUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -249,7 +249,7 @@ public class ImbuingRecipe implements Recipe<ImbuingRecipe.ImbuingRecipeInput> {
 				ByteBufCodecs.BOOL, ImbuingRecipe::showNotification,
 				ByteBufCodecs.holderRegistry(Registries.ENCHANTMENT), recipe -> recipe.enchant.left(),
 				ByteBufCodecs.VAR_INT, recipe -> recipe.enchant.rightInt(),
-				CodecUtil.streamNonNullList(Ingredient.CONTENTS_STREAM_CODEC, Ingredient.EMPTY), ImbuingRecipe::getIngredients,
+				StreamCodecUtil.nonNullList(Ingredient.CONTENTS_STREAM_CODEC, Ingredient.EMPTY), ImbuingRecipe::getIngredients,
 				(imbuingLevelReq, xpOverride, showUnlockNotification, enchant, enchantLevel, foci) -> {
 					Ingredient powerSource = foci.getFirst();
 					NonNullList<Ingredient> patchedIngredients = NonNullList.withSize(foci.size() - 1, Ingredient.EMPTY);

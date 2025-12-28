@@ -22,10 +22,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.common.registration.entity.AoAMonsters;
 import net.tslat.aoa3.common.registration.worldgen.AoAWorldgenKeys;
 import net.tslat.aoa3.content.entity.monster.precasia.AttercopusEntity;
-import net.tslat.aoa3.library.object.AllDirections;
+import net.tslat.aoa3.library.constant.AllDirections;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntitySpawningUtil;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;

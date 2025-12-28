@@ -8,7 +8,7 @@ import net.neoforged.neoforge.client.event.RenderFrameEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.tslat.aoa3.client.gui.overlay.ScopeOverlayRenderer;
 import net.tslat.aoa3.common.registration.AoAConfigs;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 import java.util.Optional;

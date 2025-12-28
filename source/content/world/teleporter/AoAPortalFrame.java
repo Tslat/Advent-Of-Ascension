@@ -14,8 +14,8 @@ import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 
 import java.util.ArrayList;
 
@@ -172,7 +172,7 @@ public class AoAPortalFrame {
     }
 
     public static void lightPortalFrame(ServerLevel level, BlockPos basePos, PortalDirection direction, PortalBlock portalBlock) {
-        final TELParticlePacket packet = new TELParticlePacket();
+        final TMEParticlePacket packet = new TMEParticlePacket();
         final int colour = portalBlock.getParticleColour(portalBlock.defaultBlockState());
 
         switch (direction) {
@@ -185,10 +185,10 @@ public class AoAPortalFrame {
 
                         for (int i = 0; i < 10; i++) {
                             if (level.random.nextBoolean()) {
-                                packet.particle(ParticleBuilder.forRandomPosInBounds(ParticleTypes.END_ROD, new AABB(pos)).spawnNTimes(5).scaleMod(0.5f).colourOverride(0, 0, 0, 1f));
+                                packet.particle(ParticleBuilder.forRandomPosInBounds(ParticleTypes.END_ROD, new AABB(pos)).spawnNTimes(5).scaleMod(0.5f).colourTint(0, 0, 0, 1f));
                             }
                             else {
-                                packet.particle(ParticleBuilder.forRandomPosInBounds(ParticleTypes.END_ROD, new AABB(pos)).spawnNTimes(5).scaleMod(0.5f).colourOverride(colour));
+                                packet.particle(ParticleBuilder.forRandomPosInBounds(ParticleTypes.END_ROD, new AABB(pos)).spawnNTimes(5).scaleMod(0.5f).colourTint(colour));
                             }
                         }
                     }
@@ -203,10 +203,10 @@ public class AoAPortalFrame {
 
                         for (int i = 0; i < 10; i++) {
                             if (level.random.nextBoolean()) {
-                                packet.particle(ParticleBuilder.forRandomPosInBounds(ParticleTypes.END_ROD, new AABB(pos)).spawnNTimes(5).scaleMod(0.5f).colourOverride(0, 0, 0, 1f));
+                                packet.particle(ParticleBuilder.forRandomPosInBounds(ParticleTypes.END_ROD, new AABB(pos)).spawnNTimes(5).scaleMod(0.5f).colourTint(0, 0, 0, 1f));
                             }
                             else {
-                                packet.particle(ParticleBuilder.forRandomPosInBounds(ParticleTypes.END_ROD, new AABB(pos)).spawnNTimes(5).scaleMod(0.5f).colourOverride(colour));
+                                packet.particle(ParticleBuilder.forRandomPosInBounds(ParticleTypes.END_ROD, new AABB(pos)).spawnNTimes(5).scaleMod(0.5f).colourTint(colour));
                             }
                         }
                     }
@@ -216,7 +216,7 @@ public class AoAPortalFrame {
                 break;
         }
 
-        packet.sendToAllNearbyPlayers(level, Vec3.atBottomCenterOf(basePos), 32);
+        packet.sendToAllPlayersNearby(level, Vec3.atBottomCenterOf(basePos), 32);
     }
 
     public enum PortalDirection {

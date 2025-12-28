@@ -13,7 +13,7 @@
         "condition": "minecraft:entity_properties",
         "entity": "this",
         "predicate": {
-          "nbt": "{NeoForgeData:{spawned_by_spawner:1b}}"
+          "nbt": "{NeoForgeData:{aoa3_spawned_by_spawner:1b}}"
         }
       }
     }

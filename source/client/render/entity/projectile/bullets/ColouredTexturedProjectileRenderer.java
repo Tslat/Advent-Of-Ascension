@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.tslat.aoa3.client.render.entity.projectile.TexturedProjectileRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class ColouredTexturedProjectileRenderer<T extends ThrowableProjectile> extends TexturedProjectileRenderer<T> {
 	private final int colour;
@@ -24,7 +24,7 @@ public class ColouredTexturedProjectileRenderer<T extends ThrowableProjectile> e
 
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
 				.spawnNTimes(8)
-				.colourOverride(this.colour)
-				.spawnParticles(entity.level());
+				.colourTint(this.colour)
+				.spawnClientParticles(entity.level());
 	}
 }

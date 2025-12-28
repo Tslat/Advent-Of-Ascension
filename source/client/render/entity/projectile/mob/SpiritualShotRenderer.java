@@ -5,7 +5,7 @@ import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.mob.SpiritualShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class SpiritualShotRenderer extends ParticleProjectileRenderer<SpiritualShotEntity> {
 	public SpiritualShotRenderer(final EntityRendererProvider.Context manager) {
@@ -15,7 +15,7 @@ public class SpiritualShotRenderer extends ParticleProjectileRenderer<SpiritualS
 	@Override
 	protected void addParticles(SpiritualShotEntity entity, float partialTicks) {
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_SWIRL.get(), entity.position())
-				.colourOverride(ColourUtil.YELLOW)
-				.spawnParticles(entity.level());
+				.colourTint(ColourUtil.YELLOW)
+				.spawnClientParticles(entity.level());
 	}
 }

@@ -4,7 +4,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
-import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMob;
+import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMobOld;
 
 public class CottonCandorShotEntity extends BaseMobProjectile {
 	public CottonCandorShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
@@ -15,7 +15,7 @@ public class CottonCandorShotEntity extends BaseMobProjectile {
 		super(AoAProjectiles.COTTON_CANDOR_SHOT.get(), world);
 	}
 
-	public CottonCandorShotEntity(AoAFlyingRangedMob shooter, Type projectileType) {
+	public CottonCandorShotEntity(AoAFlyingRangedMobOld shooter, Type projectileType) {
 		super(AoAProjectiles.COTTON_CANDOR_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 

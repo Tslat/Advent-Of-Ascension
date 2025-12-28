@@ -4,7 +4,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 
-public class ShyregemBow extends BaseBow {
+public class ShyregemBow extends AoABow {
 	public ShyregemBow(Item.Properties properties) {
 		super(properties);
 	}

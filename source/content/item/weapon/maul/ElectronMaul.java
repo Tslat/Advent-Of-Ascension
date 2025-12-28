@@ -8,20 +8,25 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.item.AoADataComponents;
-import net.tslat.aoa3.library.constant.AttackSpeed;
+import net.tslat.aoa3.library.object.extension.MutableFloat;
 import net.tslat.aoa3.player.resource.AoAResource;
-import net.tslat.aoa3.util.*;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import java.util.List;
 
-public class ElectronMaul extends BaseMaul {
-	public ElectronMaul() {
-		super(25.0f, AttackSpeed.THIRD, 2.5d, 1500);
+public class ElectronMaul extends AoAMaul {
+	public ElectronMaul(Tier tier, Item.Properties properties) {
+		super(tier, properties);
 	}
 
 	@Override
@@ -34,11 +39,11 @@ public class ElectronMaul extends BaseMaul {
 
 				if (damageScaling != currentCalcBuff) {
 					stack.set(AoADataComponents.DAMAGE_SCALING, currentCalcBuff);
-					livingEntity.getAttribute(Attributes.ATTACK_KNOCKBACK).addOrUpdateTransientModifier(getKnockbackModifier(damageScaling == 0 ? 1 : damageScaling));
+					livingEntity.getAttribute(Attributes.ATTACK_KNOCKBACK).addOrUpdateTransientModifier(getKnockbackModifier(stack, damageScaling == 0 ? 1 : damageScaling));
 				}
 			}
 			else if (damageScaling != 0 && livingEntity.getMainHandItem().isEmpty()) {
-				livingEntity.getAttribute(Attributes.ATTACK_KNOCKBACK).addOrUpdateTransientModifier(getKnockbackModifier(1));
+				livingEntity.getAttribute(Attributes.ATTACK_KNOCKBACK).addOrUpdateTransientModifier(getKnockbackModifier(stack, 1));
 				stack.set(AoADataComponents.DAMAGE_SCALING, 0f);
 			}
 		}
@@ -48,8 +53,8 @@ public class ElectronMaul extends BaseMaul {
 	public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
 		float attackStr = player.getAttackStrengthScale(0);
 
-		stack.set(AoADataComponents.MELEE_SWING_STRENGTH, attackStr);
-		player.getAttribute(Attributes.ATTACK_KNOCKBACK).addOrUpdateTransientModifier(getKnockbackModifier(attackStr * getKnockbackMultiplier(player)));
+		stack.get(AoADataComponents.MELEE_SWING_STRENGTH).setValue(attackStr);
+		player.getAttribute(Attributes.ATTACK_KNOCKBACK).addOrUpdateTransientModifier(getKnockbackModifier(stack, attackStr * getKnockbackMultiplier(player)));
 
 		return false;
 	}
@@ -57,9 +62,9 @@ public class ElectronMaul extends BaseMaul {
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		if (attacker.level() instanceof ServerLevel level) {
-			doMeleeEffect(stack, target, attacker, stack.getOrDefault(AoADataComponents.MELEE_SWING_STRENGTH, 1f));
+			doMeleeEffect(stack, target, attacker, stack.getOrDefault(AoADataComponents.MELEE_SWING_STRENGTH, new MutableFloat(1f)).getValue());
 			ItemUtil.damageItemForUser(level, stack, attacker, InteractionHand.MAIN_HAND);
-			attacker.getAttribute(Attributes.ATTACK_KNOCKBACK).addOrUpdateTransientModifier(getKnockbackModifier(1 * getKnockbackMultiplier(attacker)));
+			attacker.getAttribute(Attributes.ATTACK_KNOCKBACK).addOrUpdateTransientModifier(getKnockbackModifier(stack, 1 * getKnockbackMultiplier(attacker)));
 		}
 
 		return true;

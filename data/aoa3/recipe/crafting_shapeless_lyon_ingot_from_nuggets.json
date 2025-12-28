@@ -3,31 +3,31 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:lyon_nugget"
+      "tag": "c:nuggets/lyon"
     },
     {
-      "item": "aoa3:lyon_nugget"
+      "tag": "c:nuggets/lyon"
     },
     {
-      "item": "aoa3:lyon_nugget"
+      "tag": "c:nuggets/lyon"
     },
     {
-      "item": "aoa3:lyon_nugget"
+      "tag": "c:nuggets/lyon"
     },
     {
-      "item": "aoa3:lyon_nugget"
+      "tag": "c:nuggets/lyon"
     },
     {
-      "item": "aoa3:lyon_nugget"
+      "tag": "c:nuggets/lyon"
     },
     {
-      "item": "aoa3:lyon_nugget"
+      "tag": "c:nuggets/lyon"
     },
     {
-      "item": "aoa3:lyon_nugget"
+      "tag": "c:nuggets/lyon"
     },
     {
-      "item": "aoa3:lyon_nugget"
+      "tag": "c:nuggets/lyon"
     }
   ],
   "result": {

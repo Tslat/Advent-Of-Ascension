@@ -13,6 +13,8 @@ import net.tslat.aoa3.player.ServerPlayerDataManager;
 import java.util.List;
 
 public class RageResource extends AoAResource.Instance {
+	public static final float DEFAULT_MAX_VALUE = 100;
+	public static final float DEFAULT_PER_TICK_DRAIN = 0.01f;
 	private final List<DynamicEventSubscriber<?>> eventSubscribers = List.of(
 			afterTakingDamage(this::handleAfterDamaged),
 			listener(PlayerTickEvent.Pre.class, PlayerTickEvent.Pre::getEntity, this::handlePlayerTick));
@@ -25,8 +27,8 @@ public class RageResource extends AoAResource.Instance {
 	public RageResource(ServerPlayerDataManager plData, JsonObject jsonData) {
 		super(AoAResources.RAGE.get(), plData);
 
-		this.maxValue = Math.max(0, GsonHelper.getAsFloat(jsonData, "max_value"));
-		this.perTickDrain = GsonHelper.getAsFloat(jsonData, "per_tick_drain");
+		this.maxValue = Math.max(0, GsonHelper.getAsFloat(jsonData, "max_value", DEFAULT_MAX_VALUE));
+		this.perTickDrain = GsonHelper.getAsFloat(jsonData, "per_tick_drain", DEFAULT_PER_TICK_DRAIN);
 	}
 
 	public RageResource(CompoundTag nbtData) {
@@ -49,6 +51,7 @@ public class RageResource extends AoAResource.Instance {
 	@Override
 	public void setValue(float amount) {
 		this.value = Mth.clamp(amount, 0, getMaxValue());
+		this.needsSync = true;
 	}
 
 	@Override
@@ -77,6 +80,9 @@ public class RageResource extends AoAResource.Instance {
 		else {
 			nbt.putFloat("value", getCurrentValue());
 		}
+
+		if (!forClientSetup)
+			this.needsSync = false;
 
 		return nbt;
 	}

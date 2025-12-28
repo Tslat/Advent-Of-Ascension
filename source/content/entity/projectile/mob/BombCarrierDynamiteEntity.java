@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.entity.projectile.mob;
 
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -11,8 +10,9 @@ import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.monster.overworld.BombCarrierEntity;
-import net.tslat.aoa3.library.builder.SoundBuilder;
-import net.tslat.aoa3.library.object.explosion.StandardExplosion;
+import net.tslat.aoa3.library.builder.AoAExplosionBuilder;
+import net.tslat.tme.api.explosion.StandardExplosion;
+import net.tslat.tme.api.sound.SoundBuilder;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
@@ -33,7 +33,7 @@ public class BombCarrierDynamiteEntity extends BaseMobProjectile implements GeoE
 		this.shooter = null;
 
 		if (level.isClientSide())
-			new SoundBuilder(AoASounds.LIT_FUSE).followEntity(this).category(SoundSource.HOSTILE).execute();
+			SoundBuilder.following(AoASounds.LIT_FUSE, this).category(getOwner() != null ? getOwner().getSoundSource() : getSoundSource()).play();
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class BombCarrierDynamiteEntity extends BaseMobProjectile implements GeoE
 
 	private void explode(Vec3 position) {
 		if (level() instanceof ServerLevel serverLevel)
-			new StandardExplosion(AoAExplosions.BOMB_CARRIER_DYNAMITE, serverLevel, this, position).explode();
+			AoAExplosionBuilder.at(serverLevel, position, AoAExplosions.BOMB_CARRIER_DYNAMITE, StandardExplosion::new).explodingEntity(this).explode();
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.client.render.entity.projectile.TexturedProjectileRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.cannon.HeavyWitherBallEntity;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class HeavyWitherBallRenderer extends TexturedProjectileRenderer<HeavyWitherBallEntity> {
 	public HeavyWitherBallRenderer(final EntityRendererProvider.Context manager, final ResourceLocation textureResource) {
@@ -20,8 +20,8 @@ public class HeavyWitherBallRenderer extends TexturedProjectileRenderer<HeavyWit
 
 		for (int i = 0; i < 8; i++) {
 			ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
-				.colourOverride(0, 0, 0, 1f)
-				.spawnParticles(entity.level());
+				.colourTint(0, 0, 0, 1f)
+				.spawnClientParticles(entity.level());
 		}
 	}
 }

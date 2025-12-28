@@ -34,7 +34,10 @@
     [],
     [],
     [],
-    [],
+    [
+      "aoa3:blazium_ore",
+      "aoa3:baronyte_ore"
+    ],
     [],
     [],
     [],

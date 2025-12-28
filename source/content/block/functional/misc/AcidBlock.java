@@ -21,7 +21,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 public class AcidBlock extends Block {
 	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 2, 16);
@@ -37,9 +37,9 @@ public class AcidBlock extends Block {
 
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-		if (entity instanceof Monster || (entity instanceof Player && !((Player)entity).isCreative())) {
+		if (entity instanceof Monster || (entity instanceof Player pl && !pl.isCreative())) {
 			entity.hurt(DamageUtil.miscDamage(AoADamageTypes.ACID, entity.level()), 4);
-			EntityUtil.applyPotions(entity, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 40).level(4));
+			EntityUtil.applyPotions(entity, null, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 40).level(4));
 		}
 	}
 

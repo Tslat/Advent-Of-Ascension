@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.entity.monster.precasia;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
@@ -15,20 +16,19 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.common.registration.worldgen.AoABiomes;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.library.object.EntityDataHolder;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.constant.DefaultAnimations;
 
 public class AttercopusEntity extends AoAMeleeMob<AttercopusEntity> {
-	public static final EntityDataHolder<Boolean> CLIMBING = EntityDataHolder.register(AttercopusEntity.class, EntityDataSerializers.BOOLEAN, false, entity -> entity.climbing, (entity, value) -> entity.climbing = value);
+	public static final EntityDataAccessor<Boolean> CLIMBING = makeSynchedData(AttercopusEntity.class, EntityDataSerializers.BOOLEAN);
 
 	private boolean climbing = false;
 
@@ -40,7 +40,7 @@ public class AttercopusEntity extends AoAMeleeMob<AttercopusEntity> {
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
 
-		registerDataParams(builder, CLIMBING);
+		builder.define(CLIMBING, false);
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class AttercopusEntity extends AoAMeleeMob<AttercopusEntity> {
 
 	@Override
 	public boolean onClimbable() {
-		return CLIMBING.get(this);
+		return getSynchedData(CLIMBING);
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class AttercopusEntity extends AoAMeleeMob<AttercopusEntity> {
 		super.tick();
 
 		if (!level().isClientSide)
-			CLIMBING.set(this, this.horizontalCollision);
+			setSynchedData(CLIMBING, this.horizontalCollision);
 	}
 
 	@Override
@@ -114,17 +114,17 @@ public class AttercopusEntity extends AoAMeleeMob<AttercopusEntity> {
 
 	@Override
 	protected void onAttack(Entity target) {
-		if (target instanceof LivingEntity livingTarget)
-			EntityUtil.applyPotions(livingTarget, new EffectBuilder(MobEffects.POISON, level().getDifficulty().getId() * 8 * 20));
+		if (target instanceof LivingEntity)
+			EntityUtil.applyPotions(target, this, new EffectBuilder(MobEffects.POISON, level().getDifficulty().getId() * 8 * 20));
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.and((entityType, level, spawnType, pos, rand) -> {
+	public static SpawnPlacements.SpawnPredicate<AttercopusEntity> spawnRules(EntityType<AttercopusEntity> entityType) {
+		return EntitySpawnConditions.createDayNightMonster(entityType).and((entityType2, level, spawnType, pos, rand) -> {
 			if (level.getLevel().dimension() != AoADimensions.PRECASIA)
 				return true;
 
 			if (pos.getY() <= 50)
-				return spawnType != MobSpawnType.NATURAL || rand.nextFloat() < 0.05f;
+				return !EntitySpawnConditions.isNaturalSpawn(spawnType) || rand.nextFloat() < 0.05f;
 
 			return level.getBiome(pos).is(AoABiomes.PRECASIAN_DESERT) && level.getSkyDarken() >= 4 && rand.nextFloat() < 0.05f * level.getCurrentDifficultyAt(pos).getEffectiveDifficulty();
 		});

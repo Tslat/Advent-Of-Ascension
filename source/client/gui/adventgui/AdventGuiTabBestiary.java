@@ -420,8 +420,8 @@ public class AdventGuiTabBestiary extends Screen {
 						if (openEntryInstance instanceof AoARangedMob) {
 							openEntryStatsLines.add(ChatFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.projectileStrength") + ChatFormatting.RESET + " " + ((AoARangedMob)openEntryInstance).getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE));
 						}
-						else if (openEntryInstance instanceof AoAFlyingRangedMob) {
-							openEntryStatsLines.add(ChatFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.projectileStrength") + ChatFormatting.RESET + " " + ((AoAFlyingRangedMob)openEntryInstance).getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE));
+						else if (openEntryInstance instanceof AoAFlyingRangedMobOld) {
+							openEntryStatsLines.add(ChatFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.projectileStrength") + ChatFormatting.RESET + " " + ((AoAFlyingRangedMobOld)openEntryInstance).getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE));
 						}
 					}
 

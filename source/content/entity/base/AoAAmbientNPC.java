@@ -4,6 +4,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializer;
+import net.minecraft.network.syncher.SyncedDataHolder;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
@@ -22,55 +24,33 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
-import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.object.EasyRandom;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-
 public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, GeoEntity {
 	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
-	private EntityDataHolder<?>[] dataParams;
 
 	public AoAAmbientNPC(EntityType<? extends PathfinderMob> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	@Override
-	protected void defineSynchedData(SynchedEntityData.Builder builder) {
-		super.defineSynchedData(builder);
-
-		if (this.dataParams == null)
-			this.dataParams = new EntityDataHolder<?>[0];
+	protected static <D> EntityDataAccessor<D> makeSynchedData(Class<? extends SyncedDataHolder> entityClass, EntityDataSerializer<D> serializer) {
+		return SynchedEntityData.defineId(entityClass, serializer);
 	}
 
-	@Override
-	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-		super.onSyncedDataUpdated(key);
-
-		for (EntityDataHolder<?> dataHolder : this.dataParams) {
-			if (dataHolder.checkSync(this, key))
-				break;
-		}
+	protected <D> D getSynchedData(EntityDataAccessor<D> data) {
+		return getEntityData().get(data);
 	}
 
-	protected final void registerDataParams(SynchedEntityData.Builder builder, EntityDataHolder<?>... params) {
-		EntityDataHolder<?>[] newArray = new EntityDataHolder[this.dataParams.length + params.length];
-
-		System.arraycopy(this.dataParams, 0, newArray, 0, this.dataParams.length);
-		System.arraycopy(params, 0, newArray, this.dataParams.length, params.length);
-
-		for (EntityDataHolder<?> param : params) {
-			param.defineDefault(builder);
-		}
-
-		this.dataParams = newArray;
+	protected <D> void setSynchedData(EntityDataAccessor<D> data, D value) {
+		getEntityData().set(data, value);
 	}
 
 	@Override
@@ -102,8 +82,8 @@ public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, GeoEnt
 		return null;
 	}
 
-	public RandomUtil.EasyRandom rand() {
-		return new RandomUtil.EasyRandom(this.random);
+	public EasyRandom rand() {
+		return EasyRandom.wrap(this.random);
 	}
 
 	@Nullable

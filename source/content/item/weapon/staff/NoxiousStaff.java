@@ -1,11 +1,8 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
-import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AreaEffectCloud;
@@ -16,76 +13,64 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
 import net.tslat.aoa3.content.entity.projectile.staff.NoxiousShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.tme.api.object.builder.EffectBuilder;
+import net.tslat.tme.api.object.RayTrace;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
 
-public class NoxiousStaff extends BaseStaff<Object> {
+public class NoxiousStaff extends AoAStaff<Object> {
 	public NoxiousStaff(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getCastingSound() {
-		return AoASounds.ITEM_NOXIOUS_STAFF_CAST.get();
-	}
-
-	public static Object2IntMap<Item> getDefaultRunes() {
-		return Util.make(new Object2IntArrayMap<>(), runes -> {
-			runes.put(AoAItems.WIND_RUNE.get(), 2);
-			runes.put(AoAItems.POISON_RUNE.get(), 2);
-			runes.put(AoAItems.STORM_RUNE.get(), 2);
-		});
+	public WeaponFiringContext.Builder createProjectileContext(ItemStack stack, @Nullable Entity shooter, InteractionHand hand) {
+		return super.createProjectileContext(stack, shooter, hand).degreesInaccuracy(13.33f);
 	}
 
 	@Override
-	public void cast(ServerLevel level, ItemStack staff, LivingEntity caster, Object args) {
-		level.addFreshEntity(new NoxiousShotEntity(caster, this, 60, 0, 0, 0));
-		level.addFreshEntity(new NoxiousShotEntity(caster, this, 60, 0.075f, 0.075f, 0));
-		level.addFreshEntity(new NoxiousShotEntity(caster, this, 60, -0.075f, 0, 0.075f));
-		level.addFreshEntity(new NoxiousShotEntity(caster, this, 60, 0, -0.075f, -0.075f));
-		level.addFreshEntity(new NoxiousShotEntity(caster, this, 60, -0.075f, 0.075f, -0.075f));
-		level.addFreshEntity(new NoxiousShotEntity(caster, this, 60, -0.075f, -0.075f, 0.075f));
-	}
+	public void cast(ServerLevel level, LivingEntity caster, ItemStack staff, InteractionHand hand, Object args) {
+		WeaponFiringContext firingContext = createProjectileContext(staff, caster, hand).build();
 
-	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		if (DamageUtil.doMagicProjectileAttack(shooter, shot, target, getDmg())) {
-			EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.POISON, 100).level(3));
-
-			return true;
+		for (int i = 0; i < 6; i++) {
+			fireProjectile(level, firingContext, NoxiousShotEntity::new, (context, projectile) ->
+					projectile.fromArmPos().shootingAtTarget(context.velocity(), context.inaccuracy()));
 		}
-
-		return false;
 	}
 
 	@Override
-	public void doBlockImpact(BaseEnergyShot shot, Vec3 pos, LivingEntity shooter) {
-		AreaEffectCloud cloud = new AreaEffectCloud(shot.level(), shot.getX(), shot.getY(), shot.getZ());
+	protected void onHitBlock(Level level, @Nullable WeaponProjectile projectile, @Nullable WeaponFiringContext context, @Nullable RayTrace<Void> rayTrace, BlockState hitBlock) {
+		spawnCloud(level, rayTrace.hitPos(), projectile.getShooter());
+	}
+
+	@Override
+	protected void onDamageEntity(ServerLevel level, @Nullable WeaponProjectile projectile, @Nullable WeaponFiringContext context, @Nullable RayTrace<?> rayTrace, Entity hitEntity, float damage) {
+		EntityUtil.applyPotions(hitEntity, projectile == null ? null : projectile.getShooter(), new EffectBuilder(MobEffects.POISON, 100).level(3));
+		spawnCloud(level, rayTrace.hitPos(), projectile.getShooter());
+	}
+
+	protected void spawnCloud(Level level, Vec3 location, @Nullable Entity caster) {
+		AreaEffectCloud cloud = new AreaEffectCloud(level, location.x, location.y, location.z);
 
 		cloud.setRadius(3);
 		cloud.setPotionContents(new PotionContents(Optional.of(Potions.STRONG_POISON), Optional.of(ColourUtil.RGB(51, 102, 0)), List.of(new MobEffectInstance(MobEffects.POISON, 100, 2, true, true))));
 		cloud.setDuration(3);
-		cloud.setOwner(shooter);
 
-		shot.level().addFreshEntity(cloud);
-	}
+		if (caster instanceof LivingEntity livingCaster)
+			cloud.setOwner(livingCaster);
 
-	@Override
-	public float getDmg() {
-		return 7f;
+		level.addFreshEntity(cloud);
 	}
 
 	@Override

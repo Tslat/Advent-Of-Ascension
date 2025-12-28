@@ -3,7 +3,6 @@ package net.tslat.aoa3.client.render.blockentity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,8 +19,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.content.block.blockentity.InfusionTableBlockEntity;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.internal.particle.transition.ToVelocityParticleTransition;
 
 public class
 InfusionTableRenderer implements BlockEntityRenderer<InfusionTableBlockEntity> {
@@ -75,11 +75,11 @@ InfusionTableRenderer implements BlockEntityRenderer<InfusionTableBlockEntity> {
 				ParticleBuilder.forPositions(new ItemParticleOption(ParticleTypes.ITEM, input), slotItemPos)
 						.scaleMod(0.125f)
 						.gravityOverride(0)
-						.velocity(0, 0, 0)
+						.velocity(velocity.x, velocity.y,	velocity.z)
+						.addTransition(ToVelocityParticleTransition.create(velocity))
 						.lifespan(30)
-						.particleConsumer(particle -> ((Particle)particle).setParticleSpeed(velocity.x, velocity.y,	velocity.z))
 						.cutoffDistance(20)
-						.spawnParticles(level);
+						.spawnClientParticles(level);
 			}
 		}
 
@@ -133,11 +133,11 @@ InfusionTableRenderer implements BlockEntityRenderer<InfusionTableBlockEntity> {
 				ParticleBuilder.forPositions(new ItemParticleOption(ParticleTypes.ITEM, stack), slotItemPos)
 						.scaleMod(0.125f)
 						.gravityOverride(0)
-						.velocity(0, 0, 0)
 						.lifespan(30)
-						.particleConsumer(particle -> ((Particle)particle).setParticleSpeed(velocity.x, velocity.y, velocity.z))
+						.velocity(velocity.x, velocity.y,	velocity.z)
+						.addTransition(ToVelocityParticleTransition.create(velocity))
 						.cutoffDistance(20)
-						.spawnParticles(level);
+						.spawnClientParticles(level);
 			}
 		}
 

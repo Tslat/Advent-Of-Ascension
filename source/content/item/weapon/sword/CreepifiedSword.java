@@ -8,11 +8,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
-public class CreepifiedSword extends BaseSword {
+public class CreepifiedSword extends AoASword {
 	public CreepifiedSword(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

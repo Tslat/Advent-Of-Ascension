@@ -3,31 +3,31 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:ghoulish_nugget"
+      "tag": "c:nuggets/ghoulish"
     },
     {
-      "item": "aoa3:ghoulish_nugget"
+      "tag": "c:nuggets/ghoulish"
     },
     {
-      "item": "aoa3:ghoulish_nugget"
+      "tag": "c:nuggets/ghoulish"
     },
     {
-      "item": "aoa3:ghoulish_nugget"
+      "tag": "c:nuggets/ghoulish"
     },
     {
-      "item": "aoa3:ghoulish_nugget"
+      "tag": "c:nuggets/ghoulish"
     },
     {
-      "item": "aoa3:ghoulish_nugget"
+      "tag": "c:nuggets/ghoulish"
     },
     {
-      "item": "aoa3:ghoulish_nugget"
+      "tag": "c:nuggets/ghoulish"
     },
     {
-      "item": "aoa3:ghoulish_nugget"
+      "tag": "c:nuggets/ghoulish"
     },
     {
-      "item": "aoa3:ghoulish_nugget"
+      "tag": "c:nuggets/ghoulish"
     }
   ],
   "result": {

@@ -2,6 +2,9 @@ package net.tslat.aoa3.content.entity.misc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializer;
+import net.minecraft.network.syncher.SyncedDataHolder;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -16,24 +19,43 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public abstract class BasicMiscEntity extends Entity implements GeoEntity {
 	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+	protected boolean isUnmoveable = false;
+	protected int lifespan = -1;
 
 	public BasicMiscEntity(EntityType<?> entityType, Level level) {
 		super(entityType, level);
 	}
 
+	protected static <D> EntityDataAccessor<D> makeSynchedData(Class<? extends SyncedDataHolder> entityClass, EntityDataSerializer<D> serializer) {
+		return SynchedEntityData.defineId(entityClass, serializer);
+	}
+
+	protected <D> D getSynchedData(EntityDataAccessor<D> data) {
+		return getEntityData().get(data);
+	}
+
+	protected <D> void setSynchedData(EntityDataAccessor<D> data, D value) {
+		getEntityData().set(data, value);
+	}
+
 	@Override
 	public boolean isPushable() {
-		return isAlive();
+		return !this.isUnmoveable && isAlive();
+	}
+
+	@Override
+	public boolean isPushedByFluid(FluidType type) {
+		return !this.isUnmoveable && super.isPushedByFluid(type);
 	}
 
 	@Override
 	public boolean canBeCollidedWith() {
-		return isAlive();
+		return !this.isUnmoveable && isAlive();
 	}
 
 	@Override
 	public boolean isPickable() {
-		return isAlive();
+		return false;
 	}
 
 	@Override
@@ -62,6 +84,9 @@ public abstract class BasicMiscEntity extends Entity implements GeoEntity {
 
 		if (getDeltaMovement().lengthSqr() != 0)
 			move(MoverType.SELF, getDeltaMovement());
+
+		if (!level().isClientSide && this.lifespan > 0 && this.tickCount >= this.lifespan)
+			discard();
 	}
 
 	@Override

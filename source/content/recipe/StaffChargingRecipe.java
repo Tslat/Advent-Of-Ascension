@@ -4,6 +4,8 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Reference2IntArrayMap;
+import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -17,7 +19,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.item.AoADataComponents;
-import net.tslat.aoa3.content.item.weapon.staff.BaseStaff;
+import net.tslat.aoa3.content.item.weapon.staff.AoAStaff;
 import net.tslat.aoa3.util.RecipeUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,17 +53,17 @@ public class StaffChargingRecipe extends CustomRecipe implements RecipeBookRecip
 
 	@Override
 	public boolean matches(CraftingInput input, Level level) {
-		Object2IntMap<Item> foundItems = new Object2IntArrayMap<>();
-		Object2IntMap<Item> runeCosts = null;
+		Reference2IntMap<Item> foundItems = new Reference2IntArrayMap<>();
+		Reference2IntMap<Item> runeCosts = null;
 
 		for (ItemStack stack : input.items()) {
 			if (runeCosts == null && stack.has(AoADataComponents.STORED_SPELL_CASTS)) {
-				BaseStaff.StoredCasts storedCasts = stack.get(AoADataComponents.STORED_SPELL_CASTS);
+				AoAStaff.StoredCasts storedCasts = stack.get(AoADataComponents.STORED_SPELL_CASTS);
 
 				if (storedCasts.stored() < 0 || storedCasts.stored() >= storedCasts.max().orElse(Integer.MAX_VALUE))
 					return false;
 
-				runeCosts = stack.has(AoADataComponents.STAFF_RUNE_COST) ? stack.get(AoADataComponents.STAFF_RUNE_COST).runeCosts() : null;
+				runeCosts = stack.has(AoADataComponents.STAFF_STATS) ? stack.get(AoADataComponents.STAFF_STATS).runeCosts() : null;
 			}
 			else if (!stack.isEmpty()) {
 				foundItems.mergeInt(stack.getItem(), stack.getCount(), Integer::sum);
@@ -71,12 +73,12 @@ public class StaffChargingRecipe extends CustomRecipe implements RecipeBookRecip
 		if (foundItems.isEmpty() || runeCosts == null || foundItems.size() != runeCosts.size())
 			return false;
 
-		for (Object2IntMap.Entry<Item> foundItem : foundItems.object2IntEntrySet()) {
+		for (Reference2IntMap.Entry<Item> foundItem : foundItems.reference2IntEntrySet()) {
 			if (!runeCosts.containsKey(foundItem.getKey()))
 				return false;
 		}
 
-		for (Object2IntMap.Entry<Item> runeCost : runeCosts.object2IntEntrySet()) {
+		for (Reference2IntMap.Entry<Item> runeCost : runeCosts.reference2IntEntrySet()) {
 			if (!foundItems.containsKey(runeCost.getKey()) || foundItems.getInt(runeCost.getKey()) < runeCost.getIntValue())
 				return false;
 		}
@@ -93,8 +95,8 @@ public class StaffChargingRecipe extends CustomRecipe implements RecipeBookRecip
 		for (int i = 0; i < input.size(); i++) {
 			ItemStack stack = input.getItem(i);
 
-			if (stack.has(AoADataComponents.STORED_SPELL_CASTS) && stack.has(AoADataComponents.STAFF_RUNE_COST)) {
-				runeCosts = new Object2IntArrayMap<>(stack.get(AoADataComponents.STAFF_RUNE_COST).runeCosts());
+			if (stack.has(AoADataComponents.STORED_SPELL_CASTS) && stack.has(AoADataComponents.STAFF_STATS)) {
+				runeCosts = new Object2IntArrayMap<>(stack.get(AoADataComponents.STAFF_STATS).runeCosts());
 			}
 			else {
 				remainingItems.set(i, stack);
@@ -130,10 +132,10 @@ public class StaffChargingRecipe extends CustomRecipe implements RecipeBookRecip
 	@Override
 	public ItemStack assemble(CraftingInput inventory, HolderLookup.Provider holderLookup) {
 		for (ItemStack stack : inventory.items()) {
-			if (stack.has(AoADataComponents.STORED_SPELL_CASTS) && stack.has(AoADataComponents.STAFF_RUNE_COST)) {
+			if (stack.has(AoADataComponents.STORED_SPELL_CASTS) && stack.has(AoADataComponents.STAFF_STATS)) {
 				ItemStack newStack = stack.copy();
 
-				newStack.set(AoADataComponents.STORED_SPELL_CASTS, BaseStaff.StoredCasts.increment(stack.get(AoADataComponents.STORED_SPELL_CASTS)));
+				newStack.set(AoADataComponents.STORED_SPELL_CASTS, AoAStaff.StoredCasts.increment(stack.get(AoADataComponents.STORED_SPELL_CASTS)));
 
 				return newStack;
 			}

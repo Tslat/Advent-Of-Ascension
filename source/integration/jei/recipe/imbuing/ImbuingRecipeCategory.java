@@ -1,7 +1,6 @@
 package net.tslat.aoa3.integration.jei.recipe.imbuing;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
@@ -44,8 +43,6 @@ import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
-import java.util.List;
-
 public class ImbuingRecipeCategory extends ContainerRecipeCategory<ImbuingRecipe> {
 	public static final RecipeType<ImbuingRecipe> RECIPE_TYPE = RecipeType.create(AdventOfAscension.MOD_ID, "imbuing", ImbuingRecipe.class);
 
@@ -74,13 +71,23 @@ public class ImbuingRecipeCategory extends ContainerRecipeCategory<ImbuingRecipe
 	}
 
 	@Override
+	public int getWidth() {
+		return 154;
+	}
+
+	@Override
+	public int getHeight() {
+		return 64;
+	}
+
+	@Override
 	protected ResourceLocation getBackgroundTexture() {
 		return AdventOfAscension.id("textures/gui/containers/imbuing_chamber.png");
 	}
 
 	@Override
 	protected IDrawable createBackgroundDrawRegion(IGuiHelper guiHelper, ResourceLocation backgroundTexture) {
-		return guiHelper.createDrawable(backgroundTexture, backgroundTextureU(), backgroundTextureV(), 154, 64);
+		return guiHelper.createDrawable(backgroundTexture, backgroundTextureU(), backgroundTextureV(), getWidth(), getHeight());
 	}
 
 	@Override

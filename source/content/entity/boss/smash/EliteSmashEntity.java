@@ -8,7 +8,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -26,11 +25,9 @@ import net.tslat.aoa3.content.entity.boss.AoABoss;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
 import net.tslat.aoa3.content.entity.brain.task.custom.ChargeAttack;
 import net.tslat.aoa3.content.entity.brain.task.custom.GroundSlamAttack;
-import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.util.AttributeUtil;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
@@ -51,6 +48,8 @@ import net.tslat.smartbrainlib.api.core.sensor.custom.UnreachableTargetSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.registry.SBLMemoryTypes;
 import net.tslat.smartbrainlib.util.BrainUtils;
+import net.tslat.tme.api.object.builder.EffectBuilder;
+import net.tslat.tme.api.sound.SoundBuilder;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
@@ -127,7 +126,7 @@ public class EliteSmashEntity extends AoABoss {
 			AttributeUtil.applyPermanentModifier(this, Attributes.ARMOR, ENRAGED_ARMOUR_MOD);
 			AttributeUtil.applyPermanentModifier(this, Attributes.ARMOR_TOUGHNESS, ENRAGED_TOUGHNESS_MOD);
 			triggerAnim("arms_controller", "enrage");
-			new SoundBuilder(AoASounds.ENTITY_SMASH_ENRAGE).followEntity(this).category(SoundSource.HOSTILE).execute();
+			SoundBuilder.following(AoASounds.ENTITY_SMASH_ENRAGE, this).play();
 			BrainUtils.setForgettableMemory(this, MemoryModuleType.ATTACK_COOLING_DOWN, true, 100);
 			BrainUtils.setForgettableMemory(this, SBLMemoryTypes.SPECIAL_ATTACK_COOLDOWN.get(), true, 100);
 		}
@@ -139,7 +138,7 @@ public class EliteSmashEntity extends AoABoss {
 
 	@Override
 	public boolean canDisableShield() {
-		return !ATTACK_STATE.is(this, AXE_SLAM_STATE);
+		return !isAttackState(AXE_SLAM_STATE);
 	}
 
 	@Override
@@ -175,9 +174,9 @@ public class EliteSmashEntity extends AoABoss {
 	public BrainActivityGroup<AoABoss> getCoreTasks() {
 		return BrainActivityGroup.coreTasks(
 				new LookAtTarget<>()
-						.startCondition(entity -> !ATTACK_STATE.is(this, CHARGE_STATE)),
+						.startCondition(entity -> !isAttackState(CHARGE_STATE)),
 				new WalkOrRunToWalkTarget<>()
-						.startCondition(entity -> !ATTACK_STATE.is(this, CHARGE_STATE)),
+						.startCondition(entity -> !isAttackState(CHARGE_STATE)),
 				new FloatToSurfaceOfFluid<>());
 	}
 
@@ -188,7 +187,7 @@ public class EliteSmashEntity extends AoABoss {
 						new TargetOrRetaliate<>()
 								.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
 								.attackablePredicate(target -> DamageUtil.isAttackable(target) && !isAlliedTo(target))
-								.startCondition(entity -> !ATTACK_STATE.is(this, CHARGE_STATE)),
+								.startCondition(entity -> !isAttackState(CHARGE_STATE)),
 						new Idle<>().runFor(entity -> entity.getRandom().nextInt(15, 45))),
 				new OneRandomBehaviour<>(
 						new SetRandomWalkTarget<>().speedModifier(0.9f),
@@ -201,7 +200,7 @@ public class EliteSmashEntity extends AoABoss {
 				new InvalidateAttackTarget<>(),
 				new SetWalkTargetToAttackTarget<>()
 						.speedMod((entity, target) -> 1.1f)
-						.startCondition(entity -> !ATTACK_STATE.is(this, CHARGE_STATE)),
+						.startCondition(entity -> !isAttackState(CHARGE_STATE)),
 				new FirstApplicableBehaviour<>(
 						new OneRandomBehaviour<>(
 								Pair.of(
@@ -211,8 +210,8 @@ public class EliteSmashEntity extends AoABoss {
 												.requiresTarget()
 												.whenActivating(entity -> this.level().playSound(null, getX(), getY(), getZ(), AoASounds.HEAVY_WOODEN_IMPACT.get(), this.getSoundSource(), 1, 1))
 												.cooldownFor(entity -> 5 + (int)(getSwingDurationTicks(AXE_SLAM_STATE) * entity.getRandom().nextFloat() * 1.5f))
-												.startCondition(mob -> ATTACK_STATE.is(this, AXE_SLAM_STATE))
-												.whenStopping(entity -> ATTACK_STATE.set(this, AXE_SWING_STATE)),
+												.startCondition(mob -> isAttackState(AXE_SLAM_STATE))
+												.whenStopping(entity -> setAttackState(AXE_SWING_STATE)),
 										20),
 								Pair.of(
 										new FleeTarget<>().fleeDistance(40).startCondition(entity -> BrainUtils.hasMemory(entity, SBLMemoryTypes.TARGET_UNREACHABLE.get()) && isEnraged()),
@@ -221,7 +220,7 @@ public class EliteSmashEntity extends AoABoss {
 								.timeBeforeReacting(entity -> 40)
 								.reaction((entity, isTowering) -> {
 									enrage();
-									ATTACK_STATE.set(this, AXE_SLAM_STATE);
+									setAttackState(AXE_SLAM_STATE);
 								}),
 						new OneRandomBehaviour<>(
 								Pair.of(
@@ -230,29 +229,29 @@ public class EliteSmashEntity extends AoABoss {
 												.slamAtTarget()
 												.requiresTarget()
 												.whenActivating(entity -> this.level().playSound(null, getX(), getY(), getZ(), AoASounds.HEAVY_WOODEN_IMPACT.get(), this.getSoundSource(), 1, 0.5f))
-												.whenStarting(entity -> ATTACK_STATE.set(this, AXE_SLAM_STATE))
+												.whenStarting(entity -> setAttackState(AXE_SLAM_STATE))
 												.startCondition(entity -> {
 													LivingEntity target = BrainUtils.getTargetOfEntity(entity);
 
 													return target != null && target.distanceToSqr(entity) < 25;
 												})
 												.whenStopping(entity -> {
-													ATTACK_STATE.set(this, AXE_SWING_STATE);
+													setAttackState(AXE_SWING_STATE);
 													BrainUtils.setForgettableMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN, true, 5 + (int)(getSwingDurationTicks(AXE_SLAM_STATE) * entity.getRandom().nextFloat() * 5f));
 												}),
 										1),
 								Pair.of(
 										new AnimatableMeleeAttack<>(getSwingWarmupTicks(AXE_SWING_STATE))
 												.attackInterval(entity -> getSwingDurationTicks(AXE_SWING_STATE) + entity.getRandom().nextInt(5, 15))
-												.startCondition(mob -> ATTACK_STATE.is(this, AXE_SWING_STATE)),
+												.startCondition(mob -> isAttackState(AXE_SWING_STATE)),
 										5)
 						).startCondition(entity -> !BrainUtils.hasMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN)),
 						new OneRandomBehaviour<>(
 								new CustomBehaviour<>(entity -> {
 									BrainUtils.setForgettableMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN, true, 90);
 									triggerAnim("arms_controller", "belly_drum");
-									new SoundBuilder(AoASounds.ENTITY_SMASH_BELLY_DRUM).isMonster().followEntity(this).execute();
-									EntityUtil.applyPotions(entity,
+									SoundBuilder.following(AoASounds.ENTITY_SMASH_BELLY_DRUM, this).play();
+									EntityUtil.applyPotions(entity, entity,
 											new EffectBuilder(MobEffects.DAMAGE_RESISTANCE, 100).level(2),
 											new EffectBuilder(MobEffects.MOVEMENT_SPEED, 100),
 											new EffectBuilder(MobEffects.DAMAGE_BOOST, 100).level(5));
@@ -265,10 +264,10 @@ public class EliteSmashEntity extends AoABoss {
 										.targetWhenCharging()
 										.whenStarting(entity -> {
 											triggerAnim("arms_controller", "charge_up");
-											ATTACK_STATE.set(this, CHARGE_STATE);
+											setAttackState(CHARGE_STATE);
 										})
 										.whenStopping(entity -> {
-											ATTACK_STATE.set(this, AXE_SWING_STATE);
+											setAttackState(AXE_SWING_STATE);
 											BrainUtils.setForgettableMemory(entity, SBLMemoryTypes.SPECIAL_ATTACK_COOLDOWN.get(), true, 150);
 										})
 										.cooldownFor(entity -> 150)
@@ -281,8 +280,8 @@ public class EliteSmashEntity extends AoABoss {
 				.moveSpeed(0.315)
 				.meleeStrength(30)
 				.knockbackResist(1)
-				.followRange(100)
-				.aggroRange(64)
+				.followRange(128)
+				.aggroRange(128)
 				.armour(15, 25)
 				.knockback(1f)
 				.stepHeight(1.25f);
@@ -307,7 +306,7 @@ public class EliteSmashEntity extends AoABoss {
 			return PlayState.STOP;
 		}));
 		controllers.add(new AnimationController<>(this, "arms_controller", 3, state -> {
-			if (ATTACK_STATE.is(this, CHARGE_STATE))
+			if (isAttackState(CHARGE_STATE))
 				return state.setAndContinue(CHARGE);
 
 			if (this.swinging)

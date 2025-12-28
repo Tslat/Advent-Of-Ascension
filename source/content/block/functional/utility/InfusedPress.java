@@ -27,10 +27,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.menu.InfusedPressMenu;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.block.blockentity.InfusedPressBlockEntity;
-import net.tslat.aoa3.library.object.GenericItemStackHandler;
+import net.tslat.aoa3.library.object.extension.GenericItemStackHandler;
 import net.tslat.aoa3.util.InteractionResults;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 import org.jetbrains.annotations.Nullable;
 
 public class InfusedPress extends Block implements EntityBlock {
@@ -69,7 +69,7 @@ public class InfusedPress extends Block implements EntityBlock {
 			if (compressing) {
 				if (press.compress()) {
 					RandomSource rand = level.random;
-					TELParticlePacket packet = new TELParticlePacket();
+					TMEParticlePacket packet = new TMEParticlePacket();
 
 					level.playSound(null, pos.getX() + 0.5f, pos.getY() + 1, pos.getZ() + 0.5f, SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, rand.nextFloat() * 0.5f + 0.75f);
 
@@ -80,12 +80,12 @@ public class InfusedPress extends Block implements EntityBlock {
 						packet.particle(ParticleBuilder.forRandomPosInCircleRadius(ParticleTypes.CAMPFIRE_COSY_SMOKE, pos.above(1).getBottomCenter(), 0.5f)
 								.scaleMod(0.25f)
 								.lifespan(rand.nextInt(10, 20))
-								.colourOverride(rand.nextInt(125, 175), 0, 0, 255));
+								.colourTint(rand.nextInt(125, 175), 0, 0, 255));
 						packet.particle(ParticleBuilder.forRandomPosInCircleRadius(ParticleTypes.CRIT, pos.above(1).getBottomCenter(), 0.5f)
 								.scaleMod(0.25f)
 								.lifespan(rand.nextInt(3, 15))
 								.velocity(rand.nextGaussian() * 0.05f, rand.nextFloat() * 0.1f, rand.nextGaussian() * 0.05f)
-								.colourOverride(rand.nextInt(125, 175), 0, 0, 255));
+								.colourTint(rand.nextInt(125, 175), 0, 0, 255));
 					}
 
 					packet.sendToAllPlayersTrackingBlock(serverLevel, pos);

@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:baronyte_block"
+      "tag": "c:storage_blocks/baronyte"
     }
   ],
   "result": {

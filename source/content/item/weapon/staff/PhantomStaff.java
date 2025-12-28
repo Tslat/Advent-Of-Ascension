@@ -1,57 +1,33 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
-import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
-import net.tslat.aoa3.content.entity.projectile.staff.PhantomShotEntity;
-import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
 import net.tslat.aoa3.util.LocaleUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class PhantomStaff extends BaseStaff<Object> {
+public class PhantomStaff extends AoAStaff<Void> {
 	public PhantomStaff(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getCastingSound() {
-		return AoASounds.ITEM_PHANTOM_STAFF_CAST.get();
-	}
-
-	public static Object2IntMap<Item> getDefaultRunes() {
-		return Util.make(new Object2IntArrayMap<>(), runes -> {
-			runes.put(AoAItems.WIND_RUNE.get(), 2);
-			runes.put(AoAItems.DISTORTION_RUNE.get(), 2);
-		});
+	public WeaponFiringContext.Builder createProjectileContext(ItemStack stack, @Nullable Entity shooter, InteractionHand hand) {
+		return super.createProjectileContext(stack, shooter, hand).pierceThrough(Integer.MAX_VALUE);
 	}
 
 	@Override
-	public void cast(ServerLevel level, ItemStack staff, LivingEntity caster, Object args) {
-		level.addFreshEntity(new PhantomShotEntity(caster, this, 60));
-	}
-
-	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		return DamageUtil.doMagicProjectileAttack(shooter, shot, target, getDmg());
-	}
-
-	@Override
-	public float getDmg() {
-		return 24;
+	public void cast(ServerLevel level, LivingEntity caster, ItemStack staff, InteractionHand hand, Void args) {
+		fireProjectile(level, caster, staff, hand, AoAProjectiles.PHANTOM_SHOT);
 	}
 
 	@Override

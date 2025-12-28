@@ -5,10 +5,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.tme.api.scheduling.TickScheduler;
 
 import java.util.List;
 
-public class CoralStaffTask implements Runnable {
+public class CoralStaffTask implements TickScheduler.Task {
     private final Level world;
     private final List<BlockPos> coralPositions;
 
@@ -21,7 +22,7 @@ public class CoralStaffTask implements Runnable {
     }
 
     @Override
-    public void run() {
+    public void run(int tick) {
         for (BlockPos pos : coralPositions) {
             Block block = world.getBlockState(pos).getBlock();
 
@@ -31,6 +32,6 @@ public class CoralStaffTask implements Runnable {
     }
 
     public void schedule(int time) {
-        AoAScheduler.scheduleSyncronisedTask(this, time);
+        AoAScheduler.schedule(time, this);
     }
 }

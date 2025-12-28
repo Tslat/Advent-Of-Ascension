@@ -4,7 +4,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
-import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMob;
+import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMobOld;
 
 public class CraexxeusShotEntity extends BaseMobProjectile {
 	public CraexxeusShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
@@ -15,7 +15,7 @@ public class CraexxeusShotEntity extends BaseMobProjectile {
 		super(AoAProjectiles.CRAEXXEUS_SHOT.get(), world);
 	}
 
-	public CraexxeusShotEntity(AoAFlyingRangedMob shooter, Type projectileType) {
+	public CraexxeusShotEntity(AoAFlyingRangedMobOld shooter, Type projectileType) {
 		super(AoAProjectiles.CRAEXXEUS_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 

@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -45,7 +44,7 @@ public class RunePostBlock extends Block {
 			}
 
 			if (!level.isClientSide()) {
-				AoAScheduler.scheduleSyncronisedTask(new RuneCreationTask((ServerLevel)level, pos, getRune(), stack.getCount() * ((RuneSource)stack.getItem()).getRuneGenFactor(), player), 1);
+				AoAScheduler.schedule(1, new RuneCreationTask((ServerLevel)level, pos, getRune(), stack.getCount() * ((RuneSource)stack.getItem()).getRuneGenFactor(), player));
 
 				if (!player.isCreative())
 					stack.shrink(stack.getCount());

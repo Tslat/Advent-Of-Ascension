@@ -14,13 +14,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.player.skill.AoASkill;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class AoASkillArgument implements ArgumentType<AoASkill> {
-	private static final List<String> EXAMPLES = Arrays.asList("aoa3:alchemy", "aoa3:creation", "aoa3:hauling", "aoa3:innervation");
+	private static final List<String> EXAMPLES = List.of("aoa3:alchemy", "aoa3:creation", "aoa3:hauling", "aoa3:innervation");
 	private static final DynamicCommandExceptionType UNKNOWN_SKILL_ERROR = new DynamicCommandExceptionType(input -> Component.translatable("argument.aoa3.skill.notFound"));
 
 	public AoASkillArgument() {}

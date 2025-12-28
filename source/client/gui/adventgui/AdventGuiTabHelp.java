@@ -11,23 +11,23 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.tslat.aoa3.integration.IntegrationManager;
-import net.tslat.aoa3.library.object.Text;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RenderUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.api.object.extension.Text;
 import org.jetbrains.annotations.Nullable;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
 public class AdventGuiTabHelp extends Screen {
-	private int tipNumber;
+	private final int tipNumber;
 
 	protected AdventGuiTabHelp() {
 		super(Component.translatable("gui.aoa3.adventGui.help"));
 
-		tipNumber = RandomUtil.randomNumberUpTo(IntegrationManager.isPatchouliActive() ? 12 : 13);
+		tipNumber = RandomUtil.numberUpTo(IntegrationManager.isPatchouliActive() ? 12 : 13);
 	}
 
 	@Override

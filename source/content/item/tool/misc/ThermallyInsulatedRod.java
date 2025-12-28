@@ -20,7 +20,7 @@ import net.tslat.aoa3.event.custom.events.HaulingItemFishedEvent;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class ThermallyInsulatedRod extends HaulingRod {
 		if (bobber.distanceToSqr(player) <= 9) {
 			if (player instanceof ServerPlayer pl) {
 				List<ItemStack> loot = landEntity(pl, stack, hand, bobber);
-				int xp = RandomUtil.randomNumberBetween(1, 6);
+				int xp = RandomUtil.numberBetween(1, 6);
 				HaulingItemFishedEvent event = AoAEvents.fireHaulingItemFished(bobber.getHookedIn(), stack, loot, xp, 1, bobber);
 
 				if (!event.isCanceled()) {

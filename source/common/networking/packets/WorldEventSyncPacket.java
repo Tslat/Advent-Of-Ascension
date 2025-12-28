@@ -10,7 +10,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.content.world.event.AoAWorldEvent;
 import net.tslat.aoa3.content.world.event.AoAWorldEventManager;
-import net.tslat.aoa3.util.CodecUtil;
+import net.tslat.tme.api.util.StreamCodecUtil;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 public record WorldEventSyncPacket(List<Triple<AoAWorldEvent.Type<?>, ResourceLocation, CompoundTag>> events) implements AoAPacket {
 	public static final Type<WorldEventSyncPacket> TYPE = new Type<>(AdventOfAscension.id("world_event_sync"));
 	public static final StreamCodec<RegistryFriendlyByteBuf, WorldEventSyncPacket> CODEC = StreamCodec.composite(
-			CodecUtil.streamTriple(Triple::of, ByteBufCodecs.registry(AoARegistries.WORLD_EVENT_TYPE_REGISTRY_KEY), ResourceLocation.STREAM_CODEC, ByteBufCodecs.TRUSTED_COMPOUND_TAG).apply(ByteBufCodecs.list()), WorldEventSyncPacket::events,
+			StreamCodecUtil.triple(Triple::of, ByteBufCodecs.registry(AoARegistries.WORLD_EVENT_TYPE_REGISTRY_KEY), ResourceLocation.STREAM_CODEC, ByteBufCodecs.TRUSTED_COMPOUND_TAG).apply(ByteBufCodecs.list()), WorldEventSyncPacket::events,
 			WorldEventSyncPacket::new);
 
 	@Override

@@ -11,7 +11,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class Ultraflame extends BaseSword {
+public class Ultraflame extends AoASword {
 	public Ultraflame(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

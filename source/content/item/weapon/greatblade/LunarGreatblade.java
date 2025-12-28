@@ -9,11 +9,11 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
-public class LunarGreatblade extends BaseGreatblade {
+public class LunarGreatblade extends AoAGreatblade {
 	private final double maxDmg;
 
 	public LunarGreatblade(Tier tier, Item.Properties properties) {
@@ -24,7 +24,7 @@ public class LunarGreatblade extends BaseGreatblade {
 
 	@Override
 	public float getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack greatblade, DamageSource source, float baseDamage) {
-		return super.getDamageForAttack(target, attacker, greatblade, source, baseDamage + (float)RandomUtil.randomValueUpTo(this.maxDmg - Math.min(baseDamage, this.maxDmg)) * getSwingEffectiveness(greatblade));
+		return super.getDamageForAttack(target, attacker, greatblade, source, baseDamage + (float)RandomUtil.valueUpTo(this.maxDmg - Math.min(baseDamage, this.maxDmg)) * getSwingEffectiveness(greatblade));
 	}
 
 	@Override

@@ -1,12 +1,8 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
-import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import net.minecraft.Util;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AreaEffectCloud;
@@ -15,74 +11,67 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
-import net.tslat.aoa3.content.entity.projectile.staff.MoonlightFallEntity;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
+import net.tslat.aoa3.content.entity.projectile.base.NonPhysicalWeaponProjectile;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.tme.api.object.RayTrace;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
 
-public class MoonlightStaff extends BaseStaff<BlockPos> {
+public class MoonlightStaff extends AoAStaff<Vec3> {
 	public MoonlightStaff(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getCastingSound() {
-		return AoASounds.ITEM_MOONLIGHT_STAFF_CAST.get();
-	}
+	public Optional<Vec3> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		RayTrace<LivingEntity> rayTrace = RayTrace.createForEyeline(caster, 70).forEntities(LivingEntity.class).run();
 
-	public static Object2IntMap<Item> getDefaultRunes() {
-		return Util.make(new Object2IntArrayMap<>(), runes -> {
-			runes.put(AoAItems.COMPASS_RUNE.get(), 1);
-			runes.put(AoAItems.LUNAR_RUNE.get(), 2);
-			runes.put(AoAItems.KINETIC_RUNE.get(), 2);
-		});
+		return rayTrace.missed() ? Optional.empty() : Optional.of(rayTrace.hitPos());
 	}
 
 	@Override
-	public Optional<BlockPos> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		return Optional.ofNullable(PlayerUtil.getBlockAimingAt(caster, 70));
+	public WeaponFiringContext.Builder createProjectileContext(ItemStack stack, @Nullable Entity shooter, InteractionHand hand) {
+		return super.createProjectileContext(stack, shooter, hand).lifespan(120);
 	}
 
 	@Override
-	public void cast(ServerLevel level, ItemStack staff, LivingEntity caster, BlockPos args) {
-		level.addFreshEntity(new MoonlightFallEntity(caster, this, args.getX(), args.getY() + 30, args.getZ(), 3f));
+	public void cast(ServerLevel level, LivingEntity caster, ItemStack staff, InteractionHand hand, Vec3 args) {
+		fireProjectile(level, caster, staff, hand, (serverLevel, context) -> new NonPhysicalWeaponProjectile(AoAProjectiles.MOONLIGHT_FALL.get(), serverLevel, context),
+					   (context, projectile) -> projectile.fromPos(args.add(0, 30, 0)).shootingTowards(new Vec3(0, -1, 0), 3, 0.1f));
 	}
 
 	@Override
-	public void doBlockImpact(BaseEnergyShot shot, Vec3 hitPos, LivingEntity caster) {
-		createCloud(shot, caster);
+	protected void onDamageEntity(ServerLevel level, @Nullable WeaponProjectile projectile, @Nullable WeaponFiringContext context, @Nullable RayTrace<?> rayTrace, Entity hitEntity, float damage) {
+		createCloud(level, rayTrace.hitPos(), projectile.getLivingShooter());
 	}
 
 	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity caster) {
-		if (!target.isInvulnerable()) {
-			createCloud(shot, caster);
+	protected void onHitBlock(Level level, @Nullable WeaponProjectile projectile, @Nullable WeaponFiringContext context, @Nullable RayTrace<Void> rayTrace, BlockState hitBlock) {
+		createCloud(level, rayTrace.hitPos(), projectile.getLivingShooter());
+	}
 
-			return true;
+	private void createCloud(Level level, Vec3 position, @Nullable LivingEntity caster) {
+		if (level instanceof ServerLevel serverLevel) {
+			AreaEffectCloud cloud = new AreaEffectCloud(serverLevel, position.x, position.y, position.z);
+
+			cloud.setOwner(caster);
+			cloud.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 140, 1, false, true));
+			cloud.setRadius(0.1f);
+			cloud.setRadiusPerTick(1);
+			cloud.setDuration(10);
+			cloud.setWaitTime(0);
+
+			serverLevel.addFreshEntity(cloud);
 		}
-
-		return false;
-	}
-
-	private void createCloud(BaseEnergyShot shot, LivingEntity caster) {
-		AreaEffectCloud cloud = new AreaEffectCloud(shot.level(), shot.getX(), shot.getY(), shot.getZ());
-
-		cloud.setOwner(caster);
-		cloud.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 140, 1, false, true));
-		cloud.setRadius(0.1f);
-		cloud.setRadiusPerTick(1);
-		cloud.setDuration(10);
-		cloud.setWaitTime(0);
-
-		shot.level().addFreshEntity(cloud);
 	}
 
 	@Override

@@ -2,50 +2,37 @@ package net.tslat.aoa3.content.entity.misc;
 
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.fluids.FluidType;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.common.registration.entity.AoAMonsters;
-import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.effectslib.api.util.EffectBuilder;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.tme.api.object.builder.EntityPredicateBuilder;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.constant.DefaultAnimations;
 
-public class SandGiantPitTrapEntity extends BasicMiscEntity {
-	private static final EntityPredicate<LivingEntity> damagePredicate = new EntityPredicate<LivingEntity>().isAlive().isSubtypeOf(LivingEntity.class).isNot(AoAMonsters.SAND_GIANT.get()).isDamageable();
+import java.util.function.Predicate;
 
-	public SandGiantPitTrapEntity(EntityType<?> entityType, Level level) {
-		super(entityType, level);
-	}
+public class SandGiantPitTrapEntity extends BasicMiscEntity {
+	private static final Predicate<Entity> TARGET_PREDICATE = EntityPredicateBuilder.builder().isAlive().isNot(AoAMonsters.SAND_GIANT).isDamageable().build();
+	private static final EffectBuilder EFFECT = new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 12).level(5).hideEffectIcon().hideParticles().isAmbient();
 
 	public SandGiantPitTrapEntity(Level level, Vec3 pos) {
-		super(AoAMiscEntities.SAND_GIANT_PIT_TRAP.get(), level);
+		this(AoAMiscEntities.SAND_GIANT_PIT_TRAP.get(), level);
 
 		setPos(pos);
 	}
 
-	@Override
-	public boolean isPushable() {
-		return false;
-	}
+	public SandGiantPitTrapEntity(EntityType<?> entityType, Level level) {
+		super(entityType, level);
 
-	@Override
-	public boolean isPushedByFluid(FluidType type) {
-		return false;
-	}
-
-	@Override
-	public boolean canBeCollidedWith() {
-		return false;
-	}
-
-	@Override
-	public boolean isPickable() {
-		return false;
+		this.isUnmoveable = true;
+		this.lifespan = 6000;
 	}
 
 	@Override
@@ -59,16 +46,10 @@ public class SandGiantPitTrapEntity extends BasicMiscEntity {
 		super.tick();
 
 		if (!level().isClientSide()) {
-			if (tickCount > 6000) {
-				discard();
-
-				return;
-			}
-
-			if (tickCount > 13 && tickCount % 5 == 0) {
-				for (LivingEntity entity : EntityRetrievalUtil.<LivingEntity>getEntities(level(), getBoundingBox(), damagePredicate)) {
+			if (this.tickCount > 13 && this.tickCount % 5 == 0) {
+				for (LivingEntity entity : EntityRetrievalUtil.getEntities(this, 0, LivingEntity.class, TARGET_PREDICATE)) {
 					entity.resetFallDistance();
-					entity.addEffect(new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 12).level(5).hideEffectIcon().hideParticles().isAmbient().build());
+					EntityUtil.applyPotions(entity, this, EFFECT);
 				}
 			}
 		}

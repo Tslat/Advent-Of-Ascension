@@ -11,7 +11,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class CottonCrusher extends BaseGreatblade {
+public class CottonCrusher extends AoAGreatblade {
 	public CottonCrusher(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

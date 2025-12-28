@@ -27,7 +27,7 @@ import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4fStack;
 
@@ -136,7 +136,7 @@ public class CorruptedTravellerScreen extends AbstractContainerScreen<CorruptedT
 		long worldTick = mc.level.getGameTime();
 
 		if (worldTick >= nextFoodTick) {
-			currentGhostlyFood = APPLICABLE_FOOD.get(RandomUtil.randomNumberUpTo(APPLICABLE_FOOD.size()));
+			currentGhostlyFood = APPLICABLE_FOOD.get(RandomUtil.numberUpTo(APPLICABLE_FOOD.size()));
 			nextFoodTick = worldTick + 20;
 		}
 

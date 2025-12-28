@@ -39,7 +39,7 @@ import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -135,6 +135,10 @@ public final class PlayerUtil {
         AoAResource.Instance instance = getResource(player, resource);
 
         return instance == AoAResources.DEFAULT ? 0 : instance.getCurrentValue();
+    }
+
+    public static boolean hasResourceAmount(Player player, AoAResource resource, float amount) {
+        return getResourceValue(player, resource) >= amount;
     }
 
     public static void addResourceToPlayer(ServerPlayer player, AoAResource resource, float amount) {

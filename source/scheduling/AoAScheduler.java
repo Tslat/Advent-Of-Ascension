@@ -1,64 +1,34 @@
 package net.tslat.aoa3.scheduling;
 
-import com.google.common.collect.HashMultimap;
-import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.event.GlobalEvents;
-import org.apache.logging.log4j.Level;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.scheduling.TickScheduler;
 
-import java.util.Iterator;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
-public class AoAScheduler {
-	private static ScheduledExecutorService scheduler = null;
-	private static final HashMultimap<Integer, Runnable> scheduledSynchTasks = HashMultimap.<Integer, Runnable>create();
+public final class AoAScheduler {
+	private static final TickScheduler SCHEDULER = TickScheduler.createForServer();
+	private static final ScheduledExecutorService ASYNC_SCHEDULER = Executors.newSingleThreadScheduledExecutor();
 
-	private static boolean running = true;
-
-	public static void scheduleSyncronisedTask(Runnable run, int ticks) {
-		scheduledSynchTasks.put(GlobalEvents.tick + ticks, run);
+	public static void schedule(int delay, TickScheduler.Task task) {
+		SCHEDULER.schedule(delay, task);
 	}
 
-	public static void scheduleAsyncTask(Runnable run, int time, TimeUnit unit) {
-		if (scheduler == null || !running)
-			serverStartupTasks();
-
-		scheduler.schedule(run, time, unit);
+	public static void scheduleEveryTick(int delay, int duration, TickScheduler.Task task) {
+		SCHEDULER.scheduleEveryTick(delay, duration, task);
 	}
 
-	public static void serverStartupTasks() {
-		if (scheduler != null)
-			scheduler.shutdownNow();
-
-		scheduler = Executors.newScheduledThreadPool(1);
-
-		handleSyncScheduledTasks(null);
+	public static void scheduleCritical(int delay, TickScheduler.Task task) {
+		SCHEDULER.scheduleCritical(delay, task);
 	}
 
-	public static void serverShutdownTasks() {
-		handleSyncScheduledTasks(null);
-
-		scheduler.shutdownNow();
-		scheduler = null;
-		running = false;
+	public static void scheduleAsync(int time, TimeUnit unit, Runnable run) {
+		ASYNC_SCHEDULER.schedule(run, time, unit);
 	}
 
-	public static void handleSyncScheduledTasks(@Nullable Integer tick) {
-		if (scheduledSynchTasks.containsKey(tick)) {
-			Iterator<Runnable> tasks = tick == null ? scheduledSynchTasks.values().iterator() : scheduledSynchTasks.get(tick).iterator();
-
-			while (tasks.hasNext()) {
-				try {
-					tasks.next().run();
-				}
-				catch (Exception ex) {
-					Logging.logMessage(Level.ERROR, "Unable to run unhandled scheduled task, skipping.", ex);
-				}
-
-				tasks.remove();
-			}
-		}
+	public static void shutdown(Consumer<ExecutorService> shutdownHandler) {
+		shutdownHandler.accept(ASYNC_SCHEDULER);
 	}
 }

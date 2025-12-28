@@ -2,54 +2,36 @@ package net.tslat.aoa3.content.item.weapon.gun;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
-import net.tslat.aoa3.content.entity.projectile.thrown.GrenadeEntity;
+import net.tslat.aoa3.common.registration.item.AoAWeapons;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
+import net.tslat.aoa3.content.item.weapon.thrown.Grenade;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
-public class Dustometer extends BaseGun {
+public class Dustometer extends AoAGun {
 	public Dustometer(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_GUN_GENERIC_FIRE_2.get();
-	}
+	protected void onGunFire(ServerLevel level, WeaponFiringContext context, WeaponProjectile projectile) {
+		if (RandomUtil.oneInNChance(3)) {
+			Grenade grenade = AoAWeapons.GRENADE.get();
+			ItemStack grenadeStack = grenade.getDefaultInstance();
+			Vec3 pos = context.getShooter() != null ? context.getShooter().position() : projectile.asEntity().position();
+			grenade.throwProjectile(level, grenade.createFiringContext(grenadeStack, context.getShooter(), context.weaponHand()).build(), grenadeStack);
 
-	@Override
-	protected boolean fireGun(ServerLevel level, LivingEntity shooter, ItemStack stack, InteractionHand hand) {
-		if (super.fireGun(level, shooter, stack, hand)) {
-			if (!shooter.level().isClientSide() && RandomUtil.oneInNChance(3)) {
-				shooter.level().addFreshEntity(new GrenadeEntity(shooter, this, hand, 120, 0));
-				shooter.level().playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), AoASounds.ITEM_GUN_AIR_CANNON_FIRE.get(), SoundSource.PLAYERS, 1.0f, getFiringSoundPitchAdjust() + (float)RandomUtil.randomScaledGaussianValue(0.075f));
-			}
-
-			return true;
+			level.playSound(null, pos.x, pos.y, pos.z, AoASounds.ITEM_GUN_AIR_CANNON_FIRE.get(), SoundSource.PLAYERS, 1, getFiringSoundPitch(context.weaponStack()) + (float)RandomUtil.scaledGaussianValue(0.075f));
 		}
-
-		return false;
-	}
-
-	@Override
-	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPosition, float bulletDmgMultiplier) {
-		if (!(bullet instanceof GrenadeEntity))
-			super.doImpactDamage(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
 	}
 
 	@Override

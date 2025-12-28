@@ -24,17 +24,18 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.boss.AoABoss;
 import net.tslat.aoa3.content.item.misc.summoning.BossTokenItem;
 import net.tslat.aoa3.event.dimension.NowhereEvents;
-import net.tslat.aoa3.library.builder.SoundBuilder;
+import net.tslat.tme.api.sound.SoundBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.InventoryUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.ObjectUtil;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 
 public class NowhereBossArena {
@@ -135,13 +136,13 @@ public class NowhereBossArena {
 				return false;
 
 			for (Player player : players) {
-				AoAScheduler.scheduleSyncronisedTask(() -> {
+				AoAScheduler.schedule(1, tick -> {
 					ServerPlayer pl = (ServerPlayer)player;
 					PlayerUtil.resetToDefaultStatus(pl);
-					pl.connection.teleport(17.5d, 452.5d, 3.5d, 0, pl.getXRot());
+					pl.teleportTo(pl.serverLevel(), 17.5d, 452.5d, 3.5d, Set.of(), 0, pl.getXRot());
 					InventoryUtil.clearItems(pl, AoAItems.RETURN_CRYSTAL);
 					PlayerUtil.getAdventPlayer(pl).storage.returnStoredItems();
-				}, 1);
+				});
 			}
 		}
 
@@ -161,10 +162,10 @@ public class NowhereBossArena {
 		if (structureStart == null)
 			return;
 
-		AoAScheduler.scheduleSyncronisedTask(() -> {
+		AoAScheduler.schedule(100, tick -> {
 			boolean spawnBoss = false;
 			Entity entity = entityType.create(level);
-			SoundBuilder soundBuilder = entity instanceof AoABoss boss && boss.getMusic() != null ? new SoundBuilder(boss.getMusic()).isMusic() : null;
+			SoundBuilder soundBuilder = entity instanceof AoABoss boss && boss.getMusic() != null ? SoundBuilder.asMusic(boss.getMusic(), level) : null;
 
 			if (entity != null)
 				entity.discard();
@@ -174,7 +175,7 @@ public class NowhereBossArena {
 					continue;
 
 				if (playerStillValid.test(serverPlayer)) {
-					Vec3 pos = RandomUtil.getRandomSelection(this.playerSpawnPoints);
+					Vec3 pos = RandomUtil.selection(this.playerSpawnPoints);
 					spawnBoss = true;
 
 					serverPlayer.connection.teleport(pos.x, pos.y, pos.z, 0, 0);
@@ -186,32 +187,32 @@ public class NowhereBossArena {
 				}
 
 				if (soundBuilder != null)
-					soundBuilder.include(player);
+					soundBuilder.onlyFor(player);
 			}
 
 			if (spawnBoss) {
 				AABB bounds = getStructureBounds(level);
 
-				AoAScheduler.scheduleSyncronisedTask(() -> {
+				AoAScheduler.schedule(1, tick2 -> {
 					getEntitiesInside(level, bounds).forEach(entity2 -> {
 						if (!(entity2 instanceof Player) && !(entity2 instanceof ItemEntity))
 							entity2.discard();
 					});
-				}, 1);
+				});
 
-				AoAScheduler.scheduleSyncronisedTask(() -> {
+				AoAScheduler.schedule(40, tick2 -> {
 					if (soundBuilder != null)
-						soundBuilder.execute();
-				}, 40);
+						soundBuilder.play();
+				});
 
-				AoAScheduler.scheduleSyncronisedTask(() -> {
+				AoAScheduler.schedule(140, tick2 -> {
 					int playerCount = getPlayersInside(level, bounds).size();
 
 					if (playerCount > 0)
 						bossFunction.spawn(level, getRandomBossSpawn(), stack, playerCount);
-				}, 140);
+				});
 			}
-		}, 100);
+		});
 
 		for (Player player : players) {
 			player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("nowhere.boss.teleportWarning"), ChatFormatting.GOLD));
@@ -285,6 +286,6 @@ public class NowhereBossArena {
 	}
 
 	public Vec3 getRandomBossSpawn() {
-		return RandomUtil.getRandomSelection(this.bossSpawnPoints);
+		return RandomUtil.selection(this.bossSpawnPoints);
 	}
 }

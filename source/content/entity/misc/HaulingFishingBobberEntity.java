@@ -7,9 +7,9 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
@@ -29,8 +29,8 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.EventHooks;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.content.item.tool.misc.HaulingRod;
 import net.tslat.aoa3.content.skill.hauling.HaulingEntity;
@@ -39,8 +39,8 @@ import net.tslat.aoa3.event.custom.AoAEvents;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.InventoryUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -164,7 +164,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 
 		int nearbyFluidBlocks = WorldUtil.getBlocksWithinAABB(level(), getBoundingBox().inflate(3, 2, 3), (state, pos) -> state.getFluidState().is(getApplicableFluid()) && state.getFluidState().isSource()).size();
 
-		if (nearbyFluidBlocks <=  50) {
+		if (nearbyFluidBlocks <= 50) {
 			this.fishingBonusMod *= 0.5f;
 
 			if (nearbyFluidBlocks < 15)
@@ -177,15 +177,15 @@ public class HaulingFishingBobberEntity extends FishingHook {
 	}
 
 	protected float fishingBonusModForBiome(Holder<Biome> biome) {
-		for (TagKey<Biome> tag : biome.tags().toList()) {
-			if (tag == BiomeTags.IS_OCEAN || tag == BiomeTags.IS_RIVER || tag == Tags.Biomes.IS_SWAMP)
-				return 1.25f;
+		float modifier = 1f;
 
-			if (tag == Tags.Biomes.IS_DEAD || tag == Tags.Biomes.IS_DRY || tag == Tags.Biomes.IS_HOT)
-				return 0.5f;
-		}
+		if (biome.is(AoATags.Biomes.WATER_FISHING_BENEFICIAL))
+			modifier *= 1.25f;
 
-		return 1f;
+		if (biome.is(AoATags.Biomes.WATER_FISHING_DETRIMENTAL))
+			modifier *= 0.5f;
+
+		return modifier;
 	}
 
 	@Override
@@ -212,7 +212,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 		if (this.hookedEntity == null)
 			checkIfCollided();
 
-		if (!level().isClientSide() && position().distanceToSqr(player.position()) > Math.pow(getMaxCastDistance() * 2f, 2)) {
+		if (!level().isClientSide() && position().distanceToSqr(player.position()) > Mth.square(getMaxCastDistance() * 2f)) {
 			discard();
 
 			return;
@@ -418,7 +418,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 		if (maxTime < 1)
 			maxTime = 1;
 
-		timeUntilFishSpawn = RandomUtil.randomNumberBetween(minTime, Math.max(minTime + 50, maxTime));
+		timeUntilFishSpawn = RandomUtil.numberBetween(minTime, Math.max(minTime + 50, maxTime));
 	}
 
 	protected void stopFishing() {
@@ -449,7 +449,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 
 		AoAEvents.fireCheckHaulingEntitySpawn(pool.orElse(null), entry.map(haulingEntity -> haulingEntity.apply(level(), isLava)).orElse(null), player, this).ifPresent(entity -> {
 			if (entity instanceof Mob mob) {
-				BlockPos pos = RandomUtil.getRandomPositionWithinRange(this.blockPosition(), 10, 10, 10, 2, 2, 2, false, level(), 5, (state, statePos) -> state.getFluidState().getType() == Fluids.WATER);
+				BlockPos pos = RandomUtil.positionWithinRange(this.blockPosition(), 10, 10, 10, 2, 2, 2, false, level(), 5, (state, statePos) -> state.getFluidState().getType() == Fluids.WATER);
 
 				mob.setPos(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
 				mob.getNavigation().createPath(blockPosition(), 0);
@@ -472,7 +472,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 	}
 
 	@Override
-	protected boolean canHitEntity(Entity entity) {
+	public boolean canHitEntity(Entity entity) {
 		if (entity.isSpectator() || !entity.isAlive())
 			return false;
 

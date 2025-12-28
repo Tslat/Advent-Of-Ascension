@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "aoa3:emberstone_ingot"
+      "tag": "c:ingots/emberstone"
     },
     "B": {
       "item": "minecraft:obsidian"

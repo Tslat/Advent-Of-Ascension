@@ -16,7 +16,7 @@ import net.tslat.aoa3.util.WorldUtil;
 
 import java.util.List;
 
-public class HolySword extends BaseSword {
+public class HolySword extends AoASword {
 	public HolySword(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

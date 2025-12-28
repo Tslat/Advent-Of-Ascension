@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class ShroomusSword extends BaseSword {
+public class ShroomusSword extends AoASword {
 	public ShroomusSword(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

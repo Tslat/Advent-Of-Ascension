@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.client.render.entity.projectile.TexturedProjectileRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.cannon.RPGEntity;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class RPGRenderer extends TexturedProjectileRenderer<RPGEntity> {
 	public RPGRenderer(final EntityRendererProvider.Context manager, final ResourceLocation textureResource) {
@@ -20,15 +20,15 @@ public class RPGRenderer extends TexturedProjectileRenderer<RPGEntity> {
 
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position().add(0, 0.3d, 0))
 				.spawnNTimes(8)
-				.colourOverride(0xDF9900)
-				.spawnParticles(entity.level());
+				.colourTint(0xDF9900)
+				.spawnClientParticles(entity.level());
 
 		for (int i = 0; i < 8; i++) {
 			float colourMod = entity.level().random.nextFloat() * 0.7f + 0.3f;
 
 			ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position().subtract(0, 0.3f, 0))
-					.colourOverride(colourMod, colourMod, colourMod, 1f)
-					.spawnParticles(entity.level());
+					.colourTint(colourMod, colourMod, colourMod, 1f)
+					.spawnClientParticles(entity.level());
 		}
 	}
 }

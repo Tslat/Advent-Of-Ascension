@@ -10,8 +10,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoARecipes;
-import net.tslat.aoa3.util.CodecUtil;
 import net.tslat.aoa3.util.RecipeUtil;
+import net.tslat.tme.api.util.StreamCodecUtil;
 import org.jetbrains.annotations.Nullable;
 
 public class ToolInteractionRecipe extends CustomRecipe implements RecipeBookRecipe<CraftingInput> {
@@ -118,7 +118,7 @@ public class ToolInteractionRecipe extends CustomRecipe implements RecipeBookRec
 						.apply(builder, ToolInteractionRecipe::new));
 		public static final StreamCodec<RegistryFriendlyByteBuf, ToolInteractionRecipe> STREAM_CODEC = StreamCodec.composite(
 				RecipeUtil.RecipeBookDetails.STREAM_CODEC, recipe -> recipe.recipeBookDetails,
-				CodecUtil.streamNonNullList(Ingredient.CONTENTS_STREAM_CODEC, Ingredient.EMPTY), recipe -> recipe.ingredients,
+				StreamCodecUtil.nonNullList(Ingredient.CONTENTS_STREAM_CODEC, Ingredient.EMPTY), recipe -> recipe.ingredients,
 				Ingredient.CONTENTS_STREAM_CODEC, recipe -> recipe.toolItem,
 				ItemStack.STREAM_CODEC, recipe -> recipe.output,
 				ToolInteractionRecipe::new);

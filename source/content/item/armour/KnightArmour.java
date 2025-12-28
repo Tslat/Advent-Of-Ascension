@@ -2,7 +2,6 @@ package net.tslat.aoa3.content.item.armour;
 
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,6 +15,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.item.AoAArmourMaterials;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -45,7 +45,7 @@ public class KnightArmour extends AdventArmour {
 	@Override
 	public void onArmourTick(LivingEntity entity, EnumSet<Piece> equippedPieces) {
 		if (equippedPieces.contains(Piece.FULL_SET) && entity.isAlive() && EntityUtil.getHealthPercent(entity) < 0.2f)
-			entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 2, 1, false, true));
+			EntityUtil.applyPotions(entity, entity, new EffectBuilder(MobEffects.DAMAGE_BOOST, 2).level(2));
 	}
 
 	@Override

@@ -13,7 +13,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class FakeTntEntity extends Entity {
     private static final EntityDataAccessor<Integer> FUSE_TIME = SynchedEntityData.defineId(FakeTntEntity.class, EntityDataSerializers.INT);
@@ -120,7 +120,7 @@ public class FakeTntEntity extends Entity {
         else if (level().isClientSide) {
             level().playLocalSound(getX(), getY(), getZ(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 4f, (1f + (level().random.nextFloat() - level().random.nextFloat()) * 0.2F) * 0.7f, false);
             ParticleBuilder.forPosition(ParticleTypes.EXPLOSION_EMITTER, getX(), getY(), getZ())
-                    .spawnParticles(level());
+                    .spawnClientParticles(level());
         }
     }
 }

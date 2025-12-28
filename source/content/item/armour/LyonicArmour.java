@@ -5,13 +5,16 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.item.AoAArmourMaterials;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -24,16 +27,31 @@ public class LyonicArmour extends AdventArmour {
 	@Override
 	public void onArmourTick(LivingEntity entity, EnumSet<Piece> equippedPieces) {
 		if (entity.level().getGameTime() % 2 == 0) {
-			final boolean xpOrbs = equippedPieces.contains(Piece.FULL_SET);
+			final boolean fullSet = equippedPieces.contains(Piece.FULL_SET);
 
-			EntityRetrievalUtil.<Entity>getEntities(entity, perPieceValue(equippedPieces, 1.5f), entity2 -> entity2.isAlive() && (entity2 instanceof ItemEntity item && !item.getItem().isEmpty() && !item.hasPickUpDelay() && canPullItem(item)) || (xpOrbs && entity2 instanceof ExperienceOrb)).stream()
-					.limit(200)
-					.forEach(entity2 -> EntityUtil.pullEntityIn(entity, entity2, 0.05f, true));
+			for (Entity attractedEntity : EntityRetrievalUtil.getEntities(entity, perPieceValue(equippedPieces, 2.5f), Entity.class, target -> target.isAlive() && (canPullItem(target, entity) || (fullSet && canPullOther(target, entity))))) {
+				EntityUtil.pullEntityIn(entity, attractedEntity, 0.05f, true);
+			}
 		}
 	}
 
-	private boolean canPullItem(ItemEntity item) {
-		return item.isAlive() && !item.getItem().isEmpty() && !item.hasPickUpDelay();
+	private boolean canPullItem(Entity entity, LivingEntity wearer) {
+		return entity instanceof ItemEntity item && !item.getItem().isEmpty() && !item.hasPickUpDelay();
+	}
+
+	private boolean canPullOther(Entity entity, LivingEntity wearer) {
+		if (entity instanceof ExperienceOrb)
+			return true;
+
+		if (entity instanceof AbstractArrow arrow && arrow.lastState != null && (!(wearer instanceof Player pl) || (arrow.pickup == AbstractArrow.Pickup.ALLOWED || pl.hasInfiniteMaterials()))) {
+			arrow.inGround = false;
+			arrow.setBaseDamage(0);
+			arrow.addDeltaMovement(new Vec3(0, 0.1f, 0));
+			arrow.hurtMarked = true;
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

@@ -1,30 +1,22 @@
 package net.tslat.aoa3.content.entity.projectile.cannon;
 
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
-import net.tslat.aoa3.content.entity.projectile.HardProjectile;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
-import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.content.entity.projectile.base.PhysicalWeaponProjectile;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
 
-public class HeavyBoneCannonballEntity extends BaseBullet implements HardProjectile {
-	public HeavyBoneCannonballEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
-		super(entityType, world);
-	}
-	
-	public HeavyBoneCannonballEntity(Level world) {
-		super(AoAProjectiles.HEAVY_BONE_CANNONBALL.get(), world);
+public class HeavyBoneCannonballEntity extends PhysicalWeaponProjectile {
+	public HeavyBoneCannonballEntity(EntityType<? extends HeavyBoneCannonballEntity> entityType, Level level) {
+		super(entityType, level);
 	}
 
-	public HeavyBoneCannonballEntity(LivingEntity shooter, BaseGun gun, InteractionHand hand, int maxAge, int piercingValue) {
-		super(AoAProjectiles.HEAVY_BONE_CANNONBALL.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
+	public HeavyBoneCannonballEntity(EntityType<? extends HeavyBoneCannonballEntity> entityType, Level level, WeaponFiringContext context) {
+		super(entityType, level, context);
 	}
 
-	public HeavyBoneCannonballEntity(Level world, double x, double y, double z) {
-		super(AoAProjectiles.HEAVY_BONE_CANNONBALL.get(), world, x, y, z);
+	public HeavyBoneCannonballEntity(Level level, WeaponFiringContext context) {
+		this(AoAProjectiles.HEAVY_BONE_CANNONBALL.get(), level, context);
 	}
 
 	@Override

@@ -47,13 +47,13 @@ import net.tslat.aoa3.event.dynamic.DynamicEventSubscriber;
 import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.leaderboard.SkillsLeaderboard;
 import net.tslat.aoa3.leaderboard.task.LeaderboardActions;
-import net.tslat.aoa3.library.object.PartialNbtSerializable;
-import net.tslat.aoa3.library.object.PositionAndRotation;
+import net.tslat.aoa3.library.object.interfaces.PartialNbtSerializable;
+import net.tslat.aoa3.library.object.container.PositionAndRotation;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.*;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -75,7 +75,6 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 	private final ObjectArrayList<WeakReference<AoAPlayerEventListener>> eventListeners = new ObjectArrayList<>();
 	private final List<DynamicEventSubscriber<?>> eventSubscribers = List.of(
 			listener(LivingDeathEvent.class, LivingDeathEvent::getEntity, this::handlePlayerDeath),
-			listener(PlayerEvent.PlayerRespawnEvent.class, this::handlePlayerRespawn),
 			listener(PlayerLevelChangeEvent.class, this::handleLevelChange),
 			listener(PlayerTickEvent.Pre.class, this::handlePlayerTick));
 
@@ -213,8 +212,9 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		});
 	}
 
-	private void handlePlayerRespawn(final PlayerEvent.PlayerRespawnEvent ev) {
-		this.storage.returnStoredItems();
+	private static void handlePlayerRespawn(final PlayerEvent.PlayerRespawnEvent ev) {
+		if (ev.getEntity() instanceof ServerPlayer pl)
+			PlayerUtil.getAdventPlayer(pl).storage.returnStoredItems();
 	}
 
 	private void handleLevelChange(PlayerLevelChangeEvent ev) {
@@ -275,9 +275,10 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 	static {
 		NeoForge.EVENT_BUS.addListener(PlayerEvent.Clone.class, ServerPlayerDataManager::handlePlayerDataClone);
+		NeoForge.EVENT_BUS.addListener(PlayerEvent.PlayerRespawnEvent.class, ServerPlayerDataManager::handlePlayerRespawn);
 	}
 
-	public static void handlePlayerDataClone(final PlayerEvent.Clone ev) {
+	private static void handlePlayerDataClone(final PlayerEvent.Clone ev) {
 		ServerPlayerDataManager newData = PlayerUtil.getAdventPlayer((ServerPlayer)ev.getEntity());
 		ServerPlayerDataManager sourceData = PlayerUtil.getAdventPlayer((ServerPlayer)ev.getOriginal());
 
@@ -500,7 +501,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		@Nullable
 		private PositionAndRotation activeCheckpoint = null;
 		@Nullable
-		private CompoundTag foodDataStorage = null;
+		private CompoundTag statsStorage = null;
 
 		private boolean needsPatchouliSync = false;
 
@@ -630,25 +631,26 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			}
 		}
 
-		public void saveFoodData() {
-			this.foodDataStorage = new CompoundTag();
+		public void saveStats() {
+			this.statsStorage = new CompoundTag();
 
-			getPlayer().getFoodData().addAdditionalSaveData(this.foodDataStorage);
+			getPlayer().getFoodData().addAdditionalSaveData(this.statsStorage);
 		}
 
-		public void restoreFoodData() {
-			if (this.foodDataStorage == null)
+		public void restoreStats() {
+			if (this.statsStorage == null)
 				return;
 
-			getPlayer().getFoodData().readAdditionalSaveData(this.foodDataStorage);
+			getPlayer().getFoodData().readAdditionalSaveData(this.statsStorage);
 
-			this.foodDataStorage = null;
+			this.statsStorage = null;
 		}
 
 		boolean getSyncData(Supplier<CompoundTag> syncData) {
 			if (!this.needsPatchouliSync)
 				return false;
 
+			this.needsPatchouliSync = false;
 			ListTag booksNbt = new ListTag();
 
 			for (ResourceLocation id : this.patchouliBooks) {
@@ -665,7 +667,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			this.patchouliBooks.addAll(oldStorage.patchouliBooks);
 			this.itemStorage.putAll(oldStorage.itemStorage);
 			this.activeCheckpoint = oldStorage.activeCheckpoint;
-			this.foodDataStorage = oldStorage.foodDataStorage;
+			this.statsStorage = oldStorage.statsStorage;
 		}
 
 		@Override
@@ -799,16 +801,16 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		private final Map<Holder<ArmorMaterial>, AdventArmourSetContainer> equippedByMaterial = new Object2ObjectOpenHashMap<>(4);
 		private final EnumMap<AdventArmour.Piece, AdventArmour> equippedByPiece = new EnumMap<>(AdventArmour.Piece.class);
 		private final List<DynamicEventSubscriber<?>> eventSubscribers = List.of(
-				listener(LivingEquipmentChangeEvent.class, LivingEquipmentChangeEvent::getEntity, serverOnly(this::handleArmourChange)),
-				listener(PlayerTickEvent.Pre.class, serverOnly(this::handlePlayerTick)),
-				listener(EntityInvulnerabilityCheckEvent.class, EntityInvulnerabilityCheckEvent::getEntity, serverOnly(this::handleEntityInvulnerability)),
-				listener(MobEffectEvent.Applicable.class, MobEffectEvent.Applicable::getEntity, serverOnly(this::handleEffectApplicability)),
-				listener(LivingDamageEvent.Pre.class, LivingDamageEvent::getEntity, serverOnly(this::handlePreDamageApplication)),
-				whenTakingDamage(serverOnly(this::handleIncomingDamage)),
-				afterTakingDamage(serverOnly(this::handleAfterDamaged)),
-				whenAttacking(serverOnly(this::handleOutgoingAttack)),
-				afterAttacking(serverOnly(this::handleAfterAttacking)),
-				listener(LivingDeathEvent.class, LivingDeathEvent::getEntity, serverOnly(this::handlePlayerDeath)));
+				listener(LivingEquipmentChangeEvent.class, LivingEquipmentChangeEvent::getEntity, this::handleArmourChange),
+				listener(PlayerTickEvent.Pre.class, this::handlePlayerTick),
+				listener(EntityInvulnerabilityCheckEvent.class, EntityInvulnerabilityCheckEvent::getEntity, this::handleEntityInvulnerability),
+				listener(MobEffectEvent.Applicable.class, MobEffectEvent.Applicable::getEntity, this::handleEffectApplicability),
+				listener(LivingDamageEvent.Pre.class, LivingDamageEvent::getEntity, this::handlePreDamageApplication),
+				whenTakingDamage(this::handleIncomingDamage),
+				afterTakingDamage(this::handleAfterDamaged),
+				whenAttacking(this::handleOutgoingAttack),
+				afterAttacking(this::handleAfterAttacking),
+				listener(LivingDeathEvent.class, LivingDeathEvent::getEntity, this::handlePlayerDeath));
 
 		private boolean checkNewArmour = false;
 

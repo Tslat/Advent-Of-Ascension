@@ -12,7 +12,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.content.entity.monster.misc.ThornyPlantSproutEntity;
 import net.tslat.aoa3.util.BlockUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.function.Supplier;
 
@@ -88,7 +88,7 @@ public class ThornyPlantCrop extends MultiBlockCrop {
 		pos = pos.below(currentState.getValue(getHeightProperty()));
 
 		if (!world.isClientSide() && currentState.getValue(getAgeProperty()) == getMaxAge() - 1 && currentState.getValue(getHeightProperty()) == getGrowthHeight() - 1) {
-			int number = RandomUtil.randomNumberBetween(1, 3);
+			int number = RandomUtil.numberBetween(1, 3);
 
 			for (int i = 0; i < number; i++) {
 				world.addFreshEntity(new ThornyPlantSproutEntity(world, pos));

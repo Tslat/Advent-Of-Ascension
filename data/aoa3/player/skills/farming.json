@@ -65,11 +65,16 @@
     {
       "id": "aoa3:block_conversion",
       "interaction_item": "aoa3:mushroom_spores",
-      "level_req": 66,
+      "level_req": 60,
       "radius": 4,
       "replacement_block": "minecraft:mycelium",
       "target_block": "minecraft:grass_block",
-      "unique_id": "1885647504"
+      "unique_id": "1885649426"
+    },
+    {
+      "id": "aoa3:no_trampling",
+      "level_req": 66,
+      "unique_id": "122493923"
     },
     {
       "id": "aoa3:level_restriction",

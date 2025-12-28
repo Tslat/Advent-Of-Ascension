@@ -12,12 +12,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.ConditionalEffect;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.effects.EnchantmentEntityEffect;
 import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoARegistries;
+import net.tslat.aoa3.content.enchantment.entityeffect.ShrapnelBlast;
 import net.tslat.aoa3.content.enchantment.valueeffect.Clamp;
 import org.apache.commons.lang3.mutable.MutableFloat;
 
@@ -37,8 +39,10 @@ public final class AoAEnchantments {
 	public static final ResourceKey<Enchantment> RECHARGE = key("recharge");
 	public static final ResourceKey<Enchantment> SEVER = key("sever");
 	public static final ResourceKey<Enchantment> SHELL = key("shell");
+	public static final ResourceKey<Enchantment> FRAGMENT = key("fragment");
 
 	public static final DeferredHolder<MapCodec<? extends EnchantmentValueEffect>, MapCodec<Clamp>> CLAMP = registerValueProvider("clamp", () -> Clamp.CODEC);
+	public static final DeferredHolder<MapCodec<? extends EnchantmentEntityEffect>, MapCodec<ShrapnelBlast>> SHRAPNEL_BLAST = registerEntityEffect("shrapnel_blast", () -> ShrapnelBlast.CODEC);
 
 	public static final DeferredHolder<DataComponentType<?>, DataComponentType<List<ConditionalEffect<EnchantmentValueEffect>>>> CRIT_DAMAGE = registerEffectType("crit_damage", builder -> builder.persistent(ConditionalEffect.codec(EnchantmentValueEffect.CODEC, LootContextParamSets.ENCHANTED_DAMAGE).listOf()));
 	public static final DeferredHolder<DataComponentType<?>, DataComponentType<List<ConditionalEffect<EnchantmentValueEffect>>>> SPIRIT_CONSUMPTION = registerEffectType("spirit_consumption", builder -> builder.persistent(ConditionalEffect.codec(EnchantmentValueEffect.CODEC, LootContextParamSets.ENCHANTED_ITEM).listOf()));
@@ -58,7 +62,6 @@ public final class AoAEnchantments {
 	public static float modifySpiritConsumption(Level level, ItemStack stack, float spiritCost) {
 		if (!(level instanceof ServerLevel serverLevel))
 			return spiritCost;
-
 
 		final MutableFloat mutableFloat = new MutableFloat(spiritCost);
 
@@ -112,5 +115,9 @@ public final class AoAEnchantments {
 
 	private static <T extends EnchantmentValueEffect> DeferredHolder<MapCodec<? extends EnchantmentValueEffect>, MapCodec<T>> registerValueProvider(String id, Supplier<MapCodec<T>> codec) {
 		return AoARegistries.ENCHANTMENT_VALUE_EFFECTS.register(id, codec);
+	}
+
+	private static <T extends EnchantmentEntityEffect> DeferredHolder<MapCodec<? extends EnchantmentEntityEffect>, MapCodec<T>> registerEntityEffect(String id, Supplier<MapCodec<T>> codec) {
+		return AoARegistries.ENCHANTMENT_ENTITY_EFFECTS.register(id, codec);
 	}
 }

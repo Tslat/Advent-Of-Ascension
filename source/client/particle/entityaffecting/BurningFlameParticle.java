@@ -11,11 +11,13 @@ import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.networking.AoANetworking;
 import net.tslat.aoa3.common.networking.packets.ParticleEffectPacket;
 import net.tslat.aoa3.common.particleoption.EntityTrackingParticleOptions;
-import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Predicate;
+
 public class BurningFlameParticle extends EntityAffectingParticle {
+	private final Predicate<Entity> canCollideWith;
 	private final SpriteSet sprites;
 	private final int particleSourceId;
 
@@ -29,6 +31,7 @@ public class BurningFlameParticle extends EntityAffectingParticle {
 		this.quadSize = (this.random.nextFloat() * this.random.nextFloat() * 6 + 1) * 0.35f / 5f;
 		this.lifetime = Mth.ceil(5 / (this.random.nextFloat() * 0.8f + 0.2f));
 		this.particleSourceId = entitySourceId;
+		this.canCollideWith = CAN_COLLIDE_WITH.and(entity -> entity.getId() != this.particleSourceId);
 
 		setSpriteFromAge(this.sprites);
 		setSize(0.2f, 0.2f);
@@ -60,7 +63,7 @@ public class BurningFlameParticle extends EntityAffectingParticle {
 
 	@Override
 	protected boolean handleEntityCollision(Entity collidedEntity) {
-		if (EntityPredicate.DAMAGEABLE_ENTITIES.test(collidedEntity))
+		if (DAMAGEABLE_ENTITIES.test(collidedEntity))
 			AoANetworking.sendToServer(new ParticleEffectPacket(ParticleEffectPacket.Type.BURNING_FLAME, this.particleSourceId, collidedEntity.getId()));
 
 		return super.handleEntityCollision(collidedEntity);
@@ -71,7 +74,7 @@ public class BurningFlameParticle extends EntityAffectingParticle {
 		if (this.particleSourceId == -1)
 			return null;
 
-		return EntityRetrievalUtil.getNearestEntity(this.level, getBoundingBox().expandTowards(xVelocity, yVelocity, zVelocity), new Vec3(x, y, z), EntityPredicate.TARGETABLE_ENTITIES.and(entity -> entity.getId() != this.particleSourceId));
+		return EntityRetrievalUtil.getNearestEntity(this.level, getBoundingBox().expandTowards(xVelocity, yVelocity, zVelocity), new Vec3(this.x, this.y, this.z), this.canCollideWith);
 	}
 
 	public static class Provider implements ParticleProvider<EntityTrackingParticleOptions> {

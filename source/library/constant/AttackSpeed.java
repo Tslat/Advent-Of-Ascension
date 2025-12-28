@@ -15,6 +15,8 @@ public final class AttackSpeed {
 	public static final float HOE = -3.0f;
 	public static final float SWORD = -2.4f;
 	public static final float GREATBLADE = -3.24f;
+	public static final float MAUL = -3.4666667f;
+	public static final float BLASTER = -2.8f;
 
 	/**
 	 * Returns a float value to pass to an item tier that is equivalent to the attack speed of a sword multiplied by the passed parameter

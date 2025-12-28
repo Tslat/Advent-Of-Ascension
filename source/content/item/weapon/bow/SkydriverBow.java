@@ -4,42 +4,48 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
-import net.tslat.aoa3.content.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SkydriverBow extends BaseBow {
+public class SkydriverBow extends AoABow {
 	public SkydriverBow(Item.Properties properties) {
 		super(properties);
 	}
 
 	@Override
-	public void tickArrow(CustomArrowEntity arrow, @Nullable Entity shooter, ItemStack stack) {
-		if (!arrow.level().isClientSide && !arrow.inGround && arrow.tickCount > 1) {
-			ParticleBuilder.forRandomPosInEntity(ParticleTypes.SPIT, arrow)
-					.colourOverride(0xA53A00)
-					.velocity(0, -0.1f, 0)
-					.lifespan(20)
-					.sendToAllPlayersTrackingEntity((ServerLevel)arrow.level(), arrow);
+	public void tickArrow(Projectile projectile, @Nullable Entity shooter, ItemStack stack) {
+		Level level = projectile.level();
+
+		if (!level.isClientSide && projectile instanceof AbstractArrow arrow && !arrow.inGround && arrow.tickCount > 1) {
 
 			BlockPos.MutableBlockPos testPos = arrow.blockPosition().mutable();
 
-			while (testPos.move(Direction.DOWN).getY() >= arrow.level().getMinBuildHeight() && arrow.level().isEmptyBlock(testPos)) {
+			while (testPos.move(Direction.DOWN).getY() >= level.getMinBuildHeight() && level.isEmptyBlock(testPos)) {
 				;
 			}
 
-			if (arrow.level().getBlockState(testPos).isFaceSturdy(arrow.level(), testPos, Direction.UP) && arrow.level().getBlockState(testPos.above()).canBeReplaced() && WorldUtil.canPlaceBlock(arrow.level(), testPos.above(), shooter, null))
-				arrow.level().setBlockAndUpdate(testPos.above(), AoABlocks.ORANGE_ACID.get().defaultBlockState());
+			ParticleBuilder.forRandomPosInEntity(ParticleTypes.SPIT, arrow)
+					.colourTint(0xA53A00)
+					.velocity(0, RandomUtil.valueBetween(-0.3f, -0.5f), 0)
+					.spawnNTimes(3)
+					.lifespan(arrow.blockPosition().getY() - testPos.getY() * 4)
+					.sendToAllPlayersTrackingEntity(arrow);
+
+			if (level.getBlockState(testPos).isFaceSturdy(level, testPos, Direction.UP) && level.getBlockState(testPos.above()).canBeReplaced() && WorldUtil.canPlaceBlock(level, testPos.above(), shooter, null))
+				level.setBlockAndUpdate(testPos.above(), AoABlocks.ORANGE_ACID.get().defaultBlockState());
 		}
 	}
 

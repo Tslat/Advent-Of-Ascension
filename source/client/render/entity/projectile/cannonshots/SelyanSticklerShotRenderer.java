@@ -5,7 +5,7 @@ import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.cannon.SelyanSticklerShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class SelyanSticklerShotRenderer extends ParticleProjectileRenderer<SelyanSticklerShotEntity> {
 	public SelyanSticklerShotRenderer(final EntityRendererProvider.Context manager) {
@@ -16,7 +16,7 @@ public class SelyanSticklerShotRenderer extends ParticleProjectileRenderer<Selya
 	protected void addParticles(SelyanSticklerShotEntity entity, float partialTicks) {
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
 				.spawnNTimes(14)
-				.colourOverride(ColourUtil.GREEN)
-				.spawnParticles(entity.level());
+				.colourTint(ColourUtil.GREEN)
+				.spawnClientParticles(entity.level());
 	}
 }

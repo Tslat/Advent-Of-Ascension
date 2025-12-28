@@ -13,10 +13,6 @@ public class HellfireProjectileEntity extends ThrowableProjectile {
 	public HellfireProjectileEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
-	
-	public HellfireProjectileEntity(Level world) {
-		super(AoAProjectiles.HELLFIRE_TAIL.get(), world);
-	}
 
 	public HellfireProjectileEntity(HellfireEntity source, double targetPosX, double targetPosY, double targetPosZ) {
 		super(AoAProjectiles.HELLFIRE_TAIL.get(), source.getX(), source.getY(), source.getZ(), source.level());

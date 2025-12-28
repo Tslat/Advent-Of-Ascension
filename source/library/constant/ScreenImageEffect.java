@@ -11,7 +11,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.networking.AoANetworking;
 import net.tslat.aoa3.common.networking.packets.ScreenEffectPacket;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -56,7 +56,7 @@ public class ScreenImageEffect {
 	}
 
 	public ScreenImageEffect randomScale() {
-		return scaled((float)RandomUtil.randomValueBetween(0.25f, 1.25f));
+		return scaled((float)RandomUtil.valueBetween(0.25f, 1.25f));
 	}
 
 	public ScreenImageEffect coloured(int red, int green, int blue, int alpha) {

@@ -15,7 +15,7 @@ import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.smartbrainlib.api.core.behaviour.DelayedBehaviour;
 import net.tslat.smartbrainlib.registry.SBLMemoryTypes;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 
 import java.util.List;
 
@@ -111,7 +111,7 @@ public class ChargeAttack<E extends PathfinderMob> extends DelayedBehaviour<E> {
 			entity.setDeltaMovement(this.chargeVelocity);
 			entity.lookAt(EntityAnchorArgument.Anchor.FEET, entity.position().add(this.chargeVelocity));
 
-			for (LivingEntity target : EntityRetrievalUtil.<LivingEntity>getEntities(entity.level(), entity.getBoundingBox().expandTowards(this.chargeVelocity), target -> target != entity && target.isAlive() && target instanceof LivingEntity && (!(target instanceof Player pl) || !pl.isCreative()))) {
+			for (LivingEntity target : EntityRetrievalUtil.getEntities(entity.level(), entity.getBoundingBox().expandTowards(this.chargeVelocity), LivingEntity.class, target -> target != entity && target.isAlive() && (!(target instanceof Player pl) || !pl.isCreative()))) {
 				entity.doHurtTarget(target);
 				EntityUtil.pushEntityAway(entity, target, 1.5f);
 			}

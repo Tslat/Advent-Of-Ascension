@@ -4,7 +4,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.animal.AbstractFish;
@@ -12,8 +11,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
@@ -42,8 +41,8 @@ public class BasicFishEntity extends AbstractFish implements GeoEntity {
 		return InteractionResult.PASS;
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Entity> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT.onlySpawnIn(Blocks.WATER).onlySpawnUnder(Blocks.WATER);
+	public static SpawnPlacements.SpawnPredicate<BasicFishEntity> spawnRules(EntityType<BasicFishEntity> entityType) {
+		return EntitySpawnConditions.create(entityType).onlySpawnIn(Blocks.WATER).onlySpawnUnder(Blocks.WATER);
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<BasicFishEntity> entityType) {

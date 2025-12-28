@@ -7,9 +7,9 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.content.entity.projectile.thrown.SliceStarEntity;
 
-public class SliceStarModel extends EntityModel<BaseBullet> {
+public class SliceStarModel extends EntityModel<SliceStarEntity> {
 	private final ModelPart root;
 
 	public SliceStarModel(ModelPart meshDefRoot) {
@@ -35,7 +35,7 @@ public class SliceStarModel extends EntityModel<BaseBullet> {
 	}
 
 	@Override
-	public void setupAnim(BaseBullet sliceStar, float pLimbSwing, float pLimbSwingAmount, float tickAge, float pNetHeadYaw, float pHeadPitch) {
+	public void setupAnim(SliceStarEntity sliceStar, float pLimbSwing, float pLimbSwingAmount, float tickAge, float pNetHeadYaw, float pHeadPitch) {
 		if (sliceStar.getDeltaMovement().x() != 0 || sliceStar.getDeltaMovement().y() != 0 || sliceStar.getDeltaMovement().z() != 0) {
 			root.yRot = Mth.lerp(pLimbSwingAmount, tickAge - 1 % 360, tickAge % 360);
 		}

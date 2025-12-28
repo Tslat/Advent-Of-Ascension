@@ -2,40 +2,37 @@ package net.tslat.aoa3.content.item.weapon.blaster;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 
 import java.util.List;
 
-public class VortexBlaster extends BaseBlaster {
+public class VortexBlaster extends AoABlaster<Void> {
 	public VortexBlaster(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_GRAVITY_BLASTER_FIRE.get();
-	}
+	void fireBlaster(ServerLevel level, WeaponFiringContext context) {
+		if (context.getShooter() instanceof LivingEntity shooter) {
+			doFiringEffects(level, null, shooter.position(), context);
 
-	@Override
-	public void fireBlaster(ServerLevel level, LivingEntity shooter, ItemStack blaster) {
-		float x = -Mth.sin(shooter.getYRot() / 180.0F * (float)Math.PI) * Mth.cos(shooter.getXRot() / 180.0F * (float)Math.PI);
-		float y = -Mth.sin(shooter.getXRot() / 180.0F * (float)Math.PI);
-		float z = Mth.cos(shooter.getYRot() / 180.0F * (float)Math.PI) * Mth.cos(shooter.getXRot() / 180.0F * (float)Math.PI);
-
-		for (LivingEntity entity : shooter.level().getEntitiesOfClass(LivingEntity.class, shooter.getBoundingBox().inflate(x * 7 + 1, y * 7 + 1, z * 7 + 1))) {
-			DamageUtil.doScaledKnockback(entity, shooter, 7f, 1, 1, 1);
+			for (LivingEntity target : EntityRetrievalUtil.getEntities(level, shooter.getBoundingBox().expandTowards(shooter.getViewVector(1).scale(8)), LivingEntity.class)) {
+				DamageUtil.doScaledKnockback(target, shooter, 7f, 1, 1, 1);
+			}
 		}
 	}
+
+	/*@Override
+	protected void doFiringEffects(ServerLevel level, Void effect, Vec3 pos, WeaponFiringContext context) {
+		super.doFiringEffects(level, effect, pos, context);
+	}*/
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {

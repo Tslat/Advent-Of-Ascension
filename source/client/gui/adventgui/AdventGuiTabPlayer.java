@@ -33,11 +33,8 @@ import net.tslat.aoa3.player.AoAPlayerEventListener;
 import net.tslat.aoa3.client.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.skill.AoASkill;
-import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.aoa3.util.NumberUtil;
-import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.aoa3.util.RenderUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.aoa3.util.*;
+import net.tslat.tme.api.util.RandomUtil;
 import org.joml.Vector3f;
 
 import java.util.Comparator;
@@ -46,6 +43,7 @@ import java.util.stream.Collectors;
 
 public class AdventGuiTabPlayer extends Screen {
 	private static final ResourceLocation TOTAL_LEVEL_ICON = AdventOfAscension.id("textures/gui/aoaskill/total_level.png");
+	private static long helpTipTime = -1;
 
 	private LivingEntity entityToRender = null;
 	private float skillRenderScale = 1;
@@ -119,6 +117,10 @@ public class AdventGuiTabPlayer extends Screen {
 		if (abilityPane == null || abilityPane.skill == null) {
 			hoveringAddCycle = false;
 			hoveringSkillClose = false;
+			Component helpText = Component.translatable(LocaleUtil.createGuiLocaleKey("adventGui.player.clickSkill"));
+
+			if (helpTipTime == -1)
+				helpTipTime = System.currentTimeMillis();
 
 			poseStack.scale(1.6f, 1.6f, 1);
 
@@ -133,6 +135,11 @@ public class AdventGuiTabPlayer extends Screen {
 
 			drawPlayerBox(poseStack, adjustedMouseX, adjustedMouseY, 67, partialTick);
 			drawTotalLevel(poseStack, adjustedMouseX, adjustedMouseY, partialTick);
+
+			int tipAlpha = Math.max(0, 255 - (int)(255 * (System.currentTimeMillis() - helpTipTime) / 5000f));
+
+			if (tipAlpha > 10)
+				RenderUtil.renderScaledText(poseStack, font, helpText, AdventMainGui.GUI_WIDTH * AdventMainGui.SCALE - this.font.width(helpText) + 5, AdventMainGui.GUI_HEIGHT * AdventMainGui.SCALE - 35, 1f, 0xF29D00 | tipAlpha << 24, tipAlpha << 24, RenderUtil.TextRenderType.OUTLINED, LightTexture.FULL_BRIGHT, Minecraft.getInstance().renderBuffers().bufferSource());
 		}
 		else {
 			AoASkillRenderer skillRenderer = AoAGuiElementRenderers.getSkillRenderer(abilityPane.skill.type());
@@ -282,7 +289,7 @@ public class AdventGuiTabPlayer extends Screen {
 			Minecraft mc = Minecraft.getInstance();
 			
 			if (!ClientPlayerDataManager.get().isLegitimate()) {
-				entityToRender = RandomUtil.getRandomSelection(
+				entityToRender = RandomUtil.selection(
 						//AoAMonsters.ARCWORM,
 						AoAMonsters.CHARGER,
 						//AoAMonsters.OCCULENT,

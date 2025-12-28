@@ -8,7 +8,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import org.jetbrains.annotations.Nullable;
 
-
 public interface AoARangedAttacker extends RangedAttackMob {
 	void doRangedAttackEntity(@Nullable BaseMobProjectile projectile, Entity target);
 

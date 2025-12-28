@@ -25,16 +25,21 @@ public class AoAEntityPart<T extends LivingEntity> extends PartEntity<T> {
 	private final Vec3 posOffset;
 	private float damageMultiplier = 1;
 	private final EntityDimensions size;
+
 	private boolean isEnabled = true;
 
-	public AoAEntityPart(T parent, float width, float height, float offsetLeftRight, float offsetY, float offsetFrontBack) {
+	public AoAEntityPart(T parent, EntityDimensions size, Vec3 posOffset) {
 		super(parent);
 
-		this.size = EntityDimensions.scalable(width, height);
-		this.posOffset = new Vec3(offsetLeftRight, offsetY, offsetFrontBack);
+		this.size = size;
+		this.posOffset = posOffset;
 
-		setPos(parent.position().add(offsetLeftRight, offsetY, offsetFrontBack));
+		setPos(parent.position().add(this.posOffset));
 		refreshDimensions();
+	}
+
+	public AoAEntityPart(T parent, float width, float height, float offsetLeftRight, float offsetY, float offsetFrontBack) {
+		this(parent, EntityDimensions.scalable(width, height), new Vec3(offsetLeftRight, offsetY, offsetFrontBack));
 	}
 
 	public AoAEntityPart<T> setDamageMultiplier(float multiplier) {
@@ -56,18 +61,15 @@ public class AoAEntityPart<T extends LivingEntity> extends PartEntity<T> {
 		return this.isEnabled;
 	}
 
+	public Vec3 getPosOffset() {
+		return this.posOffset;
+	}
+
 	public void updatePosition() {
 		final T parent = getParent();
 
-		final Vec3 offset = this.posOffset.scale(getScale());
-		final double rot = Math.toRadians(-parent.yHeadRot);
-		final double cos = Math.cos(rot);
-		final double sin = Math.sin(rot);
-		final double xOffset = -cos * offset.x + sin * offset.z;
-		final double zOffset = sin * offset.x + cos * offset.z;
-
 		setOldPosAndRot();
-		setPos(parent.position().x + xOffset, parent.position().y + offset.y, parent.position().z + zOffset);
+		setPos(parent.position().add(this.posOffset.scale(getScale()).yRot((float)Math.toRadians(-parent.yHeadRot))));
 	}
 
 	@Nullable

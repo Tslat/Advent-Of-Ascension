@@ -3,31 +3,31 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:elecanium_nugget"
+      "tag": "c:nuggets/elecanium"
     },
     {
-      "item": "aoa3:elecanium_nugget"
+      "tag": "c:nuggets/elecanium"
     },
     {
-      "item": "aoa3:elecanium_nugget"
+      "tag": "c:nuggets/elecanium"
     },
     {
-      "item": "aoa3:elecanium_nugget"
+      "tag": "c:nuggets/elecanium"
     },
     {
-      "item": "aoa3:elecanium_nugget"
+      "tag": "c:nuggets/elecanium"
     },
     {
-      "item": "aoa3:elecanium_nugget"
+      "tag": "c:nuggets/elecanium"
     },
     {
-      "item": "aoa3:elecanium_nugget"
+      "tag": "c:nuggets/elecanium"
     },
     {
-      "item": "aoa3:elecanium_nugget"
+      "tag": "c:nuggets/elecanium"
     },
     {
-      "item": "aoa3:elecanium_nugget"
+      "tag": "c:nuggets/elecanium"
     }
   ],
   "result": {

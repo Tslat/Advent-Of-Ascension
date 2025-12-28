@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:story/smelt_iron",
+  "criteria": {
+    "obtain_tinkerers_table": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aoa3:tinkerers_table"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.inventor.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "aoa3:tinkerers_table"
+    },
+    "show_toast": false,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.overworld.inventor.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_tinkerers_table"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

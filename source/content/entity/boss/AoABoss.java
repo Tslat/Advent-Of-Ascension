@@ -23,11 +23,11 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoAMonster;
 import net.tslat.aoa3.content.world.nowhere.NowhereBossArena;
-import net.tslat.aoa3.library.builder.SoundBuilder;
+import net.tslat.aoa3.event.dimension.NowhereEvents;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.tme.api.sound.SoundBuilder;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.RawAnimation;
-
 
 public abstract class AoABoss extends AoAMonster<AoABoss> {
 	private final ServerBossEvent bossStatusTracker = (ServerBossEvent)new ServerBossEvent(getDisplayName(), BossEvent.BossBarColor.GREEN, BossEvent.BossBarOverlay.NOTCHED_20).setDarkenScreen(false).setCreateWorldFog(false);
@@ -54,6 +54,11 @@ public abstract class AoABoss extends AoAMonster<AoABoss> {
 	@Override
 	public int calculateKillXp() {
 		return !this.hasDrops ? 0 : 2 * (int)(5 + (getAttributeValue(Attributes.MAX_HEALTH) + getAttributeValue(Attributes.ARMOR) * 1.75f + getAttributeValue(Attributes.ATTACK_DAMAGE) * 2) / 10f);
+	}
+
+	@Override
+	public boolean shouldBeSaved() {
+		return (level().dimension() != AoADimensions.NOWHERE || !NowhereEvents.isInBossRegion(blockPosition())) && super.shouldBeSaved();
 	}
 
 	@Nullable
@@ -127,7 +132,7 @@ public abstract class AoABoss extends AoAMonster<AoABoss> {
 	}
 
 	protected RawAnimation getSwingAnimation() {
-		return getSwingAnimation(ATTACK_STATE.get(this));
+		return getSwingAnimation(getSynchedData(ATTACK_STATE));
 	}
 
 	protected RawAnimation getSwingAnimation(int state) {
@@ -135,7 +140,7 @@ public abstract class AoABoss extends AoAMonster<AoABoss> {
 	}
 
 	protected int getSwingDurationTicks() {
-		return getSwingDurationTicks(ATTACK_STATE.get(this));
+		return getSwingDurationTicks(getSynchedData(ATTACK_STATE));
 	}
 
 	protected int getSwingDurationTicks(int state) {
@@ -143,7 +148,7 @@ public abstract class AoABoss extends AoAMonster<AoABoss> {
 	}
 
 	protected int getSwingWarmupTicks() {
-		return getSwingWarmupTicks(ATTACK_STATE.get(this));
+		return getSwingWarmupTicks(getSynchedData(ATTACK_STATE));
 	}
 
 	protected int getSwingWarmupTicks(int state) {
@@ -170,7 +175,7 @@ public abstract class AoABoss extends AoAMonster<AoABoss> {
 		this.bossStatusTracker.addPlayer(player);
 
 		if (getMusic() != null && level().dimension() != AoADimensions.NOWHERE)
-			new SoundBuilder(getMusic()).isMusic().include(player).execute();
+			SoundBuilder.asMusic(getMusic(), level()).onlyFor(player).play();
 	}
 
 	@Override
@@ -180,7 +185,7 @@ public abstract class AoABoss extends AoAMonster<AoABoss> {
 		this.bossStatusTracker.removePlayer(player);
 
 		if (getMusic() != null)
-			new SoundBuilder(getMusic()).isMusic().stopSound().include(player).execute();
+			SoundBuilder.stopMusic(getMusic(), level()).onlyFor(player).play();
 	}
 
 	@Override

@@ -7,11 +7,11 @@ import net.minecraft.world.item.*;
 import net.neoforged.neoforge.common.Tags;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
-public class SweetSword extends BaseSword {
+public class SweetSword extends AoASword {
 	public SweetSword(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

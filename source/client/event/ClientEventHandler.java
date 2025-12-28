@@ -34,11 +34,10 @@ import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
 import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.player.skill.AoASkill;
-import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RegistryUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
@@ -60,7 +59,6 @@ public final class ClientEventHandler {
 	private static void onClientTick(final ClientTickEvent.Post ev) {
 		if (!Minecraft.getInstance().hasSingleplayerServer()) {
 			GlobalEvents.tick++;
-			AoAScheduler.handleSyncScheduledTasks(GlobalEvents.tick);
 		}
 	}
 
@@ -141,9 +139,9 @@ public final class ClientEventHandler {
 			for (int i = 0; i < 3 + (10 * width * depth * height); i++) {
 				ParticleBuilder.forRandomPosInBounds(AoAParticleTypes.GENERIC_DUST.get(), entity.getBoundingBox())
 						.scaleMod(0.1f)
-						.power(new Vec3(RandomUtil.randomScaledGaussianValue(0.05d), 0, RandomUtil.randomScaledGaussianValue(0.05d)))
-						.colourOverride((float)RandomUtil.randomGaussianValue(), (float)RandomUtil.randomGaussianValue(), (float)RandomUtil.randomGaussianValue(), 1f)
-						.spawnParticles(entity.level());
+						.power(new Vec3(RandomUtil.scaledGaussianValue(0.05d), 0, RandomUtil.scaledGaussianValue(0.05d)))
+						.colourTint(RandomUtil.colour(0.75f, 0.75f, 1f))
+						.spawnClientParticles(entity.level());
 			}
 		}
 	}

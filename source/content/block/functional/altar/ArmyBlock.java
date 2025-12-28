@@ -9,7 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 public class ArmyBlock extends BossAltarBlock {
 	public ArmyBlock(BlockBehaviour.Properties properties) {
@@ -43,8 +43,8 @@ public class ArmyBlock extends BossAltarBlock {
 
 	private static void spawnWaveEntities(Level world, BlockPos armyBlockPos, Entity... entities) {
 		for (Entity entity : entities) {
-			int posX = armyBlockPos.getX() - 17 + RandomUtil.randomNumberUpTo(23);
-			int posZ = armyBlockPos.getZ() - 11 + RandomUtil.randomNumberUpTo(19);
+			int posX = armyBlockPos.getX() - 17 + RandomUtil.numberUpTo(23);
+			int posZ = armyBlockPos.getZ() - 11 + RandomUtil.numberUpTo(19);
 			BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos(posX, armyBlockPos.getY(), posZ);
 
 			while (checkPos.getY() < world.getMaxBuildHeight() && !world.isEmptyBlock(checkPos.move(Direction.UP))) {

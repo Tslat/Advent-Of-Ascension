@@ -20,7 +20,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoACreativeModeTabs;
-import net.tslat.aoa3.library.object.MutableSupplier;
+import net.tslat.aoa3.library.object.extension.MutableSupplier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -34,8 +34,8 @@ public final class FluidUtil {
 		private final String id;
 		private final Supplier<FluidType> fluidType;
 
-		private final MutableSupplier<BaseFlowingFluid.Source> sourceFluid = new MutableSupplier<BaseFlowingFluid.Source>(null);
-		private final MutableSupplier<BaseFlowingFluid.Flowing> flowingFluid = new MutableSupplier<BaseFlowingFluid.Flowing>(null);
+		private final MutableSupplier<BaseFlowingFluid.Source> sourceFluid = new MutableSupplier<>(null);
+		private final MutableSupplier<BaseFlowingFluid.Flowing> flowingFluid = new MutableSupplier<>(null);
 
 		private BiFunction<MutableSupplier<BaseFlowingFluid.Flowing>, Block.Properties, Supplier<LiquidBlock>> blockCreationFunction = (flowingFluid, blockProperties) -> () -> new LiquidBlock(flowingFluid.get(), blockProperties);
 		private BiFunction<MutableSupplier<BaseFlowingFluid.Source>, Item.Properties, Supplier<BucketItem>> bucketCreationFunction = (sourceFluid, itemProperties) -> () -> new BucketItem(sourceFluid.get(), itemProperties);

@@ -26,7 +26,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.WitherBallEntity;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -107,7 +107,7 @@ public class KingShroomusEntity extends AoARangedMob<KingShroomusEntity> {
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		EntityUtil.applyPotions(target, RandomUtil.getRandomSelection(
+		EntityUtil.applyPotions(target, RandomUtil.getselection(
 				new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 80).level(3),
 				new EffectBuilder(MobEffects.POISON, 80).level(5),
 				new EffectBuilder(MobEffects.CONFUSION, 140),

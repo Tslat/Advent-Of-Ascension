@@ -3,53 +3,26 @@ package net.tslat.aoa3.client.render.entity.projectile.blasters;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.content.entity.projectile.blaster.LightBlasterShotEntity;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.aoa3.content.entity.projectile.base.NonPhysicalWeaponProjectile;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.util.RandomUtil;
 
-public class LightBlasterShotRenderer extends ParticleProjectileRenderer<LightBlasterShotEntity> {
+public class LightBlasterShotRenderer extends ParticleProjectileRenderer<NonPhysicalWeaponProjectile> {
 	public LightBlasterShotRenderer(final EntityRendererProvider.Context manager) {
 		super(manager);
 	}
 
 	@Override
-	protected void addParticles(LightBlasterShotEntity entity, float partialTicks) {
-		for (int i = 0; i < 3; i++) {
-			if (entity.toggle1) {
-				entity.yOffset1 += 0.12;
+	protected void addParticles(NonPhysicalWeaponProjectile entity, float partialTicks) {
+		for (int i = 0; i < 9; i++) {
+			float colourMod = (float)RandomUtil.valueBetween(0.3f, 1f);
 
-				if (entity.yOffset1 >= 3.0f)
-					entity.toggle1 = !entity.toggle1;
-			}
-			if (!entity.toggle1) {
-				entity.yOffset1 -= 0.12;
-
-				if (entity.yOffset1 <= -3.0f)
-					entity.toggle1 = !entity.toggle1;
-			}
-
-			if (entity.toggle2) {
-				entity.yOffset2 += 0.12;
-
-				if (entity.yOffset2 >= 3.0f)
-					entity.toggle2 = !entity.toggle2;
-			}
-			if (!entity.toggle2) {
-				entity.yOffset2 -= 0.12;
-
-				if (entity.yOffset2 <= -3.0f)
-					entity.toggle2 = !entity.toggle2;
-			}
-
-			for (int j = 0; j < 3; j++) {
-				float colourMod = entity.level().random.nextFloat() * 0.7f + 0.3f;
-
-				ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position().add(0, entity.yOffset1, 0))
-						.colourOverride(0, entity.level().random.nextFloat() * 0.7f + 0.3f, 0, 1f)
-						.spawnParticles(entity.level());
-				ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position().add(0, entity.yOffset2, 0))
-						.colourOverride(colourMod, colourMod, colourMod, 1f)
-						.spawnParticles(entity.level());
-			}
+			ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(),  entity.position().add(0, (((entity.tickCount + i / 3f) * 0.12f) % 6) - 3, 0))
+					.colourTint(0, (float)RandomUtil.valueBetween(0.3f, 1f), 0, 1f)
+					.spawnClientParticles(entity.level());
+			ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(),  entity.position().add(0, (((entity.tickCount + i / 3f) * 0.12f + 3f) % 6) - 3, 0))
+					.colourTint(colourMod, colourMod, colourMod, 1f)
+					.spawnClientParticles(entity.level());
 		}
 	}
 }

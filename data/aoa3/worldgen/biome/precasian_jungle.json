@@ -80,6 +80,18 @@
     "aoa3:meganeuropsis": {
       "charge": 0.20000000298023224,
       "energy_budget": 0.699999988079071
+    },
+    "aoa3:smilodon": {
+      "charge": 1.0,
+      "energy_budget": 0.01
+    },
+    "aoa3:spinoledon": {
+      "charge": 1.0,
+      "energy_budget": 0.01
+    },
+    "aoa3:veloraptor": {
+      "charge": 0.6000000238418579,
+      "energy_budget": 0.2
     }
   },
   "spawners": {

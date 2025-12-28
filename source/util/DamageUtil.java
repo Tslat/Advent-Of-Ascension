@@ -23,10 +23,9 @@ import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
+import net.tslat.aoa3.library.object.interfaces.ToFloatFunction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.function.Function;
 
 
 public final class DamageUtil {
@@ -66,36 +65,69 @@ public final class DamageUtil {
 		return safelyDealDamage(positionedEntityDamage(AoADamageTypes.VULCANE, attacker, target.position()), target, dmg);
 	}
 
-	public static boolean doGunAttack(@Nullable Entity attacker, @Nullable Entity projectile, Entity target, Function<DamageSource, Float> damage) {
+	public static boolean doGunAttack(@Nullable Entity attacker, @Nullable Entity projectile, Entity target, ToFloatFunction<DamageSource> damage) {
 		final DamageSource source = indirectEntityDamage(AoADamageTypes.GUN, attacker, projectile);
 
 		return safelyDealDamage(source, target, damage.apply(source));
 	}
 
-	public static boolean doHeavyGunAttack(@Nullable Entity attacker, @Nullable Entity projectile, Entity target, Function<DamageSource, Float> damage) {
+	public static boolean doHeavyGunAttack(@Nullable Entity attacker, @Nullable Entity projectile, Entity target, ToFloatFunction<DamageSource> damage) {
 		final DamageSource source = indirectEntityDamage(AoADamageTypes.HEAVY_GUN, attacker, projectile);
 
 		return safelyDealDamage(source, target, damage.apply(source));
 	}
 
-	public static boolean doEnergyProjectileAttack(@Nullable Entity attacker, @Nullable Entity projectile, Entity target, float dmg) {
-		return safelyDealDamage(indirectEntityDamage(AoADamageTypes.ENERGY_PROJECTILE, attacker, projectile), target, dmg);
+	public static boolean doEnergyProjectileAttack(@Nullable Entity attacker, @Nullable Entity projectile, Entity target, ToFloatFunction<DamageSource> damage) {
+		final DamageSource source = indirectEntityDamage(AoADamageTypes.ENERGY_PROJECTILE, attacker, projectile);
+
+		return safelyDealDamage(source, target, damage.apply(source));
 	}
 
-	public static boolean doMagicProjectileAttack(@Nullable Entity attacker, @Nullable Entity projectile, Entity target, float dmg) {
-		return safelyDealDamage(indirectEntityDamage(AoADamageTypes.MAGIC_PROJECTILE, attacker, projectile), target, dmg);
+	public static boolean doMagicProjectileAttack(@Nullable Entity attacker, @Nullable Entity projectile, Entity target, ToFloatFunction<DamageSource> damage) {
+		final DamageSource source = indirectEntityDamage(AoADamageTypes.MAGIC_PROJECTILE, attacker, projectile);
+
+		return safelyDealDamage(source, target, damage.apply(source));
 	}
 
 	public static boolean doRecoilAttack(Entity target, float dmg) {
 		return safelyDealDamage(miscDamage(AoADamageTypes.RECOIL, target.level()), target, dmg);
 	}
 
-	public static boolean doMiscMagicAttack(Entity attacker, Entity target, float dmg, @Nullable Vec3 position) {
-		return safelyDealDamage(position == null ? entityDamage(AoADamageTypes.MAGIC_ATTACK, attacker) : positionedEntityDamage(AoADamageTypes.MAGIC_ATTACK, attacker, position), target, dmg);
+	public static boolean doMiscMagicAttack(@Nullable Entity attacker, Entity target, float dmg, @Nullable Vec3 position) {
+		return safelyDealDamage(position == null ? attacker == null ?
+												   miscDamage(AoADamageTypes.MAGIC_ATTACK, target.level()) :
+												   entityDamage(AoADamageTypes.MAGIC_ATTACK, attacker) :
+								positionedEntityDamage(AoADamageTypes.MAGIC_ATTACK, attacker, position), target, dmg);
 	}
 
-	public static boolean doMiscEnergyAttack(Entity attacker, Entity target, float dmg, @Nullable Vec3 position) {
-		return safelyDealDamage(position == null ? entityDamage(AoADamageTypes.ENERGY_ATTACK, attacker) : positionedEntityDamage(AoADamageTypes.ENERGY_ATTACK, attacker, position), target, dmg);
+	public static boolean doMiscEnergyAttack(@Nullable Entity attacker, Entity target, float dmg, @Nullable Vec3 position) {
+		return safelyDealDamage(position == null ? attacker == null ?
+												   miscDamage(AoADamageTypes.ENERGY_ATTACK, target.level()) :
+												   entityDamage(AoADamageTypes.ENERGY_ATTACK, attacker) :
+								positionedEntityDamage(AoADamageTypes.ENERGY_ATTACK, attacker, position), target, dmg);
+	}
+
+	public static void doIndirectKnockback(LivingEntity target, float strength, Vec3 angle) {
+		if (target instanceof Player && !PlayerUtil.shouldPlayerBeAffected((Player)target))
+			return;
+
+		LivingKnockBackEvent event = CommonHooks.onLivingKnockBack(target, strength, angle.x, angle.z);
+
+		if (event.isCanceled())
+			return;
+
+		strength = event.getStrength();
+		AttributeInstance knockbackResist = target.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
+
+		if (knockbackResist != null)
+			strength *= Math.max(0, 1 - knockbackResist.getValue());
+
+		if (target.onGround() && angle.y < 0.1f)
+			angle = angle.add(0, 0.25f, 0);
+
+		target.setDeltaMovement(angle.scale(strength));
+		target.hasImpulse = true;
+		target.hurtMarked = true;
 	}
 
 	public static void doScaledKnockback(LivingEntity target, LivingEntity attacker, float strength, double xRatio, double yRatio, double zRatio) {
@@ -104,7 +136,7 @@ public final class DamageUtil {
 
 		LivingKnockBackEvent event = CommonHooks.onLivingKnockBack(target, strength, xRatio, zRatio);
 
-		if(event.isCanceled())
+		if (event.isCanceled())
 			return;
 
 		strength = event.getStrength();

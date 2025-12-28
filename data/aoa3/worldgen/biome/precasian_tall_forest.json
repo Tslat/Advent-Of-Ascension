@@ -81,7 +81,20 @@
     ]
   ],
   "has_precipitation": true,
-  "spawn_costs": {},
+  "spawn_costs": {
+    "aoa3:smilodon": {
+      "charge": 1.0,
+      "energy_budget": 0.30000001192092896
+    },
+    "aoa3:spinoledon": {
+      "charge": 1.0,
+      "energy_budget": 0.01
+    },
+    "aoa3:veloraptor": {
+      "charge": 0.6000000238418579,
+      "energy_budget": 0.20000000298023224
+    }
+  },
   "spawners": {
     "ambient": [],
     "axolotls": [],

@@ -1,6 +1,7 @@
 {
   "type": "aoa3:aoa_default_structure",
   "biomes": "#aoa3:has_structure/attercopus_nest",
+  "size": 15,
   "spawn_overrides": {},
   "start_height": {
     "type": "minecraft:trapezoid",
@@ -12,5 +13,6 @@
     },
     "plateau": 5
   },
-  "start_pool": "aoa3:precasia/attercopus_nest/starts"
+  "start_pool": "aoa3:precasia/attercopus_nest/starts",
+  "step": "surface_structures"
 }

@@ -1,84 +1,29 @@
 package net.tslat.aoa3.content.entity.projectile.misc;
 
-import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
 
-public class PlutonSticklerStuckEntity extends ThrowableProjectile {
-	private LivingEntity target;
-	private LivingEntity shooter;
-	private int age;
-
-	public PlutonSticklerStuckEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
+public class PlutonSticklerStuckEntity extends AttachedSticklerEntity {
+	public PlutonSticklerStuckEntity(EntityType<? extends AttachedSticklerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
-	
-	public PlutonSticklerStuckEntity(Level world) {
-		super(AoAProjectiles.PLUTON_STICKLER_STUCK.get(), world);
-	}
 
-	public PlutonSticklerStuckEntity(LivingEntity shooter, BaseGun gun, LivingEntity target, float bulletDmgMultiplier) {
-		super(AoAProjectiles.PLUTON_STICKLER_STUCK.get(), shooter.level());
-		this.target = target;
-		this.shooter = shooter;
-		moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 0);
-		shoot(0, 0, 0, 0, 0);
-	}
-
-	public PlutonSticklerStuckEntity(Level world, double x, double y, double z) {
-		super(AoAProjectiles.PLUTON_STICKLER_STUCK.get(), x, y, z, world);
+	public PlutonSticklerStuckEntity(Level level, Entity shooter, LivingEntity target, Vec3 stuckOffset, WeaponFiringContext context) {
+		super(AoAProjectiles.PLUTON_STICKLER_STUCK.get(), level, shooter, target, stuckOffset, context);
 	}
 
 	@Override
-	public double getDefaultGravity() {
-		return 0.0f;
-	}
+	protected void explode() {
+		super.explode();
 
-	@Override
-	protected void onHit(HitResult result) {}
-
-	@Override
-	protected void defineSynchedData(SynchedEntityData.Builder builder) {}
-
-	@Override
-	public void tick() {
-		super.tick();
-
-		age++;
-
-		if (level().isClientSide)
-			return;
-
-		if (target != null && target.isAlive()) {
-			moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 360);
-		}
-		else {
-			WorldUtil.createExplosion(shooter, level(), this, 2.0f);
-			explodeCoins();
-
-			if (!level().isClientSide)
-				discard();
-		}
-
-		if (age >= 100) {
-			WorldUtil.createExplosion(shooter, level(), getX(), getY() + 1, getZ(), 2.0f);
-			explodeCoins();
-
-			if (!level().isClientSide)
-				discard();
-		}
-	}
-
-	private void explodeCoins() {
 		for (float x = -0.5f; x <= 0.5f; x += 0.5f) {
 			for (float y = -0.5f; y <= 0.5f; y += 0.5f) {
 				for (float z = -0.5f; z <= 0.5f; z += 0.5f) {

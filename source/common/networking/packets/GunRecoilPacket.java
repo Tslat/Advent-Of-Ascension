@@ -6,7 +6,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 public record GunRecoilPacket(float vertical, float lateral) implements AoAPacket {
 	public static final Type<GunRecoilPacket> TYPE = new Type<>(AdventOfAscension.id("gun_recoil"));
@@ -16,7 +16,7 @@ public record GunRecoilPacket(float vertical, float lateral) implements AoAPacke
             GunRecoilPacket::new);
 
 	public GunRecoilPacket(float vertical) {
-		this(vertical, (float)RandomUtil.randomScaledGaussianValue(0.08f) * vertical);
+		this(vertical, (float)RandomUtil.scaledGaussianValue(0.08f) * vertical);
 	}
 
 	@Override

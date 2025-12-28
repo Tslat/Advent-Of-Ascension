@@ -10,8 +10,8 @@ import net.tslat.aoa3.client.model.entity.projectile.CobblestoneProjectileModel;
 import net.tslat.aoa3.client.render.entity.projectile.ModelledProjectileRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.util.RandomUtil;
 
 public class FungalRockFragmentRenderer extends ModelledProjectileRenderer<Entity> {
 	public FungalRockFragmentRenderer(final EntityRendererProvider.Context context, final ResourceLocation textureResource) {
@@ -31,8 +31,8 @@ public class FungalRockFragmentRenderer extends ModelledProjectileRenderer<Entit
 
 		for (int i = 0; i < 8; i++) {
 			ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
-					.colourOverride(RandomUtil.getRandomSelection(ColourUtil.GREEN, ColourUtil.YELLOW, ColourUtil.BLUE, 0xC140D7))
-					.spawnParticles(entity.level());
+					.colourTint(RandomUtil.selection(ColourUtil.GREEN, ColourUtil.YELLOW, ColourUtil.BLUE, 0xC140D7))
+					.spawnClientParticles(entity.level());
 		}
 	}
 }

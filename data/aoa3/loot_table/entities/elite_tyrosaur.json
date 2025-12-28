@@ -1,0 +1,80 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 150
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "aoa3:misc/rare_table"
+        }
+      ],
+      "name": "rare_table",
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "value": "aoa3:worlds/nowhere_boss",
+          "weight": 100
+        }
+      ],
+      "name": "nowhere_table",
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "aoa3:trophy_data": {
+                  "entity_data": {
+                    "id": "aoa3:elite_tyrosaur"
+                  },
+                  "is_original": true
+                }
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "function": "minecraft:set_name",
+              "name": {
+                "translate": "block.aoa3.ornate_trophy.desc",
+                "with": [
+                  {
+                    "translate": "entity.aoa3.tyrosaur"
+                  }
+                ]
+              },
+              "target": "item_name"
+            }
+          ],
+          "name": "aoa3:ornate_trophy"
+        }
+      ],
+      "name": "trophy",
+      "rolls": 1.0
+    }
+  ]
+}

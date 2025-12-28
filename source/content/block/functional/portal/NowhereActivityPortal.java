@@ -131,14 +131,14 @@ public class NowhereActivityPortal extends PortalBlock {
 		}
 
 		public void teleport(ServerPlayer pl) {
-			AoAScheduler.scheduleSyncronisedTask(() -> teleportFunction.test(pl), 1);
+			AoAScheduler.schedule(1, tick -> teleportFunction.test(pl));
 		}
 
 		public void activate(ServerPlayer pl) {
-			AoAScheduler.scheduleSyncronisedTask(() -> {
+			AoAScheduler.schedule(1, tick -> {
 				if (teleportFunction.test(pl))
 					afterTeleportFunction.accept(pl);
-			}, 1);
+			});
 		}
 
 		private static boolean doReturnPortalTeleport(ServerPlayer pl, double x, double y, double z, float rot) {

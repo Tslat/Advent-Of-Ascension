@@ -6,6 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.RetrieveSmeltedItemEvent;
 import net.tslat.aoa3.event.dynamic.DynamicEventSubscriber;
@@ -44,7 +45,7 @@ public class BonusSmeltResult extends ScalableModAbility {
 		ItemStack baseStack = ev.getOriginalStack();
 		ItemStack smeltedStack = ev.getOutputStack();
 
-		if (!smeltedStack.has(DataComponents.FOOD)) {
+		if (!smeltedStack.has(DataComponents.FOOD) && !smeltedStack.is(AoATags.Items.NO_BONUS_SMELT_RESULT)) {
 			int additional = 0;
 			Player player = ev.getEntity();
 

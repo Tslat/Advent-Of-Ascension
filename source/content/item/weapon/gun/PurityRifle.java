@@ -1,7 +1,8 @@
 package net.tslat.aoa3.content.item.weapon.gun;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -9,35 +10,26 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
+import net.tslat.aoa3.library.object.extension.MutableFloat;
 import net.tslat.aoa3.util.LocaleUtil;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.object.RayTrace;
 
 import java.util.List;
 
-public class PurityRifle extends BaseGun {
+public class PurityRifle extends AoAGun {
 	public PurityRifle(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_GUN_GENERIC_FIRE_1.get();
-	}
-
-	@Override
-	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPosition, float bulletDmgMultiplier) {
-		if (!shooter.getActiveEffects().isEmpty()) {
+	protected void modifyImpactDamage(ServerLevel level, WeaponProjectile projectile, RayTrace<?> rayTrace, Entity hitEntity, DamageSource source, MutableFloat damage) {
+		if (projectile.getShooter() instanceof LivingEntity shooter && !shooter.getActiveEffects().isEmpty()) {
 			for (MobEffectInstance effect : shooter.getActiveEffects()) {
 				if (effect.getEffect().value().getCategory() == MobEffectCategory.HARMFUL)
-					bulletDmgMultiplier *= 1.1f;
+					damage.multiply(1.1f);
 			}
 		}
-
-		super.doImpactDamage(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
 	}
 
 	@Override

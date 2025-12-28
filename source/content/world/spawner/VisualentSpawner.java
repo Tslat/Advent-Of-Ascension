@@ -5,7 +5,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.CustomSpawner;
 import net.minecraft.world.level.GameRules;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -52,7 +52,7 @@ public class VisualentSpawner implements CustomSpawner {
 	@Nullable
 	private BlockPos findNearbySpawnPosition(ServerLevel world, BlockPos centerPos, int radius, int maxTries) {
 		for (int i = 0; i < maxTries; i++) {
-			BlockPos pos = RandomUtil.getRandomPositionWithinRange(centerPos, radius, radius, radius);
+			BlockPos pos = RandomUtil.positionWithinRange(centerPos, radius, radius, radius);
 
 			if (!world.getWorldBorder().isWithinBounds(pos))
 				continue;

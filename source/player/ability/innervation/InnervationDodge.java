@@ -1,6 +1,7 @@
 package net.tslat.aoa3.player.ability.innervation;
 
 import com.google.gson.JsonObject;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
@@ -68,8 +69,8 @@ public class InnervationDodge extends AoAAbility.Instance {
 			}
 
 			@Override
-			public int getKeycode() {
-				return AoAKeybinds.ABILITY_ACTION.getKey().getValue();
+			public KeyMapping getKeybind() {
+				return AoAKeybinds.ABILITY_ACTION;
 			}
 
 			@Override
@@ -79,7 +80,7 @@ public class InnervationDodge extends AoAAbility.Instance {
 				TickRateManager tickRateManager = mc.level.tickRateManager();
 				float yRot = player.getViewYRot(mc.getTimer().getGameTimeDeltaPartialTick(!tickRateManager.isEntityFrozen(player)));
 
-				if (player.input.leftImpulse == 0 || player.input.hasForwardImpulse() || player.level().getGameTime() <= activationTime + 5 || player.getAbilities().flying)
+				if (player.input.leftImpulse == 0 || player.input.hasForwardImpulse() || player.level().getGameTime() <= InnervationDodge.this.activationTime + 5 || player.getAbilities().flying)
 					return false;
 
 				if (ClientPlayerDataManager.get().getResource(AoAResources.ENERGY.get()).hasAmount(InnervationDodge.this.energyCost)) {
@@ -90,7 +91,7 @@ public class InnervationDodge extends AoAAbility.Instance {
 
 					player.setDeltaMovement(new Vec3(velocityX, movement.y(), velocityZ));
 
-					activationTime = player.level().getGameTime();
+					InnervationDodge.this.activationTime = player.level().getGameTime();
 				}
 
 				return true;
@@ -101,17 +102,17 @@ public class InnervationDodge extends AoAAbility.Instance {
 	@Override
 	public void handleKeyInput() {
 		if (getPlayer() instanceof ServerPlayer player) {
-			if (skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).consume(this.energyCost, true)) {
+			if (this.skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).consume(this.energyCost, true)) {
 				activatedActionKey(player);
 
-				if (skill.canGainXp(true))
+				if (this.skill.canGainXp(true))
 					PlayerUtil.giveTimeBasedXpToPlayer(player, this.skill.type(), 20,  false);
 			}
 		}
 	}
 
 	private void handleIncomingDamage(LivingIncomingDamageEvent ev) {
-		if (ev.getEntity().level().getGameTime() < activationTime + 5 && DamageUtil.isMeleeDamage(ev.getSource()))
+		if (ev.getEntity().level().getGameTime() < this.activationTime + 5 && DamageUtil.isMeleeDamage(ev.getSource()))
 			ev.setCanceled(true);
 	}
 

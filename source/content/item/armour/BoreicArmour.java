@@ -7,13 +7,15 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.item.AoAArmourMaterials;
+import net.tslat.aoa3.library.builder.AoAExplosionBuilder;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.explosion.StandardExplosion;
+import net.tslat.tme.api.object.builder.EffectBuilder;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -26,12 +28,11 @@ public class BoreicArmour extends AdventArmour {
 	@Override
 	public void afterTakingDamage(LivingEntity entity, EnumSet<Piece> equippedPieces, LivingDamageEvent.Post ev) {
 		if (ev.getNewDamage() > 0 && entity.isInWater() && !DamageUtil.isEnvironmentalDamage(ev.getSource())) {
-			WorldUtil.createExplosion(entity, entity.level(), entity.blockPosition(), 0.7f + perPieceValue(equippedPieces, 0.3f));
+			AoAExplosionBuilder.at(entity, AoAExplosions.boreicArmour(equippedPieces.size()), StandardExplosion::new).explode();
 
 			if (equippedPieces.contains(Piece.FULL_SET)) {
-				for (LivingEntity entity2 : EntityRetrievalUtil.<LivingEntity>getEntities(entity, 4, entity2 -> entity2 instanceof LivingEntity && EntityUtil.isHostileMob(entity2))) {
-					entity2.addEffect(new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 40).level(2).isAmbient().build());
-				}
+				EntityUtil.applyPotions(EntityRetrievalUtil.getEntities(entity, 4, LivingEntity.class, target -> EntityUtil.areProbablyEnemies(target, entity)),
+										entity, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 40).level(2).isAmbient());
 			}
 		}
 	}

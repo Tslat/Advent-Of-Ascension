@@ -4,11 +4,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.stats.Stats;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -16,132 +11,72 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.networking.AoANetworking;
-import net.tslat.aoa3.common.networking.packets.AoASoundBuilderPacket;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
-import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
-import net.tslat.aoa3.library.builder.SoundBuilder;
-import net.tslat.aoa3.util.*;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.api.particle.transitionworker.PositionParticleTransition;
-import net.tslat.effectslib.api.particle.transitionworker.ScaleParticleTransition;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponRayTrace;
+import net.tslat.aoa3.content.item.ProjectileFiringWeapon;
+import net.tslat.tme.api.object.RayTrace;
+import net.tslat.tme.api.sound.SoundBuilder;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.internal.particle.transition.ToPositionParticleTransition;
+import net.tslat.tme.internal.particle.transition.ToScaleParticleTransition;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SoulSpark extends BaseBlaster {
+public class SoulSpark extends AoABlaster<WeaponRayTrace> {
 	public SoulSpark(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_BLASTER_ENERGY_PULSE_FIRE.get();
-	}
-
-	@Override
-	public float getBlasterHeightOffset(EnergyProjectileWeapon weapon, LivingEntity shooter) {
+	public float getEyeHeightOffset(ProjectileFiringWeapon weapon, Entity shooter) {
 		return -0.3f;
 	}
 
 	@Override
-	public float getBeamDistance(ItemStack stack, @Nullable LivingEntity shooter) {
-		return 2;
-	}
-
-	@Override
-	public float getChamberLength(EnergyProjectileWeapon weapon, LivingEntity shooter) {
+	public float getForwardOffset(ProjectileFiringWeapon weapon, Entity shooter) {
 		return 1f;
 	}
 
 	@Override
-	public float getDistToBlasterArm(EnergyProjectileWeapon weapon, LivingEntity shooter) {
+	public float getRightOffset(ProjectileFiringWeapon weapon, Entity shooter) {
 		return 0.6f;
 	}
 
 	@Override
-	public float getSpiritCost(ItemStack stack, @Nullable LivingEntity shooter, boolean forDisplay) {
-		if (forDisplay)
-			return 200;
+	public float getSpiritCost(ItemStack stack, @Nullable Entity shooter, boolean forShotConsumption) {
+		if (forShotConsumption)
+			return 0;
 
-		return super.getSpiritCost(stack, shooter, forDisplay);
+		return super.getSpiritCost(stack, shooter, forShotConsumption);
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-		ItemStack stack = player.getItemInHand(hand);
-
-		if (hand != getWeaponHand(player))
-			return InteractionResults.ItemUse.denyUsage(stack);
-
-		if (player.getAttackStrengthScale(0.0f) < 1)
-			return InteractionResults.ItemUse.denyUsage(stack);
-
-		final float energyCost = getSpiritCost(stack, player, true);
-
-		if (player.getAbilities().instabuild || PlayerUtil.getResourceValue(player, AoAResources.SPIRIT.get()) >= energyCost) {
-			player.startUsingItem(hand);
-
-			return InteractionResults.ItemUse.noActionTaken(stack);
-		}
-		else if (!player.getAbilities().instabuild) {
-			return InteractionResults.ItemUse.denyUsage(stack);
-		}
-
-		return InteractionResults.ItemUse.noActionTaken(stack);
-	}
-
-	// TODO Remove
-	@Override
-	protected ShotInfo fireBlaster(ServerLevel level, LivingEntity shooter, ItemStack blaster, boolean temp) {
-		return super.fireBlaster(level, shooter, blaster, false);
+	void fireBlaster(ServerLevel level, WeaponFiringContext context) {
+		fireRayTrace(level, context);
 	}
 
 	@Override
-	public boolean doEntityImpact(ServerLevel level, LivingEntity shooter, ItemStack stack, ShotInfo shotInfo, EntityHitResult rayTrace) {
-		if (!EntityUtil.isImmuneToSpecialAttacks(rayTrace.getEntity())) {
-			if (shooter instanceof ServerPlayer player && !player.getAbilities().instabuild) {
-				if (PlayerUtil.consumeResource(player, AoAResources.SPIRIT.get(), 200, false)) {
-					InteractionHand hand = player.getUsedItemHand();
+	protected boolean tryFireBlaster(ServerLevel level, WeaponFiringContext context) {
+		final Entity shooter = context.getShooter();
+		final float spiritCost = getSpiritCost(context.weaponStack(), shooter, false);
 
-					if (stack.getItem() != this)
-						stack = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-
-					if (stack.getItem() != this)
-						return false;
-
-					Entity target = rayTrace.getEntity();
-					Vec3 center = target.position().add(0, target.getBbHeight() * 0.5f, 0);
-
-					ParticleBuilder.forRandomPosInSphere(ParticleTypes.ELECTRIC_SPARK, center, Math.max(target.getBbHeight(), target.getBbWidth()) * 1.1f)
-							.spawnNTimes(1000)
-							.scaleMod(1.5f)
-							.lifespan(15)
-							.colourOverride(0, 100 + shooter.getRandom().nextInt(130), 230, 255)
-							.ignoreDistanceAndLimits()
-							.addTransition(ScaleParticleTransition.create(0.1f, 10))
-							.sendToAllPlayersTrackingEntity(player.serverLevel(), shooter);
-					ParticleBuilder.forPositionsInSphere(ParticleTypes.END_ROD, center, Math.max(target.getBbHeight(), target.getBbWidth()) * 1.25f, 32)
-							.colourOverride(0, 230, 230, 255)
-							.spawnNTimes(4096)
-							.lifespan(20)
-							.ignoreDistanceAndLimits()
-							.addTransition(PositionParticleTransition.create(center, 10))
-							.sendToAllPlayersTrackingEntity(player.serverLevel(), shooter);
-
-					AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(AoASounds.ITEM_SOUL_SPARK_FIRE).atEntity(rayTrace.getEntity())), shooter);
-					rayTrace.getEntity().discard();
-					ItemUtil.damageItemForUser(player, stack, hand);
-				}
-			}
+		if (spiritCost == 0 || !(shooter instanceof ServerPlayer pl) || PlayerUtil.hasResourceAmount(pl, AoAResources.SPIRIT.get(), spiritCost)) {
+			fireBlaster(level, context);
 
 			return true;
 		}
+
+		PlayerUtil.notifyPlayerOfInsufficientResources(pl, AoAResources.SPIRIT.get(), spiritCost);
 
 		return false;
 	}
@@ -152,15 +87,15 @@ public class SoulSpark extends BaseBlaster {
 			return;
 
 		if (level instanceof ServerLevel serverLevel) {
-			ServerPlayer player = shooter instanceof ServerPlayer ? (ServerPlayer)shooter : null;
+			ServerPlayer player = shooter instanceof ServerPlayer pl ? pl : null;
 
 			if (player == null || player.getCooldowns().getCooldownPercent(this, 0) == 0) {
-				if ((player == null || (player.getAbilities().instabuild || PlayerUtil.getResourceValue(player, AoAResources.SPIRIT.get()) >= 200)) && tryFireBlaster(serverLevel, shooter, stack, player)) {
+				if (tryFireBlaster(serverLevel, createFiringContext(stack, shooter, shooter.getUsedItemHand()).build())) {
 					if (player != null) {
-						player.awardStat(Stats.ITEM_USED.get(this));
+						int cooldown = getTicksBetweenShots(stack);
 
-						if (getTicksBetweenShots(stack) > 1)
-							player.getCooldowns().addCooldown(this, getTicksBetweenShots(stack));
+						if (cooldown > 1)
+							player.getCooldowns().addCooldown(this, cooldown);
 					}
 				}
 				else {
@@ -171,25 +106,67 @@ public class SoulSpark extends BaseBlaster {
 	}
 
 	@Override
-	protected void doFiringEffects(ServerLevel level, LivingEntity shooter, ItemStack stack, ShotInfo shotInfo) {
-		Vec3 originPos = shotInfo.shotOrBarrelPosForVfx();
-		Vec3 hitPos = shotInfo.getHitPos().orElse(originPos);
-		TELParticlePacket packet = new TELParticlePacket();
-		RandomSource rand = shooter.getRandom();
+	protected boolean doEntityImpact(Level level, WeaponRayTrace effect, WeaponFiringContext context, RayTrace<?> rayTrace, Entity hitEntity) {
+		if (!EntityUtil.isImmuneToSpecialAttacks(hitEntity)) {
+			Entity shooter = context.getShooter();
+			float spiritCost = getSpiritCost(context.weaponStack(), shooter, false);
 
-		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.ELECTRIC_SPARK, originPos, hitPos, 6)
-				.colourOverride(0, 100 + rand.nextInt(130), 230, 255)
-				.lifespan(1)
-				.scaleMod(0.25f + rand.nextFloat() * 0.75f));
+			if (!(shooter instanceof Player pl) || pl.hasInfiniteMaterials() || PlayerUtil.hasResourceAmount(pl, AoAResources.SPIRIT.get(), spiritCost)) {
+				if (level instanceof ServerLevel serverLevel && (!(shooter instanceof ServerPlayer serverPlayer) || PlayerUtil.consumeResource(serverPlayer, AoAResources.SPIRIT.get(), spiritCost, false))) {
+					Vec3 center = hitEntity.position().add(0, hitEntity.getBbHeight() * 0.5f, 0);
 
-		for (int i = 0; i < 3; i++) {
-			packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.ELECTRIC_SPARK, originPos.add(rand.nextGaussian() * 0.1f, rand.nextGaussian() * 0.1f, rand.nextGaussian() * 0.1f), hitPos, 6)
-					.colourOverride(0, 100 + rand.nextInt(130), 230, 255)
-					.lifespan(1)
-					.scaleMod(0.25f + rand.nextFloat() * 0.75f));
+					ParticleBuilder.forRandomPosInSphere(ParticleTypes.ELECTRIC_SPARK, center, Math.max(hitEntity.getBbHeight(), hitEntity.getBbWidth()) * 1.1f)
+							.spawnNTimes(1000)
+							.scaleMod(1.5f)
+							.lifespan(15)
+							.colourTint(0, RandomUtil.numberBetween(100, 230), 230, 255)
+							.ignoreDistanceAndLimits()
+							.addTransition(ToScaleParticleTransition.create(0.1f, 10))
+							.sendToAllPlayersTrackingEntity(shooter);
+					ParticleBuilder.forPositionsInSphere(ParticleTypes.END_ROD, center, Math.max(hitEntity.getBbHeight(), hitEntity.getBbWidth()) * 1.25f, 32)
+							.colourTint(0, 230, 230, 255)
+							.spawnNTimes(4096)
+							.lifespan(20)
+							.ignoreDistanceAndLimits()
+							.addTransition(ToPositionParticleTransition.create(center, 10))
+							.sendToAllPlayersTrackingEntity(shooter);
+
+					SoundBuilder.following(AoASounds.ITEM_SOUL_SPARK_FIRE, hitEntity).category(shooter.getSoundSource()).play();
+
+					hitEntity.discard();
+
+					if (shooter instanceof ServerPlayer pl)
+						ItemUtil.damageItemForUser(serverLevel, context.weaponStack(), 1, pl, context.weaponHand());
+				}
+
+				return true;
+			}
 		}
 
-		packet.send(level);
+		return false;
+	}
+
+	@Override
+	protected void doFiringEffects(ServerLevel level, WeaponRayTrace effect, Vec3 pos, WeaponFiringContext context) {
+		super.doFiringEffects(level, effect, pos, context);
+
+		Vec3 originPos = effect.visualStartPos();
+		Vec3 hitPos = effect.endPos();
+		TMEParticlePacket packet = new TMEParticlePacket();
+
+		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.ELECTRIC_SPARK, originPos, hitPos, 6)
+								.colourTint(0, RandomUtil.numberBetween(100, 230), 230, 255)
+								.lifespan(1)
+								.scaleMod((float)RandomUtil.valueBetween(0.25f, 1f)));
+
+		for (int i = 0; i < 3; i++) {
+			packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.ELECTRIC_SPARK, originPos.add(RandomUtil.scaledGaussianValue(0.1f), RandomUtil.scaledGaussianValue(0.1f), RandomUtil.scaledGaussianValue(0.1f)), hitPos, 6)
+									.colourTint(0, RandomUtil.numberBetween(100, 230), 230, 255)
+									.lifespan(1)
+									.scaleMod((float)RandomUtil.valueBetween(0.25f, 1f)));
+		}
+
+		packet.sendToAllPlayersTrackingEntity(context.getShooter());
 	}
 
 	@Override

@@ -8,13 +8,13 @@
     },
     "in_dimensions": [
       "aoa3:haven",
+      "aoa3:gardencia",
       "aoa3:celeve",
-      "aoa3:crystevia",
+      "aoa3:candyland",
+      "aoa3:mysterium",
       "aoa3:iromine",
       "aoa3:abyss",
-      "aoa3:gardencia",
-      "aoa3:candyland",
-      "aoa3:mysterium"
+      "aoa3:crystevia"
     ],
     "not_in_biomes": "#c:is_dead",
     "spawn_attempts_per_player": {

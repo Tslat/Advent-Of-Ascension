@@ -4,13 +4,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
-import net.tslat.aoa3.content.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -18,32 +18,30 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SoulfireBow extends BaseBow {
+public class SoulfireBow extends AoABow {
 	public SoulfireBow(Item.Properties properties) {
 		super(properties);
 	}
 
 	@Override
-	protected CustomArrowEntity makeArrow(LivingEntity shooter, ItemStack bowStack, ItemStack ammoStack, float velocity, boolean consumeAmmo) {
-		CustomArrowEntity arrow = super.makeArrow(shooter, bowStack, ammoStack, velocity, consumeAmmo);
+	public Projectile applyArrowMods(Projectile projectile, @Nullable Entity shooter, ItemStack stack) {
+		if (shooter instanceof ServerPlayer pl && PlayerUtil.consumeResource(pl, AoAResources.SPIRIT.get(), 200, false))
+			projectile.setGlowingTag(true);
 
-		if (arrow != null && shooter instanceof ServerPlayer pl && PlayerUtil.consumeResource(pl, AoAResources.SPIRIT.get(), 200, false))
-			arrow.setGlowingTag(true);
-
-		return arrow;
+		return super.applyArrowMods(projectile, shooter, stack);
 	}
 
 	@Override
-	public void onEntityImpact(CustomArrowEntity arrow, @Nullable Entity shooter, EntityHitResult hitResult, ItemStack stack, float velocity) {
-		if (arrow.isCurrentlyGlowing() && shooter instanceof LivingEntity livingShooter)
+	public void onEntityImpact(Projectile projectile, @Nullable Entity shooter, EntityHitResult hitResult, ItemStack stack, float velocity) {
+		if (projectile.isCurrentlyGlowing() && shooter instanceof LivingEntity livingShooter)
 			EntityUtil.healEntity(livingShooter, 8);
 
-		arrow.setGlowingTag(false);
+		projectile.setGlowingTag(false);
 	}
 
 	@Override
-	public void onBlockImpact(CustomArrowEntity arrow, @Nullable Entity shooter, BlockHitResult hitResult, ItemStack stack) {
-		arrow.setGlowingTag(false);
+	public void onBlockImpact(Projectile projectile, @Nullable Entity shooter, BlockHitResult hitResult, ItemStack stack) {
+		projectile.setGlowingTag(false);
 	}
 
 	@Override

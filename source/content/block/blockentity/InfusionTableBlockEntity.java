@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.menu.InfusionTableMenu;
 import net.tslat.aoa3.common.registration.block.AoABlockEntities;
-import net.tslat.aoa3.library.object.GenericItemStackHandler;
+import net.tslat.aoa3.library.object.extension.GenericItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class InfusionTableBlockEntity extends GenericContainerBlockEntity {

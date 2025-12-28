@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableList;
 import it.unimi.dsi.fastutil.ints.IntObjectPair;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.util.RandomSource;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.object.EasyRandom;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,7 +31,7 @@ import java.util.stream.Stream;
  * @param <P> The predicate input object type
  */
 public class RandomEntryPool<T, P> implements Collection<T> {
-	protected final RandomUtil.EasyRandom random;
+	protected final EasyRandom random;
 	protected final List<PoolEntry<T, P>> entries;
 
 	/**
@@ -52,7 +52,7 @@ public class RandomEntryPool<T, P> implements Collection<T> {
 
 	protected RandomEntryPool(List<PoolEntry<T, P>> entries, RandomSource random) {
 		this.entries = entries;
-		this.random = new RandomUtil.EasyRandom(random);
+		this.random = EasyRandom.wrap(random);
 	}
 
 	/**
@@ -194,7 +194,7 @@ public class RandomEntryPool<T, P> implements Collection<T> {
 		if (this.entries.size() == 1)
 			return this.entries.getFirst();
 
-		int selection = this.random.randomNumberUpTo(mappedWeights.leftInt());
+		int selection = this.random.numberUpTo(mappedWeights.leftInt());
 
 		for (int i = 0; i < this.entries.size(); i++) {
 			selection -= mappedWeights.right()[i];

@@ -18,14 +18,19 @@ public class GenericPlantBlock extends BushBlock {
     public GenericPlantBlock(Properties properties, Predicate<BlockState> validSurface, float width, float height) {
         super(properties);
 
-        float sidePadding = (16 - width) / 2f;
-        this.shape = Block.box(sidePadding, 0, sidePadding, 16f - sidePadding, height, 16f - sidePadding);;
+        this.shape = buildShape(width, height);
         this.validSurface = validSurface;
+    }
+
+    protected VoxelShape buildShape(float width, float height) {
+        float lateralRadius = width / 2f * 0.707106781f * 1.000093959f;
+
+        return Block.box(8 - lateralRadius, 0, 8 - lateralRadius, 8 + lateralRadius, height, 8 + lateralRadius);
     }
 
     @Override
     protected MapCodec<? extends BushBlock> codec() {
-        return null;
+        return MapCodec.unit(this);
     }
 
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

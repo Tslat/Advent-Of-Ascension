@@ -7,12 +7,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -34,23 +36,22 @@ import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.block.AoAFluidTypes;
 import net.tslat.aoa3.common.registration.entity.AoAEntityDataSerializers;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.common.registration.entity.AoAMonsters;
 import net.tslat.aoa3.common.registration.entity.variant.VeloraptorVariant;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.animal.precasia.OpteryxEntity;
-import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyLivingEntitySensor;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
 import net.tslat.aoa3.content.entity.brain.task.temp.FixedTargetOrRetaliate;
-import net.tslat.aoa3.library.object.EntityDataHolder;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
+import net.tslat.aoa3.library.builder.MultipartBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.AttributeUtil;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.MathUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
@@ -61,6 +62,7 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttack
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.util.BrainUtils;
+import net.tslat.tme.api.particle.ParticleBuilder;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
@@ -69,25 +71,31 @@ import software.bernie.geckolib.constant.DefaultAnimations;
 
 import java.util.List;
 
+import static net.tslat.aoa3.library.builder.MultipartBuilder.Part;
+
 public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
-	private static final EntityDataHolder<VeloraptorVariant> VARIANT = EntityDataHolder.register(VeloraptorEntity.class, AoAEntityDataSerializers.VELORAPTOR_VARIANT.get(), VeloraptorVariant.GREEN.get(), entity -> entity.variant, (entity, value) -> entity.variant = value);
+	private static final EntityDataAccessor<VeloraptorVariant> VARIANT = makeSynchedData(VeloraptorEntity.class, AoAEntityDataSerializers.VELORAPTOR_VARIANT.get());
 	private static final AttributeModifier LUNGE_DAMAGE_MODIFIER = new AttributeModifier(AdventOfAscension.id("lunge_damage"), 3, AttributeModifier.Operation.ADD_VALUE);
 
 	private static final int ATTACK_BITE = 0;
 	private static final int ATTACK_POUNCE = 1;
-	private VeloraptorVariant variant = VeloraptorVariant.GREEN.get();
 
 	public VeloraptorEntity(EntityType<? extends VeloraptorEntity> entityType, Level level) {
 		super(entityType, level);
+	}
 
-		setParts(new AoAEntityPart<>(this, getBbWidth(), 0.9375f, 0, 1, getBbWidth()).setDamageMultiplier(1.1f));
+	@Nullable
+	@Override
+	public MultipartBuilder<? extends VeloraptorEntity> definePartEntities() {
+		return MultipartBuilder.of(this,
+										  Part.sized(getBbWidth(), 0.9375f).up(1).adjacentForward().damageMod(1.1f));
 	}
 
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
 
-		registerDataParams(builder, VARIANT);
+		builder.define(VARIANT, VeloraptorVariant.GREEN.get());
 	}
 
 	@Override
@@ -126,11 +134,11 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 	@Override
 	public BrainActivityGroup<VeloraptorEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
+				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Mth.square(getAttributeValue(Attributes.FOLLOW_RANGE))),
 				new SetWalkTargetToAttackTarget<>().speedMod((entity, target) -> entity.distanceToSqr(target) < 8 ? 1f : 1.2f),
 				new OneRandomBehaviour<>(
 						Pair.of(new AnimatableMeleeAttack<>(7).attackInterval(entity -> 8)
-								.whenStarting(entity -> ATTACK_STATE.set(entity, ATTACK_BITE))
+								.whenStarting(entity -> setAttackState(ATTACK_BITE))
 								.whenStopping(entity -> BrainUtils.setSpecialCooldown(this, 8)), 5),
 						Pair.of(new LungeMeleeAttack(15)
 								.startCondition(Entity::onGround), 1)
@@ -154,15 +162,19 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 
-		compound.putString("Variant", AoARegistries.VELORAPTOR_VARIANTS.getKey(VARIANT.get(this)).toString());
+		compound.putString("Variant", AoARegistries.VELORAPTOR_VARIANTS.getKey(getSynchedData(VARIANT)).toString());
 	}
 
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
-		if (compound.contains("Variant", Tag.TAG_STRING))
-			VARIANT.set(this, AoARegistries.VELORAPTOR_VARIANTS.getEntry(ResourceLocation.tryParse(compound.getString("Variant"))));
+		if (compound.contains("Variant", Tag.TAG_STRING)) {
+			setSynchedData(VARIANT, VeloraptorVariant.getOrDefault(ResourceLocation.tryParse(compound.getString("Variant"))));
+		}
+		else if (getVariant() == null) {
+			setSynchedData(VARIANT, VeloraptorVariant.GREEN.get());
+		}
 	}
 
 	@Override
@@ -183,18 +195,18 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 	public void onDamageTaken(DamageContainer damageContainer) {
 		if (level() instanceof ServerLevel level && damageContainer.getSource().is(DamageTypeTags.IS_FIRE) && level().getFluidState(BlockPos.containing(getEyePosition())).getFluidType() == AoAFluidTypes.TAR.get() && level().getFluidState(blockPosition().above()).getFluidType() == AoAFluidTypes.TAR.get()) {
 			ParticleBuilder.forRandomPosInEntity(ParticleTypes.LARGE_SMOKE, this)
-					.colourOverride(255, 255, 255, 255)
+					.colourTint(255, 255, 255, 255)
 					.spawnNTimes(20)
-					.sendToAllPlayersTrackingEntity(level,this);
+					.sendToAllPlayersTrackingEntity(this);
 
 			if (isDeadOrDying()) {
-				AoAScheduler.scheduleSyncronisedTask(() -> {
+				AoAScheduler.schedule(19 - this.deathTime, tick -> {
 					EntitySpawningUtil.spawnEntity(level, AoAMonsters.SKELETAL_ABOMINATION.get(), position(), MobSpawnType.CONVERSION, abomination -> {
 						abomination.setXRot(getXRot());
 						abomination.setYRot(getYRot());
 						abomination.setYHeadRot(getYHeadRot());
 					});
-				}, 19 - this.deathTime);
+				});
 			}
 		}
 	}
@@ -204,23 +216,23 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
 		spawnData = super.finalizeSpawn(world, difficulty, reason, spawnData);
 
-		VARIANT.set(this, VeloraptorVariant.getVariantForSpawn(world.getLevel(), difficulty, reason, this, Suppliers.memoize(() -> level().getBiome(blockPosition())), spawnData));
+		setSynchedData(VARIANT, VeloraptorVariant.getVariantForSpawn(world.getLevel(), difficulty, reason, this, Suppliers.memoize(() -> level().getBiome(blockPosition())), spawnData));
 
 		return spawnData;
 	}
 
 	public VeloraptorVariant getVariant() {
-		return this.variant;
+		return getSynchedData(VARIANT);
 	}
 
 	@Override
 	protected int getAttackSwingDuration() {
-		return ATTACK_STATE.is(this, ATTACK_BITE) ? 8 : 40;
+		return isAttackState(ATTACK_BITE) ? 8 : 40;
 	}
 
 	@Override
 	protected int getPreAttackTime() {
-		return ATTACK_STATE.is(this, ATTACK_BITE) ? 4 : 21;
+		return isAttackState(ATTACK_BITE) ? 4 : 21;
 	}
 
 	@Override
@@ -228,8 +240,8 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 		return getVariant().lootTable().orElseGet(super::getDefaultLootTable);
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.noLowerThanY(60).difficultyBasedSpawnChance(0.1f);
+	public static SpawnPlacements.SpawnPredicate<VeloraptorEntity> spawnRules(EntityType<VeloraptorEntity> entityType) {
+		return EntitySpawnConditions.createDayNightMonster(entityType).noLowerThanY(AoADimensions.PRECASIA, 60).difficultyBasedSpawnChance(0.1f);
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<VeloraptorEntity> entityType) {
@@ -247,7 +259,7 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 		controllers.add(DefaultAnimations.genericWalkRunIdleController(this));
 		controllers.add(new AnimationController<>(this, "attacking", 0, state -> {
 			if (this.swinging) {
-				if (ATTACK_STATE.is(this, ATTACK_BITE)) {
+				if (isAttackState(ATTACK_BITE)) {
 					state.setControllerSpeed(1);
 
 					return state.setAndContinue(DefaultAnimations.ATTACK_BITE);
@@ -284,11 +296,11 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 		protected void start(VeloraptorEntity entity) {
 			super.start(entity);
 
-			ATTACK_STATE.set(entity, ATTACK_POUNCE);
+			entity.setAttackState(ATTACK_POUNCE);
 			entity.getNavigation().stop();
 			Vec3 oldPos = this.target.position();
 
-			AoAScheduler.scheduleSyncronisedTask(() -> {
+			AoAScheduler.schedule(9, tick -> {
 				final Entity target = BrainUtils.getTargetOfEntity(entity);
 				final Vec3 lungePos = target != null ? target.position().add(oldPos.vectorTo(target.position())) : entity.position().add(entity.getLookAngle().scale(4));
 
@@ -299,7 +311,7 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 												.add(0, 0.1f, 0)),
 								new Vec3(-1.2, -0.1f, -1.2f),
 								new Vec3(1.2, 0.5f, 1.2f)));
-			}, 9);
+			});
 		}
 
 		@Override

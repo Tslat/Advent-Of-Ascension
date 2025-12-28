@@ -1,5 +1,6 @@
 package net.tslat.aoa3.client.player;
 
+import net.minecraft.client.KeyMapping;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
 
 import java.util.function.Consumer;
@@ -22,10 +23,10 @@ public interface AoAPlayerKeybindListener {
     }
 
     /**
-     * Return the keycode for this listener.
-     * This value must be static
+     * Return the keymapping for this listener.
+     * This must be a standard registered keybind
      */
-    int getKeycode();
+    KeyMapping getKeybind();
 
     /**
      * Determine whether the detected keypress action should be sent to the server side

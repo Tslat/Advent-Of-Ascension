@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.event.dynamic.DynamicEventSubscriber;
@@ -41,19 +42,19 @@ public class HarvestReplant extends ScalableModAbility {
 	private void handleBlockBreak(BlockEvent.BreakEvent ev) {
 		BlockState state = ev.getState();
 
-		if (state.getBlock() instanceof CropBlock crop && testAsChance()) {
+		if (state.getBlock() instanceof CropBlock crop && !state.is(AoATags.Blocks.NO_HARVEST_REPLANT) && testAsChance()) {
 			LevelAccessor level = ev.getLevel();
 			BlockPos pos = ev.getPos();
 
 			if (InventoryUtil.findItemForConsumption(ev.getPlayer(), stack -> ItemStack.isSameItemSameComponents(stack, crop.getCloneItemStack(level, pos, state)), 1, true))
-				AoAScheduler.scheduleSyncronisedTask(() -> {
+				AoAScheduler.schedule(1, tick -> {
 					if (level.getBlockState(pos).isAir()) {
 						level.setBlock(pos, state.setValue(crop.getAgeProperty(), 0), Block.UPDATE_ALL);
 
 						if (!level.isClientSide())
 							PlayerUtil.giveXpToPlayer((ServerPlayer)ev.getPlayer(), AoASkills.FARMING.get(), PlayerUtil.getTimeBasedXpForLevel(PlayerUtil.getLevel(ev.getPlayer(), AoASkills.FARMING.get()), 3), false);
 					}
-				}, 1);
+				});
 		}
 	}
 }

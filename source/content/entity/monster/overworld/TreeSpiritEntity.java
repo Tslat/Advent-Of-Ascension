@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -22,13 +23,14 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyLivingEntitySensor;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.TreeSpiritSpriteEntity;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -40,7 +42,7 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetRetaliateTarg
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
@@ -87,8 +89,8 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 	public BrainActivityGroup<TreeSpiritEntity> getCoreTasks() {
 		return BrainActivityGroup.coreTasks(
 				new CustomHeldBehaviour<>(owner -> {
-					if (ATTACK_STATE.is(owner, 1) && BrainUtils.getTargetOfEntity(owner) == null)
-						ATTACK_STATE.set(owner, 0);
+					if (isAttackState(1) && BrainUtils.getTargetOfEntity(owner) == null)
+						setAttackState(0);
 				})
 		);
 	}
@@ -97,8 +99,8 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 	public BrainActivityGroup<TreeSpiritEntity> getIdleTasks() {
 		return BrainActivityGroup.idleTasks(
 				new SetRetaliateTarget<>()
-						.attackablePredicate(target -> DamageUtil.isAttackable(target) && distanceToSqr(target.position()) < Math.pow(getAttributeValue(AoAAttributes.AGGRO_RANGE), 2))
-						.whenStarting(owner -> ATTACK_STATE.set(owner, 1))
+						.attackablePredicate(target -> DamageUtil.isAttackable(target) && distanceToSqr(target.position()) < Mth.square(getAttributeValue(AoAAttributes.AGGRO_RANGE)))
+						.whenStarting(owner -> isAttackState(1))
 						.startCondition(entity -> level().getDifficulty() != Difficulty.PEACEFUL));
 	}
 
@@ -106,9 +108,9 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 	public BrainActivityGroup<TreeSpiritEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
 				new InvalidateAttackTarget<>()
-						.invalidateIf((entity, target) -> !target.isAlive() || level().getDifficulty() == Difficulty.PEACEFUL || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator())) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
+						.invalidateIf((entity, target) -> !target.isAlive() || level().getDifficulty() == Difficulty.PEACEFUL || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator())) || distanceToSqr(target.position()) > Mth.square(getAttributeValue(Attributes.FOLLOW_RANGE))),
 				new AnimatableRangedAttack<>(15)
-						.attackInterval(entity -> RandomUtil.randomNumberBetween(15, 35))
+						.attackInterval(entity -> RandomUtil.numberBetween(15, 35))
 						.startCondition(entity -> level().getDifficulty() != Difficulty.PEACEFUL));
 	}
 
@@ -123,7 +125,7 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 
 	@Override
 	public Component getName() {
-		if (ATTACK_STATE.is(this, 0))
+		if (isAttackState(0))
 			return Component.translatable("entity." + AdventOfAscension.MOD_ID + ".dead_tree");
 
 		return super.getName();
@@ -212,8 +214,8 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 		return new TreeSpiritSpriteEntity(this, getTarget());
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(55).spawnChance(1 / 10f);
+	public static SpawnPlacements.SpawnPredicate<TreeSpiritEntity> spawnRules(EntityType<TreeSpiritEntity> entityType) {
+		return EntitySpawnConditions.createDayMonster(entityType).noLowerThanY(AoADimensions.OVERWORLD, 55).spawnChance(1 / 10f);
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<TreeSpiritEntity> entityType) {
@@ -229,7 +231,7 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(new AnimationController<>(this, "Living", 0, state -> {
-			if (ATTACK_STATE.is(this, 1))
+			if (isAttackState(1))
 				return state.setAndContinue(ACTIVATE);
 
 			if (state.getController().getCurrentRawAnimation() != null)

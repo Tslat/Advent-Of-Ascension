@@ -7,7 +7,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.level.Level;
@@ -19,15 +22,13 @@ import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
-import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
+import net.tslat.aoa3.library.builder.MultipartBuilder;
 import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
@@ -35,12 +36,15 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.ConditionlessHel
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.constant.DefaultAnimations;
 
+import static net.tslat.aoa3.library.builder.MultipartBuilder.Part;
 
 public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARangedAttacker {
 	private static final RawAnimation BREATH_ATTACK = RawAnimation.begin().thenPlay("attack.breath.start").thenPlay("attack.breath.hold");
@@ -48,18 +52,21 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 
 	public EmbrakeEntity(EntityType<? extends EmbrakeEntity> entityType, Level world) {
 		super(entityType, world);
+	}
 
-		setParts(
-				new AoAEntityPart<>(this, getBbWidth(), getBbHeight(), 0, 0, getBbWidth()).setDamageMultiplier(1.25f),
-				new AoAEntityPart<>(this, getBbWidth(), getBbHeight(), 0, 0, -getBbWidth()),
-				new AoAEntityPart<>(this, getBbWidth() * 0.75f, getBbHeight() * 0.75f, 0, 0, -getBbWidth() * 1.875f).setDamageMultiplier(0.75f)
-		);
+	@Nullable
+	@Override
+	public MultipartBuilder<? extends EmbrakeEntity> definePartEntities() {
+		return MultipartBuilder.of(this,
+										  Part.sized(getBbWidth(), getBbHeight()).adjacentForward().damageMod(1.25f),
+										  Part.sized(getBbWidth(), getBbHeight()).adjacentBehind().then(
+												  Part.sized(getBbWidth() * 0.75f, getBbHeight() * 0.75f).adjacentBehind().damageMod(0.75f)));
 	}
 
 	@Override
 	public BrainActivityGroup<EmbrakeEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
+				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Mth.square(getAttributeValue(Attributes.FOLLOW_RANGE))),
 				new FirstApplicableBehaviour<>(
 						new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration() + 2),
 						new FirstApplicableBehaviour<>(
@@ -95,23 +102,23 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 				double baseX = direction.x;
 				double baseY = entity.getEyeY() - 0.3f;
 				double baseZ = direction.z;
-				TELParticlePacket packet = new TELParticlePacket(11);
+				TMEParticlePacket packet = new TMEParticlePacket(11);
 
 				packet.particle(ParticleBuilder.forPosition(ParticleTypes.SMOKE, baseX, baseY, baseZ));
 
 				for (int i = 0; i < 5; i++) {
-					Vec3 velocity = target.position().subtract(position.x + RandomUtil.randomScaledGaussianValue(0.5f), position.y + RandomUtil.randomScaledGaussianValue(0.5f) - 0.3, position.z + RandomUtil.randomScaledGaussianValue(0.5f)).normalize().scale(0.75f);
+					Vec3 velocity = target.position().subtract(position.x + RandomUtil.scaledGaussianValue(0.5f), position.y + RandomUtil.scaledGaussianValue(0.5f) - 0.3, position.z + RandomUtil.scaledGaussianValue(0.5f)).normalize().scale(0.75f);
 
 					packet.particle(ParticleBuilder.forPosition(EntityTrackingParticleOptions.fromEntity(AoAParticleTypes.BURNING_FLAME, entity), baseX, baseY, baseZ)
 							.scaleMod(0.3f)
 							.lifespan(Mth.ceil(3 / (entity.random.nextFloat() * 0.8f + 0.2f)))
-							.colourOverride(0f, 0f, 0f, 0f)
+							.colourTint(0f, 0f, 0f, 0f)
 							.velocity(velocity));
 					packet.particle(ParticleBuilder.forPosition(ParticleTypes.SMALL_FLAME, baseX, baseY, baseZ)
 							.velocity(velocity));
 				}
 
-				packet.sendToAllNearbyPlayers((ServerLevel)entity.level(), entity.getEyePosition(), 64);
+				packet.sendToAllPlayersNearby((ServerLevel)entity.level(), entity.getEyePosition(), 64);
 
 				if (getRunningTime() % 9 == 0 || getRunningTime() % 19 == 0)
 					entity.playSound(AoASounds.FLAMETHROWER.get(), 2, 1);
@@ -194,8 +201,8 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 		return 10;
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT.noPeacefulSpawn().spawnChance(1 / 2f).noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock();
+	public static SpawnPlacements.SpawnPredicate<EmbrakeEntity> spawnRules(EntityType<EmbrakeEntity> entityType) {
+		return EntitySpawnConditions.create(entityType).noPeacefulSpawn().spawnChance(1 / 2f).noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock();
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<EmbrakeEntity> entityType) {

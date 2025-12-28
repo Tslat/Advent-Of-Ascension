@@ -4,7 +4,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
-import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMob;
+import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMobOld;
 
 public class ConstructTerrorShotEntity extends BaseMobProjectile {
 	public ConstructTerrorShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
@@ -15,7 +15,7 @@ public class ConstructTerrorShotEntity extends BaseMobProjectile {
 		super(AoAProjectiles.TERROR_CONSTRUCT_SHOT.get(), world);
 	}
 
-	public ConstructTerrorShotEntity(AoAFlyingRangedMob shooter, Type projectileType) {
+	public ConstructTerrorShotEntity(AoAFlyingRangedMobOld shooter, Type projectileType) {
 		super(AoAProjectiles.TERROR_CONSTRUCT_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 

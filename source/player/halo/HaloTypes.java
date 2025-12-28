@@ -17,7 +17,6 @@ public enum HaloTypes {
                 case DONATOR -> HaloTypes.DONATOR;
                 case SUPER_DONATOR -> HaloTypes.SUPER_DONATOR;
                 case WIKI_EDITOR -> HaloTypes.WIKI_EDITOR;
-                default -> null;
             };
         }
     }

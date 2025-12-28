@@ -2,45 +2,38 @@ package net.tslat.aoa3.content.item.weapon.blaster;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 
 import java.util.List;
 
-public class GravityBlaster extends BaseBlaster {
+public class GravityBlaster extends AoABlaster<WeaponProjectile> {
 	public GravityBlaster(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_GRAVITY_BLASTER_FIRE.get();
-	}
+	void fireBlaster(ServerLevel level, WeaponFiringContext context) {
+		Entity shooter = context.getShooter();
 
-	@Override
-	public void fireBlaster(ServerLevel level, LivingEntity shooter, ItemStack blaster) {
-		ItemStack stack = shooter.getItemInHand(InteractionHand.MAIN_HAND);
+		if (shooter != null) {
+			for (LivingEntity mob : EntityRetrievalUtil.getEntities(level, shooter.getBoundingBox().inflate(2, 0, 2), LivingEntity.class, target -> EntityUtil.areProbablyEnemies(target, shooter))) {
+				DamageUtil.doMiscEnergyAttack(shooter, mob, context.damage(), null);
+				EntityUtil.pushEntityAway(shooter, mob, 0.5f);
+			}
 
-		if (!stack.is(this))
-			stack = getDefaultInstance();
-
-		for (LivingEntity mob : shooter.level().getEntitiesOfClass(LivingEntity.class, shooter.getBoundingBox().inflate(2, 0, 2), EntityUtil::isHostileMob)) {
-			EntityUtil.pushEntityAway(shooter, mob, 0.5f);
-			DamageUtil.doMiscEnergyAttack(shooter, mob, getBlasterDamage(stack), null);
+			shooter.push(0, 2f, 0);
+			shooter.hurtMarked = true;
 		}
-
-		shooter.hurtMarked = true;
-		shooter.push(0, 2f, 0);
 	}
 
 	@Override

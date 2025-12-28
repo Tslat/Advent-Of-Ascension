@@ -3,31 +3,31 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:shyrestone_nugget"
+      "tag": "c:nuggets/shyrestone"
     },
     {
-      "item": "aoa3:shyrestone_nugget"
+      "tag": "c:nuggets/shyrestone"
     },
     {
-      "item": "aoa3:shyrestone_nugget"
+      "tag": "c:nuggets/shyrestone"
     },
     {
-      "item": "aoa3:shyrestone_nugget"
+      "tag": "c:nuggets/shyrestone"
     },
     {
-      "item": "aoa3:shyrestone_nugget"
+      "tag": "c:nuggets/shyrestone"
     },
     {
-      "item": "aoa3:shyrestone_nugget"
+      "tag": "c:nuggets/shyrestone"
     },
     {
-      "item": "aoa3:shyrestone_nugget"
+      "tag": "c:nuggets/shyrestone"
     },
     {
-      "item": "aoa3:shyrestone_nugget"
+      "tag": "c:nuggets/shyrestone"
     },
     {
-      "item": "aoa3:shyrestone_nugget"
+      "tag": "c:nuggets/shyrestone"
     }
   ],
   "result": {

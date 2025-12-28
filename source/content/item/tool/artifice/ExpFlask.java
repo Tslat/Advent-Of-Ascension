@@ -18,8 +18,8 @@ import net.tslat.aoa3.content.item.ChargeableItem;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
@@ -69,10 +69,10 @@ public class ExpFlask extends ArtificeItem implements ChargeableItem {
 				subtractCharge(stack, xpChange, true);
 
 				ParticleBuilder.forRandomPosInEntity(AoAParticleTypes.ORB.get(), player)
-						.colourOverride((Mth.sin(entity.tickCount / 2f) + 1) * 0.5f, 1f, (Mth.sin(((float)entity.tickCount) / 2f + 4.1887903f) + 1) * 0.1f, 0.5f)
-						.lifespan(RandomUtil.randomNumberBetween(30, 70))
-						.scaleMod((float)RandomUtil.randomValueBetween(0.5f, 1.25f))
-						.sendToAllPlayersTrackingEntity(player.serverLevel(), player);
+						.colourTint((Mth.sin(entity.tickCount / 2f) + 1) * 0.5f, 1f, (Mth.sin(((float)entity.tickCount) / 2f + 4.1887903f) + 1) * 0.1f, 0.5f)
+						.lifespan(RandomUtil.numberBetween(30, 70))
+						.scaleMod((float)RandomUtil.valueBetween(0.5f, 1.25f))
+						.sendToAllPlayersTrackingEntity(player);
 
 				if (!hasEnoughCharge(stack))
 					player.stopUsingItem();

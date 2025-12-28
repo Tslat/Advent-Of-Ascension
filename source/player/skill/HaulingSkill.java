@@ -10,7 +10,7 @@ import net.tslat.aoa3.event.custom.events.HaulingItemFishedEvent;
 import net.tslat.aoa3.event.dynamic.DynamicEventSubscriber;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class HaulingSkill extends AoASkill.Instance {
 		if (!canGainXp(true))
 			return;
 
-		float xp = PlayerUtil.getTimeBasedXpForLevel(getLevel(true), 200) * (float)(1 + RandomUtil.randomScaledGaussianValue(0.25f));
+		float xp = PlayerUtil.getTimeBasedXpForLevel(getLevel(true), 200) * (float)(1 + RandomUtil.scaledGaussianValue(0.25f));
 
 		if (ev instanceof HaulingItemFishedEvent) {
 			xp *= 2f;

@@ -13,7 +13,7 @@ import net.tslat.aoa3.util.WorldUtil;
 
 import java.util.List;
 
-public class ShyreSword extends BaseGreatblade {
+public class ShyreSword extends AoAGreatblade {
 	public ShyreSword(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

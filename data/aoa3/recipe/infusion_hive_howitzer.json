@@ -1,0 +1,27 @@
+{
+  "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:cannon_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:hive_chunk"
+    },
+    {
+      "item": "aoa3:hive_chunk"
+    },
+    {
+      "item": "aoa3:hive_chunk"
+    },
+    {
+      "tag": "c:ingots/varsium"
+    },
+    {
+      "tag": "c:ingots/baronyte"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "aoa3:hive_howitzer"
+  }
+}

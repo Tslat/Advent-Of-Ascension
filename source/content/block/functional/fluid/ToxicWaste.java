@@ -12,7 +12,7 @@ import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
@@ -35,6 +35,6 @@ public class ToxicWaste extends LiquidBlock {
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
 		entity.makeStuckInBlock(state, new Vec3(1, 1, 1));
-		EntityUtil.applyPotions(entity, new EffectBuilder(MobEffects.POISON, 60).level(8), new EffectBuilder(MobEffects.CONFUSION, 150));
+		EntityUtil.applyPotions(entity, null, new EffectBuilder(MobEffects.POISON, 60).level(8), new EffectBuilder(MobEffects.CONFUSION, 150));
 	}
 }

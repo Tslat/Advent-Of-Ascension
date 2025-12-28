@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.entity.monster.precasia;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
@@ -15,10 +16,10 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.block.AoAFluidTypes;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
-import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.library.object.EntityDataHolder;
+import net.tslat.aoa3.library.builder.MultipartBuilder;
 import net.tslat.aoa3.util.DamageUtil;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
@@ -26,8 +27,10 @@ import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.constant.DefaultAnimations;
 
+import static net.tslat.aoa3.library.builder.MultipartBuilder.Part;
+
 public class SkeletalAbominationEntity extends AoAMeleeMob<SkeletalAbominationEntity> {
-    public static final EntityDataHolder<Boolean> STANDING = EntityDataHolder.register(SkeletalAbominationEntity.class, EntityDataSerializers.BOOLEAN, false, entity -> entity.standing, SkeletalAbominationEntity::setStanding);
+    public static final EntityDataAccessor<Boolean> STANDING = makeSynchedData(SkeletalAbominationEntity.class, EntityDataSerializers.BOOLEAN);
 
     private static final RawAnimation POSE_ANIM_STAND = RawAnimation.begin().thenPlay("misc.stand").thenLoop("misc.stand.hold");
     private static final RawAnimation POSE_ANIM_RELEASE = RawAnimation.begin().thenPlay("misc.stand.release");
@@ -38,33 +41,48 @@ public class SkeletalAbominationEntity extends AoAMeleeMob<SkeletalAbominationEn
     private static final int ATTACK_SWING = 2;
     private static final int ATTACK_SLAM = 3;
 
-    private boolean standing = false;
-
     public SkeletalAbominationEntity(EntityType<? extends SkeletalAbominationEntity> entityType, Level world) {
         super(entityType, world);
 
-        setParts(new AoAEntityPart<>(this, getBbWidth() * 0.75f, getBbHeight() * 0.75f, 0, getBbHeight() * 0.65f, getBbWidth() * 0.875f),
+        /*setParts(new AoAEntityPart<>(this, getBbWidth() * 0.75f, getBbHeight() * 0.75f, 0, getBbHeight() * 0.65f, getBbWidth() * 0.875f),
                 new AoAEntityPart<>(this, getBbWidth() * 0.75f, getBbHeight() * 0.5f, 0, getBbHeight(), getBbWidth() * 1.625f).setDamageMultiplier(1.25f),
                 new AoAEntityPart<>(this, getBbWidth(), getBbHeight() * 0.9f, 0, 0, -getBbWidth()).setDamageMultiplier(0.75f)
-        );
+        );*/
+    }
+
+    @Nullable
+    @Override
+    public MultipartBuilder<? extends SkeletalAbominationEntity> definePartEntities() {
+        return MultipartBuilder.ofDynamic(this,
+                                          Part.sized(getBbWidth() * 0.75f, getBbWidth() * 0.75f).adjacentAbove().adjacentForward().then(
+                                                  Part.sized(getBbWidth() * 0.75f, getBbHeight() * 0.5f).adjacentForward().damageMod(1.25f)),
+                                          Part.sized(getBbWidth(), getBbHeight() * 0.9f).adjacentBehind().damageMod(0.75f));
     }
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
 
-        registerDataParams(builder, STANDING);
+        builder.define(STANDING, false);
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        super.onSyncedDataUpdated(key);
+
+        if (key.equals(STANDING))
+            setStanding(isStanding());
     }
 
     public boolean isStanding() {
-        return this.standing;
+        return getSynchedData(STANDING);
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
 
-        compound.putBoolean("StandingUp", this.standing);
+        compound.putBoolean("StandingUp", isStanding());
     }
 
     @Override
@@ -72,7 +90,7 @@ public class SkeletalAbominationEntity extends AoAMeleeMob<SkeletalAbominationEn
         super.readAdditionalSaveData(compound);
 
         if (compound.contains("StandingUp"))
-            STANDING.set(this, compound.getBoolean("StandingUp"));
+            setSynchedData(STANDING, compound.getBoolean("StandingUp"));
     }
 
     @Override
@@ -105,13 +123,11 @@ public class SkeletalAbominationEntity extends AoAMeleeMob<SkeletalAbominationEn
     }
 
     protected void setStanding(boolean standing) {
-        if (standing == this.standing)
+        if (standing == isStanding())
             return;
 
-        this.standing = standing;
-
         if (!level().isClientSide)
-            STANDING.set(this, standing);
+            setSynchedData(STANDING, standing);
 
         toggleMultipart(!standing);
         refreshDimensions();
@@ -140,7 +156,7 @@ public class SkeletalAbominationEntity extends AoAMeleeMob<SkeletalAbominationEn
 
     @Override
     public int getCurrentSwingDuration() {
-        return switch (ATTACK_STATE.get(this)) {
+        return switch (getAttackState()) {
             case ATTACK_BITE -> 9;
             case ATTACK_THROW -> 18;
             case ATTACK_SWING -> 15;
@@ -151,7 +167,7 @@ public class SkeletalAbominationEntity extends AoAMeleeMob<SkeletalAbominationEn
 
     @Override
     protected int getPreAttackTime() {
-        return switch (ATTACK_STATE.get(this)) {
+        return switch (getAttackState()) {
             case ATTACK_BITE -> 4;
             case ATTACK_THROW -> 7;
             case ATTACK_SWING -> 6;

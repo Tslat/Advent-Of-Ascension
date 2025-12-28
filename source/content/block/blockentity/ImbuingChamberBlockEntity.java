@@ -15,7 +15,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.menu.ImbuingChamberMenu;
 import net.tslat.aoa3.common.registration.block.AoABlockEntities;
 import net.tslat.aoa3.content.item.misc.AspectFocusItem;
-import net.tslat.aoa3.library.object.GenericItemStackHandler;
+import net.tslat.aoa3.library.object.extension.GenericItemStackHandler;
 
 public class ImbuingChamberBlockEntity extends GenericContainerBlockEntity {
 	private static final Component DEFAULT_NAME = Component.translatable("container." + AdventOfAscension.MOD_ID + ".imbuing_chamber");

@@ -1,0 +1,31 @@
+{
+  "feature": "aoa3:barathos_dead_tree",
+  "placement": [
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 700
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "WORLD_SURFACE_WG"
+    },
+    {
+      "type": "minecraft:biome"
+    },
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_blocks",
+        "blocks": "aoa3:baron_sand",
+        "offset": [
+          0,
+          -1,
+          0
+        ]
+      }
+    }
+  ]
+}

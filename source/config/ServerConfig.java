@@ -11,6 +11,12 @@ public final class ServerConfig {
 	public final ModConfigSpec.BooleanValue saveLootFromExplosions;
 	public final ModConfigSpec.BooleanValue disableSkills;
 	public final ModConfigSpec.EnumValue<BossDropsScheme> bossDropsScheme;
+	public final ModConfigSpec.DoubleValue multiplayerBossHealthBonus;
+	public final ModConfigSpec.BooleanValue fastProjectileCalculations;
+	public final ModConfigSpec.BooleanValue nowhereHardcoreBossDeaths;
+
+	public final ModConfigSpec.DoubleValue spawnVarianceHealthScale;
+	public final ModConfigSpec.DoubleValue spawnVarianceSpeedScale;
 
 	public final ModConfigSpec.BooleanValue skillsLeaderboardEnabled;
 	public final ModConfigSpec.IntValue maxLeaderboardThreads;
@@ -57,6 +63,34 @@ public final class ServerConfig {
 				.comment("Select the method in which Nowhere boss loot should be distributed on kill.")
 				.translation("config.aoa3.server.bossDropsScheme")
 				.defineEnum("bossDropsScheme", BossDropsScheme.SPLIT_BETWEEN_PLAYERS);
+
+		multiplayerBossHealthBonus = configBuilder
+				.comment("Set the amount of bonus (in percent) of additional health that Nowhere bosses get per additional player in the fight")
+				.translation("config.aoa3.server.multiplayerBossHealthBonus")
+				.defineInRange("multiplayerBossHealthBonus", 25, 0d, 1000d);
+
+		fastProjectileCalculations = configBuilder
+				.comment("Disables target intercept calculations for projectile weapons, increasing performance in exchange for reduced accuracy")
+				.translation("config.aoa3.server.fastProjectileCalculations")
+				.define("fastProjectileCalculations", false);
+
+		nowhereHardcoreBossDeaths = configBuilder
+				.comment("Enables real death if dying in Nowhere to bosses")
+				.translation("config.aoa3.server.nowhereHardcoreBossDeaths")
+				.define("nowhereHardcoreBossDeaths", false);
+
+		configBuilder.pop();
+		configBuilder.comment("Mob spawn stat variance configuration options").push("spawn_stat_variance");
+
+		spawnVarianceHealthScale = configBuilder
+				.comment("Set the scale of the random variance given to AoA mobs' health when spawned, as a percentage value. (0.1 = 10%)")
+				.translation("config.aoa3.server.spawnVarianceHealthScale")
+				.defineInRange("spawnVarianceHealthScale", 0.1d, 0d, 1000d);
+
+		spawnVarianceSpeedScale = configBuilder
+				.comment("Set the scale of the random variance given to AoA mobs' speed when spawned, as a percentage value. (0.1 = 10%)")
+				.translation("config.aoa3.server.spawnVarianceSpeedScale")
+				.defineInRange("spawnVarianceSpeedScale", 0.05d, 0d, 1000d);
 
 		configBuilder.pop();
 		configBuilder.comment("AoA Leaderboard configuration options").push("leaderboard_settings");

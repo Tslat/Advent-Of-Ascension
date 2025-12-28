@@ -1,0 +1,53 @@
+{
+  "type": "minecraft:random_patch",
+  "config": {
+    "feature": {
+      "feature": {
+        "type": "minecraft:simple_block",
+        "config": {
+          "to_place": {
+            "type": "minecraft:weighted_state_provider",
+            "entries": [
+              {
+                "data": {
+                  "Name": "aoa3:baron_bramble"
+                },
+                "weight": 7
+              },
+              {
+                "data": {
+                  "Name": "aoa3:baron_blooms"
+                },
+                "weight": 3
+              },
+              {
+                "data": {
+                  "Name": "aoa3:baron_tuft"
+                },
+                "weight": 5
+              },
+              {
+                "data": {
+                  "Name": "aoa3:baron_shrub"
+                },
+                "weight": 6
+              }
+            ]
+          }
+        }
+      },
+      "placement": [
+        {
+          "type": "minecraft:block_predicate_filter",
+          "predicate": {
+            "type": "minecraft:matching_blocks",
+            "blocks": "minecraft:air"
+          }
+        }
+      ]
+    },
+    "tries": 2,
+    "xz_spread": 10,
+    "y_spread": 3
+  }
+}

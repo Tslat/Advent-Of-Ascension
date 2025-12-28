@@ -8,6 +8,7 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
@@ -20,6 +21,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.player.Player;
@@ -34,21 +36,21 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.Tags;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.custom.AoAWorldEvents;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoAAnimal;
 import net.tslat.aoa3.content.world.event.AoAWorldEventManager;
 import net.tslat.aoa3.content.world.event.BarathosSandstormEvent;
-import net.tslat.aoa3.library.builder.SoundBuilder;
-import net.tslat.aoa3.library.object.EntityDataHolder;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
+import net.tslat.tme.api.sound.SoundBuilder;
 import net.tslat.aoa3.util.InventoryUtil;
 import net.tslat.aoa3.util.LootUtil;
 import net.tslat.aoa3.util.MathUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.HeldBehaviour;
@@ -57,8 +59,10 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
 import net.tslat.smartbrainlib.registry.SBLMemoryTypes;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animation.AnimatableManager;
@@ -75,11 +79,8 @@ public class ArkbackEntity extends AoAAnimal<ArkbackEntity> {
     private static final RawAnimation REST_START_ANIM = RawAnimation.begin().thenPlay("misc.rest.start");
     private static final RawAnimation REST_STOP_ANIM = RawAnimation.begin().thenPlay("misc.shake").thenPlay("misc.rest.stop");
     public static final int MAX_SAND = 29;
-    public static final EntityDataHolder<Boolean> RESTING = EntityDataHolder.register(ArkbackEntity.class, EntityDataSerializers.BOOLEAN, false, entity -> entity.resting, (entity, value) -> entity.resting = value);
-    public static final EntityDataHolder<Integer> SAND_LEVEL = EntityDataHolder.register(ArkbackEntity.class, EntityDataSerializers.INT, 0, entity -> entity.sandLevel, (entity, value) -> entity.sandLevel = value);
-
-    private boolean resting = false;
-    private int sandLevel = 0;
+    public static final EntityDataAccessor<Boolean> RESTING = makeSynchedData(ArkbackEntity.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Integer> SAND_LEVEL = makeSynchedData(ArkbackEntity.class, EntityDataSerializers.INT);
 
     public ArkbackEntity(EntityType<? extends ArkbackEntity> entityType, Level world) {
         super(entityType, world);
@@ -89,7 +90,8 @@ public class ArkbackEntity extends AoAAnimal<ArkbackEntity> {
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
 
-        registerDataParams(builder, RESTING, SAND_LEVEL);
+        builder.define(RESTING, false);
+        builder.define(SAND_LEVEL, 0);
     }
 
     @Override
@@ -153,7 +155,7 @@ public class ArkbackEntity extends AoAAnimal<ArkbackEntity> {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
 
-        compound.putInt("SandLevel", this.sandLevel);
+        compound.putInt("SandLevel", getSynchedData(SAND_LEVEL));
     }
 
     @Override
@@ -166,7 +168,7 @@ public class ArkbackEntity extends AoAAnimal<ArkbackEntity> {
 
     @Override
     public InteractionResult interactAt(Player player, Vec3 pos, InteractionHand hand) {
-        if (getSandLevel() <= 0 || !this.resting)
+        if (getSandLevel() <= 0 || !getSynchedData(RESTING))
             return InteractionResult.PASS;
 
         if (!player.getItemInHand(hand).canPerformAction(ItemAbilities.SHOVEL_DIG))
@@ -188,7 +190,7 @@ public class ArkbackEntity extends AoAAnimal<ArkbackEntity> {
     public void tick() {
         super.tick();
 
-        if (!this.resting) {
+        if (!getSynchedData(RESTING)) {
             for (Entity entity : EntityRetrievalUtil.<Entity>getEntities(level(), AABB.ofSize(position().add(0, getBbHeight(), 0), getBbWidth(), 1.5f * getScale(), getBbWidth()), entity -> entity != this && entity.onGround() && entity.getY() >= getY() + getBbHeight())) {
                 entity.setDeltaMovement(MathUtil.getBodyForward(this).scale(-0.4f));
                 entity.hurtMarked = true;
@@ -204,18 +206,18 @@ public class ArkbackEntity extends AoAAnimal<ArkbackEntity> {
             setSandLevel(getSandLevel() + 1);
 
         if (onGround() && getDeltaMovement().horizontalDistanceSqr() > 0) {
-            for (LivingEntity entity : EntityRetrievalUtil.<LivingEntity>getEntities(level(), getBoundingBox().inflate(0.5f).move(getDeltaMovement()), entity -> entity != this && entity instanceof LivingEntity && entity.getBbHeight() < getBbHeight() && entity.getBbWidth() < getBbWidth())) {
+            for (LivingEntity entity : EntityRetrievalUtil.getEntities(level(), getBoundingBox().inflate(0.5f).move(getDeltaMovement()), LivingEntity.class, entity -> entity != this && entity.getBbHeight() < getBbHeight() && entity.getBbWidth() < getBbWidth())) {
                 entity.hurt(damageSources().cramming(), 3 * level().getDifficulty().getId());
             }
         }
     }
 
     public void setSandLevel(int sandLevel) {
-        SAND_LEVEL.set(this, Mth.clamp(sandLevel, 0, MAX_SAND));
+        setSynchedData(SAND_LEVEL, Mth.clamp(sandLevel, 0, MAX_SAND));
     }
 
     public int getSandLevel() {
-        return this.sandLevel;
+        return getSynchedData(SAND_LEVEL);
     }
 
     public static AoAEntityStats.AttributeBuilder entityStats(EntityType<ArkbackEntity> entityType) {
@@ -226,10 +228,14 @@ public class ArkbackEntity extends AoAAnimal<ArkbackEntity> {
                 .moveSpeed(0.22f);
     }
 
+    public static SpawnPlacements.SpawnPredicate<ArkbackEntity> spawnRules(EntityType<ArkbackEntity> entityType) {
+        return EntitySpawnConditions.create(entityType).minLightLevel(8).onlySpawnOn(Tags.Blocks.SANDS).betweenYLevels(AoADimensions.BARATHOS, 85, 110).spawnChance(1 / 1000f);
+    }
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "Main", 0, state -> {
-            if (this.resting)
+            if (getSynchedData(RESTING))
                 return state.setAndContinue(DefaultAnimations.REST);
 
             return state.setAndContinue(state.isMoving() ? DefaultAnimations.WALK : DefaultAnimations.IDLE);
@@ -276,11 +282,11 @@ public class ArkbackEntity extends AoAAnimal<ArkbackEntity> {
         @Override
         protected void tick(ArkbackEntity entity) {
             if (this.runningTime == 25) {
-                RESTING.set(entity, true);
+                entity.setSynchedData(RESTING, true);
             }
             else if (this.shakeTick >= 0) {
                 if (this.shakeTick++ > 16) {
-                    RESTING.set(entity, false);
+                    entity.setSynchedData(RESTING, false);
                 }
                 else {
                     Vec3 shakeDirection = MathUtil.getBodyRight(entity).scale(Mth.floor(Mth.sin(45 * this.shakeTick) * 2)).add(0, 1, 0);
@@ -295,7 +301,7 @@ public class ArkbackEntity extends AoAAnimal<ArkbackEntity> {
                         float sine = Mth.sin(45 * this.shakeTick);
 
                         if (Mth.abs(sine) >= 0.9f) {
-                            TELParticlePacket packet = new TELParticlePacket();
+                            TMEParticlePacket packet = new TMEParticlePacket();
                             shakeDirection = MathUtil.getBodyRight(entity).scale(sine * 0.25f).add(0, 0.25f, 0);
                             plateBounds = plateBounds.move(0, 0.5f, 0);
 
@@ -308,7 +314,7 @@ public class ArkbackEntity extends AoAAnimal<ArkbackEntity> {
                                         .scaleMod(entity.random.nextFloat() * 0.4f + 0.3f));
                             }
 
-                            packet.sendToAllPlayersTrackingEntity((ServerLevel)entity.level(), entity);
+                            packet.sendToAllPlayersTrackingEntity(entity);
                             entity.setSandLevel(entity.getSandLevel() - 10);
                         }
                     }
@@ -337,7 +343,7 @@ public class ArkbackEntity extends AoAAnimal<ArkbackEntity> {
 
         @Override
         protected boolean checkExtraStartConditions(ServerLevel level, ArkbackEntity entity) {
-            return !entity.resting && level.getBlockState(BlockPos.containing(entity.position().add(MathUtil.getBodyForward(entity).scale(entity.getBbWidth())).subtract(0, 1, 0))).isSolid();
+            return !entity.getSynchedData(RESTING) && level.getBlockState(BlockPos.containing(entity.position().add(MathUtil.getBodyForward(entity).scale(entity.getBbWidth())).subtract(0, 1, 0))).isSolid();
         }
 
         @Override
@@ -354,21 +360,20 @@ public class ArkbackEntity extends AoAAnimal<ArkbackEntity> {
         @Override
         protected void tick(ArkbackEntity entity) {
             if (this.runningTime == 75 || this.runningTime == 90) {
-                new SoundBuilder(SoundEvents.CAMEL_EAT)
-                        .followEntity(entity)
+                SoundBuilder.following(SoundEvents.CAMEL_EAT, entity)
                         .varyPitch(0.2f)
-                        .execute();
+                        .play();
                 ParticleBuilder.forPositions(new ItemParticleOption(ParticleTypes.ITEM, AoABlocks.BARON_SAND.toStack()), entity.position().add(MathUtil.getBodyForward(entity).scale(2)).add(0, entity.getBbHeight() / 2f, 0))
-                        .spawnNTimes(Mth.ceil(RandomUtil.randomValueBetween(10, 20)))
-                        .sendToAllPlayersTrackingEntity((ServerLevel)entity.level(), entity);
+                        .spawnNTimes(Mth.ceil(RandomUtil.valueBetween(10, 20)))
+                        .sendToAllPlayersTrackingEntity(entity);
 
                 if (entity.getHealth() < entity.getMaxHealth()) {
-                    float heal = Math.min(entity.getMaxHealth() - entity.getHealth(), (float)RandomUtil.randomValueBetween(7, 12));
+                    float heal = Math.min(entity.getMaxHealth() - entity.getHealth(), (float)RandomUtil.valueBetween(7, 12));
 
                     entity.heal(heal);
                     ParticleBuilder.forRandomPosInEntity(ParticleTypes.HEART, entity)
                             .spawnNTimes(Mth.ceil(heal))
-                            .sendToAllPlayersTrackingEntity((ServerLevel)entity.level(), entity);
+                            .sendToAllPlayersTrackingEntity(entity);
                 }
             }
         }

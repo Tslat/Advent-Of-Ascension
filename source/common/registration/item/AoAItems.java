@@ -133,7 +133,7 @@ public final class AoAItems {
 	public static final DeferredItem<Item> JUNGLE_THORNS = registerItem("jungle_thorns", miscItem());
 	public static final DeferredItem<Item> LIMONITE_ROD = registerItem("limonite_rod", miscItem());
 	public static final DeferredItem<Item> LOTTO_TOTEM = registerItem("lotto_totem", LottoTotem::new);
-	public static final DeferredItem<Item> LUNARADE_MUG = registerItem("lunarade_mug", miscItem());
+	public static final DeferredItem<Item> EMPTY_LUNARADE = registerItem("empty_lunarade", miscItem());
 	public static final DeferredItem<Item> METAL_TUB = registerItem("metal_tub", miscItem());
 	public static final DeferredItem<Item> MAGIC_MENDING_COMPOUND = registerItem("magic_mending_compound", () -> new TooltipItem(1, new Item.Properties()));
 	public static final DeferredItem<Item> MAGIC_MENDING_SOLUTION = registerItem("magic_mending_solution", MagicMendingSolution::new);
@@ -219,7 +219,7 @@ public final class AoAItems {
 	public static final DeferredItem<Item> BONE_HORN = registerItem("bone_horn", BoneHorn::new);
 	public static final DeferredItem<Item> WARPED_HORN = registerItem("warped_horn", WarpedHorn::new);
 
-	public static final DeferredItem<Item> COMPRESSED_ITEM = registerItem("compressed_item", CompressedItem::new); // TODO
+	public static final DeferredItem<Item> COMPRESSED_ITEM = registerItem("compressed_item", CompressedItem::new, (ResourceKey<CreativeModeTab>[])null); // TODO
 	public static final DeferredItem<Item> AMPHIBIYTE_LUNG = registerItem("amphibiyte_lung", miscItem()); // TODO
 	public static final DeferredItem<Item> ANCIENT_RING = registerItem("ancient_ring", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 	public static final DeferredItem<Item> BOOK_OF_SHADOWS = registerItem("book_of_shadows", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
@@ -419,6 +419,7 @@ public final class AoAItems {
 	public static final DeferredItem<Item> CHILLI_SEEDS = registerItem("chilli_seeds", () -> new ItemNameBlockItem(AoABlocks.CHILLI_CROP.get(), new Item.Properties()));
 	public static final DeferredItem<Item> FLORACLE_SEEDS = registerItem("floracle_seeds", () -> new ItemNameBlockItem(AoABlocks.FLORACLES_CROP.get(), new Item.Properties()));
 	public static final DeferredItem<Item> GOLDICAP_SEEDS = registerItem("goldicap_seeds", () -> new ItemNameBlockItem(AoABlocks.GOLDICAPS_CROP.get(), new Item.Properties()));
+	public static final DeferredItem<Item> GREEN_MANURE_SEEDS = registerItem("green_manure_seeds", () -> new ItemNameBlockItem(AoABlocks.GREEN_MANURE.get(), new Item.Properties()));
 	public static final DeferredItem<Item> HEART_FRUIT_SEEDS = registerItem("heart_fruit_seeds", () -> new ItemNameBlockItem(AoABlocks.HEART_FRUIT_CROP.get(), new Item.Properties()));
 	public static final DeferredItem<Item> LUNACRIKE_SEEDS = registerItem("lunacrike_seeds", () -> new ItemNameBlockItem(AoABlocks.LUNACRIKE_CROP.get(), new Item.Properties()));
 	public static final DeferredItem<Item> LUNALON_SEEDS = registerItem("lunalon_seeds", () -> new ItemNameBlockItem(AoABlocks.LUNALON_CROP.get(), new Item.Properties()));
@@ -427,7 +428,6 @@ public final class AoAItems {
 	public static final DeferredItem<Item> TEA_SEEDS = registerItem("tea_seeds", () -> new ItemNameBlockItem(AoABlocks.TEA_CROP.get(), new Item.Properties()));
 	public static final DeferredItem<Item> THORNY_PLANT_SEEDS = registerItem("thorny_plant_seeds", () -> new ItemNameBlockItem(AoABlocks.THORNY_PLANT_CROP.get(), new Item.Properties()));
 	public static final DeferredItem<Item> TRILLIAD_SEEDS = registerItem("trilliad_seeds", () -> new ItemNameBlockItem(AoABlocks.TRILLIAD_CROP.get(), new Item.Properties()));
-	public static final DeferredItem<Item> GREEN_MANURE_SEEDS = registerItem("green_manure_seeds", () -> new ItemNameBlockItem(AoABlocks.GREEN_MANURE.get(), new Item.Properties()));
 
 	public static final DeferredItem<Item> MUSIC_DISC_OUTLAW = registerItem("music_disc_outlaw", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(AoAJukeboxSongs.OUTLAW)));
 	public static final DeferredItem<Item> MUSIC_DISC_CAVERNS = registerItem("music_disc_caverns", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(AoAJukeboxSongs.CAVERNS)));

@@ -13,7 +13,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.content.block.blockentity.TrophyBlockEntity;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class TrophyRenderer implements BlockEntityRenderer<TrophyBlockEntity> {
 	public TrophyRenderer(BlockEntityRendererProvider.Context context) {}
@@ -46,9 +46,9 @@ public class TrophyRenderer implements BlockEntityRenderer<TrophyBlockEntity> {
 				ParticleBuilder.forPositions(ParticleTypes.GLOW, pos)
 						.scaleMod(0.05f)
 						.lifespan(Mth.ceil(10 * (random.nextFloat() * 0.8f + 0.2f)))
-						.colourOverride(colourMod, colourMod * 200 / 255f, 0, 1f)
+						.colourTint(colourMod, colourMod * 200 / 255f, 0, 1f)
 						.power(Vec3.ZERO)
-						.spawnParticles(entity.level());
+						.spawnClientParticles(entity.level());
 			}
 
 			if (AoAConfigs.CLIENT.rotatingTrophies.get())

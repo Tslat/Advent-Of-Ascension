@@ -1,25 +1,23 @@
 package net.tslat.aoa3.content.item.weapon.crossbow;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class LunarCrossbow extends BaseCrossbow {
+public class LunarCrossbow extends AoACrossbow {
 	public LunarCrossbow(Item.Properties properties) {
 		super(properties);
 	}
 
 	@Override
-	protected Projectile createProjectile(Level level, LivingEntity shooter, ItemStack stack, ItemStack ammoStack, boolean isCrit) {
-		Projectile projectile = super.createProjectile(level, shooter, stack, ammoStack, isCrit);
-
+	public Projectile applyArrowMods(Projectile projectile, @Nullable Entity shooter, ItemStack stack) {
 		projectile.setNoGravity(true);
 
 		return projectile;

@@ -21,8 +21,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.util.RandomUtil;
 
 public class BaronLooseSand extends ColoredFallingBlock {
     private static final VoxelShape FALLING_COLLISION_SHAPE = Shapes.box(0, 0, 0, 1, 0.9f, 1);
@@ -55,6 +55,7 @@ public class BaronLooseSand extends ColoredFallingBlock {
             }
         }
 
+
         return Shapes.empty();
     }
 
@@ -77,8 +78,8 @@ public class BaronLooseSand extends ColoredFallingBlock {
 
             if (level.isClientSide && (entity.xOld != entity.getX() || entity.zOld != entity.getZ()) && level.getRandom().nextBoolean()) {
                 ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, AoABlocks.BARON_LOOSE_SAND.get().defaultBlockState()), entity)
-                        .power(new Vec3(RandomUtil.randomScaledGaussianValue(1 / 12f), 0.05f, RandomUtil.randomScaledGaussianValue(1 / 12f)))
-                        .spawnParticles(level);
+                        .power(new Vec3(RandomUtil.scaledGaussianValue(1 / 12f), 0.05f, RandomUtil.scaledGaussianValue(1 / 12f)))
+                        .spawnClientParticles(level);
             }
         }
     }

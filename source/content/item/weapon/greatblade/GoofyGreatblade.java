@@ -8,18 +8,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
-public class GoofyGreatblade extends BaseGreatblade {
+public class GoofyGreatblade extends AoAGreatblade {
 	public GoofyGreatblade(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}
 
 	@Override
 	public float getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack greatblade, DamageSource source, float baseDamage) {
-		return super.getDamageForAttack(target, attacker, greatblade, source, baseDamage + (float)RandomUtil.randomValueBetween(-5, 5));
+		return super.getDamageForAttack(target, attacker, greatblade, source, baseDamage + (float)RandomUtil.valueBetween(-5, 5));
 	}
 
 	@Override

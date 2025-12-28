@@ -4,8 +4,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.tme.api.scheduling.TickScheduler;
 
-public class DracyonCleanupTask implements Runnable {
+public class DracyonCleanupTask implements TickScheduler.Task {
     private final Level world;
     private final BlockPos waterPosition;
 
@@ -15,12 +16,12 @@ public class DracyonCleanupTask implements Runnable {
     }
 
     @Override
-    public void run() {
+    public void run(int tick) {
         if (world.getBlockState(waterPosition).getBlock() == Blocks.WATER)
             world.setBlockAndUpdate(waterPosition, Blocks.AIR.defaultBlockState());
     }
 
     public void schedule(int time) {
-        AoAScheduler.scheduleSyncronisedTask(this, time);
+        AoAScheduler.schedule(time, this);
     }
 }

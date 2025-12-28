@@ -1,55 +1,37 @@
 package net.tslat.aoa3.content.entity.projectile.thrown;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ItemSupplier;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
-import net.tslat.aoa3.common.registration.item.AoAWeapons;
-import net.tslat.aoa3.content.entity.projectile.HardProjectile;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.content.entity.projectile.base.ThrownItemProjectile;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
 import net.tslat.aoa3.content.entity.projectile.misc.HellfireProjectileEntity;
-import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 
-public class HellfireEntity extends BaseBullet implements HardProjectile, ItemSupplier {
-	private LivingEntity shooter;
-
-	public HellfireEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
-		super(entityType, world);
+public class HellfireEntity extends ThrownItemProjectile {
+	public HellfireEntity(EntityType<? extends HellfireEntity> entityType, Level level) {
+		super(entityType, level);
 	}
 
-	public HellfireEntity(Level world) {
-		super(AoAProjectiles.HELLFIRE.get(), world);
+	public HellfireEntity(EntityType<? extends HellfireEntity> entityType, Level level, WeaponFiringContext context) {
+		super(entityType, level, context);
 	}
 
-	public HellfireEntity(LivingEntity shooter, BaseGun gun) {
-		super(AoAProjectiles.HELLFIRE.get(), shooter, gun, 1.0f, 0, 1.5f);
-		this.shooter = shooter;
-	}
-
-	public HellfireEntity(LivingEntity shooter, BaseGun gun, InteractionHand hand, int maxAge, int piercingValue) {
-		super(AoAProjectiles.HELLFIRE.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
-	}
-
-	public HellfireEntity(Level world, double x, double y, double z) {
-		super(AoAProjectiles.HELLFIRE.get(), world, x, y, z);
+	public HellfireEntity(Level level, WeaponFiringContext context) {
+		this(AoAProjectiles.HELLFIRE.get(), level, context);
 	}
 
 	@Override
@@ -58,56 +40,38 @@ public class HellfireEntity extends BaseBullet implements HardProjectile, ItemSu
 	}
 
 	@Override
-	protected void onHit(HitResult result) {
-		if (result instanceof BlockHitResult && tickCount <= 1 && getOwner() == null)
-			return;
-
-		super.onHit(result);
+	protected void doBlockImpact(BlockHitResult rayTrace, BlockState impactedBlock) {
+		explode(rayTrace.getLocation());
 	}
 
 	@Override
-	public void doBlockImpact(Vec3 impactLocation, Direction face, BlockPos blockPos) {
-		explode(impactLocation);
-	}
-
-	@Override
-	public void doEntityImpact(Entity target, Vec3 impactLocation) {
-		explode(impactLocation);
+	protected void doEntityImpact(EntityHitResult rayTrace, Entity hitEntity) {
+		explode(rayTrace.getLocation());
 	}
 
 	protected void explode(Vec3 position) {
 		int count = 0;
-		Player attacker = getOwner() instanceof Player pl ? pl : null;
+		Entity shooter = getShooter();
 
-		for (LivingEntity target : level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(7.0D), EntityUtil::isHostileMob)) {
-			if (DamageUtil.doMiscMagicAttack(getOwner(), target, 3.5f, position())) {
+		for (LivingEntity target : EntityRetrievalUtil.getEntities(this, 7, LivingEntity.class, target -> EntityUtil.areProbablyEnemies(target, shooter))) {
+			if (DamageUtil.doMiscMagicAttack(shooter, target, getShotContext().damage(), position)) {
 				HellfireProjectileEntity tail = new HellfireProjectileEntity(this, target.getX(), target.getY(), target.getZ());
 
-				tail.setOwner(getOwner());
+				tail.setOwner(shooter);
 
 				level().addFreshEntity(tail);
 				target.igniteForSeconds(10);
-				target.hurt(level().damageSources().indirectMagic(attacker, this), 0.1f);
 
-				if (attacker != null) {
-					target.setLastHurtByMob(attacker);
-					target.setLastHurtByPlayer(attacker);
-				}
+				if (shooter != null)
+					target.hurt(level().damageSources().indirectMagic(shooter, this), 0.1f);
 
 				count++;
 			}
 		}
 
-		if (shooter instanceof Player) {
-			level().playSound(null, getX(), getY(), getZ(), AoASounds.HELLFIRE_IMPACT.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
+		level().playSound(null, getX(), getY(), getZ(), AoASounds.HELLFIRE_IMPACT.get(), getShooter() != null ? getShooter().getSoundSource() : SoundSource.PLAYERS, 1, 1);
 
-			if (count >= 20 && shooter instanceof ServerPlayer)
-				AdvancementUtil.grantCriterion((ServerPlayer)shooter, AdventOfAscension.id("overworld/heckfire"), "20_target_hellfire");
-		}
-	}
-
-	@Override
-	public ItemStack getItem() {
-		return new ItemStack(AoAWeapons.HELLFIRE.get());
+		if (count >= 20 && shooter instanceof ServerPlayer)
+			AdvancementUtil.grantCriterion((ServerPlayer)shooter, AdventOfAscension.id("overworld/heckfire"), "20_target_hellfire");
 	}
 }

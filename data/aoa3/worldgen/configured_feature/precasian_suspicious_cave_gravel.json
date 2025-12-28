@@ -15,7 +15,7 @@
           },
           "target": {
             "predicate_type": "minecraft:tag_match",
-            "tag": "c:base_stone_precasia"
+            "tag": "aoa3:base_stone_precasia"
           }
         }
       ]

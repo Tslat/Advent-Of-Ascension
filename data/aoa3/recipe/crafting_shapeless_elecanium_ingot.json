@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:elecanium_block"
+      "tag": "c:storage_blocks/elecanium"
     }
   ],
   "result": {

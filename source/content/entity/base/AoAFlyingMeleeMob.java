@@ -1,196 +1,82 @@
 package net.tslat.aoa3.content.entity.base;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.DifficultyInstance;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectUtil;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.content.entity.ai.mob.FlyingLookRandomlyGoal;
-import net.tslat.aoa3.content.entity.ai.mob.RandomFlyingGoal;
-import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
-import net.tslat.aoa3.content.entity.ai.movehelper.RoamingFlightMovementController;
-import net.tslat.aoa3.util.PlayerUtil;
-import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
-import software.bernie.geckolib.util.GeckoLibUtil;
+import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.content.entity.ai.movehelper.AirborneMoveControl;
+import net.tslat.aoa3.content.entity.ai.temp.SetWalkTargetToAttackTarget;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
+import net.tslat.smartbrainlib.api.core.navigation.SmoothFlyingPathNavigation;
 
+public class AoAFlyingMeleeMob<T extends AoAFlyingMeleeMob<T>> extends AoAMeleeMob<T> implements FlyingEntity {
+    protected AoAFlyingMeleeMob(EntityType<? extends AoAMeleeMob> entityType, Level world) {
+        super(entityType, world);
+    }
 
-public abstract class AoAFlyingMeleeMob extends FlyingMob implements Enemy, GeoEntity {
-	protected static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(AoAFlyingMeleeMob.class, EntityDataSerializers.BOOLEAN);
+    @Override
+    protected MoveControl createMoveControl() {
+        return new AirborneMoveControl(this);
+    }
 
-	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+    @Override
+    protected PathNavigation createNavigation(Level level) {
+        final FlyingPathNavigation navigation = new SmoothFlyingPathNavigation(this, level);
 
-	protected AoAFlyingMeleeMob(EntityType<? extends FlyingMob> entityType, Level world) {
-		super(entityType, world);
+        navigation.setCanFloat(true);
 
-		moveControl = new RoamingFlightMovementController(this);
-	}
+        return navigation;
+    }
 
-	@Override
-	protected void registerGoals() {
-		goalSelector.addGoal(1, new RandomFlyingGoal(this, true));
-		goalSelector.addGoal(2, new TelegraphedMeleeAttackGoal<>(this).preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()));
-		goalSelector.addGoal(3, new FlyingLookRandomlyGoal(this));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<Player>(this, Player.class, 10, true, true, pl -> pl instanceof Player && PlayerUtil.shouldPlayerBeAffected((Player)pl)));
-	}
+    @Override
+    public BrainActivityGroup<? extends T> getFightTasks() {
+        return BrainActivityGroup.fightTasks(
+                new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Mth.square(getAttributeValue(Attributes.FOLLOW_RANGE))),
+                new SetWalkTargetToAttackTarget<>(),
+                new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration() + 2));
+    }
 
-	@Override
-	protected void defineSynchedData(SynchedEntityData.Builder builder) {
-		super.defineSynchedData(builder);
-		builder.define(INVULNERABLE, false);
-	}
+    @Override
+    protected void spawnSprintParticle() {}
 
-	@Nullable
-	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
-		xpReward = reason == MobSpawnType.MOB_SUMMONED ? 0 : (int)(5 + (getAttributeValue(Attributes.MAX_HEALTH) + getAttributeValue(Attributes.ARMOR) * 1.75f + getAttributeValue(Attributes.ATTACK_DAMAGE) * 2) / 10f);
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState block) {}
 
-		return super.finalizeSpawn(world, difficulty, reason, spawnData);
-	}
+    @Override
+    public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
+        return false;
+    }
 
+    @Override
+    protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {}
 
-	@Override
-	protected PathNavigation createNavigation(Level world) {
-		return new FlyingPathNavigation(this, world);
-	}
+    @Override
+    public boolean onClimbable() {
+        return false;
+    }
 
-	@Override
-	public SoundSource getSoundSource() {
-		return SoundSource.HOSTILE;
-	}
+    @Override
+    protected float getFlyingSpeed() {
+        return getSpeed();
+    }
 
-	@Nullable
-	@Override
-	protected SoundEvent getDeathSound() {
-		return null;
-	}
-
-	@Nullable
-	@Override
-	protected SoundEvent getHurtSound(DamageSource source) {
-		return null;
-	}
-
-	protected int getAttackSwingDuration() {
-		return 6;
-	}
-
-	protected int getPreAttackTime() {
-		return 0;
-	}
-
-	protected void onAttack(Entity target) {}
-
-	protected void onHit(DamageSource source, float amount) {}
-
-	@Override
-	public void setInvulnerable(boolean isInvulnerable) {
-		super.setInvulnerable(isInvulnerable);
-		getEntityData().set(INVULNERABLE, isInvulnerable);
-	}
-
-	@Override
-	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-		super.onSyncedDataUpdated(key);
-
-		if (key.equals(INVULNERABLE))
-			setInvulnerable(getEntityData().get(INVULNERABLE));
-	}
-
-	@Override
-	public void load(CompoundTag compound) {
-		super.load(compound);
-
-		setInvulnerable(isInvulnerable());
-	}
-
-	@Override
-	public void aiStep() {
-		this.updateSwingTime();
-		super.aiStep();
-	}
-
-	@Override
-	public boolean doHurtTarget(Entity target) {
-		if (super.doHurtTarget(target)) {
-			onAttack(target);
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		if (super.hurt(source, amount)) {
-			onHit(source, amount);
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	protected boolean shouldDropLoot() {
-		return super.shouldDropLoot() && xpReward > 0;
-	}
-
-	@Override
-	public boolean isIgnoringBlockTriggers() {
-		return true;
-	}
-
-	@Override
-	protected Entity.MovementEmission getMovementEmission() {
-		return MovementEmission.EVENTS;
-	}
-
-	@Override
-	protected boolean shouldDespawnInPeaceful() {
-		return true;
-	}
-
-	@Override
-	protected void playStepSound(BlockPos pos, BlockState blockIn) {}
-
-	@Override
-	public int getCurrentSwingDuration() {
-		int time = getAttackSwingDuration();
-
-		if (MobEffectUtil.hasDigSpeed(this))
-			time -= 1 + MobEffectUtil.getDigSpeedAmplification(this);
-
-		if (hasEffect(MobEffects.DIG_SLOWDOWN))
-			time += (1 + getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) * 2;
-
-		return time;
-	}
-
-	@Override
-	public AnimatableInstanceCache getAnimatableInstanceCache() {
-		return this.geoCache;
-	}
-
-	@Override
-	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
+    @Override
+    public void travel(Vec3 travelVector) {
+        if (onGround()) {
+            super.travel(travelVector);
+        }
+        else {
+            travelFlying(this, travelVector);
+        }
+    }
 }

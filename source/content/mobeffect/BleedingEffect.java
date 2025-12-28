@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.mobeffect;
 
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -14,9 +13,9 @@ import net.minecraft.world.item.Items;
 import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.effectslib.api.ExtendedMobEffect;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
+import net.tslat.tme.api.mobeffect.ExtendedMobEffect;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 import org.jetbrains.annotations.Nullable;
 
 public class BleedingEffect extends ExtendedMobEffect {
@@ -41,16 +40,16 @@ public class BleedingEffect extends ExtendedMobEffect {
 		if (!entity.level().isClientSide && !entity.getType().is(EntityTypeTags.UNDEAD)) {
 			entity.hurt(DamageUtil.miscDamage(AoADamageTypes.BLEED, entity.level()), 0.75f);
 
-			TELParticlePacket packet = new TELParticlePacket(20);
+			TMEParticlePacket packet = new TMEParticlePacket(20);
 
 			for (int i = 0; i < 20; i++) {
 				packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.SPLASH, entity)
-						.colourOverride(0.75f, 0, 0, 1f)
+						.colourTint(0.75f, 0, 0, 1f)
 						.spawnNTimes(5)
 						.velocity(entity.getRandom().nextGaussian() * 0.01f, entity.getRandom().nextGaussian() * 0.01f, entity.getRandom().nextGaussian() * 0.01f));
 			}
 
-			packet.sendToAllPlayersTrackingEntity((ServerLevel)entity.level(), entity);
+			packet.sendToAllPlayersTrackingEntity(entity);
 
 			if (entity instanceof Player player)
 				player.causeFoodExhaustion(5);

@@ -18,15 +18,14 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.block.AoAFluidTypes;
 import net.tslat.aoa3.common.registration.entity.AoAAnimals;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.common.registration.entity.AoAMonsters;
 import net.tslat.aoa3.content.entity.base.AoAAnimal;
-import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.brain.task.temp.FixedFollowParent;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
+import net.tslat.aoa3.library.builder.MultipartBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.EntitySpawningUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
@@ -35,21 +34,26 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowTemptation;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
 import net.tslat.smartbrainlib.util.BrainUtils;
+import net.tslat.tme.api.particle.ParticleBuilder;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.constant.DefaultAnimations;
+
+import static net.tslat.aoa3.library.builder.MultipartBuilder.Part;
 
 public class HorndronEntity extends AoAAnimal<HorndronEntity> {
 	private static final RawAnimation STRUT_ANIM = RawAnimation.begin().thenPlay("misc.charge_up");
 
 	public HorndronEntity(EntityType<? extends HorndronEntity> entityType, Level world) {
 		super(entityType, world);
+	}
 
-		setParts(new AoAEntityPart<>(this, 1, 1f, 0, 0.755f, getBbWidth() / 2f + 0.5f).setDamageMultiplier(1.25f),
-				new AoAEntityPart<>(this, 0.75f, 1.1875f, 0.3725f, 0.75f, -getBbWidth() / 2f - 0.3725f).setDamageMultiplier(0.9f),
-				new AoAEntityPart<>(this, 0.75f, 1.1875f, -0.3725f, 0.75f, -getBbWidth() / 2f - 0.3725f).setDamageMultiplier(0.9f)
-		);
+	@Override
+	public MultipartBuilder<? extends HorndronEntity> definePartEntities() {
+		return MultipartBuilder.of(this,
+										  Part.sized(1, 1).adjacentForward().up(0.755f).damageMod(1.25f),
+										  Part.sized(getBbWidth(), 1.1875f).back(0).up(0.6875f).damageMod(0.9f));
 	}
 
 	@Override
@@ -111,18 +115,18 @@ public class HorndronEntity extends AoAAnimal<HorndronEntity> {
 	public void onDamageTaken(DamageContainer damageContainer) {
 		if (level() instanceof ServerLevel level && damageContainer.getSource().is(DamageTypeTags.IS_FIRE) && level().getFluidState(BlockPos.containing(getEyePosition())).getFluidType() == AoAFluidTypes.TAR.get() && level().getFluidState(blockPosition().above()).getFluidType() == AoAFluidTypes.TAR.get()) {
 			ParticleBuilder.forRandomPosInEntity(ParticleTypes.LARGE_SMOKE, this)
-					.colourOverride(255, 255, 255, 255)
+					.colourTint(255, 255, 255, 255)
 					.spawnNTimes(20)
-					.sendToAllPlayersTrackingEntity(level,this);
+					.sendToAllPlayersTrackingEntity(this);
 
 			if (isDeadOrDying()) {
-				AoAScheduler.scheduleSyncronisedTask(() -> {
+				AoAScheduler.schedule(19 - this.deathTime, tick -> {
 					EntitySpawningUtil.spawnEntity(level, AoAMonsters.SKELETAL_ABOMINATION.get(), position(), MobSpawnType.CONVERSION, abomination -> {
 						abomination.setXRot(getXRot());
 						abomination.setYRot(getYRot());
 						abomination.setYHeadRot(getYHeadRot());
 					});
-				}, 19 - this.deathTime);
+				});
 			}
 		}
 	}
@@ -152,8 +156,8 @@ public class HorndronEntity extends AoAAnimal<HorndronEntity> {
 		return AoATags.Items.HORNDRON_FOOD;
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Entity> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT_ANIMAL;
+	public static SpawnPlacements.SpawnPredicate<HorndronEntity> spawnRules(EntityType<HorndronEntity> entityType) {
+		return EntitySpawnConditions.createAnimal(entityType);
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<HorndronEntity> entityType) {

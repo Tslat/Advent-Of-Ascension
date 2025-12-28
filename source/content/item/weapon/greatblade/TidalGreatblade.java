@@ -12,7 +12,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class TidalGreatblade extends BaseGreatblade {
+public class TidalGreatblade extends AoAGreatblade {
 	public TidalGreatblade(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

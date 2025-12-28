@@ -16,7 +16,7 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import java.util.List;
 
-public class ErebonScythe extends BaseGreatblade {
+public class ErebonScythe extends AoAGreatblade {
 	public ErebonScythe(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

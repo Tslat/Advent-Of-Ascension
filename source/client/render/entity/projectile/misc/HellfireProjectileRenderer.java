@@ -5,7 +5,7 @@ import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.misc.HellfireProjectileEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class HellfireProjectileRenderer extends ParticleProjectileRenderer<HellfireProjectileEntity> {
 	public HellfireProjectileRenderer(final EntityRendererProvider.Context manager) {
@@ -16,7 +16,7 @@ public class HellfireProjectileRenderer extends ParticleProjectileRenderer<Hellf
 	protected void addParticles(HellfireProjectileEntity entity, float partialTicks) {
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
 				.spawnNTimes(5)
-				.colourOverride(ColourUtil.RED)
-				.spawnParticles(entity.level());
+				.colourTint(ColourUtil.RED)
+				.spawnClientParticles(entity.level());
 	}
 }

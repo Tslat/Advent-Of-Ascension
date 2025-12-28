@@ -1,28 +1,22 @@
 package net.tslat.aoa3.content.entity.projectile.blaster;
 
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
-import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
-import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
+import net.tslat.aoa3.content.entity.projectile.base.NonPhysicalWeaponProjectile;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
 
-public class EradicatorShotEntity extends BaseEnergyShot {
-	public EradicatorShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
-		super(entityType, world);
+public class EradicatorShotEntity extends NonPhysicalWeaponProjectile {
+	public EradicatorShotEntity(EntityType<? extends EradicatorShotEntity> entityType, Level level) {
+		super(entityType, level);
 	}
 
-	public EradicatorShotEntity(Level world) {
-		super(AoAProjectiles.ERADICATOR_SHOT.get(), world);
+	public EradicatorShotEntity(EntityType<? extends EradicatorShotEntity> entityType, Level level, WeaponFiringContext context) {
+		super(entityType, level, context);
 	}
 
-	public EradicatorShotEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, int maxAge) {
-		super(AoAProjectiles.ERADICATOR_SHOT.get(), shooter, weapon, maxAge);
-	}
-
-	public EradicatorShotEntity(Level world, double x, double y, double z) {
-		super(AoAProjectiles.ERADICATOR_SHOT.get(), world, x, y, z);
+	public EradicatorShotEntity(Level level, WeaponFiringContext context) {
+		this(AoAProjectiles.ERADICATOR_SHOT.get(), level, context);
 	}
 
 	@Override

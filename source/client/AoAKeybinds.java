@@ -68,6 +68,6 @@ public class AoAKeybinds {
 		}
 
 		if (ev.getAction() == GLFW.GLFW_PRESS && Minecraft.getInstance().screen == null)
-			ClientPlayerDataManager.get().handleKeyInput(ev.getKey());
+			ClientPlayerDataManager.get().handleKeyInput(InputConstants.getKey(ev.getKey(), ev.getScanCode()));
 	}
 }

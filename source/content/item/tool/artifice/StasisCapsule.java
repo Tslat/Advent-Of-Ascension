@@ -3,16 +3,12 @@ package net.tslat.aoa3.content.item.tool.artifice;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.NeutralMob;
-import net.minecraft.world.entity.OwnableEntity;
-import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -20,13 +16,13 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.item.AoADataComponents;
-import net.tslat.aoa3.library.object.CachedEntity;
+import net.tslat.aoa3.library.object.container.CachedEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.api.particle.transitionworker.PositionParticleTransition;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
+import net.tslat.tme.internal.particle.transition.ToPositionParticleTransition;
 
 import java.util.List;
 
@@ -35,40 +31,39 @@ public class StasisCapsule extends ArtificeItem {
         super(new Properties().stacksTo(1).component(AoADataComponents.STORED_ENTITY, CachedEntity.EMPTY));
     }
 
-    @Override
-    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity interactionTarget, InteractionHand usedHand) {
-        if (!stack.get(AoADataComponents.STORED_ENTITY).isEmpty() || !canCapture(player, interactionTarget))
+    public InteractionResult tryCapture(Player player, LivingEntity target, ItemStack stack, InteractionHand hand) {
+        if (!stack.get(AoADataComponents.STORED_ENTITY).isEmpty() || !canCapture(player, target))
             return InteractionResult.FAIL;
 
         if (!player.level().isClientSide) {
-            TELParticlePacket packet = new TELParticlePacket();
+            TMEParticlePacket packet = new TMEParticlePacket();
 
-            packet.particle(ParticleBuilder.forRandomPosAtBoundsEdge(ParticleTypes.END_ROD, interactionTarget.getBoundingBox().inflate(Math.max(interactionTarget.getBbHeight(), interactionTarget.getBbWidth()) / 2f))
+            packet.particle(ParticleBuilder.forRandomPosAtBoundsEdge(ParticleTypes.END_ROD, target.getBoundingBox().inflate(Math.max(target.getBbHeight(), target.getBbWidth()) / 2f))
                     .spawnNTimes(200)
-                    .addTransition(PositionParticleTransition.create(interactionTarget.position().add(0, interactionTarget.getBbHeight() * 0.5f, 0), 5))
-                    .colourOverride(0.65f, 0, 0.15f, 1f)
+                    .addTransition(ToPositionParticleTransition.create(target.position().add(0, target.getBbHeight() * 0.5f, 0), 5))
+                    .colourTint(0.65f, 0, 0.15f, 1f)
                     .lifespan(10));
-            packet.particle(ParticleBuilder.forRandomPosAtBoundsEdge(ParticleTypes.ENCHANTED_HIT, interactionTarget.getBoundingBox().inflate(Math.max(interactionTarget.getBbHeight(), interactionTarget.getBbWidth()) / 2f))
+            packet.particle(ParticleBuilder.forRandomPosAtBoundsEdge(ParticleTypes.ENCHANTED_HIT, target.getBoundingBox().inflate(Math.max(target.getBbHeight(), target.getBbWidth()) / 2f))
                     .spawnNTimes(200)
                     .lifespan(10)
-                    .colourOverride(1f, 1f, 1f, 1f)
-                    .addTransition(PositionParticleTransition.create(interactionTarget.position().add(0, interactionTarget.getBbHeight() * 0.5f, 0), 5)));
+                    .colourTint(1f, 1f, 1f, 1f)
+                    .addTransition(ToPositionParticleTransition.create(target.position().add(0, target.getBbHeight() * 0.5f, 0), 5)));
 
             for (int i = 0; i < 10; i++) {
-                packet.particle(ParticleBuilder.forPositions(ParticleTypes.ELECTRIC_SPARK, interactionTarget.position().add(0, interactionTarget.getBbHeight() * 0.5f, 0))
+                packet.particle(ParticleBuilder.forPositions(ParticleTypes.ELECTRIC_SPARK, target.position().add(0, target.getBbHeight() * 0.5f, 0))
                         .spawnNTimes(10)
-                        .velocity(RandomUtil.randomScaledGaussianValue(0.05f), RandomUtil.randomScaledGaussianValue(0.05f), RandomUtil.randomScaledGaussianValue(0.05f))
+                        .velocity(RandomUtil.scaledGaussianValue(0.05f), RandomUtil.scaledGaussianValue(0.05f), RandomUtil.scaledGaussianValue(0.05f))
                         .scaleMod(0.25f)
-                        .lifespan(RandomUtil.randomNumberBetween(20, 35)));
+                        .lifespan(RandomUtil.numberBetween(20, 35)));
             }
 
-            packet.sendToAllPlayersTrackingEntity((ServerLevel)player.level(), interactionTarget);
+            packet.sendToAllPlayersTrackingEntity(target);
 
-            player.level().playSound(null, interactionTarget.getX(), interactionTarget.getY(), interactionTarget.getZ(), SoundEvents.BREEZE_WIND_CHARGE_BURST, SoundSource.PLAYERS, 0.5f, (float)RandomUtil.randomValueBetween(0.9f, 1.1f));
-            player.level().playSound(null, interactionTarget.getX(), interactionTarget.getY(), interactionTarget.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.5f, (float)RandomUtil.randomValueBetween(0.9f, 1.1f));
-            stack.set(AoADataComponents.STORED_ENTITY, CachedEntity.store(interactionTarget));
-            player.setItemInHand(usedHand, stack);
-            interactionTarget.discard();
+            player.level().playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.BREEZE_WIND_CHARGE_BURST, SoundSource.PLAYERS, 0.5f, (float)RandomUtil.valueBetween(0.9f, 1.1f));
+            player.level().playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.5f, (float)RandomUtil.valueBetween(0.9f, 1.1f));
+            stack.set(AoADataComponents.STORED_ENTITY, CachedEntity.store(target));
+            player.setItemInHand(hand, stack);
+            target.discard();
         }
 
         return InteractionResult.sidedSuccess(player.level().isClientSide);
@@ -105,16 +100,16 @@ public class StasisCapsule extends ArtificeItem {
             level.addFreshEntity(entity);
             context.getItemInHand().set(AoADataComponents.STORED_ENTITY, CachedEntity.EMPTY);
 
-            TELParticlePacket packet = new TELParticlePacket();
+            TMEParticlePacket packet = new TMEParticlePacket();
 
             for (int i = 0; i < 50; i++) {
                 packet.particle(ParticleBuilder.forRandomPosInSphere(ParticleTypes.FALLING_SPORE_BLOSSOM, entity.position().add(0, entity.getBbHeight() * 0.5f, 0), 0.25f)
-                        .colourOverride(0.8f, 0.3f, 0.3f, 1f)
-                        .velocity(RandomUtil.randomScaledGaussianValue(0.05f), RandomUtil.randomScaledGaussianValue(0.05f), RandomUtil.randomScaledGaussianValue(0.05f))
-                        .lifespan(RandomUtil.randomNumberBetween(20, 35)));
+                        .colourTint(0.8f, 0.3f, 0.3f, 1f)
+                        .velocity(RandomUtil.scaledGaussianValue(0.05f), RandomUtil.scaledGaussianValue(0.05f), RandomUtil.scaledGaussianValue(0.05f))
+                        .lifespan(RandomUtil.numberBetween(20, 35)));
             }
 
-            packet.sendToAllPlayersTrackingEntity((ServerLevel)level, player);
+            packet.sendToAllPlayersTrackingEntity(player);
             level.playSound(null, pos.x, pos.y, pos.z, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.8f, 1.8f);
             level.playSound(null, pos.x, pos.y, pos.z, SoundEvents.SPLASH_POTION_BREAK, SoundSource.PLAYERS, 1, 1.8f);
         }
@@ -123,10 +118,13 @@ public class StasisCapsule extends ArtificeItem {
     }
 
     public static boolean canCapture(Player player, LivingEntity entity) {
-        if (entity instanceof OwnableEntity ownable && (player.getUUID().equals(ownable.getOwnerUUID()) || ownable.getOwnerUUID() == null))
+        if (entity instanceof Enemy || (entity instanceof NeutralMob neutralMob && neutralMob.isAngryAt(player)))
+            return false;
+
+        if (entity instanceof AgeableMob)
             return true;
 
-        if (entity instanceof Animal && (!(entity instanceof NeutralMob neutral) || !neutral.isAngryAt(player)))
+        if (entity instanceof OwnableEntity ownable && (player.getUUID().equals(ownable.getOwnerUUID()) || ownable.getOwnerUUID() == null))
             return true;
 
         return false;

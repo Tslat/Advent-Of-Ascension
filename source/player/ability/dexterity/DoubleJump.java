@@ -1,6 +1,7 @@
 package net.tslat.aoa3.player.ability.dexterity;
 
 import com.google.gson.JsonObject;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -64,8 +65,8 @@ public class DoubleJump extends AoAAbility.Instance {
 			}
 
 			@Override
-			public int getKeycode() {
-				return Minecraft.getInstance().options.keyJump.getKey().getValue();
+			public KeyMapping getKeybind() {
+				return Minecraft.getInstance().options.keyJump;
 			}
 
 			@Override
@@ -108,10 +109,10 @@ public class DoubleJump extends AoAAbility.Instance {
 	}
 
 	private void handlePlayerFall(LivingFallEvent ev) {
-		if (!canJump)
+		if (!this.canJump)
 			ev.setDistance(ev.getDistance() - ev.getEntity().getJumpPower() * 10f);
 
-		canJump = true;
+		this.canJump = true;
 	}
 
 	@Override

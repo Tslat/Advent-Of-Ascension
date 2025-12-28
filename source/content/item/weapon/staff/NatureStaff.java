@@ -1,33 +1,21 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
-import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.BonemealableBlock;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
 
-public class NatureStaff extends BaseStaff<List<BlockPos>> {
+public class NatureStaff extends AoAStaff<List<BlockPos>> {
 	public NatureStaff(Item.Properties properties) {
 		super(properties);
-	}
-
-	@Nullable
-	@Override
-	public SoundEvent getCastingSound() {
-		return AoASounds.ITEM_NATURE_STAFF_CAST.get();
 	}
 
 	@Override
@@ -45,15 +33,8 @@ public class NatureStaff extends BaseStaff<List<BlockPos>> {
 		return Optional.ofNullable(blocks.isEmpty() ? null : blocks);
 	}
 
-	public static Object2IntMap<Item> getDefaultRunes() {
-		return Util.make(new Object2IntArrayMap<>(), runes -> {
-			runes.put(AoAItems.LIFE_RUNE.get(), 4);
-			runes.put(AoAItems.ENERGY_RUNE.get(), 2);
-		});
-	}
-
 	@Override
-	public void cast(ServerLevel level, ItemStack staff, LivingEntity caster, List<BlockPos> args) {
+	public void cast(ServerLevel level, LivingEntity caster, ItemStack staff, InteractionHand hand, List<BlockPos> args) {
 		for (BlockPos pos : args) {
 			BoneMealItem.growCrop(new ItemStack(Items.BONE_MEAL), caster.level(), pos);
 		}

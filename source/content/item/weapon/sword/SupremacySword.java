@@ -10,7 +10,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class SupremacySword extends BaseSword {
+public class SupremacySword extends AoASword {
 	public SupremacySword(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

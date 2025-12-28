@@ -18,7 +18,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class PrimalSword extends BaseSword {
+public class PrimalSword extends AoASword {
 	public PrimalSword(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

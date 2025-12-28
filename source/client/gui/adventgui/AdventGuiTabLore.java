@@ -1,6 +1,7 @@
 package net.tslat.aoa3.client.gui.adventgui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -8,6 +9,7 @@ import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -16,11 +18,14 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.networking.AoANetworking;
 import net.tslat.aoa3.common.networking.packets.patchouli.AccountPatchouliBookPacket;
 import net.tslat.aoa3.common.networking.packets.patchouli.GivePatchouliBookPacket;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.util.ColourUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RenderUtil;
+import net.tslat.tme.api.object.extension.Text;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -98,7 +103,12 @@ public class AdventGuiTabLore extends Screen {
 			if (!PatchouliIntegration.isBookLoaded(id))
 				continue;
 
-			loreBooks.put(id, PatchouliIntegration.getBook(id));
+			ItemStack book = PatchouliIntegration.getBook(id);
+
+			if (book.is(AoAItems.TORN_PAGES))
+				book.set(DataComponents.CUSTOM_NAME, Text.of(LocaleUtil.createGenericLocaleKey("item", "torn_pages." + id.getPath()), ChatFormatting.ITALIC));
+
+			loreBooks.put(id, book);
 		}
 	}
 

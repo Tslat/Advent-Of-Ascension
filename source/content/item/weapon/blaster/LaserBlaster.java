@@ -2,60 +2,47 @@ package net.tslat.aoa3.content.item.weapon.blaster;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponRayTrace;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 
-public class LaserBlaster extends BaseBlaster {
+public class LaserBlaster extends AoABlaster<WeaponRayTrace> {
 	public LaserBlaster(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_ILLUSION_SMG_FIRE.get();
+	void fireBlaster(ServerLevel level, WeaponFiringContext context) {
+		fireRayTrace(level, context);
 	}
 
 	@Override
-	public float getBeamDistance(ItemStack stack, @Nullable LivingEntity shooter) {
-		return 40;
-	}
+	protected void doFiringEffects(ServerLevel level, WeaponRayTrace effect, Vec3 pos, WeaponFiringContext context) {
+		super.doFiringEffects(level, effect, pos, context);
 
-	// TODO Remove
-	@Override
-	protected ShotInfo fireBlaster(ServerLevel level, LivingEntity shooter, ItemStack blaster, boolean temp) {
-		return super.fireBlaster(level, shooter, blaster, false);
-	}
-
-	@Override
-	protected void doFiringEffects(ServerLevel level, LivingEntity shooter, ItemStack stack, ShotInfo shotInfo) {
-		TELParticlePacket packet = new TELParticlePacket();
-		Vec3 originPos = shotInfo.shotOrBarrelPosForVfx();
-		Vec3 hitPos = shotInfo.getHitPos().orElse(originPos);
+		TMEParticlePacket packet = new TMEParticlePacket();
+		Vec3 originPos = effect.visualStartPos();
+		Vec3 hitPos = effect.endPos();
 
 		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.SONIC_BOOM, originPos, hitPos, 6)
-				.lifespan(1)
-				.ignoreDistanceAndLimits()
-				.scaleMod(0.05f)
-				.colourOverride(255, 0, 0, 255));
+								.lifespan(1)
+								.ignoreDistanceAndLimits()
+								.scaleMod(0.05f)
+								.colourTint(255, 0, 0, 255));
 		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.END_ROD, originPos, hitPos, 6)
-				.lifespan(1)
-				.ignoreDistanceAndLimits()
-				.scaleMod(0.4f)
-				.colourOverride(255, 0, 0, 255));
+								.lifespan(1)
+								.ignoreDistanceAndLimits()
+								.scaleMod(0.4f)
+								.colourTint(255, 0, 0, 255));
 		packet.particle(ParticleBuilder.forPositions(ParticleTypes.WARPED_SPORE, hitPos)
-				.lifespan(5)
-				.ignoreDistanceAndLimits()
-				.colourOverride(255, 0, 0, 255)
-				.spawnNTimes(2));
+								.lifespan(5)
+								.ignoreDistanceAndLimits()
+								.colourTint(255, 0, 0, 255)
+								.spawnNTimes(2));
 
-		packet.sendToAllPlayersTrackingEntity(level, shooter);
+		packet.sendToAllPlayersTrackingEntity(context.getShooter());
 	}
 }

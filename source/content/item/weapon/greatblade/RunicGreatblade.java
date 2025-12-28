@@ -12,7 +12,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class RunicGreatblade extends BaseGreatblade {
+public class RunicGreatblade extends AoAGreatblade {
 	public RunicGreatblade(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

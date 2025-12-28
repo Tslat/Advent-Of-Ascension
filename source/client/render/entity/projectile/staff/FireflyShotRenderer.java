@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.staff.FireflyShotEntity;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class FireflyShotRenderer extends ParticleProjectileRenderer<FireflyShotEntity> {
 	public FireflyShotRenderer(final EntityRendererProvider.Context manager) {
@@ -15,7 +15,7 @@ public class FireflyShotRenderer extends ParticleProjectileRenderer<FireflyShotE
 	protected void addParticles(FireflyShotEntity entity, float partialTicks) {
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
 				.spawnNTimes(8)
-				.colourOverride(0xDF9900)
-				.spawnParticles(entity.level());
+				.colourTint(0xDF9900)
+				.spawnClientParticles(entity.level());
 	}
 }

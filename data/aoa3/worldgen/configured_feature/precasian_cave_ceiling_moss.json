@@ -14,7 +14,7 @@
         "Name": "minecraft:moss_block"
       }
     },
-    "replaceable": "#c:base_stone_precasia",
+    "replaceable": "#aoa3:base_stone_precasia",
     "surface": "ceiling",
     "vegetation_chance": 0.08,
     "vegetation_feature": {

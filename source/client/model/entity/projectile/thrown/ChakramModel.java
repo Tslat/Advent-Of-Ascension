@@ -7,9 +7,9 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.content.entity.projectile.base.ThrownItemProjectile;
 
-public class ChakramModel extends EntityModel<BaseBullet> {
+public class ChakramModel extends EntityModel<ThrownItemProjectile> {
 	private final ModelPart root;
 
 	public ChakramModel(ModelPart modelDefRoot) {
@@ -35,7 +35,7 @@ public class ChakramModel extends EntityModel<BaseBullet> {
 	}
 
 	@Override
-	public void setupAnim(BaseBullet chakram, float pLimbSwing, float pLimbSwingAmount, float tickAge, float pNetHeadYaw, float pHeadPitch) {
+	public void setupAnim(ThrownItemProjectile chakram, float pLimbSwing, float pLimbSwingAmount, float tickAge, float pNetHeadYaw, float pHeadPitch) {
 		if (chakram.getDeltaMovement().x() != 0 || chakram.getDeltaMovement().y() != 0 || chakram.getDeltaMovement().z() != 0) {
 			root.yRot = Mth.lerp(pLimbSwingAmount, tickAge - 1 % 360, tickAge % 360);
 		}

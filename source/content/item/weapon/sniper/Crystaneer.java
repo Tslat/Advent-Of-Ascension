@@ -3,44 +3,40 @@ package net.tslat.aoa3.content.item.weapon.sniper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.LootUtil;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.object.RayTrace;
 
 import java.util.List;
 
-public class Crystaneer extends BaseSniper {
+public class Crystaneer extends AoASniper {
 	public Crystaneer(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
-	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_GUN_SNIPER_HEAVY_FIRE_LONG.get();
-	}
-
 	@Override
 	public ResourceLocation getScopeTexture(ItemStack stack) {
-		return SCOPE_4;
+		return AERIAL;
 	}
 
 	@Override
-	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
-		if (!shooter.level().isClientSide() && target instanceof LivingEntity && ((LivingEntity)target).getHealth() <= 0) {
-			for (ItemStack drop : LootUtil.generateLoot(AdventOfAscension.id("items/crystaneer"), LootUtil.getGiftParameters((ServerLevel)shooter.level(), target.position(), (shooter instanceof Player ? ((Player)shooter).getLuck() : 0), shooter))) {
-				target.spawnAtLocation(drop, 0f);
+	protected void onDamageEntity(Level level, WeaponProjectile projectile, RayTrace<?> rayTrace, Entity hitEntity, float damage) {
+		super.onDamageEntity(level, projectile, rayTrace, hitEntity, damage);
+
+		if (level instanceof ServerLevel serverLevel && hitEntity instanceof LivingEntity target && target.isDeadOrDying()) {
+			if (projectile.getShooter() instanceof LivingEntity shooter) {
+				for (ItemStack drop : LootUtil.generateLoot(AdventOfAscension.id("items/crystaneer"), LootUtil.getGiftParameters(serverLevel, rayTrace.hitPos(), (shooter instanceof Player pl ? pl.getLuck() : 0), shooter))) {
+					target.spawnAtLocation(drop, 0f);
+				}
 			}
 		}
 	}

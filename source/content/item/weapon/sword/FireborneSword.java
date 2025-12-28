@@ -11,7 +11,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class FireborneSword extends BaseSword {
+public class FireborneSword extends AoASword {
 	public FireborneSword(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

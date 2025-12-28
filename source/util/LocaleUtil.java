@@ -8,7 +8,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.library.object.explosion.ExplosionInfo;
+import net.tslat.tme.api.explosion.ExplosionInfo;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -106,20 +106,22 @@ public final class LocaleUtil {
 		return Component.translatable("ability." + AdventOfAscension.MOD_ID + ".descriptions.flatAndScaling.percent", args);
 	}
 
-	public static List<MutableComponent> getExplosionInfoLocale(ExplosionInfo info, boolean extendedInfo, boolean shrapnel) {
+	public static List<MutableComponent> getExplosionInfoLocale(ExplosionInfo info, boolean header, boolean extendedInfo, boolean shrapnel) {
 		if (extendedInfo) {
 			List<MutableComponent> lines = new ObjectArrayList<>();
 
-			lines.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.penetration." + (shrapnel ? "shrapnel" : "concussive")), LocaleUtil.getLocaleMessage(NumberUtil.roundToNthDecimalPlace(info.getPenetrationPower(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
+			lines.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.penetration." + (shrapnel ? "shrapnel" : "concussive")), LocaleUtil.getLocaleMessage(NumberUtil.roundToNthDecimalPlace(info.blockPenetration(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
 			lines.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.type." + (shrapnel ? "shrapnel" : "concussive")), ChatFormatting.GRAY));
-			lines.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.radius"), Component.literal(NumberUtil.roundToNthDecimalPlace(info.getEffectiveRadius(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
-			lines.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.damage"), Component.literal(NumberUtil.roundToNthDecimalPlace(info.getBaseDamage(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
-			lines.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.heading"), ChatFormatting.DARK_RED));
+			lines.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.radius"), Component.literal(NumberUtil.roundToNthDecimalPlace(info.radius(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
+			lines.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.damage"), Component.literal(NumberUtil.roundToNthDecimalPlace(info.baseDamage(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
+
+			if (header)
+				lines.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.heading"), ChatFormatting.DARK_RED));
 
 			return lines;
 		}
 		else {
-			return List.of(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.basic"), Component.literal(NumberUtil.roundToNthDecimalPlace(info.getBaseDamage(), 1)), Component.literal(NumberUtil.roundToNthDecimalPlace(info.getEffectiveRadius(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_RED)));
+			return List.of(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.basic"), Component.literal(NumberUtil.roundToNthDecimalPlace(info.baseDamage(), 1)), Component.literal(NumberUtil.roundToNthDecimalPlace(info.radius(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_RED)));
 		}
 	}
 
@@ -210,6 +212,8 @@ public final class LocaleUtil {
 		public static final String VULCANE_DAMAGE = LocaleUtil.createItemDescriptionLocaleKey("damage.vulcane");
 		public static final String NO_DAMAGE = LocaleUtil.createItemDescriptionLocaleKey("damage.none");
 
+		public static final String AMMO_NONE = LocaleUtil.createItemDescriptionLocaleKey("ammo.none");
+		public static final String AMMO_INVALID = LocaleUtil.createItemDescriptionLocaleKey("ammo.invalid");
 		public static final String AMMO_ITEM = LocaleUtil.createItemDescriptionLocaleKey("ammo.item");
 		public static final String AMMO_RESOURCE = LocaleUtil.createItemDescriptionLocaleKey("ammo.resource");
 		public static final String ARMOUR_AIRTIGHT = LocaleUtil.createItemDescriptionLocaleKey("armour.airtight");
@@ -233,6 +237,8 @@ public final class LocaleUtil {
 		public static final String SNIPER_CROUCH = LocaleUtil.createItemDescriptionLocaleKey("sniper.crouch");
 		public static final String STAFF_RUNE_COST = LocaleUtil.createItemDescriptionLocaleKey("staff.runesRequired");
 		public static final String STAFF_RUNE_COST_LINE = LocaleUtil.createItemDescriptionLocaleKey("staff.runesRequired.specific");
+		public static final String LIST_OBJECT_QUANTITY = LocaleUtil.createItemDescriptionLocaleKey("misc.objectQuantity");
+		public static final String CONTENTS = LocaleUtil.createItemDescriptionLocaleKey("misc.contents");
 		public static final String STAFF_STORED_CHARGES = LocaleUtil.createItemDescriptionLocaleKey("staff.storedCharges.amount");
 		public static final String STAFF_ADD_CHARGE = LocaleUtil.createItemDescriptionLocaleKey("staff.storedCharges.charge");
 		public static final String STICKLER_DESCRIPTION_1 = LocaleUtil.createItemDescriptionLocaleKey("stickler.desc.1");

@@ -3,20 +3,20 @@ package net.tslat.aoa3.client.render.entity.projectile.staff;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.content.entity.projectile.staff.PoisonShotEntity;
+import net.tslat.aoa3.content.entity.projectile.base.NonPhysicalWeaponProjectile;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
-public class PoisonShotRenderer extends ParticleProjectileRenderer<PoisonShotEntity> {
+public class PoisonShotRenderer extends ParticleProjectileRenderer<NonPhysicalWeaponProjectile> {
 	public PoisonShotRenderer(final EntityRendererProvider.Context manager) {
 		super(manager);
 	}
 
 	@Override
-	protected void addParticles(PoisonShotEntity entity, float partialTicks) {
+	protected void addParticles(NonPhysicalWeaponProjectile entity, float partialTicks) {
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
 				.spawnNTimes(8)
-				.colourOverride(ColourUtil.GREEN)
-				.spawnParticles(entity.level());
+				.colourTint(ColourUtil.GREEN)
+				.spawnClientParticles(entity.level());
 	}
 }

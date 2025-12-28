@@ -3,31 +3,31 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:skeletal_nugget"
+      "tag": "c:nuggets/skeletal"
     },
     {
-      "item": "aoa3:skeletal_nugget"
+      "tag": "c:nuggets/skeletal"
     },
     {
-      "item": "aoa3:skeletal_nugget"
+      "tag": "c:nuggets/skeletal"
     },
     {
-      "item": "aoa3:skeletal_nugget"
+      "tag": "c:nuggets/skeletal"
     },
     {
-      "item": "aoa3:skeletal_nugget"
+      "tag": "c:nuggets/skeletal"
     },
     {
-      "item": "aoa3:skeletal_nugget"
+      "tag": "c:nuggets/skeletal"
     },
     {
-      "item": "aoa3:skeletal_nugget"
+      "tag": "c:nuggets/skeletal"
     },
     {
-      "item": "aoa3:skeletal_nugget"
+      "tag": "c:nuggets/skeletal"
     },
     {
-      "item": "aoa3:skeletal_nugget"
+      "tag": "c:nuggets/skeletal"
     }
   ],
   "result": {

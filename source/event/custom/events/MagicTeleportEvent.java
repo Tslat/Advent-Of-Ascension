@@ -20,6 +20,9 @@ public class MagicTeleportEvent extends EntityTeleportEvent implements ICancella
 
 	public MagicTeleportEvent(Entity entity, @Nullable Entity teleportSource, @Nullable Entity indirectTeleportSource, Vec3 teleportPos) {
 		super(entity, teleportPos.x, teleportPos.y, teleportPos.z);
+
+		this.teleportSource = teleportSource;
+		this.indirectTeleportSource = indirectTeleportSource;
 	}
 
 	/**
@@ -34,9 +37,12 @@ public class MagicTeleportEvent extends EntityTeleportEvent implements ICancella
 	}
 
 	/**
-	 * The indirect source entity of the teleport, if applicable. <br>
-	 * In the event of a projectile-based teleport, this will be the thrower of the projectile. <br>
+	 * The indirect source entity of the teleport, if applicable.
+	 * <p>
+	 * In the event of a projectile-based teleport, this will be the thrower of the projectile.
+	 * <p>
 	 * Teleporting without the assistance of another entity (E.G. a staff ability) will leave this value as null.
+	 *
 	 * @return The indirect entity that teleported the target, if applicable
 	 */
 	@Nullable

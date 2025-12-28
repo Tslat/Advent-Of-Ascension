@@ -1,11 +1,13 @@
 {
   "type": "aoa3:aoa_default_structure",
   "biomes": "#aoa3:has_structure/precasian_lotto_hovel",
-  "heightmap_for_start": "WORLD_SURFACE_WG",
+  "project_start_to_heightmap": "WORLD_SURFACE_WG",
+  "size": 15,
   "spawn_overrides": {},
   "start_height": {
     "absolute": 0
   },
   "start_pool": "aoa3:precasia/precasian_lotto_hovel/starts",
+  "step": "surface_structures",
   "terrain_adaptation": "beard_thin"
 }

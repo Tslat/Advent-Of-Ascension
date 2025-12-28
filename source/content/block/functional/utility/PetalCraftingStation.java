@@ -16,7 +16,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAArmour;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.InventoryUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 public class PetalCraftingStation extends Block {
 	public PetalCraftingStation(BlockBehaviour.Properties properties) {
@@ -30,7 +30,7 @@ public class PetalCraftingStation extends Block {
 				if (!pl.getAbilities().instabuild)
 					stack.shrink(1);
 
-				InventoryUtil.giveItemTo(pl, RandomUtil.getRandomSelection(
+				InventoryUtil.giveItemTo(pl, RandomUtil.selection(
 						AoAArmour.HYDRANGIC_ARMOUR.boots,
 						AoAArmour.HYDRANGIC_ARMOUR.leggings,
 						AoAArmour.HYDRANGIC_ARMOUR.chestplate,

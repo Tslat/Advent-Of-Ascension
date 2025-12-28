@@ -11,9 +11,9 @@ import net.neoforged.neoforge.event.entity.EntityInvulnerabilityCheckEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.item.AoAArmourMaterials;
-import net.tslat.aoa3.library.object.Text;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.tme.api.object.extension.Text;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -38,8 +38,8 @@ public class AlacrityArmour extends AdventArmour {
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag tooltipFlag) {
 		tooltip.add(pieceEffectHeader());
-		tooltip.add(Text.formatAsBeneficial(LocaleUtil.itemDescKey(AdventOfAscension.id("alacrity_armour"), 1)));
+		tooltip.add(Text.of(LocaleUtil.itemDescKey(AdventOfAscension.id("alacrity_armour"), 1), LocaleUtil.ItemDescriptionType.BENEFICIAL.format));
 		tooltip.add(setEffectHeader());
-		tooltip.add(Text.formatAsBeneficial(LocaleUtil.itemDescKey(AdventOfAscension.id("alacrity_armour"), 2)));
+		tooltip.add(Text.of(LocaleUtil.itemDescKey(AdventOfAscension.id("alacrity_armour"), 2), LocaleUtil.ItemDescriptionType.BENEFICIAL.format));
 	}
 }

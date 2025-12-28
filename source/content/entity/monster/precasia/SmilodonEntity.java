@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -18,21 +19,20 @@ import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.block.AoAFluidTypes;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.common.registration.entity.AoAMonsters;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.animal.precasia.HorndronEntity;
-import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyLivingEntitySensor;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
+import net.tslat.aoa3.library.builder.MultipartBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.AttributeUtil;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
@@ -43,20 +43,28 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttack
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
+import net.tslat.tme.api.object.builder.EffectBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.constant.DefaultAnimations;
 
 import java.util.List;
 
+import static net.tslat.aoa3.library.builder.MultipartBuilder.Part;
+
 public class SmilodonEntity extends AoAMeleeMob<SmilodonEntity> {
 	public SmilodonEntity(EntityType<? extends SmilodonEntity> entityType, Level level) {
 		super(entityType, level);
+	}
 
-		setParts(
-				new AoAEntityPart<>(this, 0.4375f, 0.5625f, 0, 0.6875f, getBbWidth() * 2 - 0.125f).setDamageMultiplier(1.25f),
-				new AoAEntityPart<>(this, getBbWidth(), 0.8125f, 0, 0.5625f, getBbWidth()),
-				new AoAEntityPart<>(this, 0.5625f, 0.8125f, 0, 0.5625f, -getBbWidth() + 0.0625f).setDamageMultiplier(0.9f));
+	@Nullable
+	@Override
+	public MultipartBuilder<? extends SmilodonEntity> definePartEntities() {
+		return MultipartBuilder.of(this,
+										  Part.sized(getBbWidth(), 0.8125f).up(0.5625f).adjacentForward().then(
+														  Part.sized(0.4375f, 0.5625f).up(0.125f).adjacentForward().damageMod(1.25f)),
+										  Part.sized(0.5625f, 0.8125f).up(0.5625f).adjacentBehind().damageMod(0.9f));
 	}
 
 	@Override
@@ -83,7 +91,7 @@ public class SmilodonEntity extends AoAMeleeMob<SmilodonEntity> {
 	@Override
 	public BrainActivityGroup<? extends SmilodonEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
+				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Mth.square(getAttributeValue(Attributes.FOLLOW_RANGE))),
 				new SetWalkTargetToAttackTarget<>().speedMod((entity, target) -> entity.distanceToSqr(target) < 8 ? 1f : 1.5f),
 				new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration() + 2));
 	}
@@ -106,18 +114,18 @@ public class SmilodonEntity extends AoAMeleeMob<SmilodonEntity> {
 	public void onDamageTaken(DamageContainer damageContainer) {
 		if (level() instanceof ServerLevel level && damageContainer.getSource().is(DamageTypeTags.IS_FIRE) && level().getFluidState(BlockPos.containing(getEyePosition())).getFluidType() == AoAFluidTypes.TAR.get() && level().getFluidState(blockPosition().above()).getFluidType() == AoAFluidTypes.TAR.get()) {
 			ParticleBuilder.forRandomPosInEntity(ParticleTypes.LARGE_SMOKE, this)
-					.colourOverride(255, 255, 255, 255)
+					.colourTint(255, 255, 255, 255)
 					.spawnNTimes(20)
-					.sendToAllPlayersTrackingEntity(level,this);
+					.sendToAllPlayersTrackingEntity(this);
 
 			if (isDeadOrDying()) {
-				AoAScheduler.scheduleSyncronisedTask(() -> {
+				AoAScheduler.schedule(19 - this.deathTime, tick -> {
 					EntitySpawningUtil.spawnEntity(level, AoAMonsters.SKELETAL_ABOMINATION.get(), position(), MobSpawnType.CONVERSION, abomination -> {
 						abomination.setXRot(getXRot());
 						abomination.setYRot(getYRot());
 						abomination.setYHeadRot(getYHeadRot());
 					});
-				}, 19 - this.deathTime);
+				});
 			}
 		}
 	}
@@ -125,10 +133,10 @@ public class SmilodonEntity extends AoAMeleeMob<SmilodonEntity> {
 	@Override
 	protected void onAttack(Entity target) {
 		if (target.level() instanceof ServerLevel level && target instanceof LivingEntity livingTarget && rand().oneInNChance(10)) {
-			EntityUtil.applyPotions(livingTarget, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 20).level(3).hideParticles().hideEffectIcon());
+			EntityUtil.applyPotions(livingTarget, this, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 20).level(3).hideParticles().hideEffectIcon());
 			ParticleBuilder.forRandomPosInEntity(ParticleTypes.CRIT, livingTarget)
 					.spawnNTimes(10)
-					.sendToAllPlayersTrackingEntity(level, livingTarget);
+					.sendToAllPlayersTrackingEntity(livingTarget);
 			level().playSound(null, livingTarget.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE);
 		}
 	}
@@ -166,8 +174,8 @@ public class SmilodonEntity extends AoAMeleeMob<SmilodonEntity> {
 		return AoASounds.ENTITY_SMILODON_DEATH.get();
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.noLowerThanY(60).difficultyBasedSpawnChance(0.1f);
+	public static SpawnPlacements.SpawnPredicate<SmilodonEntity> spawnRules(EntityType<SmilodonEntity> entityType) {
+		return EntitySpawnConditions.createDayNightMonster(entityType).noLowerThanY(AoADimensions.PRECASIA, 60).difficultyBasedSpawnChance(0.1f);
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<SmilodonEntity> entityType) {

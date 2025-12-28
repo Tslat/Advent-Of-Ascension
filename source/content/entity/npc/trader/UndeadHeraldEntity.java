@@ -5,7 +5,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
@@ -13,11 +12,11 @@ import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.common.registration.entity.variant.UndeadHeraldTrade;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoATrader;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -96,8 +95,8 @@ public class UndeadHeraldEntity extends AoATrader {
 		return TRADES;
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT.ifValidSpawnBlock();
+	public static SpawnPlacements.SpawnPredicate<UndeadHeraldEntity> spawnRules(EntityType<UndeadHeraldEntity> entityType) {
+		return EntitySpawnConditions.create(entityType).ifValidSpawnBlock();
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<UndeadHeraldEntity> entityType) {

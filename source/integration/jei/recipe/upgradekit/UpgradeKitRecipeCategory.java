@@ -3,12 +3,14 @@ package net.tslat.aoa3.integration.jei.recipe.upgradekit;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.library.util.RecipeUtil;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +29,7 @@ public class UpgradeKitRecipeCategory implements IRecipeCategory<UpgradeKitRecip
 
 	public UpgradeKitRecipeCategory(IGuiHelper guiHelper) {
 		ResourceLocation texture = AdventOfAscension.id("textures/gui/containers/basic_block.png");
-		this.background = guiHelper.createDrawable(texture, 26, 22, 125, 18);
+		this.background = guiHelper.createDrawable(texture, 26, 22, getWidth(), getHeight());
 		this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(AoABlocks.DIVINE_STATION.get()));
 	}
 
@@ -38,17 +40,22 @@ public class UpgradeKitRecipeCategory implements IRecipeCategory<UpgradeKitRecip
 
 	@Override
 	public Component getTitle() {
-		return title;
-	}
-
-	@Override
-	public IDrawable getBackground() {
-		return background;
+		return this.title;
 	}
 
 	@Override
 	public IDrawable getIcon() {
-		return icon;
+		return this.icon;
+	}
+
+	@Override
+	public int getWidth() {
+		return 125;
+	}
+
+	@Override
+	public int getHeight() {
+		return 18;
 	}
 
 	@Override
@@ -59,5 +66,10 @@ public class UpgradeKitRecipeCategory implements IRecipeCategory<UpgradeKitRecip
 				.addIngredients(recipe.getIngredients().get(1));
 		builder.addSlot(RecipeIngredientRole.OUTPUT, 108, 1)
 				.addItemStack(RecipeUtil.getResultItem(recipe));
+	}
+
+	@Override
+	public void draw(UpgradeKitRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+		this.background.draw(guiGraphics);
 	}
 }

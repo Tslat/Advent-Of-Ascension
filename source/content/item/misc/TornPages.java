@@ -13,12 +13,25 @@ import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.StringUtil;
 
 import java.util.List;
 
 public class TornPages extends Item {
 	public TornPages() {
 		super(new Properties().stacksTo(1));
+	}
+
+	@Override
+	public Component getName(ItemStack stack) {
+		if (!IntegrationManager.isPatchouliActive())
+			return super.getName(stack);
+
+		return PatchouliIntegration.getBookFromStack(stack)
+				.filter(PatchouliIntegration::isBookLoaded)
+				.map(id -> Component.translatable("item.aoa3.tornPages.name", StringUtil.toTitleCase(id.getPath())))
+				.map(Component.class::cast)
+				.orElse(super.getName(stack));
 	}
 
 	@Override

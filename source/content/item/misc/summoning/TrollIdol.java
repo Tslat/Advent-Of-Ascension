@@ -8,7 +8,6 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -18,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.entity.AoAMonsters;
 import net.tslat.aoa3.content.entity.boss.smash.SmashEntity;
-import net.tslat.aoa3.util.AttributeUtil;
 import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -33,10 +31,8 @@ public class TrollIdol extends BossSpawningItem<SmashEntity> {
 	public SmashEntity spawnBoss(ServerLevel level, Vec3 position, ItemStack stack, int playerCount) {
 		SmashEntity smash = EntitySpawningUtil.spawnEntity(level, AoAMonsters.SMASH.get(), position, MobSpawnType.TRIGGERED);
 
-		if (playerCount > 1 && smash != null) {
-			AttributeUtil.applyPermanentModifier(smash, Attributes.MAX_HEALTH, getPerPlayerHealthBuff(playerCount));
-			smash.setHealth(smash.getMaxHealth());
-		}
+
+		applyMultiplayerHealthBoost(smash, playerCount);
 
 		return smash;
 	}

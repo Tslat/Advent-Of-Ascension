@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:raw_limonite_block"
+      "tag": "c:storage_blocks/raw_limonite"
     }
   ],
   "result": {

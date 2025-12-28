@@ -19,11 +19,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.IShearable;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
-public class RosidianGreatblade extends BaseGreatblade {
+public class RosidianGreatblade extends AoAGreatblade {
 	public RosidianGreatblade(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}
@@ -53,9 +53,9 @@ public class RosidianGreatblade extends BaseGreatblade {
 
 							if (player != null) {
 								for (ItemStack drop : shearable.onSheared(player, stack, entity.level(), newPos)) {
-									double xMod = RandomUtil.randomValueBetween(0.15f, 0.85f);
-									double yMod = RandomUtil.randomValueBetween(0.15f, 0.85f);
-									double zMod = RandomUtil.randomValueBetween(0.15f, 0.85f);
+									double xMod = RandomUtil.valueBetween(0.15f, 0.85f);
+									double yMod = RandomUtil.valueBetween(0.15f, 0.85f);
+									double zMod = RandomUtil.valueBetween(0.15f, 0.85f);
 									ItemEntity item = new ItemEntity(entity.level(), x + xMod, y + yMod, z + zMod, drop);
 
 									item.setDefaultPickUpDelay();

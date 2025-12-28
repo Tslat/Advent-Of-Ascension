@@ -1,42 +1,22 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
-import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.LocaleUtil;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
 
-public class SkyStaff extends BaseStaff<Boolean> {
+public class SkyStaff extends AoAStaff<Boolean> {
 	public SkyStaff(Item.Properties properties) {
 		super(properties);
-	}
-
-	@Nullable
-	@Override
-	public SoundEvent getCastingSound() {
-		return AoASounds.ITEM_SKY_STAFF_CAST.get();
-	}
-
-	public static Object2IntMap<Item> getDefaultRunes() {
-		return Util.make(new Object2IntArrayMap<>(), runes -> {
-			runes.put(AoAItems.WIND_RUNE.get(), 2);
-			runes.put(AoAItems.KINETIC_RUNE.get(), 2);
-			runes.put(AoAItems.ENERGY_RUNE.get(), 1);
-		});
 	}
 
 	@Override
@@ -45,7 +25,7 @@ public class SkyStaff extends BaseStaff<Boolean> {
 	}
 
 	@Override
-	public void cast(ServerLevel level, ItemStack staff, LivingEntity caster, Boolean args) {
+	public void cast(ServerLevel level, LivingEntity caster, ItemStack staff, InteractionHand hand, Boolean args) {
 		caster.setSprinting(true);
 		double xMotion = -Mth.sin(caster.getYRot() / 180.0F * (float)Math.PI) * Mth.cos(caster.getXRot() / 180.0F * (float)Math.PI) * 2f;
 		double zMotion = Mth.cos(caster.getYRot() / 180.0F * (float)Math.PI) * Mth.cos(caster.getXRot() / 180.0F * (float)Math.PI) * 2f;

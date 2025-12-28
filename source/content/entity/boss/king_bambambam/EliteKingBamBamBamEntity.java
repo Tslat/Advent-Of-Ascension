@@ -8,12 +8,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -29,7 +29,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -40,8 +39,6 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.EventHooks;
-import net.tslat.aoa3.common.networking.AoANetworking;
-import net.tslat.aoa3.common.networking.packets.AoASoundBuilderPacket;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -54,14 +51,9 @@ import net.tslat.aoa3.content.entity.monster.nether.EmbrakeEntity;
 import net.tslat.aoa3.content.entity.monster.nether.LittleBamEntity;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.StickyFireballEntity;
-import net.tslat.aoa3.library.builder.SoundBuilder;
-import net.tslat.aoa3.library.object.EntityDataHolder;
-import net.tslat.aoa3.library.object.TriFunction;
-import net.tslat.aoa3.library.object.explosion.StandardExplosion;
+import net.tslat.aoa3.library.builder.AoAExplosionBuilder;
+import net.tslat.aoa3.library.object.interfaces.TriFunction;
 import net.tslat.aoa3.util.*;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.api.util.EffectBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.DelayedBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
@@ -78,8 +70,13 @@ import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.custom.NearbyItemsSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.explosion.StandardExplosion;
+import net.tslat.tme.api.object.builder.EffectBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.sound.SoundBuilder;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animation.*;
@@ -88,15 +85,15 @@ import software.bernie.geckolib.constant.DefaultAnimations;
 import java.util.List;
 
 public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttacker {
-	public static final EntityDataHolder<Boolean> EXHAUSTED = EntityDataHolder.register(EliteKingBamBamBamEntity.class, EntityDataSerializers.BOOLEAN, false, entity -> entity.exhausted, (entity, value) -> entity.exhausted = value);
-	public static final EntityDataHolder<Boolean> STAFF_CHARGED = EntityDataHolder.register(EliteKingBamBamBamEntity.class, EntityDataSerializers.BOOLEAN, false, entity -> entity.staffCharged, (entity, value) -> entity.staffCharged = value);
-	public static final EntityDataHolder<Integer> ENERGY_LEVEL = EntityDataHolder.register(EliteKingBamBamBamEntity.class, EntityDataSerializers.INT, 150, entity -> entity.energy, (entity, value) -> entity.energy = value);
+	public static final EntityDataAccessor<Boolean> EXHAUSTED = makeSynchedData(EliteKingBamBamBamEntity.class, EntityDataSerializers.BOOLEAN);
+	public static final EntityDataAccessor<Boolean> STAFF_CHARGED = makeSynchedData(EliteKingBamBamBamEntity.class, EntityDataSerializers.BOOLEAN);
+	public static final EntityDataAccessor<Integer> ENERGY_LEVEL = makeSynchedData(EliteKingBamBamBamEntity.class, EntityDataSerializers.INT);
 
 	private static final RawAnimation EXHAUSTED_ANIM = RawAnimation.begin().thenPlayAndHold("misc.exhaust");
 	private static final RawAnimation FIREBALLS_ANIM = RawAnimation.begin().thenPlay("attack.fireballs_start").then("attack.fireballs_loop", new Animation.LoopType() {
 		@Override
 		public boolean shouldPlayAgain(GeoAnimatable geoAnimatable, AnimationController<? extends GeoAnimatable> animationController, Animation animation) {
-			return ATTACK_STATE.is((Entity)geoAnimatable, FIREBALLS_STATE);
+			return ((AoABoss)geoAnimatable).isAttackState(FIREBALLS_STATE);
 		}
 	}).thenPlay("attack.fireballs_end");
 	private static final RawAnimation GET_UP_ANIM = RawAnimation.begin().thenPlay("misc.get_up");
@@ -114,10 +111,6 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 	private static final int SUMMON_4_STATE = 3;
 	private static final int FIREBALLS_STATE = 4;
 
-	private boolean exhausted = false;
-	private boolean staffCharged = false;
-	private int energy = 150;
-
 	public EliteKingBamBamBamEntity(EntityType<? extends EliteKingBamBamBamEntity> entityType, Level level) {
 		super(entityType, level);
 	}
@@ -134,9 +127,9 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
 
-		registerDataParams(builder, EXHAUSTED);
-		registerDataParams(builder, STAFF_CHARGED);
-		registerDataParams(builder, ENERGY_LEVEL);
+		builder.define(EXHAUSTED, false);
+		builder.define(STAFF_CHARGED, false);
+		builder.define(ENERGY_LEVEL, 150);
 	}
 
 	@Override
@@ -174,7 +167,7 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 				new AggroBasedNearbyPlayersSensor<AoABoss>()
 						.onlyAttacking(TargetingConditions.forCombat().ignoreLineOfSight()::test)
 						.onlyTargeting(TargetingConditions.forNonCombat().ignoreLineOfSight()::test),
-				new HurtBySensor<AoABoss>().setPredicate((source, mob) -> !EntityUtil.isHostileMob(mob)),
+				new HurtBySensor<AoABoss>().setPredicate((source, mob) -> EntityUtil.areProbablyEnemies(mob, source.getEntity())),
 				new NearbyItemsSensor<>());
 	}
 
@@ -204,26 +197,27 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 						new Fireballs(),
 						new OneRandomBehaviour<>(
 								Pair.of(new SummonMinions(SummonMinions.Variant.LITTLE_BAM, this::getSwingWarmupTicks)
-										.cooldownFor(entity -> entity.rand().randomNumberBetween(25, 35)), 15),
+										.cooldownFor(entity -> entity.rand().numberBetween(25, 35)), 15),
 								Pair.of(new SummonMinions(SummonMinions.Variant.ZOMBIFIED_PIGLIN, this::getSwingWarmupTicks)
-										.cooldownFor(entity -> entity.rand().randomNumberBetween(21, 25)), 13),
+										.cooldownFor(entity -> entity.rand().numberBetween(21, 25)), 13),
 								Pair.of(new SummonMinions(SummonMinions.Variant.PIGLIN_BRUTE, this::getSwingWarmupTicks)
-										.cooldownFor(entity -> entity.rand().randomNumberBetween(40, 60)), 10),
+										.cooldownFor(entity -> entity.rand().numberBetween(40, 60)), 10),
 								Pair.of(new SummonMinions(SummonMinions.Variant.EMBRAKE, this::getSwingWarmupTicks)
-										.cooldownFor(entity -> entity.rand().randomNumberBetween(75, 90)), 5),
+										.cooldownFor(entity -> entity.rand().numberBetween(75, 90)), 5),
 								Pair.of(new CustomDelayedBehaviour<>(60)
 										.whenActivating(entity -> {
-											STAFF_CHARGED.set(entity, true);
+											setSynchedData(STAFF_CHARGED, true);
 											BrainUtils.setForgettableMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN, true, 5);
 
 											if (!EntityRetrievalUtil.getPlayers(entity.level(), getBoundingBox().expandTowards(getForward().multiply(3f, 1.25f, 3f))).isEmpty()) {
-												new StandardExplosion(AoAExplosions.KING_BAMBAMBAM_DISCHARGE, (ServerLevel)entity.level(), entity, entity.position().add(0, 0.5f, 0).add(entity.getForward().multiply(1.5f, 1.5f, 1.5f))).explode();
+												AoAExplosionBuilder.at((ServerLevel)entity.level(), entity.position().add(0, 0.5f, 0).add(entity.getForward().multiply(1.5f, 1.5f, 1.5f)),
+																	   AoAExplosions.KING_BAMBAMBAM_DISCHARGE, StandardExplosion::new).explodingEntity(entity).explode();
 											}
 										})
 										.whenStarting(entity -> triggerAnim("Sphere", "Charge"))
 										.startCondition(entity -> !BrainUtils.hasMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN))
-										.cooldownFor(entity -> rand().randomNumberBetween(2000, 3000)), 50)
-						).startCondition(entity -> STAFF_CHARGED.is(entity, false))));
+										.cooldownFor(entity -> rand().numberBetween(2000, 3000)), 50)
+						).startCondition(entity -> !getSynchedData(STAFF_CHARGED))));
 	}
 
 	@Override
@@ -235,21 +229,21 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 	}
 
 	protected void collapse() {
-		INVULNERABLE.set(this, true);
+		setInvulnerable(true);
 		consumeEnergy(999999);
 
 		for (int i = 0; i < 5; i++) {
-			Vec3 spawnPos = Vec3.atBottomCenterOf(RandomUtil.getRandomPositionWithinRange(blockPosition(), 8, 2, 8, 3, 0, 3, false, level(), 5, (state, pos) -> Math.abs(pos.getY() - getY()) <= 5));
+			Vec3 spawnPos = Vec3.atBottomCenterOf(RandomUtil.positionWithinRange(blockPosition(), 8, 2, 8, 3, 0, 3, false, level(), 5, (state, pos) -> Math.abs(pos.getY() - getY()) <= 5));
 
 			PositionAndMotionUtil.getNearestOnGroundPosition(level(), spawnPos).ifPresent(pos -> {
 				LivingEntity minion = SummonMinions.summonHoglin(this, pos, BrainUtils.memoryOrDefault(this, MemoryModuleType.HURT_BY_ENTITY, () -> null));
 
 				if (minion != null) {
-					EntityUtil.applyPotions(minion,
+					EntityUtil.applyPotions(minion, this,
 							new EffectBuilder(MobEffects.MOVEMENT_SPEED).hideParticles(),
 							new EffectBuilder(MobEffects.DAMAGE_BOOST).level(4));
 
-					TELParticlePacket packet = new TELParticlePacket();
+					TMEParticlePacket packet = new TMEParticlePacket();
 
 					packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.SOUL_FIRE_FLAME, minion)
 							.spawnNTimes(50)
@@ -258,14 +252,14 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 							.ignoreDistanceAndLimits()
 							.lifespan(40));
 
-					packet.sendToAllPlayersTrackingEntity((ServerLevel)level(), this);
-					AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.BLAZE_SHOOT).atPos(level(), minion.position()).category(SoundSource.HOSTILE).pitch(0.5f).varyPitch(0.1f)), this);
+					packet.sendToAllPlayersTrackingEntity(this);
+					SoundBuilder.at(SoundEvents.BLAZE_SHOOT, level(), minion.position()).category(getSoundSource()).pitch(0.5f).varyPitch(0.1f).play();
 				}
 			});
 		}
 
 		for (int i = 0; i < 15; i++) {
-			createMagnetisedItemStack(this, getEyePosition().add(0, 0.1f, 0), new Vec3(rand().randomScaledGaussianValue(0.3f), 0.25f, rand().randomScaledGaussianValue(0.3f)), Items.GOLDEN_APPLE, 200);
+			createMagnetisedItemStack(this, getEyePosition().add(0, 0.1f, 0), new Vec3(rand().scaledGaussianValue(0.3f), 0.25f, rand().scaledGaussianValue(0.3f)), Items.GOLDEN_APPLE, 200);
 		}
 	}
 
@@ -273,9 +267,9 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
-		if (INVULNERABLE.is(this, true)) {
+		if (isInvulnerable()) {
 			setHealth(getMaxHealth() / 2f);
-			INVULNERABLE.set(this, false);
+			setInvulnerable(true);
 		}
 	}
 
@@ -292,7 +286,7 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 
 	@Override
 	public void onDamageTaken(DamageContainer damageContainer) {
-		if (EXHAUSTED.is(this, false))
+		if (!getSynchedData(EXHAUSTED))
 			consumeEnergy((int)Math.floor(damageContainer.getNewDamage()));
 	}
 
@@ -305,11 +299,11 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 	}
 
 	public void addEnergy(int amount) {
-		ENERGY_LEVEL.set(this, Math.min(ENERGY_LEVEL.get(this) + amount, 150));
+		setSynchedData(ENERGY_LEVEL, Math.min(getSynchedData(ENERGY_LEVEL) + amount, 150));
 	}
 
 	public void consumeEnergy(int amount) {
-		ENERGY_LEVEL.set(this, Math.max(ENERGY_LEVEL.get(this) - amount, 0));
+		setSynchedData(ENERGY_LEVEL, Math.max(getSynchedData(ENERGY_LEVEL) - amount, 0));
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<EliteKingBamBamBamEntity> entityType) {
@@ -318,8 +312,8 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 				.moveSpeed(0.2875f)
 				.projectileDamage(25)
 				.knockbackResist(1)
-				.followRange(100)
-				.aggroRange(64)
+				.followRange(128)
+				.aggroRange(128)
 				.armour(15, 30);
 	}
 
@@ -335,14 +329,14 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 			return PlayState.STOP;
 		}));
 		controllers.add(new AnimationController<>(this, "Sphere", 0, state -> {
-			if (STAFF_CHARGED.is(this, false))
+			if (!getSynchedData(STAFF_CHARGED))
 				return state.setAndContinue(STAFF_INACTIVE_ANIM);
 
 			return state.setAndContinue(STAFF_ACTIVE_ANIM);
 		})
 				.triggerableAnim("Charge", STAFF_CHARGE_ANIM));
 		controllers.add(new AnimationController<>(this, "Fireballs", 0, state -> {
-			if (ATTACK_STATE.is(this, FIREBALLS_STATE) || (!state.getController().hasAnimationFinished() && state.getController().getCurrentAnimation() != null && state.getController().getCurrentAnimation().animation().name().equals("attack.fireballs_end")))
+			if (isAttackState(FIREBALLS_STATE) || (!state.getController().hasAnimationFinished() && state.getController().getCurrentAnimation() != null && state.getController().getCurrentAnimation().animation().name().equals("attack.fireballs_end")))
 				return state.setAndContinue(FIREBALLS_ANIM);
 
 			state.getController().forceAnimationReset();
@@ -350,7 +344,7 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 			return PlayState.STOP;
 		}));
 		controllers.add(new AnimationController<GeoAnimatable>(this, "Exhaustion", 5, state -> {
-			if (EXHAUSTED.is(this, true))
+			if (getSynchedData(EXHAUSTED))
 				return state.setAndContinue(EXHAUSTED_ANIM);
 
 			if (state.isCurrentAnimation(EXHAUSTED_ANIM) || (state.isCurrentAnimation(GET_UP_ANIM) && !state.getController().hasAnimationFinished()))
@@ -376,7 +370,7 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 	@Override
 	public void doRangedAttackBlock(@Nullable BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {}
 
-	public static class Fireballs extends HeldBehaviour<AoABoss> {
+	public static class Fireballs extends HeldBehaviour<EliteKingBamBamBamEntity> {
 		private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORY_REQUIREMENTS = ObjectArrayList.of(Pair.of(MemoryModuleType.ATTACK_COOLING_DOWN, MemoryStatus.VALUE_ABSENT));
 
 		public Fireballs() {
@@ -389,29 +383,29 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 		}
 
 		@Override
-		protected boolean checkExtraStartConditions(ServerLevel level, AoABoss entity) {
-			return STAFF_CHARGED.is(entity, true);
+		protected boolean checkExtraStartConditions(ServerLevel level, EliteKingBamBamBamEntity entity) {
+			return entity.getSynchedData(STAFF_CHARGED);
 		}
 
 		@Override
-		protected boolean shouldKeepRunning(AoABoss entity) {
-			return !ENERGY_LEVEL.is(entity, 0);
+		protected boolean shouldKeepRunning(EliteKingBamBamBamEntity entity) {
+			return entity.getSynchedData(ENERGY_LEVEL) != 0;
 		}
 
 		@Override
-		protected void start(AoABoss entity) {
-			ATTACK_STATE.set(entity, FIREBALLS_STATE);
+		protected void start(EliteKingBamBamBamEntity entity) {
+			entity.setSynchedData(ATTACK_STATE, FIREBALLS_STATE);
 		}
 
 		@Override
-		protected void stop(AoABoss entity) {
-			ATTACK_STATE.set(entity, SUMMON_1_STATE);
-			STAFF_CHARGED.set(entity, false);
+		protected void stop(EliteKingBamBamBamEntity entity) {
+			entity.setSynchedData(ATTACK_STATE, SUMMON_1_STATE);
+			entity.setSynchedData(STAFF_CHARGED, false);
 			BrainUtils.setForgettableMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN, true, 60);
 		}
 
 		@Override
-		protected void tick(AoABoss entity) {
+		protected void tick(EliteKingBamBamBamEntity entity) {
 			if (this.runningTime < 20)
 				return;
 
@@ -419,7 +413,7 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 			Vec3 left = Vec3.directionFromRotation(entity.getXRot(), entity.getYRot() + 90);
 
 			for (int i = 0; i < 2; i++) {
-				StickyFireballEntity fireball = new StickyFireballEntity(entity.level(), (EliteKingBamBamBamEntity)entity, BaseMobProjectile.Type.PHYSICAL);
+				StickyFireballEntity fireball = new StickyFireballEntity(entity.level(), entity, BaseMobProjectile.Type.PHYSICAL);
 
 				fireball.setPos((forward.x + left.x) * 0.25f + entity.getRandomX(0.25f), entity.getY() + 4.5f, (forward.z + left.z) * 0.25f + entity.getRandomZ(0.25f));
 				fireball.setDeltaMovement(entity.getRandom().nextGaussian() * 0.15f, 1.2f, entity.getRandom().nextGaussian() * 0.15f);
@@ -431,9 +425,9 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 		}
 	}
 
-	public static class Rest extends HeldBehaviour<AoABoss> {
+	public static class Rest extends HeldBehaviour<EliteKingBamBamBamEntity> {
 		public Rest() {
-			runFor(entity -> INVULNERABLE.is(entity, true) ? 480 : 160);
+			runFor(entity -> entity.isInvulnerable() ? 480 : 160);
 		}
 
 		@Override
@@ -442,32 +436,33 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 		}
 
 		@Override
-		protected boolean checkExtraStartConditions(ServerLevel level, AoABoss entity) {
-			return ENERGY_LEVEL.is(entity, 0);
+		protected boolean checkExtraStartConditions(ServerLevel level, EliteKingBamBamBamEntity entity) {
+			return entity.getSynchedData(ENERGY_LEVEL) == 0;
 		}
 
 		@Override
-		protected boolean shouldKeepRunning(AoABoss entity) {
-			if (INVULNERABLE.is(entity, true))
+		protected boolean shouldKeepRunning(EliteKingBamBamBamEntity entity) {
+			if (entity.isInvulnerable())
 				return true;
 
-			return !ENERGY_LEVEL.is(entity, 150);
+			return entity.getSynchedData(ENERGY_LEVEL) != 150;
 		}
 
 		@Override
-		protected void start(AoABoss entity) {
-			EXHAUSTED.set(entity, true);
+		protected void start(EliteKingBamBamBamEntity entity) {
+			entity.setSynchedData(EXHAUSTED, true);
 			entity.setDeltaMovement(0, 0, 0);
 			entity.getNavigation().stop();
 			BrainUtils.clearMemory(entity, MemoryModuleType.PATH);
-			AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(AoASounds.ENTITY_KING_BAMBAMBAM_EXHAUSTED).followEntity(entity)), entity);
+			SoundBuilder.following(AoASounds.ENTITY_KING_BAMBAMBAM_EXHAUSTED, entity).play();
 		}
 
 		@Override
-		protected void stop(AoABoss entity) {
-			EXHAUSTED.set(entity, false);
-			INVULNERABLE.set(entity, false);
-			((EliteKingBamBamBamEntity)entity).addEnergy(150);
+		protected void stop(EliteKingBamBamBamEntity entity) {
+			entity.setSynchedData(EXHAUSTED, false);
+			entity.setInvulnerable(false);
+			entity.setInvulnerable(false);
+			entity.addEnergy(150);
 		}
 	}
 
@@ -503,40 +498,40 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 
 		@Override
 		protected void start(AoABoss entity) {
-			ATTACK_STATE.set(entity, this.variant.ordinal());
+			entity.setAttackState(this.variant.ordinal());
 			entity.swing(InteractionHand.MAIN_HAND);
-			AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(this.variant.summonSound).followEntity(entity).category(SoundSource.HOSTILE)), entity);
+			SoundBuilder.following(this.variant.summonSound, entity).category(entity.getSoundSource()).play();
 		}
 
 		@Override
 		protected void doDelayedAction(AoABoss entity) {
-			Vec3 spawnPos = Vec3.atBottomCenterOf(RandomUtil.getRandomPositionWithinRange(entity.blockPosition(), 4, 2, 4, 1, 0, 1, false, entity.level(), 5, (state, pos) -> Math.abs(pos.getY() - entity.getY()) <= 5));
+			Vec3 spawnPos = Vec3.atBottomCenterOf(RandomUtil.positionWithinRange(entity.blockPosition(), 4, 2, 4, 1, 0, 1, false, entity.level(), 5, (state, pos) -> Math.abs(pos.getY() - entity.getY()) <= 5));
 
 			PositionAndMotionUtil.getNearestOnGroundPosition(entity.level(), spawnPos).ifPresent(pos -> {
 				LivingEntity minion = this.variant.spawnFunction.apply(entity, pos, BrainUtils.memoryOrDefault(entity, MemoryModuleType.HURT_BY_ENTITY, () -> BrainUtils.getTargetOfEntity(entity)));
 
 				if (minion != null) {
 					((EliteKingBamBamBamEntity)entity).consumeEnergy(this.variant.energyCost);
-					EntityUtil.applyPotions(minion,
+					EntityUtil.applyPotions(minion, entity,
 							new EffectBuilder(MobEffects.DAMAGE_BOOST).level(3).hideParticles(),
 							new EffectBuilder(MobEffects.MOVEMENT_SPEED).hideParticles());
 
-					TELParticlePacket packet = new TELParticlePacket();
+					TMEParticlePacket packet = new TMEParticlePacket();
 
 					packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.SMALL_FLAME, minion)
 							.spawnNTimes(50)
 							.lifespan(40)
 							.ignoreDistanceAndLimits());
 
-					packet.sendToAllPlayersTrackingEntity((ServerLevel)entity.level(), entity);
-					AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.BLAZE_SHOOT).followEntity(entity).category(SoundSource.HOSTILE).pitch(0.5f).varyPitch(0.1f)), entity);
+					packet.sendToAllPlayersTrackingEntity(entity);
+					SoundBuilder.following(SoundEvents.BLAZE_SHOOT, entity).category(entity.getSoundSource()).pitch(0.5f).varyPitch(0.1f).play();
 				}
 			});
 		}
 
 		@Override
 		protected void stop(AoABoss entity) {
-			BrainUtils.setForgettableMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN, true, entity.rand().randomNumberBetween((this.variant.ordinal() + 1) * 25, (this.variant.ordinal() + 1) * 45));
+			BrainUtils.setForgettableMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN, true, entity.rand().numberBetween((this.variant.ordinal() + 1) * 25, (this.variant.ordinal() + 1) * 45));
 		}
 
 		@Nullable
@@ -565,7 +560,7 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 				@Override
 				protected void dropAllDeathLoot(ServerLevel level, DamageSource damageSource) {
 					for (int i = 0; i < 3; i++) {
-						createMagnetisedItemStack(entity, getEyePosition().add(0, 0.1f, 0), new Vec3(entity.rand().randomScaledGaussianValue(0.5f), 0.5f, entity.rand().randomScaledGaussianValue(0.5f)), entity.rand().getRandomSelection(LOOT_ITEMS), 60);
+						createMagnetisedItemStack(entity, getEyePosition().add(0, 0.1f, 0), new Vec3(entity.rand().scaledGaussianValue(0.5f), 0.5f, entity.rand().scaledGaussianValue(0.5f)), entity.rand().selection(LOOT_ITEMS), 60);
 					}
 				}
 
@@ -611,7 +606,7 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 				@Override
 				protected void dropAllDeathLoot(ServerLevel level, DamageSource damageSource) {
 					for (int i = 0; i < 3; i++) {
-						createMagnetisedItemStack(entity, getEyePosition().add(0, 0.1f, 0), new Vec3(entity.rand().randomScaledGaussianValue(0.5f), 0.5f, entity.rand().randomScaledGaussianValue(0.5f)), entity.rand().getRandomSelection(LOOT_ITEMS), 60);
+						createMagnetisedItemStack(entity, getEyePosition().add(0, 0.1f, 0), new Vec3(entity.rand().scaledGaussianValue(0.5f), 0.5f, entity.rand().scaledGaussianValue(0.5f)), entity.rand().selection(LOOT_ITEMS), 60);
 					}
 				}
 
@@ -656,7 +651,7 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 				@Override
 				protected void dropAllDeathLoot(ServerLevel level, DamageSource damageSource) {
 					for (int i = 0; i < 3; i++) {
-						createMagnetisedItemStack(entity, getEyePosition().add(0, 0.1f, 0), new Vec3(entity.rand().randomScaledGaussianValue(0.5f), 0.25f, entity.rand().randomScaledGaussianValue(0.5f)), entity.rand().getRandomSelection(LOOT_ITEMS), 60);
+						createMagnetisedItemStack(entity, getEyePosition().add(0, 0.1f, 0), new Vec3(entity.rand().scaledGaussianValue(0.5f), 0.25f, entity.rand().scaledGaussianValue(0.5f)), entity.rand().selection(LOOT_ITEMS), 60);
 					}
 				}
 
@@ -702,7 +697,7 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 				@Override
 				protected void dropAllDeathLoot(ServerLevel level, DamageSource damageSource) {
 					for (int i = 0; i < 3; i++) {
-						createMagnetisedItemStack(entity, getEyePosition().add(0, 0.1f, 0), new Vec3(entity.rand().randomScaledGaussianValue(0.3f), 0.25f, entity.rand().randomScaledGaussianValue(0.3f)), entity.rand().getRandomSelection(LOOT_ITEMS), 60);
+						createMagnetisedItemStack(entity, getEyePosition().add(0, 0.1f, 0), new Vec3(entity.rand().scaledGaussianValue(0.3f), 0.25f, entity.rand().scaledGaussianValue(0.3f)), entity.rand().selection(LOOT_ITEMS), 60);
 					}
 				}
 
@@ -748,7 +743,7 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 				@Override
 				protected void dropAllDeathLoot(ServerLevel level, DamageSource damageSource) {
 					for (int i = 0; i < 3; i++) {
-						createMagnetisedItemStack(entity, getEyePosition().add(0, 0.1f, 0), new Vec3(entity.rand().randomScaledGaussianValue(0.3f), 0.25f, entity.rand().randomScaledGaussianValue(0.3f)), entity.rand().getRandomSelection(LOOT_ITEMS), 60);
+						createMagnetisedItemStack(entity, getEyePosition().add(0, 0.1f, 0), new Vec3(entity.rand().scaledGaussianValue(0.3f), 0.25f, entity.rand().scaledGaussianValue(0.3f)), entity.rand().selection(LOOT_ITEMS), 60);
 					}
 				}
 
@@ -799,44 +794,44 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 				if (this.magnetisedTo == null || !this.magnetisedTo.isAlive()) {
 					discard();
 				}
-				else if (this.getY() < this.level().getMinBuildHeight()) {
+				else if (getY() < level().getMinBuildHeight()) {
 					discard();
 				}
 				else if (this.tickCount > 40) {
-					if (!EntityRetrievalUtil.getPlayers(this.level(), getBoundingBox().inflate(0.75f, 2, 0.75f)).isEmpty()) {
-						AoANetworking.sendToAllNearbyPlayers(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.ARMOR_EQUIP_GOLD).category(SoundSource.PLAYERS).atPos(this.level(), position().x, position().y, position().z)), (ServerLevel)this.level(), position(), 6);
+					if (!EntityRetrievalUtil.getPlayers(level(), getBoundingBox().inflate(0.75f, 2, 0.75f)).isEmpty()) {
+						SoundBuilder.at(SoundEvents.ARMOR_EQUIP_GOLD, level(), position()).category(boss.getSoundSource()).radius(6).play();
 						discard();
 
 						return;
 					}
 
 					if (this.tickCount > delay) {
-						hurtMarked = true;
+						this.hurtMarked = true;
 						this.noPhysics = true;
 						Vec3 startPos = getEyePosition().add(0, 0.15f, 0);
 						Vec3 travelVector = this.magnetisedTo.getEyePosition().subtract(0, 0.2f, 0).subtract(startPos);
 						Vec3 angle = travelVector.normalize();
 						double dist = travelVector.length();
-						TELParticlePacket particlePacket = new TELParticlePacket();
+						TMEParticlePacket particlePacket = new TMEParticlePacket();
 
 						setNoGravity(true);
 						setDeltaMovement(angle.scale(0.08f));
 
 						for (float i = 0.25f; i < dist; i += 0.5f) {
-							particlePacket.particle(ParticleBuilder.forPositions(ParticleTypes.ELECTRIC_SPARK, startPos.add(angle.multiply(i, i, i))).colourOverride(1, 1, 1, 0.15f));
+							particlePacket.particle(ParticleBuilder.forPositions(ParticleTypes.ELECTRIC_SPARK, startPos.add(angle.multiply(i, i, i))).colourTint(1, 1, 1, 0.15f));
 						}
 
 						if (this.magnetisedTo.distanceToSqr(this) < 3.1f) {
 							this.magnetisedTo.heal(50);
 							((EliteKingBamBamBamEntity)this.magnetisedTo).addEnergy(30);
 							this.magnetisedTo.triggerAnim("Gold Consumption", "consume");
-							AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.ARMOR_EQUIP_GOLD).followEntity(this.magnetisedTo).category(SoundSource.HOSTILE).pitch(0.3f).varyPitch(0.1f)), this.magnetisedTo);
+							SoundBuilder.following(SoundEvents.ARMOR_EQUIP_GOLD, this.magnetisedTo).category(boss.getSoundSource()).pitch(0.3f).varyPitch(0.1f).play();
 							particlePacket.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.HEART, this.magnetisedTo).spawnNTimes(10));
 
 							discard();
 						}
 
-						particlePacket.sendToAllPlayersTrackingEntity((ServerLevel)level(), this.magnetisedTo);
+						particlePacket.sendToAllPlayersTrackingEntity(this.magnetisedTo);
 					}
 				}
 

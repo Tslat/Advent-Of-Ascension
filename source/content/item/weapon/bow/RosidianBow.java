@@ -12,7 +12,7 @@ import net.tslat.aoa3.util.WorldUtil;
 
 import java.util.List;
 
-public class RosidianBow extends BaseBow {
+public class RosidianBow extends AoABow {
 	public RosidianBow(Item.Properties properties) {
 		super(properties);
 	}

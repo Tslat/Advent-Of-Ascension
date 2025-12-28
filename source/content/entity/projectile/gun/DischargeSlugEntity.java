@@ -1,51 +1,45 @@
 package net.tslat.aoa3.content.entity.projectile.gun;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
-import net.tslat.aoa3.content.entity.projectile.HardProjectile;
-import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.aoa3.content.entity.projectile.base.PhysicalWeaponProjectile;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.library.builder.AoAExplosionBuilder;
+import net.tslat.tme.api.explosion.StandardExplosion;
 
-public class DischargeSlugEntity extends BaseBullet implements HardProjectile {
-	public DischargeSlugEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
-		super(entityType, world);
+public class DischargeSlugEntity extends PhysicalWeaponProjectile {
+	public DischargeSlugEntity(EntityType<? extends DischargeSlugEntity> entityType, Level level) {
+		super(entityType, level);
 	}
 
-	public DischargeSlugEntity(Level world) {
-		super(AoAProjectiles.DISCHARGE_SLUG.get(), world);
+	public DischargeSlugEntity(EntityType<? extends DischargeSlugEntity> entityType, Level level, WeaponFiringContext context) {
+		super(entityType, level, context);
 	}
 
-	public DischargeSlugEntity(LivingEntity shooter, BaseGun gun, int piercingValue) {
-		super(AoAProjectiles.DISCHARGE_SLUG.get(), shooter, gun, 1.0f, piercingValue, 20.0f);
-	}
-
-	public DischargeSlugEntity(LivingEntity shooter, BaseGun gun, InteractionHand hand, int maxAge, int piercingValue) {
-		super(AoAProjectiles.DISCHARGE_SLUG.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
-	}
-
-	public DischargeSlugEntity(Level world, double x, double y, double z) {
-		super(AoAProjectiles.DISCHARGE_SLUG.get(), world, x, y, z);
+	public DischargeSlugEntity(Level level, WeaponFiringContext context) {
+		this(AoAProjectiles.DISCHARGE_SLUG.get(), level, context);
 	}
 
 	@Override
-	public void doBlockImpact(Vec3 impactLocation, Direction face, BlockPos blockPos) {
-		explode(impactLocation);
+	protected void doBlockImpact(BlockHitResult rayTrace, BlockState impactedBlock) {
+		explode(rayTrace.getLocation());
 	}
 
 	@Override
-	public void doEntityImpact(Entity target, Vec3 impactLocation) {
-		explode(impactLocation);
+	protected void doEntityImpact(EntityHitResult rayTrace, Entity hitEntity) {
+		explode(rayTrace.getLocation());
 	}
 
 	protected void explode(Vec3 position) {
-		WorldUtil.createExplosion(getOwner(), level(), this, 1.8f);
+		if (level() instanceof ServerLevel level)
+			AoAExplosionBuilder.at(level, position, AoAExplosions.DISCHARGE_SLUG, StandardExplosion::new).explodingEntity(this).explode();
 	}
 }

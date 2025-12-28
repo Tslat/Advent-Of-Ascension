@@ -24,7 +24,6 @@ import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.content.entity.ai.mob.MultiTypeAttackGoal;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
@@ -32,10 +31,11 @@ import net.tslat.aoa3.content.entity.ai.mob.TelegraphedRangedAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.constant.DefaultAnimations;
 
@@ -108,16 +108,16 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 			double depth = boundingBox.maxZ - boundingBox.minZ;
 			double height = boundingBox.maxY - boundingBox.minY;
 			int particleCount = (int)Math.ceil(3 + (10 * width * depth * height));
-			TELParticlePacket packet = new TELParticlePacket(particleCount);
+			TMEParticlePacket packet = new TMEParticlePacket(particleCount);
 
 			for (int i = 0; i < particleCount; i++) {
 				packet.particle(ParticleBuilder.forRandomPosInEntity(EntityTrackingParticleOptions.ambient(AoAParticleTypes.FREEZING_SNOWFLAKE), this)
 						.lifespan(Mth.ceil(3 / (this.random.nextFloat() * 0.8f + 0.2f)))
 						.scaleMod(0.3f)
-						.velocity(RandomUtil.randomScaledGaussianValue(0.05d), 0, RandomUtil.randomScaledGaussianValue(0.05d)));
+						.velocity(RandomUtil.scaledGaussianValue(0.05d), 0, RandomUtil.scaledGaussianValue(0.05d)));
 			}
 
-			packet.sendToAllNearbyPlayers((ServerLevel)level(), position(), 10);
+			packet.sendToAllPlayersNearby((ServerLevel)level(), position(), 10);
 			remove(RemovalReason.KILLED);
 		}
 
@@ -169,15 +169,15 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 		double baseX = getX();
 		double baseY = getEyeY();
 		double baseZ = getZ();
-		TELParticlePacket packet = new TELParticlePacket(5);
+		TMEParticlePacket packet = new TMEParticlePacket(5);
 
 		for (int i = 0; i < 5; i++) {
-			double x = baseX + RandomUtil.randomScaledGaussianValue(0.5f);
-			double y = baseY + RandomUtil.randomScaledGaussianValue(0.5f);
-			double z = baseZ + RandomUtil.randomScaledGaussianValue(0.5f);
-			double targetX = target.getX() + RandomUtil.randomScaledGaussianValue(0.5f);
-			double targetY = target.getEyeY() + RandomUtil.randomScaledGaussianValue(0.5f);
-			double targetZ = target.getZ() + RandomUtil.randomScaledGaussianValue(0.5f);
+			double x = baseX + RandomUtil.scaledGaussianValue(0.5f);
+			double y = baseY + RandomUtil.scaledGaussianValue(0.5f);
+			double z = baseZ + RandomUtil.scaledGaussianValue(0.5f);
+			double targetX = target.getX() + RandomUtil.scaledGaussianValue(0.5f);
+			double targetY = target.getEyeY() + RandomUtil.scaledGaussianValue(0.5f);
+			double targetZ = target.getZ() + RandomUtil.scaledGaussianValue(0.5f);
 
 			packet.particle(ParticleBuilder.forPosition(EntityTrackingParticleOptions.fromEntity(AoAParticleTypes.FREEZING_SNOWFLAKE, this), baseX, baseY, baseZ)
 					.scaleMod(0.4f)
@@ -188,7 +188,7 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 		if (tickCount % 5 == 0)
 			playSound(AoASounds.ICE_WIND.get(), 1.5f, 1f);
 
-		packet.sendToAllNearbyPlayers((ServerLevel)level(), getEyePosition(), 200);
+		packet.sendToAllPlayersNearby((ServerLevel)level(), getEyePosition(), 200);
 	}
 
 	@Override
@@ -202,8 +202,8 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 	@Override
 	public void doRangedAttackBlock(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 15f);
+	public static SpawnPlacements.SpawnPredicate<IceGiantEntity> spawnRules(EntityType<IceGiantEntity> entityType) {
+		return EntitySpawnConditions.createDayMonster(entityType).spawnChance(1 / 15f);
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<IceGiantEntity> entityType) {

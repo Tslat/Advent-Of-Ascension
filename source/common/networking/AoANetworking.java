@@ -49,14 +49,14 @@ public class AoANetworking {
 		registrar.playToClient(WikiSearchPacket.TYPE, WikiSearchPacket.CODEC, WikiSearchPacket::receiveMessage);
 		registrar.playToClient(PatchouliBookSyncPacket.TYPE, PatchouliBookSyncPacket.CODEC, PatchouliBookSyncPacket::receiveMessage);
 		registrar.playToClient(UpdateClientMovementPacket.TYPE, UpdateClientMovementPacket.CODEC, UpdateClientMovementPacket::receiveMessage);
-		registrar.playToClient(AoASoundBuilderPacket.TYPE, AoASoundBuilderPacket.CODEC, AoASoundBuilderPacket::receiveMessage);
 		registrar.playToClient(MultipartTogglePacket.TYPE, MultipartTogglePacket.CODEC, MultipartTogglePacket::receiveMessage);
 		registrar.playToClient(HaloChangePacket.TYPE, HaloChangePacket.CODEC, HaloChangePacket::receiveMessage);
 		registrar.playToClient(WorldEventSyncPacket.TYPE, WorldEventSyncPacket.CODEC, WorldEventSyncPacket::receiveMessage);
 		registrar.playToClient(WorldEventUpdatePacket.TYPE, WorldEventUpdatePacket.CODEC, WorldEventUpdatePacket::receiveMessage);
+		registrar.playToClient(EntityRidePlayerPacket.TYPE, EntityRidePlayerPacket.CODEC, EntityRidePlayerPacket::receiveMessage);
 	}
 
-	public static void sendToAllNearbyPlayers(AoAPacket packet, ServerLevel level, Vec3 origin, double radius) {
+	public static void sendToAllPlayersNearby(AoAPacket packet, ServerLevel level, Vec3 origin, double radius) {
 		PacketDistributor.sendToPlayersNear(level, null, origin.x, origin.y, origin.z, radius, packet);
 	}
 

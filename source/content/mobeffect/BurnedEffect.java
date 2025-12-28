@@ -9,7 +9,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.effectslib.api.ExtendedMobEffect;
+import net.tslat.tme.api.mobeffect.ExtendedMobEffect;
 import org.jetbrains.annotations.Nullable;
 
 public class BurnedEffect extends ExtendedMobEffect {

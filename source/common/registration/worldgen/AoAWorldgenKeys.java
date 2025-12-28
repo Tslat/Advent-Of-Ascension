@@ -94,6 +94,17 @@ public final class AoAWorldgenKeys {
 			public static final ResourceKey<ConfiguredFeature<?, ?>> LOOSE_SAND_PATCH = key("loose_sand_patch");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> DRIED_OASIS_LAKE = key("dried_oasis_lake");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> BARON_STONE_PILLARS = key("baron_stone_pillars");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> VARSIUM_ORE = key("varsium_ore");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> BARONYTE_ORE = key("baronyte_ore");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> BLAZIUM_ORE = key("blazium_ore");
+
+			public static final ResourceKey<ConfiguredFeature<?, ?>> BARON_FOSSIL_SITE = key("baron_fossil_site");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> FALSE_BARON_OASIS = key("false_baron_oasis");
+
+			public static final ResourceKey<ConfiguredFeature<?, ?>> BARATHOS_SAND_SHRUBS = key("barathos_sand_shrubs");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> BARATHOS_STONE_SHRUBS = key("barathos_stone_shrubs");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> BARATHOS_SHRUBS = key("barathos_shrubs");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> BARATHOS_DEAD_TREE = key("barathos_dead_tree");
 
 			private static ResourceKey<ConfiguredFeature<?, ?>> key(String id) {
 				return ResourceKey.create(Registries.CONFIGURED_FEATURE, AdventOfAscension.id(id));
@@ -189,6 +200,17 @@ public final class AoAWorldgenKeys {
 			public static final ResourceKey<PlacedFeature> LOOSE_SAND_PATCH = key("loose_sand_patch");
 			public static final ResourceKey<PlacedFeature> DRIED_OASIS_LAKE = key("dried_oasis_lake");
 			public static final ResourceKey<PlacedFeature> BARON_STONE_PILLARS = key("baron_stone_pillars");
+			public static final ResourceKey<PlacedFeature> VARSIUM_ORE = key("varsium_ore");
+			public static final ResourceKey<PlacedFeature> BARONYTE_ORE = key("baronyte_ore");
+			public static final ResourceKey<PlacedFeature> BLAZIUM_ORE = key("blazium_ore");
+
+			public static final ResourceKey<PlacedFeature> BARON_FOSSIL_SITES = key("baron_fossil_sites");
+			public static final ResourceKey<PlacedFeature> FALSE_BARON_OASIS = key("false_baron_oasis");
+
+			public static final ResourceKey<PlacedFeature> BARATHOS_SAND_SHRUBS = key("barathos_sand_shrubs");
+			public static final ResourceKey<PlacedFeature> BARATHOS_STONE_SHRUBS = key("barathos_stone_shrubs");
+			public static final ResourceKey<PlacedFeature> BARATHOS_SHRUBS = key("barathos_shrubs");
+			public static final ResourceKey<PlacedFeature> BARATHOS_DEAD_TREE = key("barathos_dead_tree");
 
 			private static ResourceKey<PlacedFeature> key(String id) {
 				return ResourceKey.create(Registries.PLACED_FEATURE, AdventOfAscension.id(id));
@@ -229,6 +251,7 @@ public final class AoAWorldgenKeys {
 		public static final ResourceKey<BiomeModifier> SASQUATCH_SPAWNS = key("sasquatch_spawns");
 		public static final ResourceKey<BiomeModifier> BUSH_BABY_SPAWNS = key("bush_baby_spawns");
 		public static final ResourceKey<BiomeModifier> VOID_WALKER_SPAWNS = key("void_walker_spawns");
+		public static final ResourceKey<BiomeModifier> END_VOID_WALKER_SPAWNS = key("end_void_walker_spawns");
 		public static final ResourceKey<BiomeModifier> ANCIENT_GOLEM_SPAWNS = key("ancient_golem_spawns");
 		public static final ResourceKey<BiomeModifier> GHOST_SPAWNS = key("ghost_spawns");
 		public static final ResourceKey<BiomeModifier> BOMB_CARRIER_SPAWNS = key("bomb_carrier_spawns");

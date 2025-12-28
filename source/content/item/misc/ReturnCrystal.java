@@ -16,6 +16,7 @@ import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.*;
 
 import java.util.List;
+import java.util.Set;
 
 public class ReturnCrystal extends Item {
 	public ReturnCrystal() {
@@ -54,20 +55,22 @@ public class ReturnCrystal extends Item {
 
 			if (!NowhereEvents.isInLobbyRegion(pl.blockPosition())) {
 				if (NowhereEvents.isInBossRegion(pl.blockPosition()) && !AdvancementUtil.isAdvancementCompleted(pl, AdventOfAscension.id("nowhere/root"))) {
-					AoAScheduler.scheduleSyncronisedTask(() -> {
+					AoAScheduler.schedule(1, tick -> {
 						PlayerUtil.resetToDefaultStatus(pl);
-						pl.connection.teleport(17.5d, 452.5d, 3.5d, 0, pl.getXRot());
+						pl.placePortalTicket(pl.blockPosition());
+						pl.teleportTo(pl.serverLevel(), 17.5d, 452.5d, 3.5d, Set.of(), 0, pl.getXRot());
 						InventoryUtil.clearItems(pl, AoAItems.RETURN_CRYSTAL);
 						PlayerUtil.getAdventPlayer(pl).storage.returnStoredItems();
-					}, 1);
+					});
 				}
 				else {
-					AoAScheduler.scheduleSyncronisedTask(() -> {
+					AoAScheduler.schedule(1, tick -> {
 						PlayerUtil.resetToDefaultStatus(pl);
-						pl.connection.teleport(16.5d, 1501.5d, 16.5d, 180, pl.getXRot());
+						pl.placePortalTicket(pl.blockPosition());
+						pl.teleportTo(pl.serverLevel(), 16.5d, 1501.5d, 16.5d, Set.of(), 180, pl.getXRot());
 						InventoryUtil.clearItems(pl, AoAItems.RETURN_CRYSTAL);
 						PlayerUtil.getAdventPlayer(pl).storage.returnStoredItems();
-					}, 1);
+					});
 				}
 			}
 		}

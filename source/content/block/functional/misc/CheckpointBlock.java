@@ -24,12 +24,11 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
-import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.aoa3.library.builder.SoundBuilder;
-import net.tslat.aoa3.library.object.PositionAndRotation;
+import net.tslat.aoa3.library.object.container.PositionAndRotation;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.tme.api.sound.SoundBuilder;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -73,14 +72,14 @@ public class CheckpointBlock extends Block {
 
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-		if (entity.tickCount % 5 == 0 && !level.isClientSide() && EntityPredicate.SURVIVAL_PLAYER.test(entity)) {
-			ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayer)entity);
+		if (entity.tickCount % 5 == 0 && !level.isClientSide() && entity instanceof ServerPlayer pl && !pl.isSpectator() && !pl.isCreative()) {
+			ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 			PositionAndRotation checkpoint = plData.storage.getActiveCheckpoint();
 
 			if (checkpoint == null || checkpoint.asBlockPos().distSqr(pos) > 9) {
 				plData.storage.setActiveCheckpoint(PositionAndRotation.from(pos, entity));
 				plData.getPlayer().sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("checkpoint.set"), ChatFormatting.GREEN), true);
-				new SoundBuilder(AoASounds.CHECKPOINT).notInWorld().execute();
+				SoundBuilder.localAmbience(AoASounds.CHECKPOINT, level).onlyFor(plData.getPlayer()).play();
 			}
 		}
 	}

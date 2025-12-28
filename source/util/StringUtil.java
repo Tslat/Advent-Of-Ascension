@@ -40,4 +40,14 @@ public final class StringUtil {
 	public static String removeFormatting(String string) {
 		return FORMATTING_CODE_PATTERN.matcher(string).replaceAll("");
 	}
+
+	public static String lazyPluralise(String text) {
+		if (text.endsWith("s") || text.endsWith("y"))
+			return text;
+
+		if (text.endsWith("x") || text.endsWith("o"))
+			return text + "es";
+
+		return text + "s";
+	}
 }

@@ -14,15 +14,16 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.EventHooks;
@@ -32,15 +33,16 @@ import net.tslat.aoa3.common.particleoption.EntityTrackingParticleOptions;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.entity.*;
+import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
+import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
+import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.FireballEntity;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableRangedAttack;
@@ -55,8 +57,11 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttack
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetRetaliateTarget;
 import net.tslat.smartbrainlib.registry.SBLMemoryTypes;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
@@ -106,7 +111,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                                 new AnimatableRangedAttack<>(0)
                                         .attackInterval(entity -> entity.getRandom().nextIntBetweenInclusive(10, 20))
                                         .attackRadius(24)
-                                        .whenStarting(entity -> ATTACK_STATE.set(this, FIREBALL))
+                                        .whenStarting(entity -> setAttackState(FIREBALL))
                                         .whenStopping(entity -> BrainUtils.setForgettableMemory(entity, SBLMemoryTypes.SPECIAL_ATTACK_COOLDOWN.get(), true, 10)),
                                 30
                         ),
@@ -143,7 +148,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                 if (getRunningTime() <= 5)
                     return true;
 
-                TELParticlePacket packet = new TELParticlePacket();
+                TMEParticlePacket packet = new TMEParticlePacket();
 
                 for (int i = -180; i <= 180; i += 8) {
                     double angle = Math.toRadians(i * entity.tickCount);
@@ -154,7 +159,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                     double velocityZ = z - entity.getZ();
 
                     packet.particle(ParticleBuilder.forPosition(EntityTrackingParticleOptions.fromEntity(AoAParticleTypes.BURNING_FLAME, entity), x, y, z)
-                            .colourOverride(0f, 0f, 0f, 0f)
+                            .colourTint(0f, 0f, 0f, 0f)
                             .scaleMod(0.35f)
                             .lifespan(Mth.ceil(3 / (entity.random.nextFloat() * 0.8f + 0.2f)))
                             .velocity(velocityX, -0.6f, velocityZ));
@@ -163,7 +168,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                     packet.particle(ParticleBuilder.forPosition(ParticleTypes.SMOKE, x, y, z));
                 }
 
-                packet.sendToAllNearbyPlayers((ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
+                packet.sendToAllPlayersNearby((ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
 
                 if (getRunningTime() % 9 == 0 || getRunningTime() % 19 == 0)
                     entity.playSound(AoASounds.FLAMETHROWER.get(), 2, 1);
@@ -194,26 +199,26 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                 if (getRunningTime() <= 24)
                     return true;
 
-                ATTACK_STATE.set(entity, FLAMETHROWER);
+                entity.setAttackState(FLAMETHROWER);
 
                 Vec3 position = entity.position();
                 double baseX = position.x;
                 double baseY = entity.getEyeY() - 1;
                 double baseZ = position.z;
-                TELParticlePacket packet = new TELParticlePacket(ParticleBuilder.forPosition(ParticleTypes.LARGE_SMOKE, baseX, baseY, baseZ));
+                TMEParticlePacket packet = new TMEParticlePacket(ParticleBuilder.forPosition(ParticleTypes.LARGE_SMOKE, baseX, baseY, baseZ));
 
                 for (int i = 0; i < 5; i++) {
-                    Vec3 velocity = this.target.getEyePosition().subtract(baseX + RandomUtil.randomScaledGaussianValue(0.5f), baseY + RandomUtil.randomScaledGaussianValue(0.5f), baseZ + RandomUtil.randomScaledGaussianValue(0.5f)).normalize().scale(0.75f);
+                    Vec3 velocity = this.target.getEyePosition().subtract(baseX + RandomUtil.scaledGaussianValue(0.5f), baseY + RandomUtil.scaledGaussianValue(0.5f), baseZ + RandomUtil.scaledGaussianValue(0.5f)).normalize().scale(0.75f);
 
                     packet.particle(ParticleBuilder.forPosition(EntityTrackingParticleOptions.fromEntity(AoAParticleTypes.BURNING_FLAME, entity), baseX, baseY, baseZ)
-                            .colourOverride(0f, 0f, 0f, 0f)
+                            .colourTint(0f, 0f, 0f, 0f)
                             .scaleMod(0.35f)
                             .velocity(velocity.x, velocity.y, velocity.z));
                     packet.particle(ParticleBuilder.forPosition(ParticleTypes.SMALL_FLAME, baseX, baseY, baseZ)
                             .velocity(velocity.x, velocity.y, velocity.z));
                 }
 
-                packet.sendToAllNearbyPlayers((ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
+                packet.sendToAllPlayersNearby((ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
 
                 if (getRunningTime() % 9 == 0 || getRunningTime() % 19 == 0)
                     entity.playSound(AoASounds.FLAMETHROWER.get(), 2, 1);
@@ -245,9 +250,9 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
             cooldownFor(entity -> 160);
             whenStopping(entity -> {
                 BrainUtils.setForgettableMemory(entity, SBLMemoryTypes.SPECIAL_ATTACK_COOLDOWN.get(), true, 20);
-                ATTACK_STATE.set(entity, FIREBALL);
+                entity.setAttackState(FIREBALL);
             });
-            whenStarting(entity -> ATTACK_STATE.set(entity, FLAMETHROWER_OPEN));
+            whenStarting(entity -> entity.setAttackState(FLAMETHROWER_OPEN));
         }
     }
 
@@ -327,27 +332,27 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
         if (level().isClientSide()) {
             if (hasAura()) {
                 for (int i = 0; i < 3; i++) {
-                    double cos = Math.cos(getX() * RandomUtil.randomValueBetween(-1, 1));
-                    double sin = Math.sin(getZ() * RandomUtil.randomValueBetween(-1, 1));
+                    double cos = Math.cos(getX() * RandomUtil.valueBetween(-1, 1));
+                    double sin = Math.sin(getZ() * RandomUtil.valueBetween(-1, 1));
                     double startX = cos * getBbWidth() + getX();
                     double startZ = sin * getBbWidth() + getZ();
                     double startY = getRandomY();
 
                     ParticleBuilder.forPosition(EntityTrackingParticleOptions.fromEntity(AoAParticleTypes.FIRE_AURA, this), startX, startY, startZ)
                             .scaleMod(0.25f)
-                            .colourOverride(1f, 1f, 1f, 0.75f)
+                            .colourTint(1f, 1f, 1f, 0.75f)
                             .velocity(RandomUtil.fiftyFifty() ? -1 : 1, RandomUtil.fiftyFifty() ? -1 : 1, RandomUtil.fiftyFifty() ? -1 : 1)
-                            .spawnParticles(level());
+                            .spawnClientParticles(level());
                 }
             }
 
-            ParticleBuilder.forPosition(ParticleTypes.FLAME, getX() + RandomUtil.randomValueBetween(-0.2f, 0.2f), getEyeY() - 1 + RandomUtil.randomValueBetween(-0.2f, 0.2f), getZ() + RandomUtil.randomValueBetween(-0.2f, 0.2f)).spawnParticles(level());
+            ParticleBuilder.forPosition(ParticleTypes.FLAME, getX() + RandomUtil.valueBetween(-0.2f, 0.2f), getEyeY() - 1 + RandomUtil.valueBetween(-0.2f, 0.2f), getZ() + RandomUtil.valueBetween(-0.2f, 0.2f)).spawnClientParticles(level());
 
             if (getRandom().nextInt(10) == 0) {
-                ParticleBuilder.forPosition(ParticleTypes.SMOKE, getX(), getEyeY() - 1, getZ()).spawnParticles(level());
+                ParticleBuilder.forPosition(ParticleTypes.SMOKE, getX(), getEyeY() - 1, getZ()).spawnClientParticles(level());
 
                 if (getDeltaMovement().horizontalDistanceSqr() == 0)
-                    ParticleBuilder.forPosition(ParticleTypes.DRIPPING_LAVA, getX(), getEyeY() - 1, getZ()).spawnParticles(level());
+                    ParticleBuilder.forPosition(ParticleTypes.DRIPPING_LAVA, getX(), getEyeY() - 1, getZ()).spawnClientParticles(level());
             }
         }
         else if (hasAura() && BrainUtils.getTargetOfEntity(this) == null) {
@@ -395,7 +400,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                 if (source.getDirectEntity() instanceof LivingEntity attacker) {
                     DamageUtil.safelyDealDamage(DamageUtil.entityDamage(AoADamageTypes.MOB_FIRE_RECOIL, this), attacker, 3);
                     attacker.igniteForSeconds((int)Math.ceil(Math.max(0, attacker.getRemainingFireTicks()) / 20f) + 2);
-                    attacker.addEffect(new MobEffectInstance(AoAMobEffects.NETHENGEIC_CURSE, 200));
+                    EntityUtil.applyPotions(attacker, this, new EffectBuilder(AoAMobEffects.NETHENGEIC_CURSE, 200));
                 }
             }
             else if (DamageUtil.isEnergyDamage(source)) {
@@ -408,15 +413,8 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
         return super.hurt(source, amount);
     }
 
-    public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-        return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT.noPeacefulSpawn().noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock().and((entityType, levelAccessor, spawnReason, blockPos, rand) -> {
-            if (!(levelAccessor instanceof Level level) || (spawnReason != MobSpawnType.STRUCTURE && spawnReason != MobSpawnType.NATURAL))
-                return true;
-
-            return EntityRetrievalUtil.getEntities(level,
-                    new AABB(blockPos.getX() - 15, blockPos.getY() - 2, blockPos.getZ() - 15, blockPos.getX() + 15, blockPos.getY() + 2, blockPos.getZ() + 15),
-                    entity -> entity.getType() == AoAMonsters.NETHENGEIC_BEAST.get()).isEmpty();
-        });
+    public static SpawnPlacements.SpawnPredicate<NethengeicBeastEntity> spawnRules(EntityType<NethengeicBeastEntity> entityType) {
+        return EntitySpawnConditions.create(entityType).noPeacefulSpawn().noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock().notNearEntities(NethengeicBeastEntity.class, 15, 2, 15);
     }
 
     public static AoAEntityStats.AttributeBuilder entityStats(EntityType<NethengeicBeastEntity> entityType) {
@@ -432,7 +430,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(DefaultAnimations.genericWalkIdleController(this));
         controllers.add(new AnimationController<>(this, "living", 0, event -> {
-            if (!ATTACK_STATE.is(this, FLAMETHROWER)) {
+            if (!isAttackState(FLAMETHROWER)) {
                 event.getController().setAnimationSpeed(1 + (1 - (getHealth() / getMaxHealth())) * 5);
                 event.getController().setAnimation(DefaultAnimations.LIVING);
 
@@ -441,7 +439,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
 
             return PlayState.STOP;
         }));
-        controllers.add(AoAAnimations.genericHeldPoseController(this, FLAMETHROWER_ANIM, FLAMETHROWER_RELEASE_ANIM, entity -> ATTACK_STATE.isAny(entity, FLAMETHROWER_OPEN, FLAMETHROWER))
+        controllers.add(AoAAnimations.genericHeldPoseController(this, FLAMETHROWER_ANIM, FLAMETHROWER_RELEASE_ANIM, entity -> isAttackState(FLAMETHROWER_OPEN) || isAttackState(FLAMETHROWER))
                 .triggerableAnim("fire_aura", FIRE_AURA_ANIM)
                 .triggerableAnim("fire_spin", FIRE_SPIN_ANIM));
     }

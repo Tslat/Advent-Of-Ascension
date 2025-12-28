@@ -11,9 +11,9 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.AoATags;
+import net.tslat.aoa3.common.registration.item.AoAArtificeDevices;
 import net.tslat.aoa3.common.registration.item.AoADataComponents;
-import net.tslat.aoa3.common.registration.item.AoATools;
-import net.tslat.aoa3.content.item.weapon.staff.BaseStaff;
+import net.tslat.aoa3.content.item.weapon.staff.AoAStaff;
 import net.tslat.aoa3.util.RecipeUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,7 +32,7 @@ public class ArcanumBatteryAttachRecipe extends CustomRecipe implements RecipeBo
 		super(recipeBookDetails.category());
 
 		this.recipeBookDetails = recipeBookDetails;
-		this.ingredients = NonNullList.of(Ingredient.EMPTY, Ingredient.of(AoATags.Items.STAVES), Ingredient.of(AoATools.ARCANUM_BATTERY));
+		this.ingredients = NonNullList.of(Ingredient.EMPTY, Ingredient.of(AoATags.Items.STAVES), Ingredient.of(AoAArtificeDevices.ARCANUM_BATTERY));
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class ArcanumBatteryAttachRecipe extends CustomRecipe implements RecipeBo
 
 		for (ItemStack stack : input.items()) {
 			if (stack.is(AoATags.Items.STAVES)) {
-				if (BaseStaff.StoredCasts.getIfPresent(stack).map(storedCasts -> storedCasts.stored() >= 0).orElse(false))
+				if (AoAStaff.StoredCasts.getIfPresent(stack).map(storedCasts -> storedCasts.stored() >= 0).orElse(false))
 					return false;
 			}
 		}
@@ -78,7 +78,7 @@ public class ArcanumBatteryAttachRecipe extends CustomRecipe implements RecipeBo
 			if (stack.is(AoATags.Items.STAVES)) {
 				staff = stack.copy();
 
-				staff.set(AoADataComponents.STORED_SPELL_CASTS, new BaseStaff.StoredCasts(0, OptionalInt.empty()));
+				staff.set(AoADataComponents.STORED_SPELL_CASTS, new AoAStaff.StoredCasts(0, OptionalInt.empty()));
 
 				break;
 			}

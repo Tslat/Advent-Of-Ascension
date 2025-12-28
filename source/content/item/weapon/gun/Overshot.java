@@ -2,44 +2,30 @@ package net.tslat.aoa3.content.item.weapon.gun;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
 import net.tslat.aoa3.util.LocaleUtil;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class Overshot extends BaseGun {
+public class Overshot extends AoAGun {
 	public Overshot(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_GUN_GENERIC_FIRE_2.get();
-	}
+	protected void onGunFire(ServerLevel level, WeaponFiringContext context, WeaponProjectile projectile) {
+		WeaponProjectile projectile2 = findAndConsumeAmmo(level, context);
 
-	@Override
-	protected boolean fireGun(ServerLevel level, LivingEntity shooter, ItemStack stack, InteractionHand hand) {
-		if (super.fireGun(level, shooter, stack, hand)) {
-			BaseBullet bullet = findAndConsumeAmmo(shooter, stack, hand);
+		if (projectile2 == null || !(projectile2.asEntity() instanceof Entity bullet))
+			return;
 
-			if (bullet != null) {
-				bullet.teleportTo(bullet.getX(), bullet.getY() + 0.1f, bullet.getZ());
-				shooter.level().addFreshEntity(bullet);
-			}
-
-			return true;
-		}
-
-		return false;
+		projectile2.fromArmPosWithOffset(0, 0.1f).shootingAtTarget(context.velocity(), context.inaccuracy());
+		level.addFreshEntity(bullet);
 	}
 
 	@Override

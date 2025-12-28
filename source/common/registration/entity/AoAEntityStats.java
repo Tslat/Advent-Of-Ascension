@@ -16,6 +16,7 @@ import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.content.entity.animal.ShinySquidEntity;
 import net.tslat.aoa3.content.entity.animal.barathos.ArkbackEntity;
 import net.tslat.aoa3.content.entity.animal.barathos.EmperorBeastEntity;
+import net.tslat.aoa3.content.entity.animal.barathos.MasonBeetleEntity;
 import net.tslat.aoa3.content.entity.animal.fish.BasicFishEntity;
 import net.tslat.aoa3.content.entity.animal.fish.BasicLavaFishEntity;
 import net.tslat.aoa3.content.entity.animal.precasia.DeinotheriumEntity;
@@ -32,6 +33,7 @@ import net.tslat.aoa3.content.entity.boss.smash.SmashEntity;
 import net.tslat.aoa3.content.entity.boss.tyrosaur.EliteTyrosaurEntity;
 import net.tslat.aoa3.content.entity.boss.tyrosaur.TyrosaurEntity;
 import net.tslat.aoa3.content.entity.boss.tyrosaur.WoundedTyrosaurEntity;
+import net.tslat.aoa3.content.entity.monster.barathos.EchodarEntity;
 import net.tslat.aoa3.content.entity.monster.barathos.NospikeEntity;
 import net.tslat.aoa3.content.entity.monster.barathos.TharaflyEntity;
 import net.tslat.aoa3.content.entity.monster.misc.ThornyPlantSproutEntity;
@@ -111,8 +113,10 @@ public final class AoAEntityStats {
 	private static void doBarathosEntityStats(final EntityAttributeCreationEvent ev) {
 		NospikeEntity.entityStats(AoAMonsters.NOSPIKE.get()).build(ev);
 		TharaflyEntity.entityStats(AoAMonsters.THARAFLY.get()).build(ev);
+		EchodarEntity.entityStats(AoAMonsters.ECHODAR.get()).build(ev);
 		ArkbackEntity.entityStats(AoAAnimals.ARKBACK.get()).build(ev);
 		EmperorBeastEntity.entityStats(AoAAnimals.EMPEROR_BEAST.get()).build(ev);
+		MasonBeetleEntity.entityStats(AoAAnimals.MASON_BEETLE.get()).build(ev);
 	}
 
 	private static void doBossEntityStats(final EntityAttributeCreationEvent ev) {

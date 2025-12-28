@@ -12,7 +12,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class LelyetianGreatblade extends BaseGreatblade {
+public class LelyetianGreatblade extends AoAGreatblade {
 	public LelyetianGreatblade(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

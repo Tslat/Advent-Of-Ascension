@@ -8,30 +8,31 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.phys.EntityHitResult;
-import net.tslat.aoa3.content.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
 
-public class SunshineBow extends BaseBow {
+public class SunshineBow extends AoABow {
 	public SunshineBow(Item.Properties properties) {
 		super(properties);
 	}
 
 	@Override
-	public void onEntityImpact(CustomArrowEntity arrow, @Nullable Entity shooter, EntityHitResult hitResult, ItemStack stack, float velocity) {
-		if (arrow.isCritArrow()) {
+	public void onEntityImpact(Projectile projectile, @Nullable Entity shooter, EntityHitResult hitResult, ItemStack stack, float velocity) {
+		if (projectile instanceof AbstractArrow arrow && arrow.isCritArrow() && !arrow.level().isClientSide) {
 			AreaEffectCloud cloud = new AreaEffectCloud(arrow.level(), arrow.getX(), arrow.getY(), arrow.getZ());
 
 			cloud.addEffect(new MobEffectInstance(MobEffects.GLOWING, 200, 0, true, false));
@@ -47,9 +48,8 @@ public class SunshineBow extends BaseBow {
 
 			arrow.level().addFreshEntity(cloud);
 
-			for (LivingEntity entity : EntityRetrievalUtil.<LivingEntity>getEntities(arrow.level(), arrow.getBoundingBox().inflate(30, 1, 30), EntityUtil::isHostileMob)) {
-				EntityUtil.applyPotions(entity, new EffectBuilder(MobEffects.GLOWING, 200));
-			}
+			EntityUtil.applyPotions(EntityRetrievalUtil.getEntities(arrow, 30, 1, 30, LivingEntity.class, target -> EntityUtil.areProbablyEnemies(target, shooter)), shooter,
+									new EffectBuilder(MobEffects.GLOWING, 200));
 		}
 	}
 

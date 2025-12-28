@@ -9,7 +9,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
@@ -56,7 +56,7 @@ public final class EntitySpawningUtil {
 	}
 
 	public static <T extends Entity> T spawnEntity(ServerLevel level, T entity, Vec3 position, MobSpawnType spawnReason, Consumer<T> entityModifications) {
-		entity.moveTo(position.x(), position.y(), position.z(), Mth.wrapDegrees((float)RandomUtil.randomValueUpTo(360d)), 0);
+		entity.moveTo(position.x(), position.y(), position.z(), Mth.wrapDegrees((float)RandomUtil.valueUpTo(360d)), 0);
 		entityModifications.accept(entity);
 
 		if (entity instanceof Mob mob) {

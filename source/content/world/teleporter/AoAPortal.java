@@ -7,7 +7,6 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -26,11 +25,12 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.block.functional.portal.NowherePortalBlock;
 import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
-import net.tslat.aoa3.library.builder.SoundBuilder;
+import net.tslat.aoa3.library.object.container.BoundingRegion;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.tme.api.sound.SoundBuilder;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.IdentityHashMap;
@@ -43,16 +43,22 @@ public interface AoAPortal extends Portal {
 
     PortalBlock getPortalBlock();
     Block getPortalFrame();
+
+    default int portalFrameWidth() {
+        return 5;
+    }
+
+    default int portalSpaceHeight() {
+        return 6;
+    }
+
     default DimensionTransition.PostDimensionTransition playTransitSound(Entity entity) {
         if (entity instanceof ServerPlayer pl) {
-            return entity2 -> {
-                new SoundBuilder(AoASounds.PORTAL_EXIT)
-                        .pitch(pl.getRandom().nextFloat() * 0.4F + 0.8F)
-                        .category(SoundSource.AMBIENT)
-                        .notInWorld()
-                        .include(pl)
-                        .execute();
-            };
+            return entity2 ->
+                    SoundBuilder.localAmbience(AoASounds.PORTAL_EXIT, pl.level())
+                            .varyPitch(0.2f)
+                            .onlyFor(pl)
+                            .play();
         }
 
         return DimensionTransition.PLAY_PORTAL_SOUND;
@@ -165,7 +171,7 @@ public interface AoAPortal extends Portal {
         if (!(state.getBlock() instanceof PortalBlock))
             plData.storage.removePortalReturnLocation(currentWorld.dimension());
 
-        return null;
+        return currentWorld.dimension() == AoADimensions.NOWHERE && destWorld.dimension() == AoADimensions.OVERWORLD ? locPos : null;
     }
 
     default BlockPos findExistingPortal(Level targetLevel, Entity entity, BlockPos originPos) {
@@ -310,26 +316,19 @@ public interface AoAPortal extends Portal {
 
     default BlockPos findSuitablePortalLocation(Level level, Entity entity, BlockPos originPos) {
         final int searchRadius = AoAConfigs.SERVER.portalSearchRadius.get();
-        final int worldFloor = level.getMinBuildHeight();
-        final int worldCeiling = worldFloor + level.dimensionType().logicalHeight();
+        final BoundingRegion boundingRegion = BoundingRegion.createForTeleportation(level);
         final BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
-        final int posX = Mth.floor(originPos.getX());
-        final int posY = originPos.getY() >= worldCeiling ? Math.min(worldCeiling, 65) : Mth.floor(originPos.getY());
-        final int posZ = Mth.floor(originPos.getZ());
+        final int posX = originPos.getX();
+        final int posY = originPos.getY() >= boundingRegion.maxY() ?
+                boundingRegion.isWithinY(level.getSeaLevel()) ?
+                        level.getSeaLevel() + 2 :
+                        (int)(boundingRegion.minY() + (boundingRegion.maxY() - boundingRegion.minY() / 2f)) :
+                originPos.getY();
+        final int posZ = originPos.getZ();
         BlockPos fallbackPos = null;
-        boolean isCleanSpawn = true;
 
         try (BulkSectionAccess sectionAccess = new BulkSectionAccess(level)) {
-            for (int x = posX - 2; x <= posX + 2 && isCleanSpawn; x++) {
-                for (int z = posZ - 2; z <= posZ + 2 && isCleanSpawn; z++) {
-                    for (int y = posY + 1; y <= posY + 6 && isCleanSpawn; y++) {
-                        if (y >= worldCeiling || !sectionAccess.getBlockState(checkPos.set(x, y, z)).isAir())
-                            isCleanSpawn = false;
-                    }
-                }
-            }
-
-            if (isCleanSpawn) {
+            if (hasExistingSpaceForPortal(posX, posY, posZ, sectionAccess, boundingRegion)) {
                 if (!sectionAccess.getBlockState(checkPos.set(posX, posY, posZ)).isAir())
                     return checkPos.set(posX, posY + 2, posZ).immutable();
 
@@ -337,10 +336,7 @@ public interface AoAPortal extends Portal {
             }
 
             for (int radius = 1; radius <= searchRadius; radius++) {
-                for (int y = posY - radius; y <= posY + radius; y += radius * 2) {
-                    if (y < worldFloor || y >= worldCeiling - 6)
-                        continue;
-
+                for (int y = (int)Math.max(posY - radius, boundingRegion.minY()); y <= (int)Math.min(posY + radius, boundingRegion.maxY()); y += radius * 2) {
                     int xNeg = -1;
 
                     for (int x = 0; x <= radius; x++) {
@@ -361,33 +357,11 @@ public interface AoAPortal extends Portal {
                             zNeg *= -1;
 
                             if (!sectionAccess.getBlockState(checkPos.set(x2, y, z2)).isAir()) {
-                                isCleanSpawn = true;
-
-                                for (int x3 = x2 - 2; x3 <= x2 + 2 && isCleanSpawn; x3++) {
-                                    for (int z3 = z2 - 2; z3 <= z2 + 2 && isCleanSpawn; z3++) {
-                                        for (int y3 = y + 1; y3 <= y + 6 && isCleanSpawn; y3++) {
-                                            if (!sectionAccess.getBlockState(checkPos.set(x3, y3, z3)).isAir())
-                                                isCleanSpawn = false;
-                                        }
-                                    }
-                                }
-
-                                if (isCleanSpawn)
+                                if (hasExistingSpaceForPortal(x2, y, z2, sectionAccess, boundingRegion))
                                     return checkPos.set(x2, y + 2, z2).immutable();
                             }
                             else if (fallbackPos == null) {
-                                isCleanSpawn = true;
-
-                                for (int x3 = x2 - 2; x3 <= x2 + 2 && isCleanSpawn; x3++) {
-                                    for (int z3 = z2 - 2; z3 <= z2 + 2 && isCleanSpawn; z3++) {
-                                        for (int y3 = y + 1; y3 <= y + 6 && isCleanSpawn; y3++) {
-                                            if (!sectionAccess.getBlockState(checkPos.set(x3, y3, z3)).isAir())
-                                                isCleanSpawn = false;
-                                        }
-                                    }
-                                }
-
-                                if (isCleanSpawn)
+                                if (hasExistingSpaceForPortal(x2, y, z2, sectionAccess, boundingRegion))
                                     fallbackPos = checkPos.set(x2, y + 2, z2).immutable();
                             }
                         }
@@ -399,7 +373,7 @@ public interface AoAPortal extends Portal {
                 for (int y = 0; y <= radius - 1; y++) {
                     int y2 = posY + y * yNeg;
 
-                    if (y2 < 0 || y2 >= worldCeiling - 6)
+                    if (!boundingRegion.isAboveMinY(y2) || !boundingRegion.isBelowMaxY(y2 + 6))
                         continue;
 
                     if (yNeg == 1 && y != 0)
@@ -420,33 +394,11 @@ public interface AoAPortal extends Portal {
                             int x2 = posX + x;
 
                             if (!sectionAccess.getBlockState(checkPos.set(x2, y2, z2)).isAir()) {
-                                isCleanSpawn = true;
-
-                                for (int x3 = x2 - 2; x3 <= x2 + 2 && isCleanSpawn; x3++) {
-                                    for (int z3 = z2 - 2; z3 <= z2 + 2 && isCleanSpawn; z3++) {
-                                        for (int y3 = y2 + 1; y3 <= y2 + 6 && isCleanSpawn; y3++) {
-                                            if (!sectionAccess.getBlockState(checkPos.set(x3, y3, z3)).isAir())
-                                                isCleanSpawn = false;
-                                        }
-                                    }
-                                }
-
-                                if (isCleanSpawn)
+                                if (hasExistingSpaceForPortal(x2, y2, z2, sectionAccess, boundingRegion))
                                     return checkPos.set(x2, y2 + 2, z2).immutable();
                             }
                             else if (fallbackPos == null) {
-                                isCleanSpawn = true;
-
-                                for (int x3 = x2 - 2; x3 <= x2 + 2 && isCleanSpawn; x3++) {
-                                    for (int z3 = z2 - 2; z3 <= z2 + 2 && isCleanSpawn; z3++) {
-                                        for (int y3 = y2 + 1; y3 <= y2 + 6 && isCleanSpawn; y3++) {
-                                            if (!sectionAccess.getBlockState(checkPos.set(x3, y3, z3)).isAir())
-                                                isCleanSpawn = false;
-                                        }
-                                    }
-                                }
-
-                                if (isCleanSpawn)
+                                if (hasExistingSpaceForPortal(x2, y2, z2, sectionAccess, boundingRegion))
                                     fallbackPos = checkPos.set(x2, y2 + 2, z2).immutable();
                             }
                         }
@@ -466,33 +418,11 @@ public interface AoAPortal extends Portal {
                             int z2 = posZ + z;
 
                             if (!sectionAccess.getBlockState(checkPos.set(x2, y2, z2)).isAir()) {
-                                isCleanSpawn = true;
-
-                                for (int x3 = x2 - 2; x3 <= x2 + 2 && isCleanSpawn; x3++) {
-                                    for (int z3 = z2 - 2; z3 <= z2 + 2 && isCleanSpawn; z3++) {
-                                        for (int y3 = y2 + 1; y3 <= y2 + 6 && isCleanSpawn; y3++) {
-                                            if (!sectionAccess.getBlockState(checkPos.set(x3, y3, z3)).isAir())
-                                                isCleanSpawn = false;
-                                        }
-                                    }
-                                }
-
-                                if (isCleanSpawn)
+                                if (hasExistingSpaceForPortal(x2, y2, z2, sectionAccess, boundingRegion))
                                     return checkPos.set(x2, y2 + 2, z2).immutable();
                             }
                             else if (fallbackPos == null) {
-                                isCleanSpawn = true;
-
-                                for (int x3 = x2 - 2; x3 <= x2 + 2 && isCleanSpawn; x3++) {
-                                    for (int z3 = z2 - 2; z3 <= z2 + 2 && isCleanSpawn; z3++) {
-                                        for (int y3 = y2 + 1; y3 <= y2 + 6 && isCleanSpawn; y3++) {
-                                            if (!sectionAccess.getBlockState(checkPos.set(x3, y3, z3)).isAir())
-                                                isCleanSpawn = false;
-                                        }
-                                    }
-                                }
-
-                                if (isCleanSpawn)
+                                if (hasExistingSpaceForPortal(x2, y2, z2, sectionAccess, boundingRegion))
                                     fallbackPos = checkPos.set(x2, y2 + 2, z2).immutable();
                             }
                         }
@@ -507,41 +437,21 @@ public interface AoAPortal extends Portal {
                     while (sectionAccess.getBlockState(checkPos.move(Direction.DOWN)).isAir() && checkPos.getY() >= 0);
 
                     int y = checkPos.getY();
-                    isCleanSpawn = true;
 
-                    for (int x2 = x - 2; x2 <= x + 2 && isCleanSpawn; x2++) {
-                        for (int z2 = z - 2; z2 <= z + 2 && isCleanSpawn; z2++) {
-                            for (int y2 = y + 1; y2 <= y + 6 && isCleanSpawn; y2++) {
-                                if (!sectionAccess.getBlockState(checkPos.set(x2, y2, z2)).isAir() || y2 >= worldCeiling - 6)
-                                    isCleanSpawn = false;
-                            }
-                        }
-                    }
-
-                    if (isCleanSpawn && y >= 0)
+                    if (hasExistingSpaceForPortal(x, y, z, sectionAccess, boundingRegion))
                         return checkPos.set(x, y + 2, z).immutable();
                 }
             }
 
             for (int x = posX - searchRadius; x <= posX + searchRadius; x++) {
                 for (int z = posZ - searchRadius; z <= posZ + searchRadius; z++) {
-                    checkPos.set(x, worldCeiling - 7, z);
+                    checkPos.set(x, boundingRegion.maxY() - 1 - portalSpaceHeight(), z);
 
                     while (sectionAccess.getBlockState(checkPos.move(Direction.DOWN)).isAir() && checkPos.getY() >= posY + searchRadius);
 
                     int y = checkPos.getY();
-                    isCleanSpawn = true;
 
-                    for (int x2 = x - 2; x2 <= x + 2 && isCleanSpawn; x2++) {
-                        for (int z2 = z - 2; z2 <= z + 2 && isCleanSpawn; z2++) {
-                            for (int y2 = y + 1; y2 <= y + 6 && isCleanSpawn; y2++) {
-                                if (!sectionAccess.getBlockState(checkPos.set(x2, y2, z2)).isAir())
-                                    isCleanSpawn = false;
-                            }
-                        }
-                    }
-
-                    if (isCleanSpawn)
+                    if (hasExistingSpaceForPortal(x, y, z, sectionAccess, boundingRegion))
                         return checkPos.set(x, y + 2, z).immutable();
                 }
             }
@@ -550,14 +460,39 @@ public interface AoAPortal extends Portal {
         if (fallbackPos != null)
             return fallbackPos;
 
-        return BlockPos.containing(originPos.getX(), Math.clamp(originPos.getY() + 2, worldFloor + 1, worldCeiling - 10), originPos.getZ());
+        return BlockPos.containing(originPos.getX(), Math.clamp(originPos.getY() + 2, boundingRegion.minY() + 2, boundingRegion.maxY() - 10), originPos.getZ());
+    }
+
+    default boolean hasExistingSpaceForPortal(int x, int y, int z, BulkSectionAccess sectionAccess, BoundingRegion boundingRegion) {
+        BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
+        int widthRadius = Mth.ceil(portalFrameWidth() / 2f);
+        int minX = x - widthRadius;
+        int minY = y + 1;
+        int minZ = z - widthRadius;
+        int maxX = x + widthRadius;
+        int maxY = y + portalSpaceHeight();
+        int maxZ = z + widthRadius;
+
+        if (!boundingRegion.isBelowMaxX(maxX) || !boundingRegion.isBelowMaxY(maxY) || !boundingRegion.isBelowMaxZ(maxZ) ||
+                !boundingRegion.isAboveMinX(minX) || !boundingRegion.isAboveMinY(minY) || !boundingRegion.isAboveMinZ(minZ))
+            return false;
+
+        for (int x2 = minX; x2 <= maxX; x2++) {
+            for (int z2 = minZ; z2 <= maxZ; z2++) {
+                for (int y2 = minY; y2 <= maxY; y2++) {
+                    if (!sectionAccess.getBlockState(checkPos.set(x2, y2, z2)).isAir())
+                        return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     default BlockPos createPortalFrameAndSpace(Level level, Entity entity, BlockPos pos) {
         if (WorldUtil.isWorld(level, AoADimensions.OVERWORLD))
             return pos;
 
-        final BlockPos returnPos = pos;
         final BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
         final BlockState border = getPortalFrame().defaultBlockState();
         final Direction.Axis direction = EntityUtil.getDirectionFacing(entity, true).getAxis();
@@ -616,12 +551,12 @@ public interface AoAPortal extends Portal {
                 if (!level.getBlockState(mutablePos).isFaceSturdy(level, mutablePos, Direction.UP)) {
                     createPortalBaseAndDecorations(level, new BlockPos(posX, posY, posZ), direction);
 
-                    return returnPos;
+                    return pos;
                 }
             }
         }
 
-        return returnPos;
+        return pos;
     }
 
     default void createPortalBaseAndDecorations(Level level, BlockPos pos, Direction.Axis direction) {

@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.armour;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
@@ -10,8 +9,10 @@ import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.common.registration.item.AoAArmourMaterials;
 import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -25,7 +26,7 @@ public class VoidArmour extends AdventArmour {
 	public void afterTakingDamage(LivingEntity entity, EnumSet<Piece> equippedPieces, LivingDamageEvent.Post ev) {
 		if (ev.getNewDamage() > 0 && ev.getSource().getEntity() instanceof LivingEntity attacker && DamageUtil.isMeleeDamage(ev.getSource())) {
 			if (RandomUtil.percentChance(equippedPieces.contains(Piece.FULL_SET) ? 0.2f : perPieceValue(equippedPieces, 0.025f)))
-				attacker.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30, 20, true, true));
+				EntityUtil.applyPotions(attacker, entity, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 30).level(20).isAmbient());
 		}
 	}
 

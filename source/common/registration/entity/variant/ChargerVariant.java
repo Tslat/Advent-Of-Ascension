@@ -4,6 +4,7 @@ import com.google.common.base.Suppliers;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.DifficultyInstance;
@@ -46,6 +47,15 @@ public record ChargerVariant(String name, boolean isPriorityVariant, Optional<Re
     }
 
     private static final Supplier<ChargerVariant[]> SORTED_VARIANTS = Suppliers.memoize(() -> AoARegistries.CHARGER_VARIANTS.getAllRegisteredObjects().filter(variant -> variant != PLAINS.get()).sorted(Comparator.comparing(ChargerVariant::isPriorityVariant).reversed()).toArray(ChargerVariant[]::new));
+
+    public static ChargerVariant getOrDefault(ResourceLocation id) {
+        if (id == null)
+            return PLAINS.get();
+
+        ChargerVariant variant = AoARegistries.CHARGER_VARIANTS.getEntry(id);
+
+        return variant == null ? PLAINS.get() : variant;
+    }
 
     public static ChargerVariant getVariantForSpawn(ServerLevel level, DifficultyInstance difficulty, MobSpawnType spawnReason, ChargerEntity charger, Supplier<Holder<Biome>> biome, @Nullable SpawnGroupData spawnData) {
         ChargerVariant variant = ChargerVariant.PLAINS.get();

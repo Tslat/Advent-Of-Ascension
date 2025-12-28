@@ -13,7 +13,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class KnightsGuard extends BaseGreatblade {
+public class KnightsGuard extends AoAGreatblade {
 	public KnightsGuard(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

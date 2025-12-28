@@ -2,7 +2,6 @@ package net.tslat.aoa3.content.item.armour;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -21,7 +20,7 @@ import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EnchantmentUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import java.util.EnumSet;
@@ -46,7 +45,7 @@ public class NecroArmour extends AdventArmour {
 
 			ParticleBuilder.forRandomPosInEntity(ParticleTypes.HEART, entity)
 					.spawnNTimes(5)
-					.sendToAllPlayersTrackingEntity((ServerLevel)entity.level(), entity);
+					.sendToAllPlayersTrackingEntity(entity);
 		}
 	}
 

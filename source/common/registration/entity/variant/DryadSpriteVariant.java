@@ -2,6 +2,7 @@ package net.tslat.aoa3.common.registration.entity.variant;
 
 import com.google.common.base.Suppliers;
 import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.MobSpawnType;
@@ -41,6 +42,15 @@ public record DryadSpriteVariant(String name, boolean isPriorityVariant, Ingredi
     }
 
     private static final Supplier<DryadSpriteVariant[]> SORTED_VARIANTS = Suppliers.memoize(() -> AoARegistries.DRYAD_SPRITE_VARIANTS.getAllRegisteredObjects().filter(variant -> variant != WOOD.get()).sorted(Comparator.comparing(DryadSpriteVariant::isPriorityVariant).reversed()).toArray(DryadSpriteVariant[]::new));
+
+    public static DryadSpriteVariant getOrDefault(ResourceLocation id) {
+        if (id == null)
+            return WOOD.get();
+
+        DryadSpriteVariant variant = AoARegistries.DRYAD_SPRITE_VARIANTS.getEntry(id);
+
+        return variant == null ? WOOD.get() : variant;
+    }
 
     public static DryadSpriteVariant getVariantForSpawn(ServerLevel level, DifficultyInstance difficulty, MobSpawnType spawnReason, DryadSpriteEntity dryadSprite, Supplier<Holder<Biome>> biome, @Nullable SpawnGroupData spawnData) {
         DryadSpriteVariant variant = DryadSpriteVariant.WOOD.get();

@@ -23,7 +23,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.ai.mob.MultiTypeAttackGoal;
@@ -33,10 +32,11 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.StoneGiantRockEntity;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.PositionAndMotionUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -72,7 +72,7 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 				return 1;
 
 			return getNavigation().createPath(target, 0) == null ? 1 : 0;
-		}, meleeGoal, rangedGoal).onChange(goal -> ATTACK_STATE.set(this, goal == meleeGoal ? 0 : 1)));
+		}, meleeGoal, rangedGoal).onChange(goal -> setAttackState(goal == meleeGoal ? 0 : 1)));
 		goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1));
 		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
 		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
@@ -95,7 +95,7 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 	}
 
 	@Override
-	protected float getWaterSlowDown() {
+	public float getWaterSlowDown() {
 		return 1;
 	}
 
@@ -106,12 +106,12 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 
 	@Override
 	protected int getAttackSwingDuration() {
-		return ATTACK_STATE.is(this, 0) ? 13 : 41;
+		return isAttackState(0) ? 13 : 41;
 	}
 
 	@Override
 	protected int getPreAttackTime() {
-		return ATTACK_STATE.is(this, 0) ? 7 : 32;
+		return isAttackState(0) ? 7 : 32;
 	}
 
 	@Override
@@ -121,7 +121,7 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 		if (attacker instanceof Silverfish) {
 			if (!level().isClientSide()) {
 				heal(level().getDifficulty().getId() * 7);
-				ParticleBuilder.forPositions(ParticleTypes.HEART, attacker.position()).sendToAllNearbyPlayers((ServerLevel)level(), attacker.position(), 50);
+				ParticleBuilder.forPositions(ParticleTypes.HEART, attacker.position()).sendToAllPlayersNearby((ServerLevel)level(), attacker.position(), 50);
 				playSound(SoundEvents.SILVERFISH_AMBIENT);
 				attacker.discard();
 			}
@@ -154,20 +154,20 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 	public void doRangedAttackEntity(BaseMobProjectile projectile, Entity target) {
 		DamageUtil.doProjectileAttack(this, projectile, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE));
 
-		new TELParticlePacket(
+		new TMEParticlePacket(
 				ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()), projectile).spawnNTimes(3),
 				ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DIRT.defaultBlockState()), projectile).spawnNTimes(3))
-				.sendToAllNearbyPlayers((ServerLevel)level(), position(), 20);
+				.sendToAllPlayersNearby((ServerLevel)level(), position(), 20);
 
 		projectile.playSound(AoASounds.ROCK_SMASH.get());
 	}
 
 	@Override
 	public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		new TELParticlePacket(
+		new TMEParticlePacket(
 				ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()), projectile).spawnNTimes(3),
 				ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DIRT.defaultBlockState()), projectile).spawnNTimes(3))
-				.sendToAllNearbyPlayers((ServerLevel)level(), position(), 20);
+				.sendToAllPlayersNearby((ServerLevel)level(), position(), 20);
 
 		projectile.playSound(AoASounds.ROCK_SMASH.get());
 	}
@@ -198,8 +198,8 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 		return silverfish;
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 15f);
+	public static SpawnPlacements.SpawnPredicate<StoneGiantEntity> spawnRules(EntityType<StoneGiantEntity> entityType) {
+		return EntitySpawnConditions.createDayMonster(entityType).spawnChance(1 / 15f);
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<StoneGiantEntity> entityType) {
@@ -218,6 +218,6 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(
 				DefaultAnimations.genericWalkController(this),
-				AoAAnimations.dynamicAttackController(this, state -> ATTACK_STATE.is(this, 0) ? DefaultAnimations.ATTACK_SLAM : DefaultAnimations.ATTACK_THROW));
+				AoAAnimations.dynamicAttackController(this, state -> isAttackState(0) ? DefaultAnimations.ATTACK_SLAM : DefaultAnimations.ATTACK_THROW));
 	}
 }

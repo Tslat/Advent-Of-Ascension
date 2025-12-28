@@ -6,6 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
@@ -44,10 +45,8 @@ import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.content.entity.base.AoAAnimal;
-import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.brain.task.temp.FixedFollowParent;
-import net.tslat.aoa3.content.entity.brain.task.temp.SetRandomFlyingTarget;
-import net.tslat.aoa3.library.object.EntityDataHolder;
+import net.tslat.aoa3.library.builder.MultipartBuilder;
 import net.tslat.aoa3.util.AttributeUtil;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
@@ -55,9 +54,10 @@ import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.BreedWithPartner;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowTemptation;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomFlyingTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
@@ -67,9 +67,11 @@ import software.bernie.geckolib.constant.DefaultAnimations;
 
 import java.util.UUID;
 
+import static net.tslat.aoa3.library.builder.MultipartBuilder.Part;
+
 public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAnimal, OwnableEntity {
 	protected static final AttributeModifier EGG_HEALTH_MOD = new AttributeModifier(AdventOfAscension.id("baby_base_health"), -0.75f, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-	public static final EntityDataHolder<Boolean> IS_EGG = EntityDataHolder.register(OpteryxEntity.class, EntityDataSerializers.BOOLEAN, false, entity -> entity.isEgg, (entity, value) -> entity.isEgg = value);
+	public static final EntityDataAccessor<Boolean> IS_EGG = makeSynchedData(OpteryxEntity.class, EntityDataSerializers.BOOLEAN);
 	protected static final EntityDimensions EGG_DIMENSIONS = EntityDimensions.fixed(0.375f, 0.5f);
 	private static final RawAnimation TAKEOFF_ANIM = RawAnimation.begin().thenPlay("move.fly_start");
 	private static final RawAnimation LANDING_ANIM = RawAnimation.begin().thenPlay("move.fly_stop");
@@ -81,8 +83,6 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 	@Nullable
 	protected UUID ownerId = null;
 
-	protected boolean isEgg = false;
-
 	public OpteryxEntity(EntityType<? extends OpteryxEntity> entityType, Level world) {
 		super(entityType, world);
 
@@ -92,12 +92,15 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 		this.walkNavigator = this.navigation;
 
 		this.walkNavigator.setCanFloat(true);
+	}
 
-		setParts(
-				new AoAEntityPart<>(this, 0.375f, 0.4375f, 0, 0.76f, getBbWidth() - 0.0625f),
-				new AoAEntityPart<>(this, 0.25f, 0.25f, 0, 0.97f, getBbWidth() + 0.25f),
-				new AoAEntityPart<>(this, 0.25f, 0.25f, 0, 0.97f, getBbWidth() + 0.5f),
-				new AoAEntityPart<>(this, 0.375f, 0.4375f, 0, 0.76f, -getBbWidth() + 0.0625f));
+	@Override
+	public MultipartBuilder<? extends OpteryxEntity> definePartEntities() {
+		return MultipartBuilder.of(this,
+										  Part.sized(0.375f, 0.4375f).up(0.76f).adjacentBehind(),
+										  Part.sized(0.375f, 0.4375f).up(0.97f).adjacentForward().then(
+												  Part.sized(0.25f, 0.25f).up(0.35f).adjacentForward().then(
+														  Part.sized(0.25f, 0.25f).adjacentForward())));
 	}
 
 	@Override
@@ -109,7 +112,7 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
 
-		registerDataParams(builder, IS_EGG);
+		builder.define(IS_EGG, false);
 	}
 
 	@Override
@@ -229,7 +232,7 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
 
-		tag.putBoolean("IsEgg", IS_EGG.get(this));
+		tag.putBoolean("IsEgg", isEgg());
 
 		if (getOwnerUUID() != null)
 			tag.putUUID("Owner", getOwnerUUID());
@@ -240,7 +243,7 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 		super.readAdditionalSaveData(tag);
 
 		if (tag.contains("IsEgg", Tag.TAG_BYTE))
-			IS_EGG.set(this, tag.getBoolean("IsEgg"));
+			setSynchedData(IS_EGG, tag.getBoolean("IsEgg"));
 
 		if (tag.contains("Owner", Tag.TAG_INT_ARRAY))
 			this.ownerId = tag.getUUID("Owner");
@@ -251,12 +254,12 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 		super.aiStep();
 
 		if (isEgg()) {
-			if (getParts()[0].isEnabled()) {
+			if (isMultipartActive()) {
 				toggleMultipart(false);
 				refreshDimensions();
 			}
 		}
-		else if (!getParts()[0].isEnabled()) {
+		else if (!isMultipartActive()) {
 			toggleMultipart(true);
 			refreshDimensions();
 		}
@@ -268,10 +271,10 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 			if (isEgg()) {
 				if (getAge() > -120000) {
 					if (getAge() == -24000) {
-						level().playSound(null, blockPosition(), SoundEvents.TURTLE_EGG_HATCH, SoundSource.NEUTRAL, 0.7f, (float)rand().randomValueBetween(0.2f, 1.1f));
+						level().playSound(null, blockPosition(), SoundEvents.TURTLE_EGG_HATCH, SoundSource.NEUTRAL, 0.7f, (float)rand().valueBetween(0.2f, 1.1f));
 					}
 					else if (getAge() % 12000 == 0) {
-						level().playSound(null, blockPosition(), SoundEvents.TURTLE_EGG_CRACK, SoundSource.NEUTRAL, 0.7f, (float)rand().randomValueBetween(0.2f, 1.1f));
+						level().playSound(null, blockPosition(), SoundEvents.TURTLE_EGG_CRACK, SoundSource.NEUTRAL, 0.7f, (float)rand().valueBetween(0.2f, 1.1f));
 					}
 				}
 
@@ -293,8 +296,8 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 	protected void customServerAiStep() {
 		super.customServerAiStep();
 
-		if (IS_EGG.is(this, true))
-			IS_EGG.set(this, false);
+		if (isEgg())
+			setSynchedData(IS_EGG, false);
 
 		boolean wasFlying = isFlying();
 
@@ -380,7 +383,7 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 	}
 
 	public boolean isEgg() {
-		return IS_EGG.get(this);
+		return getSynchedData(IS_EGG);
 	}
 
 	@Override
@@ -388,7 +391,7 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 		super.setAge(age);
 
 		if (!level().isClientSide()) {
-			IS_EGG.set(this, isEggAge());
+			setSynchedData(IS_EGG, isEggAge());
 
 			if ((age == 0 || age == -24000) && getOwner() instanceof ServerPlayer pl)
 				CriteriaTriggers.TAME_ANIMAL.trigger(pl, this);

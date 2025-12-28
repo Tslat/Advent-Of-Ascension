@@ -1,68 +1,34 @@
 package net.tslat.aoa3.content.entity.projectile.thrown;
 
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ItemSupplier;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.EntityHitResult;
 import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
-import net.tslat.aoa3.common.registration.item.AoAWeapons;
-import net.tslat.aoa3.content.entity.projectile.HardProjectile;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
-import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.content.entity.projectile.base.ThrownItemProjectile;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
 import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
-public class SliceStarEntity extends BaseBullet implements HardProjectile, ItemSupplier {
-	public SliceStarEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
-		super(entityType, world);
+public class SliceStarEntity extends ThrownItemProjectile {
+	public SliceStarEntity(EntityType<? extends SliceStarEntity> entityType, Level level) {
+		super(entityType, level);
 	}
 
-	public SliceStarEntity(Level world) {
-		super(AoAProjectiles.SLICE_STAR.get(), world);
+	public SliceStarEntity(EntityType<? extends SliceStarEntity> entityType, Level level, WeaponFiringContext context) {
+		super(entityType, level, context);
 	}
 
-	public SliceStarEntity(LivingEntity shooter, BaseGun gun) {
-		super(AoAProjectiles.SLICE_STAR.get(), shooter, gun, 1.0f, 0, 3.0f);
-	}
-
-	public SliceStarEntity(LivingEntity shooter, BaseGun gun, InteractionHand hand, int maxAge, int piercingValue) {
-		super(AoAProjectiles.SLICE_STAR.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
-	}
-
-	public SliceStarEntity(Level world, double x, double y, double z) {
-		super(AoAProjectiles.SLICE_STAR.get(), world, x, y, z);
+	public SliceStarEntity(Level level, WeaponFiringContext context) {
+		this(AoAProjectiles.SLICE_STAR.get(), level, context);
 	}
 
 	@Override
-	public double getDefaultGravity() {
-		return 0.05f;
-	}
-
-	@Override
-	public void doEntityImpact(Entity target, Vec3 impactLocation) {
-		if (DamageUtil.doProjectileAttack(getOwner(), this, target, AoAWeapons.SLICE_STAR.get().getGunDamage(getWeaponStack(AoAWeapons.SLICE_STAR.asItem()))) && target instanceof LivingEntity livingEntity && RandomUtil.oneInNChance(10))
-			livingEntity.addEffect(new EffectBuilder(AoAMobEffects.BLEEDING, 80).hideParticles().build());
-	}
-
-	@Override
-	protected void onHit(HitResult result) {
-		if (result instanceof BlockHitResult && tickCount <= 1 && getOwner() == null)
-			return;
-
-		super.onHit(result);
-	}
-
-	@Override
-	public ItemStack getItem() {
-		return new ItemStack(AoAWeapons.SLICE_STAR.get());
+	protected void doEntityImpact(EntityHitResult rayTrace, Entity hitEntity) {
+		if (DamageUtil.doProjectileAttack(getOwner(), this, hitEntity, getShotContext().damage()) && RandomUtil.oneInNChance(10))
+			EntityUtil.applyPotions(hitEntity, getOwner(), new EffectBuilder(AoAMobEffects.BLEEDING, 80).hideParticles());
 	}
 }

@@ -4,7 +4,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
-import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMob;
+import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMobOld;
 
 public class OmnilightShotEntity extends BaseMobProjectile {
 	public OmnilightShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
@@ -15,7 +15,7 @@ public class OmnilightShotEntity extends BaseMobProjectile {
 		super(AoAProjectiles.OMNILIGHT_SHOT.get(), world);
 	}
 
-	public OmnilightShotEntity(AoAFlyingRangedMob shooter, Type projectileType) {
+	public OmnilightShotEntity(AoAFlyingRangedMobOld shooter, Type projectileType) {
 		super(AoAProjectiles.OMNILIGHT_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 

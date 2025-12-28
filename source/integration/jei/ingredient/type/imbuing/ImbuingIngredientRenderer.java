@@ -1,6 +1,6 @@
 package net.tslat.aoa3.integration.jei.ingredient.type.imbuing;
 
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.ingredients.IIngredientRenderer;
 import mezz.jei.common.platform.Services;
 import mezz.jei.common.util.RegistryUtil;
@@ -42,8 +42,7 @@ public class ImbuingIngredientRenderer implements IIngredientRenderer<Enchantmen
     }
 
     @Override
-    public List<Component> getTooltip(EnchantmentInstance ingredient, TooltipFlag tooltipFlag) {
-        final List<Component> tooltip = new ObjectArrayList<>();
+    public void getTooltip(ITooltipBuilder tooltip, EnchantmentInstance ingredient, TooltipFlag tooltipFlag) {
         final Holder<Enchantment> enchant = ingredient.enchantment;
         final ResourceLocation id = RegistryUtil.getRegistry(Registries.ENCHANTMENT).getKey(enchant.value());
         final String enchantDescKey = "enchantment." + id.getNamespace() + "." + id.getPath() + ".desc";
@@ -58,8 +57,13 @@ public class ImbuingIngredientRenderer implements IIngredientRenderer<Enchantmen
 
         if (tooltipFlag.isAdvanced())
             tooltip.add(Component.literal(id.toString()).withStyle(ChatFormatting.DARK_GRAY));
+    }
 
-        return tooltip;
+    // TODO
+    @SuppressWarnings("removal")
+    @Override
+    public List<Component> getTooltip(EnchantmentInstance ingredient, TooltipFlag tooltipFlag) {
+        return List.of();
     }
 
     @Override

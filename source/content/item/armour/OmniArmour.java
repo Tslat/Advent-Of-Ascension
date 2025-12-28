@@ -8,10 +8,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.item.AoAArmourMaterials;
+import net.tslat.aoa3.library.builder.AoAExplosionBuilder;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.tme.api.explosion.StandardExplosion;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -30,7 +32,7 @@ public class OmniArmour extends AdventArmour {
 	@Override
 	public void afterTakingDamage(LivingEntity entity, EnumSet<Piece> equippedPieces, LivingDamageEvent.Post ev) {
 		if (ev.getNewDamage() > 0 && equippedPieces.contains(Piece.FULL_SET) && DamageUtil.isMeleeDamage(ev.getSource()))
-			WorldUtil.createExplosion(entity, entity.level(), entity.blockPosition(), 1.75f);
+			AoAExplosionBuilder.at(entity, AoAExplosions.OMNI_ARMOUR, StandardExplosion::new).explode();
 	}
 
 	@Override

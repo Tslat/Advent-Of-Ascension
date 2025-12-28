@@ -3,31 +3,31 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:varsium_nugget"
+      "tag": "c:nuggets/varsium"
     },
     {
-      "item": "aoa3:varsium_nugget"
+      "tag": "c:nuggets/varsium"
     },
     {
-      "item": "aoa3:varsium_nugget"
+      "tag": "c:nuggets/varsium"
     },
     {
-      "item": "aoa3:varsium_nugget"
+      "tag": "c:nuggets/varsium"
     },
     {
-      "item": "aoa3:varsium_nugget"
+      "tag": "c:nuggets/varsium"
     },
     {
-      "item": "aoa3:varsium_nugget"
+      "tag": "c:nuggets/varsium"
     },
     {
-      "item": "aoa3:varsium_nugget"
+      "tag": "c:nuggets/varsium"
     },
     {
-      "item": "aoa3:varsium_nugget"
+      "tag": "c:nuggets/varsium"
     },
     {
-      "item": "aoa3:varsium_nugget"
+      "tag": "c:nuggets/varsium"
     }
   ],
   "result": {

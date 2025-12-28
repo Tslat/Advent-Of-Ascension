@@ -16,7 +16,7 @@ import net.tslat.aoa3.common.packet.packets.MusicPacket;
 
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAFlyingMeleeMob;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -89,7 +89,7 @@ public class CrystocoreEntity extends AoAFlyingMeleeMob {
 				changeCooldown = 220;
 				changeState();
 
-				EntityUtil.applyPotions(level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(10), PlayerUtil::shouldPlayerBeAffected), RandomUtil.getRandomSelection(
+				EntityUtil.applyPotions(level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(10), PlayerUtil::shouldPlayerBeAffected), RandomUtil.getselection(
 						new EffectBuilder(MobEffects.POISON, 180).level(2),
 						new EffectBuilder(MobEffects.BLINDNESS, 180),
 						new EffectBuilder(MobEffects.WEAKNESS, 180).level(2),

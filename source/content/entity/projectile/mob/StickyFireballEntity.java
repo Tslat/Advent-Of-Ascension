@@ -2,7 +2,6 @@ package net.tslat.aoa3.content.entity.projectile.mob;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -11,8 +10,9 @@ import net.minecraft.world.phys.HitResult;
 import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
-import net.tslat.aoa3.library.object.explosion.StandardExplosion;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.aoa3.library.builder.AoAExplosionBuilder;
+import net.tslat.tme.api.explosion.StandardExplosion;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class StickyFireballEntity extends FireballEntity {
 	public StickyFireballEntity(EntityType<? extends StickyFireballEntity> entityType, Level level) {
@@ -32,9 +32,8 @@ public class StickyFireballEntity extends FireballEntity {
 	public void tick() {
 		super.tick();
 
-		if (level() instanceof ServerLevel serverLevel && this.tickCount == 99) {
-			new StandardExplosion(AoAExplosions.STICKY_FIREBALL, serverLevel, this, getOwner(), position()).explode();
-
+		if (!level().isClientSide && this.tickCount == 99) {
+			AoAExplosionBuilder.at(this, AoAExplosions.STICKY_FIREBALL, StandardExplosion::new).explode();
 			discard();
 
 			return;
@@ -44,7 +43,7 @@ public class StickyFireballEntity extends FireballEntity {
 			setDeltaMovement(0, 0, 0);
 
 		if (level().isClientSide() && (getDeltaMovement().lengthSqr() != 0 || this.tickCount % 4 == 0))
-			ParticleBuilder.forRandomPosInEntity(ParticleTypes.CAMPFIRE_COSY_SMOKE, this).lifespan(40).scaleMod(0.5f).spawnParticles(level());
+			ParticleBuilder.forRandomPosInEntity(ParticleTypes.CAMPFIRE_COSY_SMOKE, this).lifespan(40).scaleMod(0.5f).spawnClientParticles(level());
 	}
 
 	@Override

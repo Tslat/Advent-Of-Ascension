@@ -1,6 +1,7 @@
 package net.tslat.aoa3.player.ability.extraction;
 
 import com.google.gson.JsonObject;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -100,8 +101,8 @@ public class HarvestSpeedBoost extends AoAAbility.Instance {
 			}
 
 			@Override
-			public int getKeycode() {
-				return AoAKeybinds.ABILITY_ACTION.getKey().getValue();
+			public KeyMapping getKeybind() {
+				return AoAKeybinds.ABILITY_ACTION;
 			}
 
 			@Override

@@ -61,7 +61,7 @@ public final class AoANpcs {
 		final DeferredHolder<EntityType<?>, EntityType<T>> registryObject = AoARegistries.ENTITIES.register(registryName, () -> builder.build(registryName));
 
 		if (builder.hasSpawnEgg())
-			AoAItems.registerItem(registryName + "_spawn_egg", () -> new DeferredSpawnEggItem(registryObject, builder.getSpawnEggBackgroundColour(), builder.getSpawnEggDotsColour(), new Item.Properties()), CreativeModeTabs.SPAWN_EGGS);
+			AoAItems.registerItem(registryName + "_spawn_egg", () -> new DeferredSpawnEggItem(registryObject, 0xFFFFFFFF/*builder.getSpawnEggBackgroundColour()*/, 0xFFFFFFFF/*builder.getSpawnEggDotsColour()*/, new Item.Properties()), CreativeModeTabs.SPAWN_EGGS);
 
 		return registryObject;
 	}

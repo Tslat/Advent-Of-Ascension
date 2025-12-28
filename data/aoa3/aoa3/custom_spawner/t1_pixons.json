@@ -7,11 +7,10 @@
       "min_inclusive": 3000
     },
     "in_dimensions": [
-      "minecraft:the_nether",
       "aoa3:lelyetia",
-      "aoa3:barathos",
+      "minecraft:the_nether",
       "aoa3:creeponia",
-      "aoa3:precasia"
+      "aoa3:barathos"
     ],
     "not_in_biomes": "#c:is_dead",
     "spawn_attempts_per_player": {

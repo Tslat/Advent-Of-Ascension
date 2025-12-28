@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.entity.ai;
 
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -123,7 +124,7 @@ public abstract class ExtendedTargetGoal<T extends Mob> extends ExtendedGoal<T> 
 		if (pathEnd == null)
 			return false;
 
-		return (Math.pow(pathEnd.x - target.getBlockX(), 2) + Math.pow(pathEnd.z - target.getBlockZ(), 2)) <= 2.25d;
+		return (Mth.square(pathEnd.x - target.getBlockX()) + Mth.square(pathEnd.z - target.getBlockZ())) <= 2.25d;
 	}
 
 	protected double getTargetingRange() {

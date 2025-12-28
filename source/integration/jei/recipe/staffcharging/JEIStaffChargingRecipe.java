@@ -1,6 +1,6 @@
 package net.tslat.aoa3.integration.jei.recipe.staffcharging;
 
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.Item;
@@ -10,7 +10,7 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.item.AoADataComponents;
-import net.tslat.aoa3.content.item.weapon.staff.BaseStaff;
+import net.tslat.aoa3.content.item.weapon.staff.AoAStaff;
 import net.tslat.aoa3.content.recipe.StaffChargingRecipe;
 
 import java.util.OptionalInt;
@@ -22,13 +22,13 @@ public class JEIStaffChargingRecipe extends StaffChargingRecipe {
 		public JEIStaffChargingRecipe(Item staff) {
 			super("", CraftingBookCategory.MISC, true);
 
-			Object2IntMap<Item> runeCost = staff.components().get(AoADataComponents.STAFF_RUNE_COST.get()).runeCosts();
+			Reference2IntMap<Item> runeCost = staff.components().get(AoADataComponents.STAFF_STATS.get()).runeCosts();
 			this.ingredients = NonNullList.withSize(runeCost.size() + 1, Ingredient.EMPTY);
 			int i = 1;
 			ItemStack chargedStaff = staff.getDefaultInstance();
 			this.ingredients.set(0, Ingredient.of(staff.getDefaultInstance()));
 
-			chargedStaff.set(AoADataComponents.STORED_SPELL_CASTS, new BaseStaff.StoredCasts(1, OptionalInt.empty()));
+			chargedStaff.set(AoADataComponents.STORED_SPELL_CASTS, new AoAStaff.StoredCasts(1, OptionalInt.empty()));
 
 			this.output = chargedStaff;
 

@@ -3,31 +3,31 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:ghastly_nugget"
+      "tag": "c:nuggets/ghastly"
     },
     {
-      "item": "aoa3:ghastly_nugget"
+      "tag": "c:nuggets/ghastly"
     },
     {
-      "item": "aoa3:ghastly_nugget"
+      "tag": "c:nuggets/ghastly"
     },
     {
-      "item": "aoa3:ghastly_nugget"
+      "tag": "c:nuggets/ghastly"
     },
     {
-      "item": "aoa3:ghastly_nugget"
+      "tag": "c:nuggets/ghastly"
     },
     {
-      "item": "aoa3:ghastly_nugget"
+      "tag": "c:nuggets/ghastly"
     },
     {
-      "item": "aoa3:ghastly_nugget"
+      "tag": "c:nuggets/ghastly"
     },
     {
-      "item": "aoa3:ghastly_nugget"
+      "tag": "c:nuggets/ghastly"
     },
     {
-      "item": "aoa3:ghastly_nugget"
+      "tag": "c:nuggets/ghastly"
     }
   ],
   "result": {

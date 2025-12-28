@@ -1,6 +1,7 @@
 package net.tslat.aoa3.player.ability.innervation;
 
 import com.google.gson.JsonObject;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -73,8 +74,8 @@ public class InnervationMobLure extends AoAAbility.Instance {
 			}
 
 			@Override
-			public int getKeycode() {
-				return AoAKeybinds.ABILITY_ACTION.getKey().getValue();
+			public KeyMapping getKeybind() {
+				return AoAKeybinds.ABILITY_ACTION;
 			}
 
 			@Override
@@ -97,12 +98,12 @@ public class InnervationMobLure extends AoAAbility.Instance {
 	}
 
 	private void handlePlayerTick(final PlayerTickEvent.Pre ev) {
-		if (!isLuring)
+		if (!this.isLuring)
 			return;
 
 		final Player pl = ev.getEntity();
 
-		if (luringEntity == null || luringEntity.isDeadOrDying() || pl.isDeadOrDying() || !pl.isCrouching() || !skill.getPlayerDataManager().getResource(AoAResources.SPIRIT.get()).consume(this.perTickDrain, true)) {
+		if (this.luringEntity == null || this.luringEntity.isDeadOrDying() || pl.isDeadOrDying() || !pl.isCrouching() || !this.skill.getPlayerDataManager().getResource(AoAResources.SPIRIT.get()).consume(this.perTickDrain, true)) {
 			resetLureState();
 
 			return;
@@ -111,18 +112,18 @@ public class InnervationMobLure extends AoAAbility.Instance {
 		if (pl.level().getGameTime() % 10 == 0 && pl instanceof ServerPlayer serverPl)
 			new ScreenImageEffect(ScreenImageEffect.Type.ACTION_KEY_VIGNETTE).fullscreen(true).duration(10).sendToPlayer(serverPl);
 
-		if (luringEntity.getTarget() != pl)
-			luringEntity.setTarget(pl);
+		if (this.luringEntity.getTarget() != pl)
+			this.luringEntity.setTarget(pl);
 	}
 
 	private void handleIncomingDamage(LivingIncomingDamageEvent ev) {
-		if (isLuring && ev.getSource().getEntity() == luringEntity) {
-			skill.getPlayerDataManager().getResource(AoAResources.SPIRIT.get()).consume(this.onHitDrain, true);
+		if (this.isLuring && ev.getSource().getEntity() == this.luringEntity) {
+			this.skill.getPlayerDataManager().getResource(AoAResources.SPIRIT.get()).consume(this.onHitDrain, true);
 			ev.setAmount(ev.getAmount() * this.luredDamageModifier);
 
 			resetLureState();
 
-			if (skill.canGainXp(true))
+			if (this.skill.canGainXp(true))
 				PlayerUtil.giveTimeBasedXpToPlayer((ServerPlayer)getPlayer(), this.skill.type(), 30,  false);
 		}
 	}

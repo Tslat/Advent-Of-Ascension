@@ -14,7 +14,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 public class ToxicBlock extends Block {
 	private static final VoxelShape SHAPE = Shapes.create(new AABB(0.002, 0.002, 0.002, 0.998, 0.998, 0.998));
@@ -32,7 +32,7 @@ public class ToxicBlock extends Block {
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
 		if (entity instanceof Player && !((Player)entity).isCreative()) {
 			//entity.hurt(new DamageSource("toxic_block").bypassArmor(), 4);
-			EntityUtil.applyPotions(entity,
+			EntityUtil.applyPotions(entity, null,
 					new EffectBuilder(MobEffects.POISON, 60).level(6),
 					new EffectBuilder(MobEffects.CONFUSION, 40),
 					new EffectBuilder(MobEffects.BLINDNESS, 40));

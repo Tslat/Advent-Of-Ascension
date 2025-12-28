@@ -10,11 +10,12 @@ import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.tme.api.object.builder.EffectBuilder;
+import net.tslat.tme.api.scheduling.TickScheduler;
 
 import java.util.Arrays;
 
-public class UltimatumStaffTask implements Runnable {
+public class UltimatumStaffTask implements TickScheduler.Task {
 	private final int startingTick;
 	private final LivingEntity shooter;
 	private final LivingEntity target;
@@ -39,7 +40,7 @@ public class UltimatumStaffTask implements Runnable {
 
 		EntityUtil.removePotions(target, MobEffects.REGENERATION);
 		EntityUtil.removePotions(shooter, MobEffects.REGENERATION);
-		EntityUtil.applyPotions(Arrays.asList(target, shooter),
+		EntityUtil.applyPotions(Arrays.asList(target, shooter), shooter,
 				new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 210).level(100).hideParticles(),
 				new EffectBuilder(MobEffects.WEAKNESS, 210).level(50).hideParticles(),
 				new EffectBuilder(MobEffects.DAMAGE_RESISTANCE, 210).level(5).hideParticles(),
@@ -49,7 +50,7 @@ public class UltimatumStaffTask implements Runnable {
 	}
 
 	@Override
-	public void run() {
+	public void run(int tick) {
 		if (shooter == null || target == null || shooter.level().isClientSide || !shooter.blockPosition().equals(shooterPos) || !target.blockPosition().equals(targetPos)) {
 			resetStates();
 
@@ -101,11 +102,11 @@ public class UltimatumStaffTask implements Runnable {
 
 		targetTurn = !targetTurn;
 
-		AoAScheduler.scheduleSyncronisedTask(this, 1);
+		AoAScheduler.schedule(1, this);
 	}
 
 	private void resetStates() {
-		if ( target != null && target.getHealth() > 0)
+		if (target != null && target.getHealth() > 0)
 			EntityUtil.removePotions(target, MobEffects.BLINDNESS, MobEffects.DAMAGE_RESISTANCE, MobEffects.WEAKNESS, MobEffects.MOVEMENT_SLOWDOWN, MobEffects.LEVITATION, MobEffects.NIGHT_VISION);
 
 		if (shooter != null && shooter.getHealth() > 0)

@@ -9,8 +9,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.event.custom.events.ApplyDynamicAttributeModifiersEvent;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
@@ -219,12 +217,12 @@ public class AoAAbility {
 
 		public void receiveInteractionDataFromClient(String data) {}
 
-		@OnlyIn(Dist.CLIENT)
+		// Client Only
 		public boolean onGuiClick(final int mouseX, final int mouseY) {
 			return getListenerState() == ListenerState.ACTIVE || getListenerState() == ListenerState.MANUALLY_DISABLED;
 		}
 
-		@OnlyIn(Dist.CLIENT)
+		// Client Only
 		public boolean onGuiHover(final int mouseX, final int mouseY) {
 			return getListenerState() == ListenerState.ACTIVE || getListenerState() == ListenerState.MANUALLY_DISABLED;
 		}

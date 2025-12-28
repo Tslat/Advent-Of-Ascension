@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.item.tool.misc;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -32,13 +31,13 @@ import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
 import net.tslat.aoa3.event.custom.AoAEvents;
 import net.tslat.aoa3.event.custom.events.HaulingItemFishedEvent;
 import net.tslat.aoa3.event.custom.events.HaulingRodPullEntityEvent;
-import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LootUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.sound.SoundBuilder;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -62,9 +61,9 @@ public class HaulingRod extends FishingRodItem {
 			if (player.fishing instanceof HaulingFishingBobberEntity bobber) {
 				if (bobber.getState() == HaulingFishingBobberEntity.State.HOOKED_FISH) {
 					if (!level.isClientSide) {
-						new SoundBuilder(AoASounds.ITEM_HAULING_ROD_REEL_IN).followEntity(player).execute();
-						ParticleBuilder.forRandomPosInEntity(ParticleTypes.BUBBLE, player.fishing).sendToAllPlayersTrackingEntity((ServerLevel)level, player.fishing);
-						ParticleBuilder.forRandomPosInEntity(ParticleTypes.SPLASH, player.fishing).sendToAllPlayersTrackingEntity((ServerLevel)level, player.fishing);
+						SoundBuilder.following(AoASounds.ITEM_HAULING_ROD_REEL_IN, player).play();
+						ParticleBuilder.forRandomPosInEntity(ParticleTypes.BUBBLE, player.fishing).sendToAllPlayersTrackingEntity(player.fishing);
+						ParticleBuilder.forRandomPosInEntity(ParticleTypes.SPLASH, player.fishing).sendToAllPlayersTrackingEntity(player.fishing);
 					}
 
 					reelIn(player, bobber, stack, hand);
@@ -107,7 +106,7 @@ public class HaulingRod extends FishingRodItem {
 		if (bobber.distanceToSqr(player) <= 9) {
 			if (player instanceof ServerPlayer pl) {
 				List<ItemStack> loot = landEntity(pl, stack, hand, bobber);
-				int xp = RandomUtil.randomNumberBetween(2, 10);
+				int xp = RandomUtil.numberBetween(2, 10);
 				HaulingItemFishedEvent event = AoAEvents.fireHaulingItemFished(bobber.getHookedIn(), stack, loot, xp, 1, bobber);
 
 				if (!event.isCanceled()) {
@@ -213,11 +212,11 @@ public class HaulingRod extends FishingRodItem {
 	}
 
 	protected void playRetrievalSound(Player player, HaulingFishingBobberEntity bobber, ItemStack stack) {
-		player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE, SoundSource.NEUTRAL, 1, 0.4f / (float)RandomUtil.randomValueBetween(0.8f, 1.2f));
+		player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE, SoundSource.NEUTRAL, 1, 0.4f / (float)RandomUtil.valueBetween(0.8f, 1.2f));
 	}
 
 	protected void playCastSound(Player player, HaulingFishingBobberEntity bobber, ItemStack stack) {
-		player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_THROW, SoundSource.NEUTRAL, 0.5f, 0.4f / (float)RandomUtil.randomValueBetween(0.8f, 1.2f));
+		player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_THROW, SoundSource.NEUTRAL, 0.5f, 0.4f / (float)RandomUtil.valueBetween(0.8f, 1.2f));
 	}
 
 	protected HaulingFishingBobberEntity getNewBobber(Player player, ItemStack stack, float lureMod, float luckMod) {

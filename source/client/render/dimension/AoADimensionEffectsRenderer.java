@@ -2,6 +2,7 @@ package net.tslat.aoa3.client.render.dimension;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import it.unimi.dsi.fastutil.floats.FloatConsumer;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
@@ -13,17 +14,21 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.library.object.ExtendedBulkSectionAccess;
+import net.tslat.tme.api.object.EasyRandom;
+import net.tslat.tme.api.util.BlockRetrievalUtil;
+import org.apache.commons.lang3.tuple.Triple;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+
+import java.util.List;
 
 public abstract class AoADimensionEffectsRenderer extends DimensionSpecialEffects {
     protected static final ResourceLocation MOON_TEXTURE = ResourceLocation.withDefaultNamespace("textures/environment/moon_phases.png");
@@ -85,71 +90,83 @@ public abstract class AoADimensionEffectsRenderer extends DimensionSpecialEffect
 
     public void adjustFogRender(ClientLevel level, FogRenderer.FogMode fogMode, FogType fogType, Camera camera, FloatConsumer farPlaneDistance, FloatConsumer nearPlaneDistance) {}
 
-    public void doFXTick(ClientLevel level, int playerX, int playerY, int playerZ) {
-        RandomSource random = RandomSource.create();
-        Block markerParticleTarget = level.getMarkerParticleTarget();
-        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+    public void doFXTick(ClientLevel level, BlockPos playerPos) {
+        final ChunkPos chunkPos = new ChunkPos(playerPos);
 
-        for (int i = 0; i < 667; i++) {
-            tryFX(level, null, playerX, playerY, playerZ, 16, random, markerParticleTarget, pos);
-            tryFX(level, null, playerX, playerY, playerZ, 32, random, markerParticleTarget, pos);
+        if (!level.getChunkSource().hasChunk(chunkPos.x + 2, chunkPos.z + 2))
+            return;
+
+        final EasyRandom random = EasyRandom.wrap(level.random);
+        final Block markerParticleTarget = level.getMarkerParticleTarget();
+        final List<Triple<BlockState, FluidState, BlockPos>> fxBlocks = BlockRetrievalUtil.getBlocks(level, reader -> {
+            List<Triple<BlockState, FluidState, BlockPos>> blocks = new ObjectArrayList<>();
+
+            for (int radius = 16; radius <= 32; radius += 16) {
+                for (int i = 0; i < 667; i++) {
+                    BlockPos blockPos = playerPos.offset(random.numberBetween(-radius, radius), random.numberBetween(-radius, radius), random.numberBetween(-radius, radius));
+
+                    blocks.add(Triple.of(reader.getBlockState(blockPos), reader.getFluidState(blockPos), blockPos));
+                }
+            }
+
+            return blocks;
+        });
+
+        for (Triple<BlockState, FluidState, BlockPos> block : fxBlocks) {
+            tickBlockFx(level, block, playerPos, random, markerParticleTarget);
         }
     }
 
-    public void tryFX(ClientLevel level, ExtendedBulkSectionAccess sectionAccess, int playerX, int playerY, int playerZ, int radius, RandomSource random, Block markerParticleTarget, BlockPos.MutableBlockPos pos) {
-        int x = playerX + level.random.nextInt(radius) - level.random.nextInt(radius);
-        int y = playerY + level.random.nextInt(radius) - level.random.nextInt(radius);
-        int z = playerZ + level.random.nextInt(radius) - level.random.nextInt(radius);
-        pos.set(x, y, z);
-        BlockState block = level.getBlockState(pos);
-        FluidState fluid = level.getFluidState(pos);
+    public void tickBlockFx(ClientLevel level, Triple<BlockState, FluidState, BlockPos> block, BlockPos playerPos, EasyRandom random, Block markerParticleTarget) {
+        BlockState state = block.getLeft();
+        BlockPos pos = block.getRight();
 
-        block.getBlock().animateTick(block, level, pos, random);
+        state.getBlock().animateTick(state, level, pos, random);
 
-        if (!fluid.isEmpty())
-            doFluidFXTick(level, sectionAccess, fluid, block, playerX, playerY, playerZ, random, pos);
+        if (!block.getMiddle().isEmpty())
+            doFluidFXTick(level, block, playerPos, random);
 
-        if (markerParticleTarget == block.getBlock())
-            level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK_MARKER, block), x + 0.5d, y + 0.5d, z + 0.5d, 0, 0, 0);
+        if (state.is(markerParticleTarget))
+            level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK_MARKER, state), pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, 0, 0, 0);
 
-        if (!block.isCollisionShapeFullBlock(level, pos))
-            doAmbientParticleFXTick(level, sectionAccess, playerX, playerY, playerZ, random, pos);
+        if (!state.isCollisionShapeFullBlock(level, pos))
+            doAmbientParticleFXTick(level, pos, random, playerPos);
     }
 
-    protected void doFluidFXTick(ClientLevel level, ExtendedBulkSectionAccess sectionAccess, FluidState fluid, BlockState block, int playerX, int playerY, int playerZ, RandomSource random, BlockPos.MutableBlockPos pos) {
-        ParticleOptions dripParticle = fluid.getDripParticle();
+    protected void doFluidFXTick(ClientLevel level, Triple<BlockState, FluidState, BlockPos> block, BlockPos playerPos, EasyRandom random) {
+        ParticleOptions dripParticle = block.getMiddle().getDripParticle();
+        BlockPos pos = block.getRight();
 
-        fluid.animateTick(level, pos, random);
+        block.getMiddle().animateTick(level, pos, random);
 
         if (dripParticle != null && level.random.nextInt(10) == 0) {
             BlockPos belowPos = pos.below();
 
-            level.trySpawnDripParticles(belowPos, level.getBlockState(belowPos), dripParticle, block.isFaceSturdy(level, pos, Direction.DOWN));
+            level.trySpawnDripParticles(belowPos, level.getBlockState(belowPos), dripParticle, block.getLeft().isFaceSturdy(level, pos, Direction.DOWN));
         }
     }
 
-    protected void doAmbientParticleFXTick(ClientLevel level, ExtendedBulkSectionAccess sectionAccess, int playerX, int playerY, int playerZ, RandomSource random, BlockPos.MutableBlockPos pos) {
+    protected void doAmbientParticleFXTick(ClientLevel level, BlockPos pos, EasyRandom random, BlockPos playerPos) {
         Biome biome = level.getBiome(pos).value();
 
-        if (!spawnAmbientParticle(level, sectionAccess, pos, biome)) {
-            biome.getAmbientParticle()
-                    .ifPresent(settings -> {
-                        if (settings.canSpawn(level.random)) {
-                            level.addParticle(
-                                    settings.getOptions(),
-                                    pos.getX() + level.random.nextDouble(),
-                                    pos.getY() + level.random.nextDouble(),
-                                    pos.getZ() + level.random.nextDouble(),
-                                    0,
-                                    0,
-                                    0
-                            );
-                        }
-                    });
-        }
+        if (spawnAmbientParticle(level, pos, biome, random))
+            return;
+
+        biome.getAmbientParticle().ifPresent(settings -> {
+            if (settings.canSpawn(random)) {
+                level.addParticle(
+                        settings.getOptions(),
+                        pos.getX() + random.nextDouble(),
+                        pos.getY() + random.nextDouble(),
+                        pos.getZ() + random.nextDouble(),
+                        0,
+                        0,
+                        0);
+            }
+        });
     }
 
-    public boolean spawnAmbientParticle(ClientLevel level, ExtendedBulkSectionAccess sectionAccess, BlockPos pos, Biome biome) {
+    public boolean spawnAmbientParticle(ClientLevel level, BlockPos pos, Biome biome, EasyRandom random) {
         return false;
     }
 }

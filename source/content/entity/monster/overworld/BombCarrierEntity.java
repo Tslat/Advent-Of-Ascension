@@ -1,21 +1,20 @@
 package net.tslat.aoa3.content.entity.monster.overworld;
 
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.BombCarrierDynamiteEntity;
-import net.tslat.aoa3.library.builder.SoundBuilder;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import net.tslat.aoa3.util.PositionAndMotionUtil;
+import net.tslat.tme.api.sound.SoundBuilder;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -76,8 +75,8 @@ public class BombCarrierEntity extends AoARangedMob<BombCarrierEntity> {
 		level().addFreshEntity(projectile);
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(55).spawnChance(1 / 5f);
+	public static SpawnPlacements.SpawnPredicate<BombCarrierEntity> spawnRules(EntityType<BombCarrierEntity> entityType) {
+		return EntitySpawnConditions.createDayMonster(entityType).noLowerThanY(AoADimensions.OVERWORLD, 55).spawnChance(1 / 5f);
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<BombCarrierEntity> entityType) {
@@ -94,6 +93,6 @@ public class BombCarrierEntity extends AoARangedMob<BombCarrierEntity> {
 		controllers.add(
 				DefaultAnimations.genericWalkIdleController(this),
 				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_THROW).transitionLength(0)
-						.setSoundKeyframeHandler(event -> new SoundBuilder(AoASounds.LIGHT_FUSE).followEntity(this).category(SoundSource.HOSTILE).execute()));
+						.setSoundKeyframeHandler(event -> SoundBuilder.following(AoASounds.LIGHT_FUSE, this).play()));
 	}
 }

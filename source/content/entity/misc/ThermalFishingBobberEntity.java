@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.entity.misc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -14,10 +13,10 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.Tags;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 
 public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 	public ThermalFishingBobberEntity(ServerPlayer player, Level world, ItemStack rod) {
@@ -101,14 +100,14 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 
 	@Override
 	protected float fishingBonusModForBiome(Holder<Biome> biome) {
-		for (TagKey<Biome> tag : biome.tags().toList()) {
-			if (tag == BiomeTags.IS_OCEAN || tag == BiomeTags.IS_RIVER || tag == Tags.Biomes.IS_SWAMP)
-				return 0.5f;
+		float modifier = 1f;
 
-			if (tag == Tags.Biomes.IS_DEAD || tag == Tags.Biomes.IS_DRY || tag == Tags.Biomes.IS_HOT)
-				return 1.25f;
-		}
+		if (biome.is(AoATags.Biomes.LAVA_FISHING_BENEFICIAL))
+			modifier *= 1.25f;
 
-		return 1f;
+		if (biome.is(AoATags.Biomes.LAVA_FISHING_DETRIMENTAL))
+			modifier *= 0.5f;
+
+		return modifier;
 	}
 }

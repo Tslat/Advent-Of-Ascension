@@ -21,7 +21,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class RockPickSword extends BaseSword {
+public class RockPickSword extends AoASword {
 	public RockPickSword(Tier tier, Item.Properties properties) {
 		super(tier, properties, createToolProperties(tier, BlockTags.MINEABLE_WITH_PICKAXE));
 	}

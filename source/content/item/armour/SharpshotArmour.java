@@ -8,8 +8,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.tslat.aoa3.common.registration.item.AoAArmourMaterials;
-import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.content.item.weapon.sniper.BaseSniper;
+import net.tslat.aoa3.content.item.weapon.gun.AoAGun;
+import net.tslat.aoa3.content.item.weapon.sniper.AoASniper;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -25,8 +25,8 @@ public class SharpshotArmour extends AdventArmour {
 	public void handleOutgoingAttack(LivingEntity entity, EnumSet<Piece> equippedPieces, LivingIncomingDamageEvent ev) {
 		Item gun;
 
-		if (DamageUtil.isGunDamage(ev.getSource()) && ((gun = entity.getMainHandItem().getItem()) instanceof BaseGun || (gun = entity.getOffhandItem().getItem()) instanceof BaseGun)) {
-			float mod = equippedPieces.contains(Piece.FULL_SET) && gun instanceof BaseSniper ? 1.38f : (1 + perPieceValue(equippedPieces, 0.07f));
+		if (DamageUtil.isGunDamage(ev.getSource()) && ((gun = entity.getMainHandItem().getItem()) instanceof AoAGun || (gun = entity.getOffhandItem().getItem()) instanceof AoAGun)) {
+			float mod = equippedPieces.contains(Piece.FULL_SET) && gun instanceof AoASniper ? 1.38f : (1 + perPieceValue(equippedPieces, 0.07f));
 
 			ev.setAmount(ev.getAmount() * mod);
 		}

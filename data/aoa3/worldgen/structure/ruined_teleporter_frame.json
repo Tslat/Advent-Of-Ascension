@@ -1,6 +1,7 @@
 {
   "type": "aoa3:aoa_default_structure",
   "biomes": "#aoa3:has_structure/ruined_teleporter",
+  "size": 15,
   "spawn_overrides": {
     "ambient": {
       "bounding_box": "piece",
@@ -24,5 +25,6 @@
     }
   },
   "start_pool": "aoa3:overworld/ruined_teleporter_frame/starts",
+  "step": "surface_structures",
   "terrain_adaptation": "beard_thin"
 }

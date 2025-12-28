@@ -40,6 +40,15 @@ public record PixonVariant(String name, boolean isPriorityVariant, int primaryCo
 
     private static final Supplier<PixonVariant[]> SORTED_VARIANTS = Suppliers.memoize(() -> AoARegistries.PIXON_VARIANTS.getAllRegisteredObjects().sorted(Comparator.comparing(PixonVariant::isPriorityVariant).reversed()).toArray(PixonVariant[]::new));
 
+    public static PixonVariant getOrDefault(ResourceLocation id) {
+        if (id == null)
+            return AMBIENT.get();
+
+        PixonVariant variant = AoARegistries.PIXON_VARIANTS.getEntry(id);
+
+        return variant == null ? AMBIENT.get() : variant;
+    }
+
     public static PixonVariant getVariantForSpawn(ServerLevel level, DifficultyInstance difficulty, PixonEntity pixon, Supplier<Holder<Biome>> biome) {
         PixonVariant variant = PixonVariant.AMBIENT.get();
 

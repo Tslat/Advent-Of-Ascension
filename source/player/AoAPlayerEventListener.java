@@ -1,5 +1,6 @@
 package net.tslat.aoa3.player;
 
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -16,6 +17,9 @@ import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.List;
@@ -211,7 +215,7 @@ public interface AoAPlayerEventListener {
 	default void createKeybindListener(Consumer<AoAPlayerKeybindListener> consumer) {}
 
 	/**
-	 * This method gets triggered when the keycode assigned in {@link AoAPlayerKeybindListener#getKeycode()} is pressed.
+	 * This method gets triggered when the keycode assigned in {@link AoAPlayerKeybindListener#getKeybind()} is pressed.
 	 * <p>
 	 * It will only be called once per press, so ongoing press effects should be handled manually via the keybind itself.
 	 */
@@ -221,6 +225,17 @@ public interface AoAPlayerEventListener {
 	 * Send the action key screen effect pulse to the given player
 	 */
 	default void activatedActionKey(ServerPlayer player) {
+		TMEParticlePacket packet = new TMEParticlePacket();
+
+		for (int i = 0; i < 50; i++) {
+			packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.GLOW_SQUID_INK, player)
+									.colourTint(255, 204, 0, 50)
+									.scaleMod(RandomUtil.valueBetween(0.25f, 0.75f))
+									.lifespan(RandomUtil.numberBetween(20, 40))
+									.velocity(RandomUtil.scaledGaussianValue(0.05f), RandomUtil.scaledGaussianValue(0.05f), RandomUtil.scaledGaussianValue(0.05f)));
+		}
+
+		packet.sendToAllPlayersTrackingEntity(player);
 		new ScreenImageEffect(ScreenImageEffect.Type.ACTION_KEY_VIGNETTE).coloured(ColourUtil.makeARGB(ColourUtil.WHITE, 127)).fullscreen(true).duration(10).sendToPlayer(player);
 	}
 

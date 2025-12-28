@@ -2,65 +2,65 @@ package net.tslat.aoa3.content.item.weapon.gun;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
-import net.tslat.aoa3.content.entity.projectile.gun.HotShotEntity;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
+import net.tslat.aoa3.content.entity.projectile.base.PhysicalWeaponProjectile;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.api.object.RayTrace;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class HeatWave extends BaseGun {
+public class HeatWave extends AoAGun {
 	public HeatWave(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_GUN_CANNON_FIRE_1_SHORT.get();
+	public WeaponProjectile createProjectileEntity(Level level, WeaponFiringContext context) {
+		return new PhysicalWeaponProjectile(AoAProjectiles.HOT_SHOT.get(), level, context);
 	}
 
 	@Override
-	public boolean isFullAutomatic() {
-		return false;
+	protected void onDamageEntity(Level level, WeaponProjectile projectile, RayTrace<?> rayTrace, Entity hitEntity, float damage) {
+		if (level instanceof ServerLevel serverLevel)
+			doFlareBurst(serverLevel, rayTrace.hitPos(), projectile.getShooter());
 	}
 
 	@Override
-	public Item getAmmoItem() {
-		return AoAItems.METAL_SLUG.get();
+	protected void onHitBlock(Level level, WeaponProjectile projectile, RayTrace<Void> rayTrace, BlockState hitBlock) {
+		if (level instanceof ServerLevel serverLevel)
+			doFlareBurst(serverLevel, rayTrace.hitPos(), projectile.getShooter());
 	}
 
-	@Override
-	public BaseBullet createProjectileEntity(LivingEntity shooter, ItemStack gunStack, InteractionHand hand) {
-		return new HotShotEntity(shooter, this, hand, 120, 0);
-	}
+	protected void doFlareBurst(ServerLevel level, Vec3 hitPos, @Nullable Entity shooter) {
+		AreaEffectCloud cloud = new AreaEffectCloud(level, hitPos.x, hitPos.y, hitPos.z);
 
-	@Override
-	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
-		AreaEffectCloud cloud = new AreaEffectCloud(bullet.level(), (target.getX() + bullet.getX()) / 2d, (target.getY() + bullet.getY()) / 2d, (target.getZ() + bullet.getZ()) / 2d);
+		if (shooter instanceof LivingEntity livingShooter)
+			cloud.setOwner(livingShooter);
 
-		cloud.setOwner(shooter);
 		cloud.setParticle(ParticleTypes.FLAME);
 		cloud.setRadius(1f);
 		cloud.setDuration(5);
 		cloud.setRadiusPerTick(0.4f);
 		cloud.setWaitTime(0);
 
-		bullet.level().addFreshEntity(cloud);
+		level.addFreshEntity(cloud);
 
-		for (LivingEntity entity : bullet.level().getEntitiesOfClass(LivingEntity.class, cloud.getBoundingBox().inflate(2, 1, 2), EntityUtil::isHostileMob)) {
+		for (LivingEntity entity : EntityRetrievalUtil.getEntities(level, cloud.getBoundingBox().inflate(2, 1, 2), LivingEntity.class, EntityUtil::isHostileMob)) {
 			entity.igniteForSeconds(4);
 		}
 	}

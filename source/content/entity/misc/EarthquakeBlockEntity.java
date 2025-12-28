@@ -23,8 +23,8 @@ import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 import org.jetbrains.annotations.Nullable;
 
 public class EarthquakeBlockEntity extends Entity {
@@ -108,10 +108,9 @@ public class EarthquakeBlockEntity extends Entity {
             move(MoverType.SELF, getDeltaMovement());
 
             if (!level().isClientSide) {
-                for (LivingEntity entity : EntityRetrievalUtil.<LivingEntity>getEntities(level(), getBoundingBox(), entity -> entity != this.owner && entity instanceof LivingEntity)) {
-                    if (entity.hurt(DamageUtil.indirectEntityDamage(DamageTypes.MOB_ATTACK_NO_AGGRO, this.owner, this), this.damage)) {
-                        EntityUtil.applyPotions(entity, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 60).level(3).isAmbient().hideParticles());
-                    }
+                for (LivingEntity entity : EntityRetrievalUtil.getEntities(level(), getBoundingBox().deflate(0.1f), LivingEntity.class, entity -> entity != this.owner)) {
+                    if (entity.hurt(DamageUtil.indirectEntityDamage(DamageTypes.MOB_ATTACK_NO_AGGRO, this.owner, this), getDamage()))
+                        EntityUtil.applyPotions(entity, getOwner(), new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 60).level(3).isAmbient().hideParticles());
                 }
             }
         }

@@ -9,6 +9,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.neoforged.neoforge.common.Tags;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.PlayerSkillsLootModificationEvent;
 import net.tslat.aoa3.event.dynamic.DynamicEventSubscriber;
@@ -45,7 +46,7 @@ public class BonusMiningResult extends ScalableModAbility {
 		if (!testAsChance())
 			return;
 
-		if (!state.is(Tags.Blocks.ORES))
+		if (!state.is(Tags.Blocks.ORES) || state.is(AoATags.Blocks.NO_BONUS_MINING_RESULT))
 			return;
 
 		Item blockItem = state.getBlock().asItem();

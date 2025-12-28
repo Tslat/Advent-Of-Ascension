@@ -11,7 +11,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class FaunamancersBlade extends BaseSword {
+public class FaunamancersBlade extends AoASword {
 	public FaunamancersBlade(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

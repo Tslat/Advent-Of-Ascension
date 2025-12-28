@@ -11,6 +11,7 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.animal.ShinySquidEntity;
 import net.tslat.aoa3.content.entity.animal.barathos.ArkbackEntity;
 import net.tslat.aoa3.content.entity.animal.barathos.EmperorBeastEntity;
+import net.tslat.aoa3.content.entity.animal.barathos.MasonBeetleEntity;
 import net.tslat.aoa3.content.entity.animal.fish.BasicFishEntity;
 import net.tslat.aoa3.content.entity.animal.fish.BasicLavaFishEntity;
 import net.tslat.aoa3.content.entity.animal.precasia.DeinotheriumEntity;
@@ -58,6 +59,7 @@ public final class AoAAnimals {
 
 	public static final DeferredHolder<EntityType<?>, EntityType<ArkbackEntity>> ARKBACK = register("arkback", EntityTypeRegistrar.creature(ArkbackEntity::new).sized(5f, 4f, 3f).spawnEgg(0x63514B, 0x3C2923));
 	public static final DeferredHolder<EntityType<?>, EntityType<EmperorBeastEntity>> EMPEROR_BEAST = register("emperor_beast", EntityTypeRegistrar.creature(EmperorBeastEntity::new).sized(5f, 8.5f, 13f).spawnEgg(0x4F4444, 0xC9B5A2));
+	public static final DeferredHolder<EntityType<?>, EntityType<MasonBeetleEntity>> MASON_BEETLE = register("mason_beetle", EntityTypeRegistrar.creature(MasonBeetleEntity::new).sized(0.534375f, 0.4375f, 0.390625f).spawnEgg(0x2F2727, 0x5A4D4D));
 
 	//public static final DeferredHolder<EntityType<?>, EntityType<Animal>> ANGELICA = registerAnimal("angelica", AngelicaEntity::new, 0.6f, 2f, 0x146262, 0xB4B4B4);
 	//public static final DeferredHolder<EntityType<?>, EntityType<Animal>> DAWNLIGHT = registerAnimal("dawnlight", DawnlightEntity::new, 0.6875f, 1.375f, 0xD8DAD2, 0xEBEBEA);
@@ -75,7 +77,7 @@ public final class AoAAnimals {
 		final DeferredHolder<EntityType<?>, EntityType<T>> registryObject = AoARegistries.ENTITIES.register(registryName, () -> builder.build(registryName));
 
 		if (builder.hasSpawnEgg())
-			AoAItems.registerItem(registryName + "_spawn_egg", () -> new DeferredSpawnEggItem(registryObject, builder.getSpawnEggBackgroundColour(), builder.getSpawnEggDotsColour(), new Item.Properties()), CreativeModeTabs.SPAWN_EGGS);
+			AoAItems.registerItem(registryName + "_spawn_egg", () -> new DeferredSpawnEggItem(registryObject, 0xFFFFFFFF/*builder.getSpawnEggBackgroundColour()*/, 0xFFFFFFFF/*builder.getSpawnEggDotsColour()*/, new Item.Properties()), CreativeModeTabs.SPAWN_EGGS);
 
 		return registryObject;
 	}

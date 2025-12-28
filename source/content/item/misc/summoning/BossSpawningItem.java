@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.item.misc.summoning;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
@@ -23,8 +24,8 @@ import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 
 public abstract class BossSpawningItem<T extends Entity> extends TooltipItem implements BossTokenItem {
 	public BossSpawningItem() {
@@ -66,6 +67,11 @@ public abstract class BossSpawningItem<T extends Entity> extends TooltipItem imp
 	}
 
 	@Override
+	public boolean canGrindstoneRepair(ItemStack stack) {
+		return false;
+	}
+
+	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		if (WorldUtil.isWorld(level, AoADimensions.NOWHERE))
 			return InteractionResultHolder.pass(player.getItemInHand(hand));
@@ -76,16 +82,16 @@ public abstract class BossSpawningItem<T extends Entity> extends TooltipItem imp
 	@Override
 	public void onUseTick(Level level, LivingEntity livingEntity, ItemStack stack, int remainingUseDuration) {
 		if (level instanceof ServerLevel serverLevel) {
-			TELParticlePacket packet = new TELParticlePacket();
+			TMEParticlePacket packet = new TMEParticlePacket();
 
 			for (int i = 0; i < 3; i++) {
 				float colorMod = level.random.nextFloat() * 0.7f + 0.3f;
 
 				packet.particle(ParticleBuilder.forRandomPosInEntity(AoAParticleTypes.GENERIC_DUST.get(), livingEntity)
-						.colourOverride(colorMod * 209 / 255f, colorMod * 177 / 255f, 0, 1f));
+						.colourTint(colorMod * 209 / 255f, colorMod * 177 / 255f, 0, 1f));
 			}
 
-			packet.sendToAllNearbyPlayers(serverLevel, livingEntity.position(), 20);
+			packet.sendToAllPlayersNearby(serverLevel, livingEntity.position(), 20);
 		}
 	}
 
@@ -99,7 +105,9 @@ public abstract class BossSpawningItem<T extends Entity> extends TooltipItem imp
 		if (nowhere == null)
 			return stack;
 
-		AoAScheduler.scheduleSyncronisedTask(() -> {
+		BlockPos fromPos = entity.blockPosition();
+
+		AoAScheduler.schedule(1, tick -> {
 			if (AdvancementUtil.isAdvancementCompleted(pl, AdventOfAscension.id("nowhere/root"))) {
 				ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 				GlobalPos returnLoc = plData.storage.getPortalReturnFor(nowhere.dimension());
@@ -107,15 +115,14 @@ public abstract class BossSpawningItem<T extends Entity> extends TooltipItem imp
 				pl.changeDimension(AoAPortal.getTransitionForLevel(nowhere, pl, AoABlocks.NOWHERE_PORTAL.get()));
 				pl.connection.teleport(17.5d, 502.5d, 3.5d, 0, pl.getXRot());
 
-				if (returnLoc != null)
-					plData.storage.setPortalReturnLocation(nowhere.dimension(), returnLoc);
+				plData.storage.setPortalReturnLocation(nowhere.dimension(), returnLoc == null ? new GlobalPos(level.dimension(), fromPos) : returnLoc);
 			}
 			else {
 				PlayerUtil.getAdventPlayer(pl).storage.setPortalReturnLocation(nowhere.dimension(), pl.level().dimension(), pl.blockPosition());
 				pl.changeDimension(AoAPortal.getTransitionForLevel(nowhere, pl, AoABlocks.NOWHERE_PORTAL.get()));
 				pl.connection.teleport(17.5d, 452.5d, 3.5d, 0, pl.getXRot());
 			}
-		}, 1);
+		});
 
 		return stack;
 	}

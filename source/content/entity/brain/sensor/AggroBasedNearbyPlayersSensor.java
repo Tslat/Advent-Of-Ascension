@@ -9,7 +9,7 @@ import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
 import net.tslat.smartbrainlib.object.SquareRadius;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 import net.tslat.smartbrainlib.util.SensoryUtils;
 
 import java.util.Comparator;

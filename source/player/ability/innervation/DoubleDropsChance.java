@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -39,7 +40,7 @@ public class DoubleDropsChance extends ScalableModAbility {
 		List<ItemStack> loot = ev.getGeneratedLoot();
 		Entity killedEntity = ev.getLootContext().getParamOrNull(LootContextParams.THIS_ENTITY);
 
-		if (killedEntity instanceof Player)
+		if (killedEntity instanceof Player || !(killedEntity instanceof LivingEntity))
 			return;
 
 		if (testAsChance()) {

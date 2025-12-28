@@ -1,0 +1,245 @@
+{
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "aoa3:barathos/baron_resource_pit/small1",
+        "processors": {
+          "processors": [
+            {
+              "processor_type": "minecraft:rule",
+              "rules": [
+                {
+                  "input_predicate": {
+                    "block": "aoa3:baronyte_ore",
+                    "predicate_type": "minecraft:random_block_match",
+                    "probability": 0.85
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  },
+                  "output_state": {
+                    "Name": "aoa3:baron_stone"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "aoa3:barathos/baron_resource_pit/small2",
+        "processors": {
+          "processors": [
+            {
+              "processor_type": "minecraft:rule",
+              "rules": [
+                {
+                  "input_predicate": {
+                    "block": "aoa3:baronyte_ore",
+                    "predicate_type": "minecraft:random_block_match",
+                    "probability": 0.85
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  },
+                  "output_state": {
+                    "Name": "aoa3:baron_stone"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "aoa3:barathos/baron_resource_pit/small3",
+        "processors": {
+          "processors": [
+            {
+              "processor_type": "minecraft:rule",
+              "rules": [
+                {
+                  "input_predicate": {
+                    "block": "aoa3:baronyte_ore",
+                    "predicate_type": "minecraft:random_block_match",
+                    "probability": 0.85
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  },
+                  "output_state": {
+                    "Name": "aoa3:baron_stone"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "aoa3:barathos/baron_resource_pit/small4",
+        "processors": {
+          "processors": [
+            {
+              "processor_type": "minecraft:rule",
+              "rules": [
+                {
+                  "input_predicate": {
+                    "block": "aoa3:baronyte_ore",
+                    "predicate_type": "minecraft:random_block_match",
+                    "probability": 0.85
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  },
+                  "output_state": {
+                    "Name": "aoa3:baron_stone"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "aoa3:barathos/baron_resource_pit/large1",
+        "processors": {
+          "processors": [
+            {
+              "processor_type": "minecraft:rule",
+              "rules": [
+                {
+                  "input_predicate": {
+                    "block": "aoa3:baronyte_ore",
+                    "predicate_type": "minecraft:random_block_match",
+                    "probability": 0.85
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  },
+                  "output_state": {
+                    "Name": "aoa3:baron_stone"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "aoa3:barathos/baron_resource_pit/large2",
+        "processors": {
+          "processors": [
+            {
+              "processor_type": "minecraft:rule",
+              "rules": [
+                {
+                  "input_predicate": {
+                    "block": "aoa3:baronyte_ore",
+                    "predicate_type": "minecraft:random_block_match",
+                    "probability": 0.85
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  },
+                  "output_state": {
+                    "Name": "aoa3:baron_stone"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "aoa3:barathos/baron_resource_pit/large3",
+        "processors": {
+          "processors": [
+            {
+              "processor_type": "minecraft:rule",
+              "rules": [
+                {
+                  "input_predicate": {
+                    "block": "aoa3:baronyte_ore",
+                    "predicate_type": "minecraft:random_block_match",
+                    "probability": 0.85
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  },
+                  "output_state": {
+                    "Name": "aoa3:baron_stone"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "aoa3:barathos/baron_resource_pit/large4",
+        "processors": {
+          "processors": [
+            {
+              "processor_type": "minecraft:rule",
+              "rules": [
+                {
+                  "input_predicate": {
+                    "block": "aoa3:baronyte_ore",
+                    "predicate_type": "minecraft:random_block_match",
+                    "probability": 0.85
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  },
+                  "output_state": {
+                    "Name": "aoa3:baron_stone"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    }
+  ],
+  "fallback": "minecraft:empty"
+}

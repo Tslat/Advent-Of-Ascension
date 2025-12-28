@@ -2,42 +2,36 @@ package net.tslat.aoa3.content.item.weapon.blaster;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.projectile.blaster.OrbocronEntity;
-import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.api.object.RayTrace;
 
 import java.util.List;
 
-public class Orbocron extends BaseBlaster {
+public class Orbocron extends AoABlaster<WeaponProjectile> {
 	public Orbocron(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_SHADOW_BLASTER_FIRE.get();
+	void fireBlaster(ServerLevel level, WeaponFiringContext context) {
+		fireBasicBlasterProjectile(level, context, AoAProjectiles.ORBOCRON_SHOT);
 	}
 
 	@Override
-	public void fireBlaster(ServerLevel level, LivingEntity shooter, ItemStack blaster) {
-		shooter.level().addFreshEntity(new OrbocronEntity(shooter, this, 60));
-	}
-
-	@Override
-	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		for (LivingEntity e : shot.level().getEntitiesOfClass(LivingEntity.class, shot.getBoundingBox().inflate(15), EntityUtil::isHostileMob)) {
-			if (!EntityUtil.isImmuneToSpecialAttacks(e))
-				EntityUtil.pullEntityIn(target, e, 0.5f, false);
+	protected void onDamageEntity(Level level, WeaponProjectile effect, WeaponFiringContext context, RayTrace<?> rayTrace, Entity hitEntity, float damage) {
+		for (LivingEntity nearbyEntity : EntityRetrievalUtil.getEntities(level, rayTrace.hitPos(), 15, LivingEntity.class, target -> EntityUtil.areProbablyEnemies(target, context.getShooter()) && !EntityUtil.isImmuneToSpecialAttacks(target))) {
+			EntityUtil.pullEntityIn(hitEntity, nearbyEntity, 0.5f, false);
 		}
 	}
 

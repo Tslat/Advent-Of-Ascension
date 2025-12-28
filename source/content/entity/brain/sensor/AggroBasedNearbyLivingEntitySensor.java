@@ -8,7 +8,7 @@ import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
 import net.tslat.smartbrainlib.object.SquareRadius;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 
 import java.util.Comparator;
 import java.util.List;
@@ -24,7 +24,7 @@ public class AggroBasedNearbyLivingEntitySensor<E extends LivingEntity> extends 
 			radius = new SquareRadius(dist, dist);
 		}
 
-		List<LivingEntity> entities = EntityRetrievalUtil.getEntities(level, entity.getBoundingBox().inflate(radius.xzRadius(), radius.yRadius(), radius.xzRadius()), obj -> obj instanceof LivingEntity livingEntity && predicate().test(livingEntity, entity));
+		List<LivingEntity> entities = EntityRetrievalUtil.getEntities(level, entity.getBoundingBox().inflate(radius.xzRadius(), radius.yRadius(), radius.xzRadius()), LivingEntity.class, nearby -> predicate().test(nearby, entity));
 
 		entities.sort(Comparator.comparingDouble(entity::distanceToSqr));
 

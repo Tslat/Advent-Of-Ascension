@@ -12,7 +12,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class UnderworldGreatblade extends BaseGreatblade {
+public class UnderworldGreatblade extends AoAGreatblade {
 	public UnderworldGreatblade(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

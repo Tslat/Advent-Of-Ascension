@@ -3,18 +3,19 @@ package net.tslat.aoa3.content.entity.monster.overworld;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.content.entity.ai.movehelper.UnderwaterWalkingMovementController;
-import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
+import net.tslat.aoa3.library.builder.MultipartBuilder;
 import net.tslat.aoa3.util.AttributeUtil;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
@@ -39,17 +40,22 @@ import software.bernie.geckolib.constant.DefaultAnimations;
 
 import java.util.List;
 
+import static net.tslat.aoa3.library.builder.MultipartBuilder.Part;
+
 public class ChomperEntity extends AoAMeleeMob<ChomperEntity> {
 	public ChomperEntity(EntityType<? extends ChomperEntity> entityType, Level world) {
 		super(entityType, world);
 
 		moveControl = new UnderwaterWalkingMovementController(this);
+	}
 
-		setParts(
-				new AoAEntityPart<>(this, getBbWidth(), 0.65f, 0, 0.2f, getBbWidth()).setDamageMultiplier(1.25f),
-				new AoAEntityPart<>(this, getBbWidth(), 7 / 16f, 0, 0.225f, -getBbWidth()).setDamageMultiplier(0.9f),
-				new AoAEntityPart<>(this, 7 / 16f, 5 / 16f, 0, 0.25f, -getBbWidth() * 1.775f).setDamageMultiplier(0.75f)
-		);
+	@Nullable
+	@Override
+	public MultipartBuilder<? extends ChomperEntity> definePartEntities() {
+		return MultipartBuilder.of(this,
+										  Part.sized(getBbWidth(), 0.65f).up(0.2f).adjacentForward().damageMod(1.25f),
+										  Part.sized(getBbWidth(), 0.4375f).up(0.225f).adjacentBehind().damageMod(0.9f).then(
+												  Part.sized(0.4375f, 0.3125f).up(0.025f).adjacentBehind().damageMod(0.75f)));
 	}
 
 	@Override
@@ -104,13 +110,13 @@ public class ChomperEntity extends AoAMeleeMob<ChomperEntity> {
 	@Override
 	public BrainActivityGroup<ChomperEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
+				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Mth.square(getAttributeValue(Attributes.FOLLOW_RANGE))),
 				new SetWalkTargetToAttackTarget<>().speedMod((entity, target) -> 1.05f),
 				new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration() + 2));
 	}
 
 	@Override
-	protected float getWaterSlowDown() {
+	public float getWaterSlowDown() {
 		return 1;
 	}
 
@@ -130,8 +136,8 @@ public class ChomperEntity extends AoAMeleeMob<ChomperEntity> {
 		return 5;
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.difficultyBasedSpawnChance(0.1f);
+	public static SpawnPlacements.SpawnPredicate<ChomperEntity> spawnRules(EntityType<ChomperEntity> entityType) {
+		return EntitySpawnConditions.createDayNightMonster(entityType).difficultyBasedSpawnChance(0.1f);
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<ChomperEntity> entityType) {

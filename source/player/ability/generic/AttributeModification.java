@@ -17,12 +17,12 @@ import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.ApplyDynamicAttributeModifiersEvent;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
 import net.tslat.aoa3.event.dynamic.DynamicEventSubscriber;
-import net.tslat.aoa3.library.object.Text;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.AttributeUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RegistryUtil;
+import net.tslat.tme.api.object.extension.Text;
 
 import java.util.List;
 
@@ -85,8 +85,10 @@ public class AttributeModification extends ScalableModAbility {
 		}
 
 		super.updateDescription(Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey(),
-				Text.of(this.attribute.value().getDescriptionId()),
-				LocaleUtil.getAbilityValueDesc(baseValue != 0, perLevelMod != 0, modifier.operation() != AttributeModifier.Operation.ADD_VALUE, amount, perLevel, NumberUtil.roundToNthDecimalPlace((float)modifier.amount() * (modifier.operation() == AttributeModifier.Operation.ADD_VALUE ? 1 : 100), 3))));
+													   Text.of(this.attribute.value().getDescriptionId()),
+													   LocaleUtil.getAbilityValueDesc(baseValue != 0, perLevelMod != 0,
+																					  modifier.operation() != AttributeModifier.Operation.ADD_VALUE, amount, perLevel,
+																					  NumberUtil.roundToNthDecimalPlace((float)modifier.amount() * (modifier.operation() == AttributeModifier.Operation.ADD_VALUE ? 1 : 100), 3))));
 	}
 
 	@Override

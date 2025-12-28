@@ -4,6 +4,7 @@ import mezz.jei.api.gui.builder.IIngredientAcceptor;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.gui.widgets.ISlottedWidgetFactory;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.helpers.IModIdHelper;
@@ -12,6 +13,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.runtime.IIngredientManager;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
@@ -55,13 +57,13 @@ public abstract class ContainerRecipeCategory<T> implements IRecipeCategory<T> {
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.background;
+    public IDrawable getIcon() {
+        return this.icon;
     }
 
     @Override
-    public IDrawable getIcon() {
-        return this.icon;
+    public void draw(T recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        this.background.draw(guiGraphics);
     }
 
     public record TextureBasedRecipeLayoutBuilder(IRecipeLayoutBuilder wrappedBuilder, int xOffset, int yOffset) implements IRecipeLayoutBuilder {
@@ -76,6 +78,8 @@ public abstract class ContainerRecipeCategory<T> implements IRecipeCategory<T> {
             return this.wrappedBuilder.addSlot(role);
         }
 
+        // TODO
+        @SuppressWarnings("removal")
         @Override
         public IRecipeSlotBuilder addSlotToWidget(RecipeIngredientRole role, ISlottedWidgetFactory<?> widgetFactory) {
             return null;

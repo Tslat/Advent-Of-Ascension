@@ -5,8 +5,8 @@ import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.blaster.FlowerShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class FlowerShotRenderer extends ParticleProjectileRenderer<FlowerShotEntity> {
 	public FlowerShotRenderer(final EntityRendererProvider.Context manager) {
@@ -17,7 +17,7 @@ public class FlowerShotRenderer extends ParticleProjectileRenderer<FlowerShotEnt
 	protected void addParticles(FlowerShotEntity entity, float partialTicks) {
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
 				.spawnNTimes(3)
-				.colourOverride(RandomUtil.fiftyFifty() ? ColourUtil.GREEN : ColourUtil.YELLOW)
-				.spawnParticles(entity.level());
+				.colourTint(RandomUtil.fiftyFifty() ? ColourUtil.GREEN : ColourUtil.YELLOW)
+				.spawnClientParticles(entity.level());
 	}
 }

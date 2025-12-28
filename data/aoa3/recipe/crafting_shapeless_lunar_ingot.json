@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:lunar_block"
+      "tag": "c:storage_blocks/lunar"
     }
   ],
   "result": {

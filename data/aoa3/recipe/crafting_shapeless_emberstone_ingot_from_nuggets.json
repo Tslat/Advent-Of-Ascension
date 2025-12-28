@@ -3,31 +3,31 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:emberstone_nugget"
+      "tag": "c:nuggets/emberstone"
     },
     {
-      "item": "aoa3:emberstone_nugget"
+      "tag": "c:nuggets/emberstone"
     },
     {
-      "item": "aoa3:emberstone_nugget"
+      "tag": "c:nuggets/emberstone"
     },
     {
-      "item": "aoa3:emberstone_nugget"
+      "tag": "c:nuggets/emberstone"
     },
     {
-      "item": "aoa3:emberstone_nugget"
+      "tag": "c:nuggets/emberstone"
     },
     {
-      "item": "aoa3:emberstone_nugget"
+      "tag": "c:nuggets/emberstone"
     },
     {
-      "item": "aoa3:emberstone_nugget"
+      "tag": "c:nuggets/emberstone"
     },
     {
-      "item": "aoa3:emberstone_nugget"
+      "tag": "c:nuggets/emberstone"
     },
     {
-      "item": "aoa3:emberstone_nugget"
+      "tag": "c:nuggets/emberstone"
     }
   ],
   "result": {

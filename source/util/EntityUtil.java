@@ -4,26 +4,23 @@ import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.util.Mth;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.CombatEntry;
 import net.minecraft.world.damagesource.CombatTracker;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.entity.PartEntity;
-import net.tslat.effectslib.api.util.EffectBuilder;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.aoa3.common.registration.AoAAttributes;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,8 +28,52 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public final class EntityUtil {
+	// TODO Check for usages to convert to areProbablyEnemies
 	public static boolean isHostileMob(Entity entity) {
 		return entity instanceof Enemy || (entity instanceof NeutralMob neutralMob && neutralMob.isAngry());
+	}
+
+	public static boolean areProbablyEnemies(Entity target, @Nullable Entity attacker) {
+		if (attacker == target)
+			return false;
+
+		if (attacker != null) {
+			if (attacker.isAlliedTo(target))
+				return false;
+
+			if (target instanceof OwnableEntity ownable && attacker.getUUID().equals(ownable.getOwnerUUID()))
+				return false;
+
+			if (attacker instanceof OwnableEntity ownable && target.getUUID().equals(ownable.getOwnerUUID()))
+				return false;
+
+			if (EntityUtil.isHostileMob(attacker)) {
+				if (target instanceof Player)
+					return true;
+
+				if (target instanceof OwnableEntity ownable) {
+					if (ownable.getOwner() instanceof Player)
+						return true;
+
+					if (target instanceof LivingEntity livingTarget) {
+						AttributeMap attributes = livingTarget.getAttributes();
+
+						if (attributes.hasAttribute(Attributes.ATTACK_DAMAGE) || attributes.hasAttribute(AoAAttributes.RANGED_ATTACK_DAMAGE))
+							return true;
+
+						if (target instanceof Mob mob && mob.getTarget() == attacker)
+							return true;
+					}
+				}
+			}
+        }
+
+		boolean isHostileTarget = EntityUtil.isHostileMob(target);
+
+		if (attacker == null || attacker instanceof Player || !EntityUtil.isHostileMob(attacker))
+			return isHostileTarget;
+
+		return !isHostileTarget;
 	}
 
 	public static void healEntity(LivingEntity entity, float amount) {
@@ -74,7 +115,8 @@ public final class EntityUtil {
 		if (knockbackResist >= 1)
 			return;
 
-		targetEntity.setDeltaMovement(targetEntity.getDeltaMovement().add(centralEntity.position().vectorTo(targetEntity.position()).scale((1 - knockbackResist) * strength)));
+		targetEntity.addDeltaMovement(targetEntity.getDeltaMovement().add(centralEntity.position().vectorTo(targetEntity.position()).scale((1 - knockbackResist) * strength)));
+		targetEntity.hasImpulse = true;
 		targetEntity.hurtMarked = true;
 	}
 
@@ -88,18 +130,18 @@ public final class EntityUtil {
 			velocity = velocity.normalize();
 
 		velocity = velocity.scale(strength);
-		targetEntity.setDeltaMovement(velocity);
+		targetEntity.addDeltaMovement(velocity);
 
 		targetEntity.hurtMarked = true;
 	}
 
-	public static void applyPotions(Collection<? extends Entity> entities, EffectBuilder... effects) {
+	public static void applyPotions(Collection<? extends Entity> entities, Entity source, EffectBuilder... effects) {
 		for (Entity entity : entities) {
-			applyPotions(entity, effects);
+			applyPotions(entity, source, effects);
 		}
 	}
 
-	public static void applyPotions(Entity entity, EffectBuilder... effects) {
+	public static void applyPotions(Entity entity, Entity source, EffectBuilder... effects) {
 		entity = getPartOrPartOwner(entity);
 
 		if (!(entity instanceof LivingEntity target) || !entity.isAlive() || entity.isSpectator() || entity instanceof FakePlayer)
@@ -109,7 +151,7 @@ public final class EntityUtil {
 
 		for (EffectBuilder builder : effects) {
 			if (!onlyBeneficial || builder.getEffect().value().isBeneficial())
-				target.addEffect(builder.build());
+				target.addEffect(builder.build(), source);
 		}
 	}
 
@@ -218,9 +260,9 @@ public final class EntityUtil {
 
 	public static Vec3 getDirectionForFacing(Entity entity) {
 		return new Vec3(
-				-Mth.sin(entity.getYRot() * (float)Math.PI / 180f),
-				-Mth.sin(entity.getXRot() * (float)Math.PI / 180f),
-				Mth.cos(entity.getYRot() * (float)Math.PI / 180f)
+				-Mth.sin(entity.getYRot() * Mth.DEG_TO_RAD),
+				-Mth.sin(entity.getXRot() * Mth.DEG_TO_RAD),
+				Mth.cos(entity.getYRot() * Mth.DEG_TO_RAD)
 		);
 	}
 
@@ -230,9 +272,9 @@ public final class EntityUtil {
 
 	public static Vec3 getVelocityVectorForFacing(Entity entity, float velocityMod) {
 		return new Vec3(
-				-Mth.sin(entity.getYRot() * (float)Math.PI / 180f) * Mth.cos(entity.getXRot() * (float)Math.PI / 180.0F) * velocityMod,
-				-Mth.sin(entity.getXRot() * (float)Math.PI / 180f) * velocityMod,
-				Mth.cos(entity.getYRot() * (float)Math.PI / 180f) * Mth.cos(entity.getXRot() * (float)Math.PI / 180f) * velocityMod);
+				-Mth.sin(entity.getYRot() * Mth.DEG_TO_RAD) * Mth.cos(entity.getXRot() * Mth.DEG_TO_RAD) * velocityMod,
+				-Mth.sin(entity.getXRot() * Mth.DEG_TO_RAD) * velocityMod,
+				Mth.cos(entity.getYRot() * Mth.DEG_TO_RAD) * Mth.cos(entity.getXRot() * Mth.DEG_TO_RAD) * velocityMod);
 	}
 
 	public static boolean isEntityMoving(Entity entity) {
@@ -245,75 +287,10 @@ public final class EntityUtil {
 		return new Vec3(entity.getX(0.5f), entity.getY(0.5f), entity.getZ(0.5f));
 	}
 
-	@Nullable
-	public static <T extends Entity> EntityHitResult getEntityCollisionWithPrecision(Level level, Entity projectile, Vec3 startVec, Vec3 endVec, AABB bounds, Predicate<T> filter, float tolerance) {
-		double closestDist = Double.MAX_VALUE;
-		Entity impactEntity = null;
-		Vec3 position = null;
-
-		for(T target : EntityRetrievalUtil.<T>getEntities(level, bounds, entity -> entity != projectile && filter.test((T)entity))) {
-			AABB targetBounds = target.getBoundingBox().inflate(tolerance);
-			Optional<Vec3> boundsClip = targetBounds.clip(startVec, endVec);
-
-			if (boundsClip.isPresent()) {
-				Vec3 pos = boundsClip.get();
-
-				double dist = startVec.distanceToSqr(pos);
-
-				if (dist < closestDist) {
-					impactEntity = target;
-					closestDist = dist;
-					position = pos;
-				}
-			}
-
-			if (target.isMultipartEntity()) {
-				for (Entity part : target.getParts()) {
-					targetBounds = part.getBoundingBox().inflate(tolerance);
-					boundsClip = targetBounds.clip(startVec, endVec);
-
-					if (boundsClip.isPresent()) {
-						Vec3 pos = boundsClip.get();
-
-						double dist = startVec.distanceToSqr(pos);
-
-						if (dist < closestDist) {
-							impactEntity = target;
-							closestDist = dist;
-							position = pos;
-						}
-					}
-				}
-			}
-		}
-
-		return impactEntity == null ? null : new EntityHitResult(impactEntity, position);
-	}
-
 	public static Entity getPartOrPartOwner(Entity entity) {
 		if (entity instanceof PartEntity<?> part)
 			return part.getParent();
 
 		return entity;
-	}
-
-	public static boolean isAllyOf(Entity entity1, Entity entity2) {
-		if (entity1 == entity2)
-			return true;
-
-		if (entity1.isAlliedTo(entity2))
-			return true;
-
-		if (entity1 instanceof OwnableEntity ownable && entity2.getUUID().equals(ownable.getOwnerUUID()))
-			return true;
-
-		if (entity2 instanceof OwnableEntity ownable && entity1.getUUID().equals(ownable.getOwnerUUID()))
-			return true;
-
-		return false;
-	}
-
-	public static EquipmentSlot handToEquipmentSlotType(InteractionHand hand) {
-		return hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
 	}
 }

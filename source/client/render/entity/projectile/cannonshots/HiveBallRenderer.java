@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.client.render.entity.projectile.TexturedProjectileRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.cannon.HiveBallEntity;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class HiveBallRenderer extends TexturedProjectileRenderer<HiveBallEntity> {
 	private int counter = 12;
@@ -33,13 +33,13 @@ public class HiveBallRenderer extends TexturedProjectileRenderer<HiveBallEntity>
 
 			if (toggle) {
 				ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
-						.colourOverride(colourMod * 223 / 255f, colourMod * 153 / 255f, 0, 1f)
-						.spawnParticles(entity.level());
+						.colourTint(colourMod * 223 / 255f, colourMod * 153 / 255f, 0, 1f)
+						.spawnClientParticles(entity.level());
 			}
 			else {
 				ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
-						.colourOverride(colourMod, colourMod, 0, 1f)
-						.spawnParticles(entity.level());
+						.colourTint(colourMod, colourMod, 0, 1f)
+						.spawnClientParticles(entity.level());
 			}
 		}
 	}

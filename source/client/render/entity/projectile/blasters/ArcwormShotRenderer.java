@@ -30,39 +30,39 @@ public class ArcwormShotRenderer extends ModelledProjectileRenderer<ArcwormShotE
 		for (int i = 0; i < 3; i++) {
 			ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position().add(0, 0.45f, 0))
 					.scaleMod(0.75f)
-					.lifespan(Mth.ceil(20 / RandomUtil.randomValueBetween(0.2f, 1)))
-					.colourOverride(ColourUtil.RED)
-					.spawnParticles(entity.level());
+					.lifespan(Mth.ceil(20 / RandomUtil.valueBetween(0.2f, 1)))
+					.colourTint(ColourUtil.RED)
+					.spawnClientParticles(entity.level());
 			ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position().add(0, 0.3f, 0))
 					.scaleMod(0.75f)
-					.lifespan(Mth.ceil(20 / RandomUtil.randomValueBetween(0.2f, 1)))
-					.colourOverride(0xDF9900)
-					.spawnParticles(entity.level());
+					.lifespan(Mth.ceil(20 / RandomUtil.valueBetween(0.2f, 1)))
+					.colourTint(0xDF9900)
+					.spawnClientParticles(entity.level());
 			ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position().add(0, 0.15f, 0))
 					.scaleMod(0.75f)
-					.lifespan(Mth.ceil(20 / RandomUtil.randomValueBetween(0.2f, 1)))
-					.colourOverride(ColourUtil.YELLOW)
-					.spawnParticles(entity.level());
+					.lifespan(Mth.ceil(20 / RandomUtil.valueBetween(0.2f, 1)))
+					.colourTint(ColourUtil.YELLOW)
+					.spawnClientParticles(entity.level());
 			ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
 					.scaleMod(0.75f)
-					.lifespan(Mth.ceil(20 / RandomUtil.randomValueBetween(0.2f, 1)))
-					.colourOverride(ColourUtil.GREEN)
-					.spawnParticles(entity.level());
+					.lifespan(Mth.ceil(20 / RandomUtil.valueBetween(0.2f, 1)))
+					.colourTint(ColourUtil.GREEN)
+					.spawnClientParticles(entity.level());
 			ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position().subtract(0, 0.15f, 0))
 					.scaleMod(0.75f)
-					.lifespan(Mth.ceil(20 / RandomUtil.randomValueBetween(0.2f, 1)))
-					.colourOverride(ColourUtil.CYAN)
-					.spawnParticles(entity.level());
+					.lifespan(Mth.ceil(20 / RandomUtil.valueBetween(0.2f, 1)))
+					.colourTint(ColourUtil.CYAN)
+					.spawnClientParticles(entity.level());
 			ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position().subtract(0, 0.3f, 0))
 					.scaleMod(0.75f)
-					.lifespan(Mth.ceil(20 / RandomUtil.randomValueBetween(0.2f, 1)))
-					.colourOverride(ColourUtil.BLUE)
-					.spawnParticles(entity.level());
+					.lifespan(Mth.ceil(20 / RandomUtil.valueBetween(0.2f, 1)))
+					.colourTint(ColourUtil.BLUE)
+					.spawnClientParticles(entity.level());
 			ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position().subtract(0, 0.45f, 0))
 					.scaleMod(0.75f)
-					.lifespan(Mth.ceil(20 / RandomUtil.randomValueBetween(0.2f, 1)))
-					.colourOverride(0xC140D7)
-					.spawnParticles(entity.level());
+					.lifespan(Mth.ceil(20 / RandomUtil.valueBetween(0.2f, 1)))
+					.colourTint(0xC140D7)
+					.spawnClientParticles(entity.level());
 		}
 	}
 }

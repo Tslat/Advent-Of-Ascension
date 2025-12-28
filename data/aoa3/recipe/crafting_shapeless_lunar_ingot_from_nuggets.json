@@ -3,31 +3,31 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:lunar_nugget"
+      "tag": "c:nuggets/lunar"
     },
     {
-      "item": "aoa3:lunar_nugget"
+      "tag": "c:nuggets/lunar"
     },
     {
-      "item": "aoa3:lunar_nugget"
+      "tag": "c:nuggets/lunar"
     },
     {
-      "item": "aoa3:lunar_nugget"
+      "tag": "c:nuggets/lunar"
     },
     {
-      "item": "aoa3:lunar_nugget"
+      "tag": "c:nuggets/lunar"
     },
     {
-      "item": "aoa3:lunar_nugget"
+      "tag": "c:nuggets/lunar"
     },
     {
-      "item": "aoa3:lunar_nugget"
+      "tag": "c:nuggets/lunar"
     },
     {
-      "item": "aoa3:lunar_nugget"
+      "tag": "c:nuggets/lunar"
     },
     {
-      "item": "aoa3:lunar_nugget"
+      "tag": "c:nuggets/lunar"
     }
   ],
   "result": {

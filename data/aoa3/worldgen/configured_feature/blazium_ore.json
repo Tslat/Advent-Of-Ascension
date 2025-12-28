@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:scattered_ore",
+  "config": {
+    "discard_chance_on_air_exposure": 0.0,
+    "size": 3,
+    "targets": [
+      {
+        "state": {
+          "Name": "aoa3:blazium_ore"
+        },
+        "target": {
+          "block": "aoa3:hellstone",
+          "predicate_type": "minecraft:block_match"
+        }
+      }
+    ]
+  }
+}

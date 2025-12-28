@@ -1,6 +1,5 @@
 package net.tslat.aoa3.content.item.weapon.sniper;
 
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
@@ -9,19 +8,11 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.aoa3.content.item.weapon.gun.AoAGun;
 
-public class BayonetteSR extends BaseSniper {
+public class BayonetteSR extends AoASniper {
 	public BayonetteSR(Item.Properties properties) {
 		super(properties);
-	}
-
-	@Nullable
-	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_GUN_SNIPER_MEDIUM_FIRE_LONG.get();
 	}
 
 	@Override
@@ -42,7 +33,7 @@ public class BayonetteSR extends BaseSniper {
 						AttributeModifier.Operation.ADD_VALUE),
 				EquipmentSlotGroup.MAINHAND);
 
-		for (ItemAttributeModifiers.Entry entry : BaseGun.createGunAttributeModifiers(unholsterTimeModifier).modifiers()) {
+		for (ItemAttributeModifiers.Entry entry : AoAGun.createGunAttributeModifiers(unholsterTimeModifier).modifiers()) {
 			builder.add(entry.attribute(), entry.modifier(), entry.slot());
 		}
 

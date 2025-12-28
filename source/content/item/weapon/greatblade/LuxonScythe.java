@@ -14,7 +14,7 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import java.util.List;
 
-public class LuxonScythe extends BaseGreatblade {
+public class LuxonScythe extends AoAGreatblade {
 	public LuxonScythe(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

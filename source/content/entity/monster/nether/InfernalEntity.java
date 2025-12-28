@@ -7,32 +7,31 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import net.tslat.aoa3.scheduling.AoAScheduler;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -52,7 +51,7 @@ public class InfernalEntity extends AoAMeleeMob<InfernalEntity> {
     @Override
     public BrainActivityGroup<InfernalEntity> getFightTasks() {
         return BrainActivityGroup.fightTasks(
-                new InvalidateAttackTarget<>().invalidateIf((entity, target) -> (target instanceof Player pl && (pl.isCreative() || pl.isSpectator())) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
+                new InvalidateAttackTarget<>().invalidateIf((entity, target) -> (target instanceof Player pl && (pl.isCreative() || pl.isSpectator())) || distanceToSqr(target.position()) > Mth.square(getAttributeValue(Attributes.FOLLOW_RANGE))),
                 new SetWalkTargetToAttackTarget<>(),
                 new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration() + 2).whenActivating(entity -> {
                     Entity target = BrainUtils.getTargetOfEntity(entity);
@@ -63,11 +62,14 @@ public class InfernalEntity extends AoAMeleeMob<InfernalEntity> {
                         state = level().getBlockState(pos = pos.below());
 
                     BlockPos finalPos = pos;
+                    ParticleBuilder particleBuilder = ParticleBuilder.forPositions(new BlockParticleOption(ParticleTypes.BLOCK, state))
+                            .velocity(0, 0.5f, 0);
 
-                    net.tslat.effectslib.api.particle.ParticleBuilder.forPositions(new BlockParticleOption(ParticleTypes.BLOCK, state), () -> new Vec3(finalPos.getX() + RandomUtil.randomValueUpTo(1), finalPos.getY() + 1.1f, finalPos.getZ() + RandomUtil.randomValueUpTo(1)), 3)
-                            .velocity(0, 0.5f, 0)
-                            .sendToAllPlayersTrackingBlock((ServerLevel)entity.level(), finalPos);
+                    for (int i = 0; i < 3; i++) {
+                        particleBuilder.addPosition(new Vec3(finalPos.getX() + RandomUtil.valueUpTo(1), finalPos.getY() + 1.1f, finalPos.getZ() + RandomUtil.valueUpTo(1)));
+                    }
 
+                    particleBuilder.sendToAllPlayersTrackingBlock((ServerLevel)entity.level(), finalPos);
                     entity.playSound(AoASounds.ROCK_SMASH.get(), 1, 0.2f);
                     doSlam(finalPos, 0.75f);
                 }));
@@ -112,32 +114,33 @@ public class InfernalEntity extends AoAMeleeMob<InfernalEntity> {
     }
 
     private void doSlam(BlockPos fromPos, float chance) {
-        TELParticlePacket packet = new TELParticlePacket();
+        TMEParticlePacket packet = new TMEParticlePacket();
 
         for (Direction dir : Direction.values()) {
             if (RandomUtil.percentChance(chance)) {
                 BlockPos pos = fromPos.offset(dir.getNormal());
+                BlockState state = level().getBlockState(pos);
 
-                if (level().getBlockState(pos).getBlock() == Blocks.NETHERRACK) {
+                if (state.is(Blocks.NETHERRACK) || state.is(Blocks.WARPED_NYLIUM) || state.is(Blocks.CRIMSON_NYLIUM)) {
                     int tickTime = Math.max(1, 1 - pos.distManhattan(fromPos));
 
-                    packet.particle(ParticleBuilder.forPosition(ParticleTypes.FLAME, pos.getX() + RandomUtil.randomValueUpTo(1), pos.getY() + 1.1, pos.getZ() + RandomUtil.randomValueUpTo(1)));
-                    level().setBlock(pos, Blocks.MAGMA_BLOCK.defaultBlockState(), Block.UPDATE_ALL);
-                    AoAScheduler.scheduleSyncronisedTask(() -> doSlam(pos, chance * 0.8f), tickTime);
-                    AoAScheduler.scheduleSyncronisedTask(() -> {
+                    packet.particle(ParticleBuilder.forPosition(ParticleTypes.FLAME, pos.getX() + RandomUtil.valueUpTo(1), pos.getY() + 1.1, pos.getZ() + RandomUtil.valueUpTo(1)));
+                    level().setBlockAndUpdate(pos, Blocks.MAGMA_BLOCK.defaultBlockState());
+                    AoAScheduler.schedule(tickTime, tick -> doSlam(pos, chance * 0.8f));
+                    AoAScheduler.schedule(tickTime + 100, tick -> {
                         if (level().getBlockState(pos).getBlock() == Blocks.MAGMA_BLOCK)
-                            level().setBlock(pos, Blocks.NETHERRACK.defaultBlockState(), Block.UPDATE_ALL);
-                    }, tickTime + 100);
+                            level().setBlockAndUpdate(pos, state);
+                    });
                 }
             }
         }
 
         if (!packet.isEmpty())
-            packet.sendToAllPlayersTrackingEntity((ServerLevel)level(), this);
+            packet.sendToAllPlayersTrackingEntity(this);
     }
 
-    public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-        return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT.noPeacefulSpawn().spawnChance(1 / 10f).noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock();
+    public static SpawnPlacements.SpawnPredicate<InfernalEntity> spawnRules(EntityType<InfernalEntity> entityType) {
+        return EntitySpawnConditions.create(entityType).noPeacefulSpawn().spawnChance(1 / 10f).noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock();
     }
 
     public static AoAEntityStats.AttributeBuilder entityStats(EntityType<InfernalEntity> entityType) {

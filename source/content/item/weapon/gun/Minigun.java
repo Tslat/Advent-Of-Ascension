@@ -1,40 +1,36 @@
 package net.tslat.aoa3.content.item.weapon.gun;
 
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
+import net.tslat.tme.api.sound.SoundBuilder;
 
-
-public class Minigun extends BaseGun {
+public class Minigun extends AoAGun {
 	public Minigun(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
-	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_GUN_MINIGUN_AUTOMATIC_FIRE.get();
-	}
-
-	@Override
-	protected float getFiringSoundPitchAdjust() {
-		return 1f;
-	}
-
 	@Override
 	public void releaseUsing(ItemStack stack, Level level, LivingEntity shooter, int timeCharged) {
-		shooter.level().playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), AoASounds.ITEM_GUN_MINIGUN_WINDDOWN.get(), SoundSource.PLAYERS, 1.0f, 1f);
+		SoundBuilder.following(AoASounds.ITEM_GUN_MINIGUN_WINDDOWN, shooter).play();
 	}
 
 	@Override
-	protected void doFiringSound(LivingEntity shooter, BaseBullet bullet, ItemStack stack, InteractionHand hand) {
-		shooter.level().playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), getFiringSound(), SoundSource.PLAYERS, 1.0f, getFiringSoundPitchAdjust());
+	protected void doFiringSound(ServerLevel level, WeaponFiringContext context, WeaponProjectile projectile) {
+		Entity shooter = context.getShooter();
+
+		getFiringSound(context.weaponStack()).ifPresent(sound ->
+																(shooter == null ?
+																 SoundBuilder.at(sound, level, projectile.asEntity().position()).category(SoundSource.PLAYERS) :
+																 SoundBuilder.following(sound, shooter))
+																		.pitch(getFiringSoundPitch(context.weaponStack()))
+																		.play());
 	}
 }

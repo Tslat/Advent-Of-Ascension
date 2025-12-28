@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -25,23 +24,24 @@ import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.particleoption.EntityTrackingParticleOptions;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.content.entity.ai.ExtendedGoal;
 import net.tslat.aoa3.content.entity.ai.mob.ExtendedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.misc.SandGiantPitTrapEntity;
 import net.tslat.aoa3.content.entity.misc.SandGiantSpikeTrapEntity;
-import net.tslat.aoa3.library.builder.EntityPredicate;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.object.builder.EntityPredicateBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.util.RandomUtil;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.constant.DefaultAnimations;
 
 import java.util.EnumSet;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 	public SandGiantEntity(EntityType<? extends SandGiantEntity> entityType, Level world) {
@@ -63,8 +63,8 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 				.maxRuntime(UniformInt.of(160, 240))
 				.cooldown(UniformInt.of(300, 500))
 				.chargeUpTime(15)
-				.onStart(goal -> ATTACK_STATE.set(this, 1))
-				.onStop(goal -> ATTACK_STATE.set(this, 0)));
+				.onStart(goal -> setAttackState(1))
+				.onStop(goal -> setAttackState(0)));
 		goalSelector.addGoal(3, new ExtendedMeleeAttackGoal<>(this).attackInterval(ConstantInt.of(getCurrentSwingDuration())).actionTelegraphTicks(getPreAttackTime()).maxRuntime(UniformInt.of(500, 700)));
 		goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1));
 		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
@@ -106,7 +106,7 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 	protected void customServerAiStep() {
 		super.customServerAiStep();
 
-		if (tickCount % 30 == 0 && ATTACK_STATE.is(this, 0) && EntityUtil.getHealthPercent(this) < 0.5f)
+		if (tickCount % 30 == 0 && isAttackState(0) && EntityUtil.getHealthPercent(this) < 0.5f)
 			spawnTrap();
 	}
 
@@ -120,7 +120,7 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 		if (block.isAir()) {
 			int x = 10;
 
-			while (x-- >= 0 && pos.getY() > level().getMinBuildHeight() && (block = level().getBlockState(pos.move(Direction.DOWN))).isAir()) {}
+			while (x-- >= 0 && pos.getY() > level().getMinBuildHeight() && (block = level().getBlockState(pos.move(Direction.DOWN))).isAir());
 
 			if (block.isAir())
 				return;
@@ -129,8 +129,8 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 		}
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 15f);
+	public static SpawnPlacements.SpawnPredicate<SandGiantEntity> spawnRules(EntityType<SandGiantEntity> entityType) {
+		return EntitySpawnConditions.createDayMonster(entityType).spawnChance(1 / 15f);
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<SandGiantEntity> entityType) {
@@ -148,10 +148,11 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 		controllers.add(
 				DefaultAnimations.genericWalkController(this),
 				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SLAM).transitionLength(0),
-				AoAAnimations.genericHeldPoseController(this, AoAAnimations.ATTACK_CHARGE, AoAAnimations.ATTACK_CHARGE_END, entity -> ATTACK_STATE.is(entity, 1)));
+				AoAAnimations.genericHeldPoseController(this, AoAAnimations.ATTACK_CHARGE, AoAAnimations.ATTACK_CHARGE_END, entity -> isAttackState(1)));
 	}
 
 	private static class TrapChaseGoal<T extends Mob> extends ExtendedGoal<T> {
+		private static final Predicate<Entity> VALID_TARGET = EntityPredicateBuilder.builder().isTargetable().build();
 		private final Function<Vec3, Entity> trapFactory;
 
 		protected int trapSpawnFrequency = 20;
@@ -196,7 +197,7 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 
 			LivingEntity target = entity.getTarget();
 
-			return EntityPredicate.TARGETABLE_ENTITIES.test(target);
+			return VALID_TARGET.test(target);
 		}
 
 		@Override
@@ -204,7 +205,7 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 			if (!super.canContinueToUse())
 				return false;
 
-			return EntityPredicate.TARGETABLE_ENTITIES.test(this.entity.getTarget());
+			return VALID_TARGET.test(this.entity.getTarget());
 		}
 
 		@Override
@@ -238,7 +239,7 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 				ParticleBuilder.forPositions(EntityTrackingParticleOptions.fromEntity(AoAParticleTypes.SANDSTORM, this.entity), positions.toArray(new Vec3[0]))
 						.scaleMod(0.5f)
 						.velocity(0, 0.25f, 0)
-						.sendToAllPlayersTrackingEntity((ServerLevel)this.entity.level(), this.entity);
+						.sendToAllPlayersTrackingEntity(this.entity);
 
 				if (entity.tickCount % 20 == 0 && (taskExpiresAt == Integer.MAX_VALUE || runningTime + 20 < taskExpiresAt))
 					entity.playSound(AoASounds.SAND_WIND.get(), 1, 0.5f);
@@ -274,7 +275,7 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 					if (block.isAir()) {
 						int x = 10;
 
-						while (x-- >= 0 && pos.getY() > entity.level().getMinBuildHeight() && (block = entity.level().getBlockState(pos.move(Direction.DOWN))).isAir()) {}
+						while (x-- >= 0 && pos.getY() > entity.level().getMinBuildHeight() && (block = entity.level().getBlockState(pos.move(Direction.DOWN))).isAir());
 
 						if (block.isAir())
 							continue;

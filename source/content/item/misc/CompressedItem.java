@@ -6,9 +6,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.tslat.aoa3.common.registration.item.AoADataComponents;
 import net.tslat.aoa3.content.item.datacomponent.CompressedItemData;
-import net.tslat.aoa3.library.object.Text;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.tme.api.object.extension.Text;
 
 import java.util.List;
 

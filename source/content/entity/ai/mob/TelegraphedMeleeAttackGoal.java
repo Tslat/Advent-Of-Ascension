@@ -9,7 +9,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.EnumSet;
 
@@ -130,7 +130,7 @@ public class TelegraphedMeleeAttackGoal<T extends Mob> extends Goal {
 
 		if (this.newPathCooldown <= 0 && (this.ignoreLineOfSight || this.entity.getSensing().hasLineOfSight(target)) && (this.targetLocation == null || target.distanceToSqr(this.targetLocation) >= 1 || RandomUtil.oneInNChance(20))) {
 			this.targetLocation = target.position();
-			this.newPathCooldown = RandomUtil.randomNumberBetween(4, 11);
+			this.newPathCooldown = RandomUtil.numberBetween(4, 11);
 
 			if (targetDistance > 256) {
 				this.newPathCooldown += 5;

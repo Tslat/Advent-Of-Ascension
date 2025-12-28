@@ -12,7 +12,7 @@ import net.neoforged.neoforge.common.Tags;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class Gemcracker extends BasePickaxe implements LootModifyingItem {
 		ItemStack primaryStack = existingLoot.get(0);
 
 		if (block.asItem() != primaryStack.getItem() && !primaryStack.is(Tags.Items.RAW_MATERIALS))
-			existingLoot.addAll(ItemUtil.increaseStackSize(primaryStack, 1 + RandomUtil.randomNumberUpTo(primaryStack.getCount())));
+			existingLoot.addAll(ItemUtil.increaseStackSize(primaryStack, 1 + RandomUtil.numberUpTo(primaryStack.getCount())));
 	}
 
 	@Override

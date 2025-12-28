@@ -2,18 +2,22 @@ package net.tslat.aoa3.content.entity.monster.overworld;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.common.registration.entity.AoAMonsters;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
@@ -25,8 +29,8 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAtt
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -45,7 +49,7 @@ public class KingChargerEntity extends AoAMeleeMob<KingChargerEntity> {
 				new TargetOrRetaliate<>()
 						.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
 						.attackablePredicate(target -> DamageUtil.isAttackable(target) && !isAlliedTo(target))
-						.whenStopping(entity -> EntityRetrievalUtil.<ChargerEntity>getEntities(entity, 40, ally -> ally instanceof ChargerEntity)
+						.whenStopping(entity -> EntityRetrievalUtil.getEntities(entity, 40, ChargerEntity.class)
 								.forEach(charger -> BrainUtils.setTargetOfEntity(charger, BrainUtils.getTargetOfEntity(entity)))),
 				new OneRandomBehaviour<>(
 						new SetRandomWalkTarget<>().speedModifier(0.9f),
@@ -55,7 +59,7 @@ public class KingChargerEntity extends AoAMeleeMob<KingChargerEntity> {
 	@Override
 	public BrainActivityGroup<KingChargerEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
+				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Mth.square(getAttributeValue(Attributes.FOLLOW_RANGE))),
 				new SetWalkTargetToAttackTarget<>().speedMod((entity, target) -> 1.125f),
 				new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration() + 2));
 	}
@@ -89,7 +93,7 @@ public class KingChargerEntity extends AoAMeleeMob<KingChargerEntity> {
 			LivingEntity target = getTarget();
 
 			if (target != null) {
-				ChargerEntity charger = EntitySpawningUtil.spawnEntity((ServerLevel)level(), AoAMonsters.CHARGER.get(), RandomUtil.getRandomPositionWithinRange(target.blockPosition(), 40, 10, 40, 30, 0, 30, true, level(), 2, (state, statePos) -> true), MobSpawnType.MOB_SUMMONED);
+				ChargerEntity charger = EntitySpawningUtil.spawnEntity((ServerLevel)level(), AoAMonsters.CHARGER.get(), RandomUtil.positionWithinRange(target.blockPosition(), 40, 10, 40, 30, 0, 30, true, level(), 2, (state, statePos) -> true), MobSpawnType.MOB_SUMMONED);
 
 				charger.getAttribute(Attributes.FOLLOW_RANGE).addTransientModifier(MINION_FOLLOW_RANGE_MOD);
 
@@ -97,12 +101,12 @@ public class KingChargerEntity extends AoAMeleeMob<KingChargerEntity> {
 					BrainUtils.setTargetOfEntity(charger, target);
 			}
 
-			this.nextChargerSpawn = this.tickCount + RandomUtil.randomNumberBetween(80, 140);
+			this.nextChargerSpawn = this.tickCount + RandomUtil.numberBetween(80, 140);
 		}
 	}
 
-	public static SpawnPlacements.SpawnPredicate<Mob> spawnRules() {
-		return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 16f);
+	public static SpawnPlacements.SpawnPredicate<KingChargerEntity> spawnRules(EntityType<KingChargerEntity> entityType) {
+		return EntitySpawnConditions.createDayMonster(entityType).spawnChance(1 / 16f);
 	}
 
 	public static AoAEntityStats.AttributeBuilder entityStats(EntityType<KingChargerEntity> entityType) {

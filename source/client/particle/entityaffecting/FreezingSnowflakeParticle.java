@@ -9,11 +9,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.networking.AoANetworking;
 import net.tslat.aoa3.common.networking.packets.ParticleEffectPacket;
-import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Predicate;
+
 public class FreezingSnowflakeParticle extends EntityAffectingParticle {
+	private final Predicate<Entity> canCollideWith;
 	private final int particleSourceId;
 
 	public FreezingSnowflakeParticle(ClientLevel level, double x, double y, double z, double xVelocity, double yVelocity, double zVelocity, @Nullable SpriteSet sprites, int entitySourceId) {
@@ -25,6 +27,7 @@ public class FreezingSnowflakeParticle extends EntityAffectingParticle {
 		this.quadSize = (this.random.nextFloat() * this.random.nextFloat() * 6 + 1) * 0.35f / 5f;
 		this.lifetime = Mth.ceil(5 / (this.random.nextFloat() * 0.8f + 0.2f));
 		this.particleSourceId = entitySourceId;
+		this.canCollideWith = CAN_COLLIDE_WITH.and(entity -> entity.getId() != this.particleSourceId);
 
 		setSize(0.2f, 0.2f);
 	}
@@ -47,6 +50,6 @@ public class FreezingSnowflakeParticle extends EntityAffectingParticle {
 		if (this.particleSourceId == -1)
 			return null;
 
-		return EntityRetrievalUtil.getNearestEntity(this.level, getBoundingBox().expandTowards(xVelocity, yVelocity, zVelocity), new Vec3(this.x, this.y, this.z), EntityPredicate.TARGETABLE_ENTITIES.and(entity -> entity.getId() != this.particleSourceId));
+		return EntityRetrievalUtil.getNearestEntity(this.level, getBoundingBox().expandTowards(xVelocity, yVelocity, zVelocity), new Vec3(this.x, this.y, this.z), this.canCollideWith);
 	}
 }

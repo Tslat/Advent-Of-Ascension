@@ -9,28 +9,27 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
-import net.tslat.aoa3.common.registration.item.AoADataComponents;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 
-public class RosidianSword extends BaseSword {
+public class RosidianSword extends AoASword {
 	public RosidianSword(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}
 
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, Player player, Entity target) {
-		stack.set(AoADataComponents.MELEE_SWING_STRENGTH, player.getAttackStrengthScale(0));
+		super.onLeftClickEntity(stack, player, target);
 
 		if (player.getHealth() < player.getMaxHealth()) {
 			float motionX = (float)(player.getX() - target.getX()) * 0.1f;
 			float motionY = (float)(player.getY() - target.getY()) * 0.1f;
 			float motionZ = (float)(player.getZ() - target.getZ()) * 0.1f;
 
-			player.level().addParticle(ParticleTypes.END_ROD, target.getX() + RandomUtil.randomScaledGaussianValue(0.2), target.getY() + target.getBbHeight() / 2f, target.getZ() + RandomUtil.randomScaledGaussianValue(0.2), motionX, motionY, motionZ);
+			player.level().addParticle(ParticleTypes.END_ROD, target.getX() + RandomUtil.scaledGaussianValue(0.2), target.getY() + target.getBbHeight() / 2f, target.getZ() + RandomUtil.scaledGaussianValue(0.2), motionX, motionY, motionZ);
 
 			for (LivingEntity swipeTarget : player.level().getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(1, 0.25, 1))) {
 				if (swipeTarget != target && swipeTarget != player && !player.isAlliedTo(swipeTarget) && player.distanceToSqr(swipeTarget) < 9) {
@@ -38,7 +37,7 @@ public class RosidianSword extends BaseSword {
 					motionY = (float)(player.getY() - swipeTarget.getY()) * 0.1f;
 					motionZ = (float)(player.getZ() - swipeTarget.getZ()) * 0.1f;
 
-					player.level().addParticle(ParticleTypes.END_ROD, true, swipeTarget.getX() + RandomUtil.randomScaledGaussianValue(0.2), swipeTarget.getY() + target.getBbHeight() / 2f, swipeTarget.getZ() + RandomUtil.randomScaledGaussianValue(0.2), motionX, motionY, motionZ);
+					player.level().addParticle(ParticleTypes.END_ROD, true, swipeTarget.getX() + RandomUtil.scaledGaussianValue(0.2), swipeTarget.getY() + target.getBbHeight() / 2f, swipeTarget.getZ() + RandomUtil.scaledGaussianValue(0.2), motionX, motionY, motionZ);
 				}
 			}
 		}

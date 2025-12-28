@@ -9,7 +9,6 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoATags;
@@ -44,7 +43,6 @@ public class TESIntegration {
 	}
 
 	private static boolean handleTypedDamage(EntityState entityState, float damageAmount, DamageSource damageSource, Consumer<TESParticle<?>> particleAdder) {
-		Vec3 entityPos = entityState.getEntity().getEyePosition();
 		ResourceLocation icon  = null;
 
 		if (DamageUtil.isMeleeDamage(damageSource)) {
@@ -70,7 +68,7 @@ public class TESIntegration {
 		}
 
 		if (icon != null) {
-			particleAdder.accept(new IconDamageParticle(entityState, new Vector3f((float)entityPos.x(), (float)entityPos.y(), (float)entityPos.z()), damageAmount, icon));
+			particleAdder.accept(new IconDamageParticle(entityState, entityState.getEntity().getEyePosition().toVector3f(), damageAmount, icon));
 
 			return true;
 		}

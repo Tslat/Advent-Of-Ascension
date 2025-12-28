@@ -13,7 +13,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -25,18 +28,18 @@ import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAEntityDataSerializers;
-import net.tslat.aoa3.common.registration.entity.AoAEntitySpawnPlacements;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.common.registration.entity.variant.PixonVariant;
 import net.tslat.aoa3.common.registration.item.AoATools;
 import net.tslat.aoa3.common.toast.ItemRequirementToastData;
-import net.tslat.aoa3.library.builder.SoundBuilder;
+import net.tslat.aoa3.library.builder.EntitySpawnConditions;
 import net.tslat.aoa3.util.InventoryUtil;
 import net.tslat.aoa3.util.LootUtil;
 import net.tslat.aoa3.util.MathUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.api.sound.SoundBuilder;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -166,15 +169,15 @@ public class PixonEntity extends Entity {
 
                     this.tickCount += 500;
 
-                    TELParticlePacket packet = new TELParticlePacket();
+                    TMEParticlePacket packet = new TMEParticlePacket();
 
                     for (int i = 0; i < 50; i++) {
                         packet.particle(ParticleBuilder.forRandomPosInSphere(ParticleTypes.FIREWORK, position().add(0, 0.35f, 0), 0.65f)
-                                .colourOverride(this.random.nextFloat() < 0.25f ? this.variant.secondaryColour() : this.variant.primaryColour())
+                                .colourTint(this.random.nextFloat() < 0.25f ? this.variant.secondaryColour() : this.variant.primaryColour())
                                 .ignoreDistanceAndLimits());
                     }
 
-                    packet.sendToAllPlayersTrackingEntity(level, this);
+                    packet.sendToAllPlayersTrackingEntity(this);
                 }
             }
         }
@@ -183,27 +186,27 @@ public class PixonEntity extends Entity {
 
             ParticleBuilder.forRandomPosInEntity(AoAParticleTypes.ORB.get(), this)
                     .velocity(random.nextGaussian() * 0.05f * (1 / size), Math.min(1.5f, this.magnitude * 0.1f), random.nextGaussian() * 0.05f * (1 / size))
-                    .colourOverride(this.random.nextFloat() < 0.25f ? this.variant.secondaryColour() : this.variant.primaryColour())
+                    .colourTint(this.random.nextFloat() < 0.25f ? this.variant.secondaryColour() : this.variant.primaryColour())
                     .cutoffDistance(256)
                     .scaleMod(size)
                     .lifespan(100)
-                    .spawnParticles(level());
+                    .spawnClientParticles(level());
             ParticleBuilder.forRandomPosInSphere(ParticleTypes.ASH, position(), Math.min(20, this.magnitude))
-                    .colourOverride((this.random.nextFloat() < 0.25f ? this.variant.secondaryColour() : this.variant.primaryColour()) | 255 << 24)
+                    .colourTint((this.random.nextFloat() < 0.25f ? this.variant.secondaryColour() : this.variant.primaryColour()) | 255 << 24)
                     .velocity(random.nextGaussian() * 0.1f * (1 / size), random.nextFloat() * 0.5f + 0.25f, random.nextGaussian() * 0.1f * (1 / size))
-                    .spawnParticles(level());
+                    .spawnClientParticles(level());
 
             for (Vec3 ringPos : MathUtil.inLateralCircle(position(), 0.5f, random.nextIntBetweenInclusive(1, 12))) {
                 ParticleBuilder.forPositions(AoAParticleTypes.ORB.get(), ringPos)
                         .velocity(position().vectorTo(ringPos).normalize().scale(0.1f).add(random.nextGaussian() * 0.05f * (1 / size), Math.min(1.5f, this.magnitude * 0.05f), random.nextGaussian() * 0.05f * (1 / size)))
-                        .colourOverride(this.random.nextFloat() < 0.25f ? this.variant.secondaryColour() : this.variant.primaryColour())
+                        .colourTint(this.random.nextFloat() < 0.25f ? this.variant.secondaryColour() : this.variant.primaryColour())
                         .scaleMod(size)
                         .lifespan(100)
-                        .spawnParticles(level());
+                        .spawnClientParticles(level());
             }
 
             if (this.tickCount % 25 == 0)
-                new SoundBuilder(AoASounds.ENTITY_PIXON_AMBIENT).followEntity(this).radius(16).execute();
+                SoundBuilder.following(AoASounds.ENTITY_PIXON_AMBIENT, this).radius(16).play();
         }
     }
 
@@ -243,8 +246,12 @@ public class PixonEntity extends Entity {
 
     @Override
     protected void readAdditionalSaveData(CompoundTag data) {
-        if (data.contains("Variant", Tag.TAG_STRING))
-            getEntityData().set(VARIANT, AoARegistries.PIXON_VARIANTS.getEntry(ResourceLocation.tryParse(data.getString("Variant"))));
+        if (data.contains("Variant", Tag.TAG_STRING)) {
+            getEntityData().set(VARIANT, PixonVariant.getOrDefault(ResourceLocation.tryParse(data.getString("Variant"))));
+        }
+        else if (getVariant() == null) {
+            getEntityData().set(VARIANT, PixonVariant.AMBIENT.get());
+        }
 
         if (data.contains("Magnitude"))
             getEntityData().set(MAGNITUDE, data.contains("Magnitude") ? data.getFloat("Magnitude") : 1f);
@@ -256,7 +263,7 @@ public class PixonEntity extends Entity {
         data.putFloat("Magnitude", this.magnitude);
     }
 
-    public static SpawnPlacements.SpawnPredicate<Entity> spawnRules() {
-        return AoAEntitySpawnPlacements.SpawnBuilder.DEFAULT;
+    public static SpawnPlacements.SpawnPredicate<PixonEntity> spawnRules(EntityType<PixonEntity> entityType) {
+        return EntitySpawnConditions.create(entityType);
     }
 }

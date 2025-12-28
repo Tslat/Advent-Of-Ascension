@@ -21,7 +21,7 @@ import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.object.EasyRandom;
 
 import java.util.List;
 import java.util.Optional;
@@ -64,21 +64,21 @@ public interface AoACustomSpawner<E extends Entity> extends CustomSpawner {
 
 	default List<Pair<EntityType<E>, BlockPos>> findNearbySpawnPositions(ServerLevel level, RandomSource random, BlockPos centerPos, int minRadius, int maxRadius, int maxTries, Supplier<Optional<EntityType<E>>> entityTypeSupplier) {
 		final List<Pair<EntityType<E>, BlockPos>> positions = new ObjectArrayList<>();
-		final RandomUtil.EasyRandom rand = new RandomUtil.EasyRandom(random);
+		final EasyRandom rand = EasyRandom.wrap(random);
 		final BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 		final float radius = Math.max(maxRadius - minRadius, 0);
 
 		for (int i = 0; i < maxTries; i++) {
 			entityTypeSupplier.get().ifPresent(entityType -> {
-				double xAdjust = rand.randomValueBetween(-radius, radius);
-				double zAdjust = rand.randomValueBetween(-radius, radius);
+				double xAdjust = rand.valueBetween(-radius, radius);
+				double zAdjust = rand.valueBetween(-radius, radius);
 				int newX = (int)Math.floor(centerPos.getX() + xAdjust + radius * Math.signum(xAdjust));
 				int newZ = (int)Math.floor(centerPos.getZ() + zAdjust + radius * Math.signum(zAdjust));
 
 				if (level.dimensionType().hasCeiling()) {
 					mutablePos.set(newX, Mth.randomBetweenInclusive(random, level.getMinBuildHeight(), level.getHeight(Heightmap.Types.WORLD_SURFACE, newX, newZ)), newZ);
 
-					while (!level.getBlockState(mutablePos.move(Direction.DOWN)).isAir()) {}
+					while (!level.getBlockState(mutablePos.move(Direction.DOWN)).isAir());
 				}
 				else {
 					mutablePos.set(level.getHeightmapPos(getHeightmapForSpawn(entityType, level, random, mutablePos.set(newX, 0, newZ)), mutablePos));
@@ -87,7 +87,7 @@ public interface AoACustomSpawner<E extends Entity> extends CustomSpawner {
 				SpawnPlacementType spawnPlacement = getSpawnPlacementTypeForSpawn(entityType, level, random, mutablePos);
 
 				if (spawnPlacement == SpawnPlacementTypes.ON_GROUND)
-					while (level.getBlockState(mutablePos.move(Direction.DOWN)).isAir() && mutablePos.getY() > level.getMinBuildHeight()) {}
+					while (level.getBlockState(mutablePos.move(Direction.DOWN)).isAir() && mutablePos.getY() > level.getMinBuildHeight());
 
 				mutablePos.move(Direction.UP);
 

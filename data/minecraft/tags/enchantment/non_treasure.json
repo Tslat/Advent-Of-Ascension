@@ -7,6 +7,7 @@
     "aoa3:form",
     "aoa3:recharge",
     "aoa3:sever",
-    "aoa3:shell"
+    "aoa3:shell",
+    "aoa3:fragment"
   ]
 }

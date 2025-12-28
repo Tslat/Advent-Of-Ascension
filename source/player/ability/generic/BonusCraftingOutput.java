@@ -34,12 +34,12 @@ public class BonusCraftingOutput extends ScalableModAbility {
 		super(AoAAbilities.BONUS_CRAFTING_OUTPUT.get(), skill, data);
 
 		if (data.has("item")) {
-			outputTargetTag = null;
-			outputTarget = AoARegistries.ITEMS.getEntry(ResourceLocation.read(GsonHelper.getAsString(data, "item")).getOrThrow());
+			this.outputTargetTag = null;
+			this.outputTarget = AoARegistries.ITEMS.getEntry(ResourceLocation.read(GsonHelper.getAsString(data, "item")).getOrThrow());
 		}
 		else {
-			outputTarget = null;
-			outputTargetTag = ItemTags.create(ResourceLocation.read(GsonHelper.getAsString(data, "tag")).getOrThrow());
+			this.outputTarget = null;
+			this.outputTargetTag = ItemTags.create(ResourceLocation.read(GsonHelper.getAsString(data, "tag")).getOrThrow());
 		}
 	}
 
@@ -47,12 +47,12 @@ public class BonusCraftingOutput extends ScalableModAbility {
 		super(AoAAbilities.BONUS_CRAFTING_OUTPUT.get(), skill, data);
 
 		if (data.contains("item")) {
-			outputTargetTag = null;
-			outputTarget = AoARegistries.ITEMS.getEntry(ResourceLocation.read(data.getString("item")).getOrThrow());
+			this.outputTargetTag = null;
+			this.outputTarget = AoARegistries.ITEMS.getEntry(ResourceLocation.read(data.getString("item")).getOrThrow());
 		}
 		else {
-			outputTarget = null;
-			outputTargetTag = ItemTags.create(ResourceLocation.read(data.getString("tag")).getOrThrow());
+			this.outputTarget = null;
+			this.outputTargetTag = ItemTags.create(ResourceLocation.read(data.getString("tag")).getOrThrow());
 		}
 	}
 
@@ -60,7 +60,7 @@ public class BonusCraftingOutput extends ScalableModAbility {
 	protected void updateDescription(MutableComponent defaultDescription) {
 		MutableComponent component;
 
-		if (outputTarget != null) {
+		if (this.outputTarget != null) {
 			component = Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey() + ".item", getScalingDescriptionComponent(2), this.outputTarget.getDefaultInstance().getHoverName());
 		}
 		else {
@@ -76,12 +76,12 @@ public class BonusCraftingOutput extends ScalableModAbility {
 	}
 
 	private void handleItemCrafting(ItemCraftingEvent ev) {
-		if (outputTarget != null) {
-			if (ev.getOutputStack().getItem() == outputTarget)
+		if (this.outputTarget != null) {
+			if (ev.getOutputStack().getItem() == this.outputTarget)
 				ev.getOutputStack().setCount((int)Math.ceil(ev.getOutputStack().getCount() * (1 + getScaledValue())));
 		}
 		else {
-			if (ev.getOutputStack().is(outputTargetTag))
+			if (ev.getOutputStack().is(this.outputTargetTag))
 				ev.getOutputStack().setCount((int)Math.ceil(ev.getOutputStack().getCount() * (1 + getScaledValue())));
 		}
 	}
@@ -91,11 +91,11 @@ public class BonusCraftingOutput extends ScalableModAbility {
 		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup) {
-			if (outputTarget != null) {
-				data.putString("item", RegistryUtil.getId(outputTarget).toString());
+			if (this.outputTarget != null) {
+				data.putString("item", RegistryUtil.getId(this.outputTarget).toString());
 			}
 			else {
-				data.putString("tag", outputTargetTag.location().toString());
+				data.putString("tag", this.outputTargetTag.location().toString());
 			}
 		}
 

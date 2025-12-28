@@ -6,7 +6,6 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
@@ -17,7 +16,10 @@ import net.neoforged.neoforge.client.event.RenderHandEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.content.item.weapon.sniper.BaseSniper;
+import net.tslat.aoa3.client.ClientOperations;
+import net.tslat.aoa3.common.registration.item.AoADataComponents;
+import net.tslat.aoa3.content.item.datacomponent.SniperScope;
+import net.tslat.aoa3.content.item.weapon.sniper.AoASniper;
 import net.tslat.aoa3.util.RenderUtil;
 
 public final class ScopeOverlayRenderer {
@@ -34,8 +36,11 @@ public final class ScopeOverlayRenderer {
 	}
 
 	private static void onFOVUpdate(final ComputeFovModifierEvent event) {
-		if (isScoped && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON)
-			event.setNewFovModifier(0.2f);
+		if (isScoped && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON) {
+			SniperScope scope = ClientOperations.getPlayer().getMainHandItem().get(AoADataComponents.SNIPER_SCOPE);
+
+			event.setNewFovModifier(0.35f / (scope == null ? 1f : scope.strength()));
+		}
 	}
 
 	private static void onHandRender(final RenderHandEvent event) {
@@ -53,25 +58,18 @@ public final class ScopeOverlayRenderer {
 			return;
 
 		Minecraft mc = Minecraft.getInstance();
-		ResourceLocation texture = null;
+		ResourceLocation texture;
 
-		if (mc.player.isShiftKeyDown() && mc.player.onGround()) {
-			ItemStack sniper = mc.player.getItemInHand(InteractionHand.MAIN_HAND);
-
-			if (sniper.getItem() instanceof BaseSniper) {
-				isScoped = true;
-				texture = ((BaseSniper)sniper.getItem()).getScopeTexture(sniper);
-			}
-			else {
-				isScoped = false;
-			}
+		if (AoASniper.isScoped(mc.player)) {
+			isScoped = true;
+			ItemStack sniper = mc.player.getMainHandItem();
+			texture = ((AoASniper)sniper.getItem()).getScopeTexture(sniper);
 		}
 		else {
 			isScoped = false;
-		}
 
-		if (!isScoped)
 			return;
+		}
 
 		RenderSystem.enableBlend();
 		RenderUtil.renderFullscreenTexture(guiGraphics, texture);

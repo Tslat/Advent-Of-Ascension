@@ -158,10 +158,10 @@ public abstract class AoAWaterRangedMob extends WaterAnimal implements RangedAtt
 	@Override
 	public void doRangedAttackEntity(BaseMobProjectile projectile, Entity target) {
 		boolean success = switch (projectile.getProjectileType()) {
-			case MAGIC -> DamageUtil.doMagicProjectileAttack(this, projectile, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE));
+			case MAGIC -> DamageUtil.doMagicProjectileAttack(this, projectile, target, source -> (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE));
 			case GUN -> DamageUtil.doGunAttack(this, projectile, target, source -> (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE));
 			case PHYSICAL -> DamageUtil.doProjectileAttack(this, projectile, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE));
-			case ENERGY -> DamageUtil.doEnergyProjectileAttack(this, projectile, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE));
+			case ENERGY -> DamageUtil.doEnergyProjectileAttack(this, projectile, target, source -> (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE));
 		};
 
 		if (success)

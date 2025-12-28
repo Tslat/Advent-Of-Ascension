@@ -4,7 +4,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,13 +15,15 @@ import net.minecraft.world.item.TooltipFlag;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 import java.util.List;
 
-public class RunicSword extends BaseSword {
+public class RunicSword extends AoASword {
 	public RunicSword(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}
@@ -48,19 +49,19 @@ public class RunicSword extends BaseSword {
 				Item rune = offhandStack.getItem();
 
 				if (rune == AoAItems.POISON_RUNE.get()) {
-					target.addEffect(new MobEffectInstance(MobEffects.POISON, 72, 1, false, true));
+					EntityUtil.applyPotions(target, attacker, new EffectBuilder(MobEffects.POISON, 72).level(2));
 				}
 				else if (rune == AoAItems.WITHER_RUNE.get()) {
-					target.addEffect(new MobEffectInstance(MobEffects.WITHER, 40, 2, false, true));
+					EntityUtil.applyPotions(target, attacker, new EffectBuilder(MobEffects.WITHER, 40).level(3));
 				}
 				else if (rune == AoAItems.WIND_RUNE.get()) {
 					DamageUtil.doScaledKnockback(target, attacker, 0.5f, 1, 1, 1);
 				}
 				else if (rune == AoAItems.WATER_RUNE.get()) {
-					target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 0, false, true));
+					EntityUtil.applyPotions(target, attacker, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 60));
 				}
 				else if (rune == AoAItems.CHARGED_RUNE.get()) {
-					((ServerLevel)target.level()).sendParticles(ParticleTypes.ANGRY_VILLAGER, target.getX() + (RandomUtil.randomValueUpTo(1) * target.getBbWidth() * 2f) - target.getBbWidth(), target.getY() + 1 + (RandomUtil.randomValueUpTo(1) * target.getBbHeight()), target.getZ() + (RandomUtil.randomValueUpTo(1) * target.getBbWidth() * 2f) - target.getBbWidth(), 3, 0, 0, 0, (double)0);
+					((ServerLevel)target.level()).sendParticles(ParticleTypes.ANGRY_VILLAGER, target.getX() + (RandomUtil.valueUpTo(1) * target.getBbWidth() * 2f) - target.getBbWidth(), target.getY() + 1 + (RandomUtil.valueUpTo(1) * target.getBbHeight()), target.getZ() + (RandomUtil.valueUpTo(1) * target.getBbWidth() * 2f) - target.getBbWidth(), 3, 0, 0, 0, (double)0);
 				}
 				else if (rune != AoAItems.FIRE_RUNE.get()) {
 					return;

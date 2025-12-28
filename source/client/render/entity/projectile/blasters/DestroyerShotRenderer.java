@@ -5,7 +5,7 @@ import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.blaster.DestroyerShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class DestroyerShotRenderer extends ParticleProjectileRenderer<DestroyerShotEntity> {
 	public DestroyerShotRenderer(final EntityRendererProvider.Context manager) {
@@ -16,7 +16,7 @@ public class DestroyerShotRenderer extends ParticleProjectileRenderer<DestroyerS
 	protected void addParticles(DestroyerShotEntity entity, float partialTicks) {
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_DUST.get(), entity.position())
 				.spawnNTimes(3)
-				.colourOverride(ColourUtil.BLACK)
-				.spawnParticles(entity.level());
+				.colourTint(ColourUtil.BLACK)
+				.spawnClientParticles(entity.level());
 	}
 }

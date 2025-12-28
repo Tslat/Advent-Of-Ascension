@@ -39,39 +39,6 @@ public final class MathUtil {
 		};
 	}
 
-	public static Iterable<Vec3> inCircleAtAngle(Vec3 center, Vec3 angle, double radius, double granularity) {
-		return new Iterable<>() {
-			@NotNull
-			@Override
-			public Iterator<Vec3> iterator() {
-				return new Iterator<>() {
-					private final double increment = Mth.TWO_PI / granularity;
-					private final double yawLength = angle.horizontalDistance();
-					private double theta = 0;
-
-					@Override
-					public boolean hasNext() {
-						return this.theta < Mth.TWO_PI;
-					}
-
-					@Override
-					public Vec3 next() {
-						double circleAngle = this.theta;
-						this.theta += this.increment;
-
-						double yaw = Math.cos(circleAngle) * radius;
-						double pitch = Math.sin(circleAngle) * radius;
-
-						return center.add(
-								(yaw * (Math.sinh(-angle.z) / this.yawLength)) - (pitch * angle.y * (angle.x / this.yawLength)),
-								pitch * this.yawLength,
-								(yaw * (Math.sinh(angle.x) / this.yawLength)) - (pitch * angle.y * (angle.z / this.yawLength)));
-					}
-				};
-			}
-		};
-	}
-
 	public static Iterable<Vec3> inLine(Vec3 start, Vec3 end, double granularity) {
 		return new Iterable<>() {
 			@NotNull

@@ -2,58 +2,67 @@ package net.tslat.aoa3.content.item.weapon.blaster;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.projectile.blaster.WinderShotEntity;
-import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
+import net.tslat.aoa3.library.object.extension.MutableFloat;
+import net.tslat.aoa3.library.object.interfaces.ToFloatFunction;
 import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.util.EntityRetrievalUtil;
+import net.tslat.tme.api.object.RayTrace;
 
 import java.util.List;
 
-public class DarklyGuster extends BaseBlaster {
+public class DarklyGuster extends AoABlaster<WeaponProjectile> {
 	public DarklyGuster(Item.Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_DARK_GUN_FIRE.get();
+	void fireBlaster(ServerLevel level, WeaponFiringContext context) {
+		fireBasicBlasterProjectile(level, context, AoAProjectiles.WINDER_SHOT);
 	}
 
 	@Override
-	public void fireBlaster(ServerLevel level, LivingEntity shooter, ItemStack blaster) {
-		shooter.level().addFreshEntity(new WinderShotEntity(shooter, this, 60));
-	}
+	protected boolean doEntityImpact(Level level, WeaponProjectile effect, WeaponFiringContext context, RayTrace<?> rayTrace, Entity hitEntity) {
+		if (level instanceof ServerLevel serverLevel) {
+			List<Entity> targets = (List)EntityRetrievalUtil.getEntities(hitEntity, 3, LivingEntity.class, target -> EntityUtil.areProbablyEnemies(target, context.getShooter()));
 
-	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		List<Entity> nearbyTargets = EntityRetrievalUtil.getEntities(target, 3, 1, 3, entity -> entity instanceof Enemy);
-		ItemStack stack = shooter.getItemInHand(InteractionHand.MAIN_HAND);
+			targets.add(hitEntity);
 
-		if (!stack.is(this))
-			stack = getDefaultInstance();
+			float splitDmg = (float)(context.damage() / targets.size() * (Math.pow(1.05, targets.size())));
+			MutableFloat damage = new MutableFloat(splitDmg);
+			boolean success = false;
+			ToFloatFunction<DamageSource> damageCalculator;
 
-		nearbyTargets.add(target);
+			for (Entity entity : targets) {
+				damage.setValue(splitDmg);
+				damageCalculator = source -> {
+					modifyImpactDamage(serverLevel, effect, context, rayTrace, entity, source, damage);
 
-		float splitDmg = (float)(getBlasterDamage(stack) / nearbyTargets.size() * (Math.pow(1.05, nearbyTargets.size())));
-		boolean success = false;
+					return damage.floatValue();
+				};
 
-		for (Entity entity : nearbyTargets) {
-			success |= DamageUtil.doEnergyProjectileAttack(shooter, shot, entity, splitDmg);
+				if (DamageUtil.doEnergyProjectileAttack(context.getShooter(), effect.asEntity(), entity, damageCalculator)) {
+					onDamageEntity(level, effect, context, rayTrace, entity, damage.floatValue());
+
+					success = true;
+				}
+			}
+
+			return success;
 		}
 
-		return success;
+		return true;
 	}
 
 	@Override

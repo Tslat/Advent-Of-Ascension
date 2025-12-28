@@ -21,7 +21,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class TrollBasherAxe extends BaseSword {
+public class TrollBasherAxe extends AoASword {
 	public TrollBasherAxe(Tier tier, Item.Properties properties) {
 		super(tier, properties, createToolProperties(tier, BlockTags.MINEABLE_WITH_AXE));
 	}

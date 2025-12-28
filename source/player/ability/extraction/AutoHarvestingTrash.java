@@ -3,7 +3,6 @@ package net.tslat.aoa3.player.ability.extraction;
 import com.google.gson.JsonObject;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -12,13 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.client.ClientHooks;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.client.gui.container.SelectInventoryItemScreen;
-import net.tslat.aoa3.common.networking.AoANetworking;
-import net.tslat.aoa3.common.networking.packets.adventplayer.SyncAoAAbilityDataPacket;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.PlayerSkillsLootModificationEvent;
@@ -125,16 +118,11 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 		markForClientSync();
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	// Client Only
 	@Override
 	public boolean onGuiClick(final int mouseX, final int mouseY) {
-		Minecraft mc = Minecraft.getInstance();
-
-		if (ClientOperations.isPressingCrouchKey()) {
-			ClientHooks.pushGuiLayer(mc, new SelectInventoryItemScreen(mc, consumingItem, item -> AoANetworking.sendToServer(new SyncAoAAbilityDataPacket(this, RegistryUtil.getId(item).toString()))));
-
+		if (!ClientOperations.doAutoHarvestingTrashSelection(this, this.consumingItem))
 			return false;
-		}
 
 		return super.onGuiClick(mouseX, mouseY);
 	}

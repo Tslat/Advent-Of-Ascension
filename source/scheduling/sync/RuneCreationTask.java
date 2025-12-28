@@ -8,9 +8,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.scheduling.AoAScheduler;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.api.scheduling.TickScheduler;
 
-public class RuneCreationTask implements Runnable {
+public class RuneCreationTask implements TickScheduler.Task {
 	private final ServerLevel level;
 	private final BlockPos pos;
 	private final Item rune;
@@ -29,13 +30,13 @@ public class RuneCreationTask implements Runnable {
 	}
 
 	@Override
-	public void run() {
+	public void run(int tick) {
 		ticker -= 5;
 
 		if (ticker > 0) {
-			level.sendParticles(ParticleTypes.END_ROD, pos.getX() + 0.5d + RandomUtil.randomGaussianValue() * 0.1d, pos.getY() + 1d + (0.85 - (0.85 * ticker / (20 * (3 + count / 10f)))), pos.getZ() + 0.5d + RandomUtil.randomGaussianValue() * 0.1d, 1, 0, 0, 0, 0.01d);
+			level.sendParticles(ParticleTypes.END_ROD, pos.getX() + 0.5d + RandomUtil.gaussianValue() * 0.1d, pos.getY() + 1d + (0.85 - (0.85 * ticker / (20 * (3 + count / 10f)))), pos.getZ() + 0.5d + RandomUtil.gaussianValue() * 0.1d, 1, 0, 0, 0, 0.01d);
 
-			AoAScheduler.scheduleSyncronisedTask(this, 5);
+			AoAScheduler.schedule(5, this);
 		}
 		else {
 			for (int spawned = 0; spawned < count;) {

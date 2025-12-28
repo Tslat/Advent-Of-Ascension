@@ -25,9 +25,9 @@ import net.tslat.aoa3.content.skill.hauling.HaulingSpawnPool;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
-import net.tslat.effectslib.networking.packet.TELParticlePacket;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.particle.ParticleBuilder;
+import net.tslat.tme.internal.networking.packet.TMEParticlePacket;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 import java.util.Optional;
@@ -57,21 +57,21 @@ public class ChumItem extends Item {
 			List<BlockPos> positions = WorldUtil.getBlocksWithinAABB(serverLevel, user.getBoundingBox().move(velocityVector.x() * 3, velocityVector.y() * 3, velocityVector.z() * 3), (blockState, mutable) -> blockState.getFluidState().is(FluidTags.WATER) && blockState.getFluidState().getHeight(level, mutable) > 0.85f);
 
 			if (!positions.isEmpty() && RandomUtil.oneInNChance(Math.max(100 / positions.size(), 1))) {
-				BlockPos pos = RandomUtil.getRandomSelection(positions);
+				BlockPos pos = RandomUtil.selection(positions);
 				Entity fish = getFishEntity(user, serverLevel, pos);
 
 				fish.setPos(pos.getX(), pos.getY(), pos.getZ());
 				serverLevel.addFreshEntity(fish);
 			}
 
-			TELParticlePacket packet = new TELParticlePacket();
+			TMEParticlePacket packet = new TMEParticlePacket();
 			ItemParticleOption particleData = new ItemParticleOption(AoAParticleTypes.FLOATING_ITEM_FRAGMENT.get(), stack);
 
 			for (float i = -0.15f; i <= 0.15f; i += 0.05f) {
 				packet.particle(ParticleBuilder.forPosition(particleData, user.getX(), user.getY() + user.getEyeHeight(), user.getZ()).velocity(velocityVector.x() + (i * 2 * velocityVector.z()), velocityVector.y(), velocityVector.z() + (i * 2 * velocityVector.x())));
 			}
 
-			packet.sendToAllNearbyPlayers(serverLevel, user.position(), 32);
+			packet.sendToAllPlayersNearby(serverLevel, user.position(), 32);
 
 			if (!(user instanceof Player player) || !player.getAbilities().instabuild)
 				stack.shrink(1);
@@ -91,7 +91,7 @@ public class ChumItem extends Item {
 				return fish.get();
 		}
 
-		int selection = RandomUtil.randomNumberUpTo(66);
+		int selection = RandomUtil.numberUpTo(66);
 
 		if (selection == 0)
 			return new Dolphin(EntityType.DOLPHIN, level);

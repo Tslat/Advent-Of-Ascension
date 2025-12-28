@@ -23,6 +23,21 @@
     [],
     [
       "aoa3:dried_oasis_lake"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [
+      "aoa3:varsium_ore",
+      "aoa3:baronyte_ore"
+    ],
+    [],
+    [],
+    [
+      "aoa3:barathos_shrubs",
+      "aoa3:barathos_stone_shrubs",
+      "aoa3:barathos_sand_shrubs"
     ]
   ],
   "has_precipitation": false,

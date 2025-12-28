@@ -12,9 +12,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.tslat.aoa3.common.registration.AoATags;
+import net.tslat.aoa3.common.registration.item.AoAArtificeDevices;
 import net.tslat.aoa3.common.registration.item.AoADataComponents;
-import net.tslat.aoa3.common.registration.item.AoATools;
-import net.tslat.aoa3.content.item.weapon.staff.BaseStaff;
+import net.tslat.aoa3.content.item.weapon.staff.AoAStaff;
 import net.tslat.aoa3.content.recipe.ArcanumBatteryAttachRecipe;
 
 import java.util.List;
@@ -30,12 +30,12 @@ public class ArcanumBatteryAttachRecipeExtension implements ICraftingCategoryExt
 			ItemStack staff = tag.value().getDefaultInstance();
 			ItemStack attachedStaff = staff.copy();
 
-			attachedStaff.set(AoADataComponents.STORED_SPELL_CASTS, new BaseStaff.StoredCasts(0, OptionalInt.empty()));
+			attachedStaff.set(AoADataComponents.STORED_SPELL_CASTS, new AoAStaff.StoredCasts(0, OptionalInt.empty()));
 			staves.add(staff);
 			attachedStaves.add(attachedStaff);
 		}
 
-		final List<IRecipeSlotBuilder> ingredientSlots = craftingGridHelper.createAndSetInputs(builder, List.of(List.of(AoATools.ARCANUM_BATTERY.toStack()), staves), 0, 0);
+		final List<IRecipeSlotBuilder> ingredientSlots = craftingGridHelper.createAndSetInputs(builder, List.of(List.of(AoAArtificeDevices.ARCANUM_BATTERY.toStack()), staves), 0, 0);
 		final IRecipeSlotBuilder resultSlot = craftingGridHelper.createAndSetOutputs(builder, attachedStaves);
 
 		builder.createFocusLink(ingredientSlots.get(1), resultSlot);

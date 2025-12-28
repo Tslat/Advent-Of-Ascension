@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.OreFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.tslat.aoa3.library.object.PositionTableSet;
+import net.tslat.aoa3.library.object.container.PositionTableSet;
 
 public class BrushableBlockOreFeature extends OreFeature {
 	public BrushableBlockOreFeature(Codec<BrushableBlockOreFeature.Configuration> codec) {

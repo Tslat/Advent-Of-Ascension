@@ -11,9 +11,9 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.item.*;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
-import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.content.item.weapon.gun.AoAGun;
 import net.tslat.aoa3.util.AttributeUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 public class CounterTargetWeaponTask extends Behavior<Mob> {
 	private final int minSwitchTime;
@@ -60,7 +60,7 @@ public class CounterTargetWeaponTask extends Behavior<Mob> {
 			default:
 		}
 
-		nextSwitchTime = RandomUtil.randomNumberBetween(minSwitchTime, maxSwitchTime);
+		nextSwitchTime = RandomUtil.numberBetween(minSwitchTime, maxSwitchTime);
 	}
 
 	protected ThreatType determineThreat(LivingEntity owner, LivingEntity target) {
@@ -76,7 +76,7 @@ public class CounterTargetWeaponTask extends Behavior<Mob> {
 			return ThreatType.NONE;
 		}
 
-		if (mainHandItem.getItem() instanceof BowItem || mainHandItem.getItem() instanceof BaseGun) {
+		if (mainHandItem.getItem() instanceof BowItem || mainHandItem.getItem() instanceof AoAGun) {
 			if (!(owner.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ShieldItem))
 				return ThreatType.RANGED;
 

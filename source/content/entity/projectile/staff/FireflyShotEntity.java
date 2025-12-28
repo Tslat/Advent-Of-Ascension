@@ -1,51 +1,47 @@
 package net.tslat.aoa3.content.entity.projectile.staff;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
-import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
+import net.tslat.aoa3.content.entity.projectile.base.NonPhysicalWeaponProjectile;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
+import net.tslat.aoa3.util.EntityUtil;
 
-import java.util.UUID;
+import java.util.List;
 
-public class FireflyShotEntity extends BaseEnergyShot {
-	public final UUID lastTargetUUID;
+public class FireflyShotEntity extends NonPhysicalWeaponProjectile {
+	private final List<Entity> hitEntities = new ObjectArrayList<>();
 
-	public FireflyShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
-		super(entityType, world);
-
-		this.lastTargetUUID = null;
+	public FireflyShotEntity(EntityType<? extends FireflyShotEntity> entityType, Level level) {
+		super(entityType, level);
 	}
 
-	public FireflyShotEntity(Level world) {
-		super(AoAProjectiles.FIREFLY_SHOT.get(), world);
-
-		this.lastTargetUUID = null;
+	public FireflyShotEntity(EntityType<? extends FireflyShotEntity> entityType, Level level, WeaponFiringContext context) {
+		super(entityType, level, context);
 	}
 
-	public FireflyShotEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, FireflyShotEntity shot, UUID lastTargetUUID, double motionX, double motionY, double motionZ) {
-		super(AoAProjectiles.FIREFLY_SHOT.get(), shooter, weapon, shot.getX(), shot.getY(), shot.getZ(), motionX, motionY, motionZ);
-
-		this.lastTargetUUID = lastTargetUUID;
+	public FireflyShotEntity(Level level, WeaponFiringContext context) {
+		this(AoAProjectiles.FIREFLY_SHOT.get(), level, context);
 	}
 
-	public FireflyShotEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, FireflyShotEntity shot, double motionX, double motionY, double motionZ) {
-		super(AoAProjectiles.FIREFLY_SHOT.get(), shooter, weapon, shot.getX(), shot.getY(), shot.getZ(), motionX, motionY, motionZ);
-
-		this.lastTargetUUID = null;
+	public boolean shouldSplitFrom(Entity hitEntity) {
+		return !this.hitEntities.contains(EntityUtil.getPartOrPartOwner(hitEntity));
 	}
 
-	public FireflyShotEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, int maxAge) {
-		super(AoAProjectiles.FIREFLY_SHOT.get(), shooter, weapon, maxAge);
-
-		this.lastTargetUUID = null;
+	@Override
+	public boolean canHitEntity(Entity target) {
+		return super.canHitEntity(target) && !this.hitEntities.contains(EntityUtil.getPartOrPartOwner(target));
 	}
 
-	public FireflyShotEntity(Level world, double x, double y, double z) {
-		super(AoAProjectiles.FIREFLY_SHOT.get(), world, x, y, z);
+	public FireflyShotEntity splitOnImpact(Entity hitEntity) {
+		FireflyShotEntity newShot = new FireflyShotEntity(level(), getShotContext());
 
-		this.lastTargetUUID = null;
+		newShot.hitEntities.addAll(this.hitEntities);
+		newShot.hitEntities.add(hitEntity);
+
+		return newShot;
 	}
 
 	@Override

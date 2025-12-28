@@ -47,7 +47,7 @@ public class FertilisedFarmlandLootModifier extends LootModifier {
 		BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
 		Vec3 pos = context.getParamOrNull(LootContextParams.ORIGIN);
 
-		if (state != null && pos != null && state.getBlock() instanceof CropBlock && state.getBlock() != AoABlocks.GREEN_MANURE.get()) {
+		if (state != null && pos != null && state.getBlock() instanceof CropBlock crop && crop.isMaxAge(state) && state.getBlock() != AoABlocks.GREEN_MANURE.get()) {
 			BlockPos farmlandPos = BlockPos.containing(pos).below();
 			BlockState belowBlock = context.getLevel().getBlockState(farmlandPos);
 

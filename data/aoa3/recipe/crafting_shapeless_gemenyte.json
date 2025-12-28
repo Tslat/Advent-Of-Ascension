@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:gemenyte_block"
+      "tag": "c:storage_blocks/gemenyte"
     }
   ],
   "result": {

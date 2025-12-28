@@ -3,31 +3,31 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:limonite_nugget"
+      "tag": "c:nuggets/limonite"
     },
     {
-      "item": "aoa3:limonite_nugget"
+      "tag": "c:nuggets/limonite"
     },
     {
-      "item": "aoa3:limonite_nugget"
+      "tag": "c:nuggets/limonite"
     },
     {
-      "item": "aoa3:limonite_nugget"
+      "tag": "c:nuggets/limonite"
     },
     {
-      "item": "aoa3:limonite_nugget"
+      "tag": "c:nuggets/limonite"
     },
     {
-      "item": "aoa3:limonite_nugget"
+      "tag": "c:nuggets/limonite"
     },
     {
-      "item": "aoa3:limonite_nugget"
+      "tag": "c:nuggets/limonite"
     },
     {
-      "item": "aoa3:limonite_nugget"
+      "tag": "c:nuggets/limonite"
     },
     {
-      "item": "aoa3:limonite_nugget"
+      "tag": "c:nuggets/limonite"
     }
   ],
   "result": {

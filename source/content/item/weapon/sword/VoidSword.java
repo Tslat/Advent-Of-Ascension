@@ -1,19 +1,20 @@
 package net.tslat.aoa3.content.item.weapon.sword;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 import java.util.List;
 
-public class VoidSword extends BaseSword {
+public class VoidSword extends AoASword {
 	public VoidSword(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}
@@ -21,7 +22,7 @@ public class VoidSword extends BaseSword {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
 		if (RandomUtil.percentChance(0.1f * attackCooldown))
-			target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30,20));
+			EntityUtil.applyPotions(target, attacker, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 30).level(20));
 	}
 
 	@Override

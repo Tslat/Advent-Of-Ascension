@@ -1,0 +1,36 @@
+{
+  "criteria": {
+    "obtain_tinkerers_table": {
+      "conditions": {
+        "items": [
+          {
+            "items": "aoa3:tinkerers_table"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "minecraft:textures/block/dark_oak_planks.png",
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.artifice.root.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "aoa3:tinkerers_table"
+    },
+    "title": {
+      "color": "gold",
+      "translate": "advancements.aoa3.artifice.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_tinkerers_table"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

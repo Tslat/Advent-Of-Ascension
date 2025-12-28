@@ -1,0 +1,20 @@
+{
+  "type": "aoa3:new_mob_spawn",
+  "biomes": {
+    "excluding": [
+      "#c:no_mob_spawns"
+    ],
+    "if_all": [
+      "#minecraft:is_end",
+      "minecraft:end_highlands"
+    ]
+  },
+  "spawn": [
+    {
+      "type": "aoa3:void_walker",
+      "maxCount": 1,
+      "minCount": 1,
+      "weight": 1
+    }
+  ]
+}

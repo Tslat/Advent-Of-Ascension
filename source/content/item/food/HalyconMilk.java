@@ -40,7 +40,7 @@ public class HalyconMilk extends Item {
 				CriteriaTriggers.CONSUME_ITEM.trigger(player, stack);
 				player.awardStat(Stats.ITEM_USED.get(this));
 
-				for(FoodProperties.PossibleEffect effect : stack.getItem().getFoodProperties(stack, player).effects()) {
+				for (FoodProperties.PossibleEffect effect : stack.getItem().getFoodProperties(stack, player).effects()) {
 					if (level.random.nextFloat() < effect.probability())
 						player.addEffect(new MobEffectInstance(effect.effect()));
 				}

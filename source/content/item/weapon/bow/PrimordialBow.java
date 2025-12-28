@@ -6,44 +6,43 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.tslat.aoa3.content.entity.projectile.arrow.CustomArrowEntity;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.util.LocaleUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class PrimordialBow extends BaseBow {
+public class PrimordialBow extends AoABow {
 	public PrimordialBow(Item.Properties properties) {
 		super(properties);
 	}
 
 	@Override
-	public void onBlockImpact(CustomArrowEntity arrow, @Nullable Entity shooter, BlockHitResult hitResult, ItemStack stack) {
-		AreaEffectCloud cloud = new AreaEffectCloud(arrow.level(), arrow.getX(), arrow.getY(), arrow.getZ());
-
-		cloud.addEffect(new MobEffectInstance(MobEffects.WITHER, 40, 0, false, true));
-		cloud.setParticle(ParticleTypes.SMOKE);
-		cloud.setRadius(2);
-		cloud.setDuration(200);
-
-		arrow.level().addFreshEntity(cloud);
+	public void onBlockImpact(Projectile projectile, @Nullable Entity shooter, BlockHitResult hitResult, ItemStack stack) {
+		doCloud(projectile.level(), hitResult.getLocation());
 	}
 
 	@Override
-	public void onEntityImpact(CustomArrowEntity arrow, @Nullable Entity shooter, EntityHitResult hitResult, ItemStack stack, float velocity) {
-		AreaEffectCloud cloud = new AreaEffectCloud(arrow.level(), arrow.getX(), arrow.getY(), arrow.getZ());
+	public void onEntityImpact(Projectile projectile, @Nullable Entity shooter, EntityHitResult hitResult, ItemStack stack, float velocity) {
+		doCloud(projectile.level(), hitResult.getLocation());
+	}
+
+	protected void doCloud(Level level, Vec3 position) {
+		AreaEffectCloud cloud = new AreaEffectCloud(level, position.x, position.y, position.z);
 
 		cloud.addEffect(new MobEffectInstance(MobEffects.WITHER, 40, 0, false, true));
 		cloud.setParticle(ParticleTypes.SMOKE);
 		cloud.setRadius(2);
 		cloud.setDuration(200);
 
-		arrow.level().addFreshEntity(cloud);
+		level.addFreshEntity(cloud);
 	}
 
 	@Override

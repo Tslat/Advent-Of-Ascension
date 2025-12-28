@@ -3,7 +3,9 @@ package net.tslat.aoa3.content.block.functional.misc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -32,6 +34,11 @@ public class FertilisedFarmland extends FarmBlock {
 			return TriState.TRUE;
 
 		return TriState.DEFAULT;
+	}
+
+	@Override
+	public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+		entity.causeFallDamage(fallDistance, 1f, entity.damageSources().fall());
 	}
 
 	@Override

@@ -1,13 +1,10 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
 import it.unimi.dsi.fastutil.objects.Object2BooleanArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -17,32 +14,16 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.MushroomBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.List;
 import java.util.Optional;
 
-public class FungalStaff extends BaseStaff<Object2BooleanArrayMap<BlockPos>> {
+public class FungalStaff extends AoAStaff<Object2BooleanArrayMap<BlockPos>> {
 	public FungalStaff(Item.Properties properties) {
 		super(properties);
-	}
-
-	@Nullable
-	@Override
-	public SoundEvent getCastingSound() {
-		return AoASounds.ITEM_FUNGAL_STAFF_CAST.get();
-	}
-
-	public static Object2IntMap<Item> getDefaultRunes() {
-		return Util.make(new Object2IntArrayMap<>(), runes -> {
-			runes.put(AoAItems.DISTORTION_RUNE.get(), 5);
-			runes.put(AoAItems.LIFE_RUNE.get(), 2);
-		});
 	}
 
 	@Override
@@ -72,7 +53,7 @@ public class FungalStaff extends BaseStaff<Object2BooleanArrayMap<BlockPos>> {
 	}
 
 	@Override
-	public void cast(ServerLevel level, ItemStack staff, LivingEntity caster, Object2BooleanArrayMap<BlockPos> args) {
+	public void cast(ServerLevel level, LivingEntity caster, ItemStack staff, InteractionHand hand, Object2BooleanArrayMap<BlockPos> args) {
 		if (level instanceof ServerLevel) {
 			for (Object2BooleanArrayMap.Entry<BlockPos> entry : args.object2BooleanEntrySet()) {
 				BlockPos pos = entry.getKey();
@@ -84,8 +65,8 @@ public class FungalStaff extends BaseStaff<Object2BooleanArrayMap<BlockPos>> {
 					BlockState state = level.getBlockState(pos);
 					MushroomBlock mushroom = (MushroomBlock)state.getBlock();
 
-					if (mushroom.isBonemealSuccess(level, RandomUtil.RANDOM.getSource(), pos, state))
-						mushroom.performBonemeal((ServerLevel)level, RandomUtil.RANDOM.getSource(), pos, state);
+					if (mushroom.isBonemealSuccess(level, RandomUtil.RANDOM, pos, state))
+						mushroom.performBonemeal(level, RandomUtil.RANDOM, pos, state);
 				}
 
 				level.levelEvent(LevelEvent.PARTICLES_AND_SOUND_PLANT_GROWTH, pos, 0);

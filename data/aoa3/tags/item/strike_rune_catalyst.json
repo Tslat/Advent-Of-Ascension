@@ -1,6 +1,9 @@
 {
   "values": [
     "minecraft:arrow",
-    "aoa3:limonite_bullet"
+    "aoa3:limonite_bullet",
+    "aoa3:metal_slug",
+    "minecraft:tipped_arrow",
+    "minecraft:spectral_arrow"
   ]
 }

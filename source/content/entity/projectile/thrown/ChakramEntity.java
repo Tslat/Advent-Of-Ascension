@@ -1,45 +1,28 @@
 package net.tslat.aoa3.content.entity.projectile.thrown;
 
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ItemSupplier;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.EntityHitResult;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
-import net.tslat.aoa3.common.registration.item.AoAWeapons;
-import net.tslat.aoa3.content.entity.projectile.HardProjectile;
-import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
-import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.content.entity.projectile.base.ThrownItemProjectile;
+import net.tslat.aoa3.content.entity.projectile.base.WeaponFiringContext;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
-public class ChakramEntity extends BaseBullet implements HardProjectile, ItemSupplier {
-	public ChakramEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
-		super(entityType, world);
-	}
-	
-	public ChakramEntity(Level world) {
-		super(AoAProjectiles.CHAKRAM.get(), world);
+public class ChakramEntity extends ThrownItemProjectile {
+	public ChakramEntity(EntityType<? extends ChakramEntity> entityType, Level level) {
+		super(entityType, level);
 	}
 
-	public ChakramEntity(LivingEntity shooter, BaseGun gun) {
-		super(AoAProjectiles.CHAKRAM.get(), shooter, gun, 1.0f, 0, 3.0f);
+	public ChakramEntity(EntityType<? extends ChakramEntity> entityType, Level level, WeaponFiringContext context) {
+		super(entityType, level, context);
 	}
 
-	public ChakramEntity(LivingEntity shooter, BaseGun gun, InteractionHand hand, int maxAge, int piercingValue) {
-		super(AoAProjectiles.CHAKRAM.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
-	}
-
-	public ChakramEntity(Level world, double x, double y, double z) {
-		super(AoAProjectiles.CHAKRAM.get(), world, x, y, z);
+	public ChakramEntity(Level level, WeaponFiringContext context) {
+		this(AoAProjectiles.CHAKRAM.get(), level, context);
 	}
 
 	@Override
@@ -48,21 +31,8 @@ public class ChakramEntity extends BaseBullet implements HardProjectile, ItemSup
 	}
 
 	@Override
-	public void doEntityImpact(Entity target, Vec3 impactLocation) {
-		if (DamageUtil.doProjectileAttack(getOwner(), this, target, AoAWeapons.CHAKRAM.get().getGunDamage(getWeaponStack(AoAWeapons.CHAKRAM.asItem()))) && target instanceof LivingEntity)
-			EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.POISON, 60).level(2));
-	}
-
-	@Override
-	protected void onHit(HitResult result) {
-		if (result instanceof BlockHitResult && tickCount <= 1 && getOwner() == null)
-			return;
-
-		super.onHit(result);
-	}
-
-	@Override
-	public ItemStack getItem() {
-		return new ItemStack(AoAWeapons.CHAKRAM.get());
+	protected void doEntityImpact(EntityHitResult rayTrace, Entity hitEntity) {
+		if (DamageUtil.doProjectileAttack(getShooter(), this, hitEntity, getShotContext().damage()))
+			EntityUtil.applyPotions(hitEntity, this, new EffectBuilder(MobEffects.POISON, 60).level(2));
 	}
 }

@@ -68,6 +68,6 @@ public class ShadowlordSpawnTask implements Runnable {
     }
 
     public void schedule(Integer time, TimeUnit units) {
-        AoAScheduler.scheduleAsyncTask(this, time, units);
+        AoAScheduler.scheduleAsync(time, units, this);
     }
 }

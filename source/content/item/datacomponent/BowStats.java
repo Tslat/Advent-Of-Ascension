@@ -5,8 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.Item;
-import net.tslat.aoa3.common.registration.item.AoADataComponents;
 
 public record BowStats(float damage, float drawSpeedModifier) {
     public static final Codec<BowStats> CODEC = RecordCodecBuilder.create(builder -> builder.group(
@@ -17,8 +15,4 @@ public record BowStats(float damage, float drawSpeedModifier) {
             ByteBufCodecs.FLOAT, BowStats::damage,
             ByteBufCodecs.FLOAT, BowStats::drawSpeedModifier,
             BowStats::new);
-
-    public static Item.Properties of(float damage, float drawSpeedModifier) {
-        return new Item.Properties().component(AoADataComponents.BOW_STATS.get(), new BowStats(damage, drawSpeedModifier));
-    }
 }

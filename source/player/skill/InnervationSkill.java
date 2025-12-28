@@ -6,6 +6,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
@@ -89,7 +90,7 @@ public class InnervationSkill extends AoASkill.Instance {
 		double toughness = armour > 0 ? AttributeUtil.getAttributeValue(target, Attributes.ARMOR_TOUGHNESS) : 0;
 		double speed = AttributeUtil.getAttributeValue(target, Attributes.MOVEMENT_SPEED);
 
-		xp *= 1 + (float)(Math.pow(armour / 30, 2) + Math.pow(toughness / 15, 1.5d));
+		xp *= 1 + (float)(Mth.square(armour / 30) + Math.pow(toughness / 15, 1.5d));
 
 		if (target.getPersistentData().contains(EntityEvents.SPAWNED_BY_SPAWNER_TAG))
 			xp *= 0.25f;

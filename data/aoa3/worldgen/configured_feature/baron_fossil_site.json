@@ -1,0 +1,11 @@
+{
+  "type": "aoa3:structure_piece",
+  "config": {
+    "processors": {
+      "processors": []
+    },
+    "templates": [
+      "aoa3:barathos/feature/baron_fossil_site"
+    ]
+  }
+}

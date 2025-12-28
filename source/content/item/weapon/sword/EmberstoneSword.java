@@ -16,12 +16,12 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 import java.util.List;
 import java.util.Optional;
 
-public class EmberstoneSword extends BaseSword implements LootModifyingItem {
+public class EmberstoneSword extends AoASword implements LootModifyingItem {
 	public EmberstoneSword(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}
@@ -45,7 +45,7 @@ public class EmberstoneSword extends BaseSword implements LootModifyingItem {
 
 				ParticleBuilder.forRandomPosInEntity(ParticleTypes.FLAME, entity)
 						.spawnNTimes(5)
-						.sendToAllPlayersTrackingEntity(level, entity);
+						.sendToAllPlayersTrackingEntity(entity);
 			});
 		}
 	}

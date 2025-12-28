@@ -1,21 +1,23 @@
 package net.tslat.aoa3.scheduling.async;
 
-import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
+import net.tslat.aoa3.common.registration.AoAExplosions;
+import net.tslat.aoa3.library.builder.AoAExplosionBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
-import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.tme.api.explosion.StandardExplosion;
 
 import java.util.concurrent.TimeUnit;
 
 public class CreepSpawnTask implements Runnable {
-    private final Level world;
+    private final ServerLevel level;
     private final double centerX;
     private final double centerY;
     private final double centerZ;
     private int currentCorner;
     private int count = 0;
 
-    public CreepSpawnTask(Level w, double centerX, double centerY, double centerZ, int startingPosition) {
-        this.world = w;
+    public CreepSpawnTask(ServerLevel w, double centerX, double centerY, double centerZ, int startingPosition) {
+        this.level = w;
         this.centerX = centerX;
         this.centerY = centerY;
         this.centerZ = centerZ;
@@ -46,7 +48,7 @@ public class CreepSpawnTask implements Runnable {
             }
         }
 
-        WorldUtil.createExplosion(null, world, x, centerY, z, 1.5f, Level.ExplosionInteraction.MOB);
+        AoAExplosionBuilder.at(this.level, x, this.centerY, z, AoAExplosions.CREEP_SPAWN, StandardExplosion::new).explode();
 
         count++;
 
@@ -68,6 +70,6 @@ public class CreepSpawnTask implements Runnable {
     }
 
     public void schedule(Integer time, TimeUnit units) {
-        AoAScheduler.scheduleAsyncTask(this, time, units);
+        AoAScheduler.scheduleAsync(time, units, this);
     }
 }

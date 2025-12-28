@@ -8,7 +8,7 @@ import net.minecraft.client.model.geom.EntityModelSet;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.tslat.aoa3.client.model.misc.PlayerHaloModel;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
-import net.tslat.aoa3.library.object.CachedFunction;
+import net.tslat.aoa3.library.object.interfaces.CachedFunction;
 import net.tslat.aoa3.player.skill.AoASkill;
 import org.jetbrains.annotations.NotNull;
 

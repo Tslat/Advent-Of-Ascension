@@ -23,7 +23,7 @@ import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.HolidayUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RenderUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -205,7 +205,7 @@ public final class XpParticlesRenderer {
 	}
 
 	private static String getAprilFoolsXpString() {
-		return RandomUtil.getRandomSelection(
+		return RandomUtil.selection(
 				"Nice!",
 				"69xp",
 				"420xp",

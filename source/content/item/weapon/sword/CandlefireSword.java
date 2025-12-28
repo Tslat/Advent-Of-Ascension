@@ -11,7 +11,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.List;
 
-public class CandlefireSword extends BaseSword {
+public class CandlefireSword extends AoASword {
 	public CandlefireSword(Tier tier, Item.Properties properties) {
 		super(tier, properties);
 	}

@@ -3,31 +3,31 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:blazium_nugget"
+      "tag": "c:nuggets/blazium"
     },
     {
-      "item": "aoa3:blazium_nugget"
+      "tag": "c:nuggets/blazium"
     },
     {
-      "item": "aoa3:blazium_nugget"
+      "tag": "c:nuggets/blazium"
     },
     {
-      "item": "aoa3:blazium_nugget"
+      "tag": "c:nuggets/blazium"
     },
     {
-      "item": "aoa3:blazium_nugget"
+      "tag": "c:nuggets/blazium"
     },
     {
-      "item": "aoa3:blazium_nugget"
+      "tag": "c:nuggets/blazium"
     },
     {
-      "item": "aoa3:blazium_nugget"
+      "tag": "c:nuggets/blazium"
     },
     {
-      "item": "aoa3:blazium_nugget"
+      "tag": "c:nuggets/blazium"
     },
     {
-      "item": "aoa3:blazium_nugget"
+      "tag": "c:nuggets/blazium"
     }
   ],
   "result": {

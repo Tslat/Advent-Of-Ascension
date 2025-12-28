@@ -118,7 +118,7 @@ public abstract class MultiBlockCrop extends AoACropBlock {
 		if (!isMaxAgeForPart(state))
 			return true;
 
-		while ((state = level.getBlockState(pos = pos.above())).getBlock() == this) {}
+		while ((state = level.getBlockState(pos = pos.above())).is(this));
 
 		return state.isAir();
 	}

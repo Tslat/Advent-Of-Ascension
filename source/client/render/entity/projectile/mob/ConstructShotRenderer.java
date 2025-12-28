@@ -5,7 +5,7 @@ import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.mob.ConstructShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.particle.ParticleBuilder;
 
 public class ConstructShotRenderer extends ParticleProjectileRenderer<ConstructShotEntity> {
 	public ConstructShotRenderer(final EntityRendererProvider.Context manager) {
@@ -15,7 +15,7 @@ public class ConstructShotRenderer extends ParticleProjectileRenderer<ConstructS
 	@Override
 	protected void addParticles(ConstructShotEntity entity, float partialTicks) {
 		ParticleBuilder.forPositions(AoAParticleTypes.GENERIC_SWIRL.get(), entity.position())
-				.colourOverride(0xC140D7)
-				.spawnParticles(entity.level());
+				.colourTint(0xC140D7)
+				.spawnClientParticles(entity.level());
 	}
 }

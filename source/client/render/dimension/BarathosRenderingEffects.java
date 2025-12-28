@@ -24,8 +24,8 @@ import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.custom.AoAWorldEvents;
 import net.tslat.aoa3.content.world.event.AoAWorldEventManager;
 import net.tslat.aoa3.content.world.event.BarathosSandstormEvent;
-import net.tslat.aoa3.library.object.ExtendedBulkSectionAccess;
-import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.tme.api.object.EasyRandom;
+import net.tslat.tme.api.particle.ParticleBuilder;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
@@ -41,8 +41,8 @@ public class BarathosRenderingEffects extends AoADimensionEffectsRenderer {
 
     @Override
     public void adjustFogRender(ClientLevel level, FogRenderer.FogMode fogMode, FogType fogType, Camera camera, FloatConsumer farPlaneDistance, FloatConsumer nearPlaneDistance) {
-        //if (true)
-        //    return;
+        if (true)
+            return;
         final float cameraHeight = (float)camera.getPosition().y;
 
         if (cameraHeight < 80 || (cameraHeight > 125 && fogMode == FogRenderer.FogMode.FOG_SKY))
@@ -67,49 +67,51 @@ public class BarathosRenderingEffects extends AoADimensionEffectsRenderer {
     }
 
     @Override
-    public void doFXTick(ClientLevel level, int playerX, int playerY, int playerZ) {
+    public void doFXTick(ClientLevel level, BlockPos playerPos) {
         this.sandstorm = AoAWorldEventManager.getEventById(level, AoAWorldEvents.BARATHOS_SANDSTORM.getId()) instanceof BarathosSandstormEvent event && event.isActive() ? event : null;
 
-        super.doFXTick(level, playerX, playerY, playerZ);
+        super.doFXTick(level, playerPos);
     }
 
     @Override
-    public boolean spawnAmbientParticle(ClientLevel level, ExtendedBulkSectionAccess sectionAccess, BlockPos pos, Biome biome) {
-        if (pos.getY() <= 125) {
-            if (pos.getY() >= 90) {
-                if (this.sandstorm != null) {
-                    if (level.getBrightness(LightLayer.SKY, pos) == 15) {
-                        float intensity = this.sandstorm.getIntensity(level.getGameTime());
-                        float rotProgress = ((level.getGameTime() / 60f) % 360) * Mth.DEG_TO_RAD;
-                        Vec3 angle = new Vec3(Math.cos(rotProgress), 0, Math.sin(rotProgress)).scale(Mth.sin(((level.getGameTime() / (level.getGameTime() % 1000 > 250 ? 20f : 1f)) % 360) * Mth.DEG_TO_RAD) * 0.4f * intensity + 0.9f);
+    public boolean spawnAmbientParticle(ClientLevel level, BlockPos pos, Biome biome, EasyRandom random) {
+        if (pos.getY() > 125)
+            return true;
 
-                        ParticleBuilder.forPositions(EntityTrackingParticleOptions.ambient(AoAParticleTypes.SANDSTORM), Vec3.atLowerCornerOf(pos).add(level.random.nextDouble(), level.random.nextDouble(), level.random.nextDouble()))
-                                .scaleMod(0.6f * intensity)
-                                .lifespan(Mth.ceil(5 / (level.random.nextFloat() * 0.8f + 0.2f)))
-                                .colourOverride(0xC4C0A1)
-                                .velocity(angle)
-                                .spawnParticles(level);
-                    }
-                }
-                else if (0.01f * 0.98572f > level.random.nextFloat()) {
-                    float rotProgress = ((level.getGameTime() / 60f) % 360) * Mth.DEG_TO_RAD;
-                    Vec3 angle = new Vec3(Math.cos(rotProgress), 0, Math.sin(rotProgress)).scale(Mth.sin(((level.getGameTime() / (level.getGameTime() % 1000 > 250 ? 20f : 1f)) % 360) * Mth.DEG_TO_RAD) * 0.3f);
+        if (pos.getY() >= 85) {
+            final long gameTick = level.getGameTime();
 
-                    ParticleBuilder.forPositions(EntityTrackingParticleOptions.ambient(AoAParticleTypes.SANDSTORM), Vec3.atLowerCornerOf(pos).add(level.random.nextDouble(), level.random.nextDouble(), level.random.nextDouble()))
-                            .scaleMod(0.3f)
-                            .lifespan(Mth.ceil(10 / (level.random.nextFloat() * 0.8f + 0.2f)))
-                            .colourOverride(0xC4C0A1)
+            if (this.sandstorm != null) {
+                if (level.getBrightness(LightLayer.SKY, pos) == 15) {
+                    float intensity = this.sandstorm.getIntensity(gameTick);
+                    float rotProgress = ((gameTick / 60f) % 360) * Mth.DEG_TO_RAD;
+                    Vec3 angle = new Vec3(Math.cos(rotProgress), 0, Math.sin(rotProgress)).scale(Mth.sin(((gameTick / (gameTick % 1000 > 250 ? 20f : 1f)) % 360) * Mth.DEG_TO_RAD) * 0.4f * intensity + 0.9f);
+
+                    ParticleBuilder.forPositions(EntityTrackingParticleOptions.ambient(AoAParticleTypes.SANDSTORM), Vec3.atLowerCornerOf(pos).add(random.nextDouble(), random.nextDouble(), random.nextDouble()))
+                            .scaleMod(0.6f * intensity)
+                            .lifespan(Mth.ceil(5 / random.valueBetween(0.2f, 1f)))
+                            .colourTint(0xC4C0A1)
                             .velocity(angle)
-                            .spawnParticles(level);
+                            .spawnClientParticles(level);
                 }
             }
-            else if (0.1f * 0.98572f >= level.random.nextFloat()) {
-                ParticleBuilder.forPositions(ParticleTypes.SMOKE, Vec3.atLowerCornerOf(pos).add(level.random.nextDouble(), level.random.nextDouble(), level.random.nextDouble()))
-                        .lifespan(Mth.ceil(5 / (level.random.nextFloat() * 0.8f + 0.2f)))
-                        //.scaleMod(0.5f)
-                        .velocity(0, 0.05f, 0)
-                        .spawnParticles(level);
+            else if (0.01f * 0.98572f > random.nextFloat()) {
+                float rotProgress = ((gameTick / 60f) % 360) * Mth.DEG_TO_RAD;
+                Vec3 angle = new Vec3(Math.cos(rotProgress), 0, Math.sin(rotProgress)).scale(Mth.sin(((gameTick / (gameTick % 1000 > 250 ? 20f : 1f)) % 360) * Mth.DEG_TO_RAD) * 0.3f);
+
+                ParticleBuilder.forPositions(EntityTrackingParticleOptions.ambient(AoAParticleTypes.SANDSTORM), Vec3.atLowerCornerOf(pos).add(random.nextDouble(), random.nextDouble(), random.nextDouble()))
+                        .scaleMod(0.3f)
+                        .lifespan(Mth.ceil(10 / random.valueBetween(0.2f, 1f)))
+                        .colourTint(0xC4C0A1)
+                        .velocity(angle)
+                        .spawnClientParticles(level);
             }
+        }
+        else if (0.1f * 0.98572f >= random.nextFloat()) {
+            ParticleBuilder.forPositions(ParticleTypes.SMOKE, Vec3.atLowerCornerOf(pos).add(random.nextDouble(), random.nextDouble(), random.nextDouble()))
+                    .lifespan(Mth.ceil(5 / random.valueBetween(0.2f, 1f)))
+                    .velocity(0, 0.05f, 0)
+                    .spawnClientParticles(level);
         }
 
         return true;

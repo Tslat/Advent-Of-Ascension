@@ -18,7 +18,7 @@ import net.tslat.aoa3.content.block.functional.misc.DustopianLamp;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import net.tslat.tme.api.util.RandomUtil;
 
 public class PrimordialShrine extends BossAltarBlock {
 	public PrimordialShrine(BlockBehaviour.Properties properties) {
@@ -71,7 +71,7 @@ public class PrimordialShrine extends BossAltarBlock {
 		Level world = player.level();
 		BlockState lampOff = AoABlocks.DUSTOPIAN_LAMP.get().defaultBlockState().setValue(DustopianLamp.LIT, false);
 
-		world.setBlockAndUpdate(RandomUtil.getRandomSelection(
+		world.setBlockAndUpdate(RandomUtil.selection(
 				blockPos.offset(5, 1, -3),
 				blockPos.offset(4, 1, -1),
 				blockPos.offset(3, 3, 1),

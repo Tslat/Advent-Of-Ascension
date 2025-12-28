@@ -17,6 +17,7 @@ import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.custom.AoAWorldEvents;
 import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.NumberUtil;
 
 public class BarathosSandstormEvent implements AoAWorldEvent {
     public static final MapCodec<BarathosSandstormEvent> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
@@ -134,7 +135,7 @@ public class BarathosSandstormEvent implements AoAWorldEvent {
     }
 
     public boolean isEntityAffected(LivingEntity entity) {
-        return entity.getY() >= 90 && entity.level().getBrightness(LightLayer.SKY, entity.blockPosition()) == 15 && !entity.getType().is(AoATags.Entities.IMMUNE_TO_SANDSTORM) && (!(entity instanceof Player) || entity.tickCount > 60);
+        return NumberUtil.numberIsBetween(entity.getY(), 90, 125) && entity.level().getBrightness(LightLayer.SKY, entity.blockPosition()) == 15 && !entity.getType().is(AoATags.Entities.IMMUNE_TO_SANDSTORM) && (!(entity instanceof Player) || entity.tickCount > 60);
     }
 
     @Override

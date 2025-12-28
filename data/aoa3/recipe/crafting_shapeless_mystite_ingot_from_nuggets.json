@@ -3,31 +3,31 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "aoa3:mystite_nugget"
+      "tag": "c:nuggets/mystite"
     },
     {
-      "item": "aoa3:mystite_nugget"
+      "tag": "c:nuggets/mystite"
     },
     {
-      "item": "aoa3:mystite_nugget"
+      "tag": "c:nuggets/mystite"
     },
     {
-      "item": "aoa3:mystite_nugget"
+      "tag": "c:nuggets/mystite"
     },
     {
-      "item": "aoa3:mystite_nugget"
+      "tag": "c:nuggets/mystite"
     },
     {
-      "item": "aoa3:mystite_nugget"
+      "tag": "c:nuggets/mystite"
     },
     {
-      "item": "aoa3:mystite_nugget"
+      "tag": "c:nuggets/mystite"
     },
     {
-      "item": "aoa3:mystite_nugget"
+      "tag": "c:nuggets/mystite"
     },
     {
-      "item": "aoa3:mystite_nugget"
+      "tag": "c:nuggets/mystite"
     }
   ],
   "result": {

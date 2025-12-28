@@ -5,19 +5,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.SectionPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.phys.*;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.neoforged.neoforge.entity.PartEntity;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.phys.Vec3;
+import net.tslat.tme.api.util.RandomUtil;
 
 import java.util.Optional;
-import java.util.function.Predicate;
 
 public final class PositionAndMotionUtil {
 	public static Vec3 accountForGravity(Vec3 origin, Vec3 velocity, Vec3 targetPos, double gravity) {
@@ -29,12 +23,10 @@ public final class PositionAndMotionUtil {
 
 	public static void turnToFace(Entity entity, Vec3 targetPosition) {
 		Vec3 position = entity.getEyePosition();
-		double lengthX = targetPosition.x() - position.x();
-		double lengthY = targetPosition.y() - position.y();
-		double lengthZ = targetPosition.z() - position.z();
+		Vec3 vector = targetPosition.subtract(position);
 
-		entity.setXRot((float)Math.toDegrees(Mth.atan2(lengthZ, lengthX)) - 90f);
-		entity.setYRot((float)Math.toDegrees(-Mth.atan2(lengthY, Math.sqrt(lengthX * lengthX + lengthZ * lengthZ))));
+		entity.setXRot((float)Math.toDegrees(Mth.atan2(vector.z, vector.x)) - 90f);
+		entity.setYRot((float)Math.toDegrees(-Mth.atan2(vector.y, vector.horizontalDistance())));
 
 		entity.xRotO = entity.getXRot();
 		entity.yRotO = entity.getYRot();
@@ -59,7 +51,7 @@ public final class PositionAndMotionUtil {
 		Vec3 velocity = new Vec3(targetPosition.x() - origin.x(), targetPosition.y() - origin.y(), targetPosition.z() - origin.z()).normalize();
 
 		if (lateralVariance != 0 || verticalVariance != 0)
-			velocity = velocity.add(RandomUtil.randomScaledGaussianValue(lateralVariance), RandomUtil.randomScaledGaussianValue(verticalVariance), RandomUtil.randomScaledGaussianValue(lateralVariance));
+			velocity = velocity.add(RandomUtil.scaledGaussianValue(lateralVariance), RandomUtil.scaledGaussianValue(verticalVariance), RandomUtil.scaledGaussianValue(lateralVariance));
 
 		entity.setDeltaMovement(velocity.scale(blocksPerSecond));
 	}
@@ -102,7 +94,7 @@ public final class PositionAndMotionUtil {
 		BlockPos.MutableBlockPos testPos = new BlockPos.MutableBlockPos(pos.x, pos.y, pos.z);
 		LevelChunk chunk = level.getChunk(SectionPos.blockToSectionCoord(pos.x), SectionPos.blockToSectionCoord(pos.z));
 
-		while (!chunk.getBlockState(testPos.move(Direction.DOWN)).blocksMotion() && testPos.getY() > level.getMinBuildHeight()) {}
+		while (!chunk.getBlockState(testPos.move(Direction.DOWN)).blocksMotion() && testPos.getY() > level.getMinBuildHeight());
 
 		return new Vec3(pos.x, testPos.getY(), pos.z);
 	}
@@ -111,7 +103,7 @@ public final class PositionAndMotionUtil {
 		BlockPos.MutableBlockPos testPos = new BlockPos.MutableBlockPos(pos.x, pos.y, pos.z);
 		LevelChunk chunk = level.getChunk(SectionPos.blockToSectionCoord(pos.x), SectionPos.blockToSectionCoord(pos.z));
 
-		while (chunk.getBlockState(testPos.move(Direction.UP)).blocksMotion() && testPos.getY() < level.getMaxBuildHeight()) {}
+		while (chunk.getBlockState(testPos.move(Direction.UP)).blocksMotion() && testPos.getY() < level.getMaxBuildHeight());
 
 		return new Vec3(pos.x, testPos.getY(), pos.z);
 	}
@@ -124,65 +116,5 @@ public final class PositionAndMotionUtil {
 		pos = moveUpToSurface(level, pos);
 
 		return Optional.of(pos);
-	}
-
-	public static HitResult rayTrace(Entity entity, double distance, boolean doEntities, @Nullable Predicate<Entity> entityFilter) {
-		return rayTrace(entity.level(), entity.getEyePosition(), entity.getEyePosition().add(entity.getLookAngle().scale(distance)), ClipContext.Block.COLLIDER, false, doEntities, ((Predicate<Entity>)target -> target != entity).and(entityFilter == null ? target -> true : entityFilter));
-	}
-
-	public static HitResult rayTrace(Level level, Vec3 start, Vec3 end, ClipContext.Block blockhitType, boolean includeFluids, boolean doEntities, @Nullable Predicate<Entity> entityFilter) {
-		BlockHitResult blockHitResult = level.clip(new ClipContext(start, end, blockhitType, includeFluids ? ClipContext.Fluid.ANY : ClipContext.Fluid.NONE, CollisionContext.empty()));
-
-		if (!doEntities)
-			return blockHitResult;
-
-		if (blockHitResult.getType() == HitResult.Type.BLOCK)
-			end = blockHitResult.getLocation();
-
-		double distance = start.distanceTo(end);
-		distance *= distance;
-		Entity closestTarget = null;
-		Vec3 clipPos = null;
-
-		for (Entity entity : EntityRetrievalUtil.getEntities(level, new AABB(start, end).inflate(1), entityFilter == null ? entity -> true : entityFilter)) {
-			PartEntity<?>[] parts = entity.getParts();
-			AABB entityPickBounds = entity.getBoundingBox().inflate(entity.getPickRadius());
-			int partIndex = 0;
-
-			while (true) {
-				if (entityPickBounds.contains(start)) {
-					if (distance > 0) {
-						closestTarget = entity;
-						distance = 0;
-						clipPos = entityPickBounds.clip(start, end).orElse(start);
-
-						break;
-					}
-				}
-				else {
-					Optional<Vec3> entityClip = entityPickBounds.clip(start, end);
-
-					if (entityClip.isPresent()) {
-						Vec3 clipPoint = entityClip.get();
-						double entityDist = start.distanceToSqr(clipPoint);
-
-						if (entityDist < distance || distance == 0) {
-							closestTarget = entity;
-							clipPos = clipPoint;
-							distance = entityDist;
-
-							break;
-						}
-					}
-				}
-
-				if (parts == null || ++partIndex >= parts.length)
-					break;
-
-				entityPickBounds = parts[partIndex].getBoundingBox().inflate(entity.getPickRadius());
-			}
-		}
-
-		return closestTarget != null ? new EntityHitResult(closestTarget, clipPos) : blockHitResult;
 	}
 }

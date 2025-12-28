@@ -13,11 +13,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
+import net.tslat.aoa3.library.builder.AoAExplosionBuilder;
 import net.tslat.aoa3.util.AdvancementUtil;
-import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.tme.api.explosion.StandardExplosion;
 import org.jetbrains.annotations.Nullable;
-
 
 public class CreepCowEntity extends AoAAnimalOld {
 	public CreepCowEntity(EntityType<? extends Animal> entityType, Level world) {
@@ -32,7 +33,7 @@ public class CreepCowEntity extends AoAAnimalOld {
 			if (!player.isCreative())
 				heldStack.shrink(1);
 
-			WorldUtil.createExplosion(this, level(), getX(), getY(), getZ(), 1.5f, Level.ExplosionInteraction.NONE);
+			AoAExplosionBuilder.at(this, AoAExplosions.CREEP_COW, StandardExplosion::new).explode();
 
 			if (player instanceof ServerPlayer)
 				AdvancementUtil.grantCriterion((ServerPlayer)player, AdventOfAscension.id("creeponia/worst_farmer_ever"), "creep_cow_milk");
