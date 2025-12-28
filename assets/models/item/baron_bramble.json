@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "aoa3:item/lunarade_mug"
+    "layer0": "aoa3:block/baron_bramble"
   }
 }

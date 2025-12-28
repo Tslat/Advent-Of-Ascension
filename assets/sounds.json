@@ -3316,12 +3316,6 @@
       }
     ]
   },
-  "entity.tyrosaur.ready_stomp": {
-    "sounds": [
-      "aoa3:entity/tyrosaur/ready_stomp"
-    ],
-    "subtitle": "subtitles.aoa3.entity.tyrosaur.ready_stomp"
-  },
   "entity.tyrosaur.roar_loop": {
     "sounds": [
       "aoa3:entity/tyrosaur/roar_loop"

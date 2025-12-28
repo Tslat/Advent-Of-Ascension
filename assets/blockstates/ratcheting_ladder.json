@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "aoa3:block/ratcheting_ladder",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "aoa3:block/ratcheting_ladder"
+    },
+    "facing=south": {
+      "model": "aoa3:block/ratcheting_ladder",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "aoa3:block/ratcheting_ladder",
+      "y": 270
+    }
+  }
+}

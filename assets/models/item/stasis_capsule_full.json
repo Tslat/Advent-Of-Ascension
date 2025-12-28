@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:item/stasis_capsule_template",
+  "textures": {
+    "layer0": "aoa3:item/stasis_capsule_full"
+  }
+}

@@ -2,93 +2,93 @@
   "variants": {
     "face=ceiling,facing=east,variant=1": {
       "model": "aoa3:block/dead_branch_down_1",
-      "y": 180
+      "y": 90
     },
     "face=ceiling,facing=east,variant=2": {
       "model": "aoa3:block/dead_branch_down_2",
-      "y": 180
+      "y": 90
     },
     "face=ceiling,facing=east,variant=3": {
       "model": "aoa3:block/dead_branch_down_3",
-      "y": 180
+      "y": 90
     },
     "face=ceiling,facing=north,variant=1": {
-      "model": "aoa3:block/dead_branch_down_1",
-      "y": 90
+      "model": "aoa3:block/dead_branch_down_1"
     },
     "face=ceiling,facing=north,variant=2": {
-      "model": "aoa3:block/dead_branch_down_2",
-      "y": 90
+      "model": "aoa3:block/dead_branch_down_2"
     },
     "face=ceiling,facing=north,variant=3": {
-      "model": "aoa3:block/dead_branch_down_3",
-      "y": 90
+      "model": "aoa3:block/dead_branch_down_3"
     },
     "face=ceiling,facing=south,variant=1": {
       "model": "aoa3:block/dead_branch_down_1",
-      "y": -90
+      "y": 180
     },
     "face=ceiling,facing=south,variant=2": {
       "model": "aoa3:block/dead_branch_down_2",
-      "y": -90
+      "y": 180
     },
     "face=ceiling,facing=south,variant=3": {
       "model": "aoa3:block/dead_branch_down_3",
-      "y": -90
+      "y": 180
     },
     "face=ceiling,facing=west,variant=1": {
-      "model": "aoa3:block/dead_branch_down_1"
+      "model": "aoa3:block/dead_branch_down_1",
+      "y": -90
     },
     "face=ceiling,facing=west,variant=2": {
-      "model": "aoa3:block/dead_branch_down_2"
+      "model": "aoa3:block/dead_branch_down_2",
+      "y": -90
     },
     "face=ceiling,facing=west,variant=3": {
-      "model": "aoa3:block/dead_branch_down_3"
+      "model": "aoa3:block/dead_branch_down_3",
+      "y": -90
     },
     "face=floor,facing=east,variant=1": {
       "model": "aoa3:block/dead_branch_up_1",
-      "y": 180
+      "y": 90
     },
     "face=floor,facing=east,variant=2": {
       "model": "aoa3:block/dead_branch_up_2",
-      "y": 180
+      "y": 90
     },
     "face=floor,facing=east,variant=3": {
       "model": "aoa3:block/dead_branch_up_3",
-      "y": 180
+      "y": 90
     },
     "face=floor,facing=north,variant=1": {
-      "model": "aoa3:block/dead_branch_up_1",
-      "y": 90
+      "model": "aoa3:block/dead_branch_up_1"
     },
     "face=floor,facing=north,variant=2": {
-      "model": "aoa3:block/dead_branch_up_2",
-      "y": 90
+      "model": "aoa3:block/dead_branch_up_2"
     },
     "face=floor,facing=north,variant=3": {
-      "model": "aoa3:block/dead_branch_up_3",
-      "y": 90
+      "model": "aoa3:block/dead_branch_up_3"
     },
     "face=floor,facing=south,variant=1": {
       "model": "aoa3:block/dead_branch_up_1",
-      "y": -90
+      "y": 180
     },
     "face=floor,facing=south,variant=2": {
       "model": "aoa3:block/dead_branch_up_2",
-      "y": -90
+      "y": 180
     },
     "face=floor,facing=south,variant=3": {
       "model": "aoa3:block/dead_branch_up_3",
-      "y": -90
+      "y": 180
     },
     "face=floor,facing=west,variant=1": {
-      "model": "aoa3:block/dead_branch_up_1"
+      "model": "aoa3:block/dead_branch_up_1",
+      "y": -90
     },
     "face=floor,facing=west,variant=2": {
-      "model": "aoa3:block/dead_branch_up_2"
+      "model": "aoa3:block/dead_branch_up_2",
+      "y": -90
     },
     "face=floor,facing=west,variant=3": {
-      "model": "aoa3:block/dead_branch_up_3"
+      "model": "aoa3:block/dead_branch_up_3",
+      "y": -90
     },
     "face=wall,facing=east,variant=1": {
       "model": "aoa3:block/dead_branch_horizontal_1",
