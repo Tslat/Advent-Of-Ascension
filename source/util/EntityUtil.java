@@ -34,6 +34,10 @@ public final class EntityUtil {
 	}
 
 	public static boolean areProbablyEnemies(Entity target, @Nullable Entity attacker) {
+		return areProbablyEnemies(target, attacker, false);
+	}
+
+	public static boolean areProbablyEnemies(Entity target, @Nullable Entity attacker, boolean isRetaliating) {
 		if (attacker == target)
 			return false;
 
@@ -66,7 +70,10 @@ public final class EntityUtil {
 					}
 				}
 			}
-        }
+		}
+
+		if (isRetaliating)
+			return true;
 
 		boolean isHostileTarget = EntityUtil.isHostileMob(target);
 

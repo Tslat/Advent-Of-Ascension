@@ -197,11 +197,8 @@ public class AoAGun extends ProjectileWeaponItem implements ProjectileFiringWeap
 
 	@Override
 	public void onUseTick(Level level, LivingEntity shooter, ItemStack stack, int count) {
-		if (!isFullAutomatic(stack) && count < getUseDuration(stack, shooter)) {
-			shooter.stopUsingItem();
-
+		if (!isFullAutomatic(stack) && count < getUseDuration(stack, shooter))
 			return;
-		}
 
 		if (level instanceof ServerLevel serverLevel) {
 			ServerPlayer player = shooter instanceof ServerPlayer pl ? pl : null;

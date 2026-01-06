@@ -105,6 +105,8 @@ public final class AoATags {
 
 		public static final TagKey<Block> FAST_CLIMBABLE = aoaTag("fast_climbable");
 
+		public static final TagKey<Block> INFERNAL_CAN_CONVERT = aoaTag("infernal_can_convert");
+
 		private static TagKey<Block> aoaTag(String id) {
 			return BlockTags.create(AdventOfAscension.id(id));
 		}

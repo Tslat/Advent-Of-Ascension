@@ -83,11 +83,11 @@
     },
     "aoa3:smilodon": {
       "charge": 1.0,
-      "energy_budget": 0.01
+      "energy_budget": 0.03
     },
     "aoa3:spinoledon": {
       "charge": 1.0,
-      "energy_budget": 0.01
+      "energy_budget": 0.06
     },
     "aoa3:veloraptor": {
       "charge": 0.6000000238418579,

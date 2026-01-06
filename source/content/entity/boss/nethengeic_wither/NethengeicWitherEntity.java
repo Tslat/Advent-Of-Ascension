@@ -184,7 +184,7 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 		return BrainActivityGroup.idleTasks(
 				new TargetOrRetaliate<>()
 						.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
-						.attackablePredicate(target -> DamageUtil.isAttackable(target) && EntityUtil.areProbablyEnemies(target, this)),
+						.attackablePredicate(target -> DamageUtil.isAttackable(target) && EntityUtil.areProbablyEnemies(target, this, true)),
 				new SetRandomHoverTarget<>().speedModifier(0.9f));
 	}
 
@@ -195,7 +195,7 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 						.invalidateIf((entity, target) -> !DamageUtil.isAttackable(target) || distanceToSqr(target.position()) > Mth.square(getAttributeValue(Attributes.FOLLOW_RANGE))),
 				new SetAdditionalAttackTargets<>()
 						.withMemories(AoABrainMemories.SECOND_ATTACK_TARGET.get(), AoABrainMemories.THIRD_ATTACK_TARGET.get())
-						.attackablePredicate((mob, memoryModuleType, livingEntity) -> DamageUtil.isAttackable(livingEntity) && EntityUtil.areProbablyEnemies(livingEntity, mob))
+						.attackablePredicate((mob, memoryModuleType, livingEntity) -> DamageUtil.isAttackable(livingEntity) && EntityUtil.areProbablyEnemies(livingEntity, mob, true))
 						.allowDuplicateTargeting()
 						.whenTargeting((owner, memory, target) -> {
 							if (memory == AoABrainMemories.SECOND_ATTACK_TARGET.get()) {

@@ -85,11 +85,11 @@
     },
     "aoa3:scolopendis": {
       "charge": 1.0,
-      "energy_budget": 0.01
+      "energy_budget": 0.03
     },
     "aoa3:spinoledon": {
       "charge": 2.0,
-      "energy_budget": 0.01
+      "energy_budget": 0.06
     }
   },
   "spawners": {

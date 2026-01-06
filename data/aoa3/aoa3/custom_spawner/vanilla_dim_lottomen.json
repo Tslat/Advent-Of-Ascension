@@ -7,9 +7,9 @@
       "min_inclusive": 8000
     },
     "in_dimensions": [
+      "minecraft:the_nether",
       "minecraft:the_end",
-      "minecraft:overworld",
-      "minecraft:the_nether"
+      "minecraft:overworld"
     ],
     "spawn_attempts_per_player": 1,
     "spawn_in_flat_world": false,

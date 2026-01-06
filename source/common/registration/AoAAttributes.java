@@ -30,8 +30,6 @@ public final class AoAAttributes {
 
 		if (!attribute.hasModifier(Mob.RANDOM_SPAWN_BONUS_ID))
 			attribute.addPermanentModifier(new AttributeModifier(Mob.RANDOM_SPAWN_BONUS_ID, Math.max(-0.99f, RandomUtil.scaledGaussianValue(AoAConfigs.SERVER.spawnVarianceSpeedScale.getAsDouble() * modifier)), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-
-
 	}
 
 	private static DeferredHolder<Attribute, Attribute> register(String id, String name, double defaultValue, double minValue, double maxValue, boolean syncedWithClient) {

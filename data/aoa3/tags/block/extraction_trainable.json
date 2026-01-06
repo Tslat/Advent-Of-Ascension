@@ -10,6 +10,9 @@
     "#minecraft:dirt",
     "#c:gravels",
     "#c:netherracks",
-    "#c:obsidians"
+    "#c:obsidians",
+    "minecraft:blackstone",
+    "minecraft:basalt",
+    "minecraft:ancient_debris"
   ]
 }

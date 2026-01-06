@@ -219,8 +219,8 @@
                       "duration": 18000,
                       "id": "minecraft:strength",
                       "neoforge:cures": [
-                        "protected_by_totem",
-                        "milk"
+                        "milk",
+                        "protected_by_totem"
                       ],
                       "show_icon": true
                     }

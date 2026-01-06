@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.entity.AoAEntityStats;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EntitySpawnConditions;
@@ -121,7 +122,7 @@ public class InfernalEntity extends AoAMeleeMob<InfernalEntity> {
                 BlockPos pos = fromPos.offset(dir.getNormal());
                 BlockState state = level().getBlockState(pos);
 
-                if (state.is(Blocks.NETHERRACK) || state.is(Blocks.WARPED_NYLIUM) || state.is(Blocks.CRIMSON_NYLIUM)) {
+                if (state.is(AoATags.Blocks.INFERNAL_CAN_CONVERT)) {
                     int tickTime = Math.max(1, 1 - pos.distManhattan(fromPos));
 
                     packet.particle(ParticleBuilder.forPosition(ParticleTypes.FLAME, pos.getX() + RandomUtil.valueUpTo(1), pos.getY() + 1.1, pos.getZ() + RandomUtil.valueUpTo(1)));

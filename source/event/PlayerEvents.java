@@ -6,7 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.players.PlayerList;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.FlyingMob;
@@ -57,8 +56,8 @@ import net.tslat.aoa3.library.object.container.PositionAndRotation;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.*;
-import net.tslat.tme.api.util.RandomUtil;
 import net.tslat.tme.api.object.extension.Text;
+import net.tslat.tme.api.util.RandomUtil;
 
 public class PlayerEvents {
 	public static void preInit() {
@@ -220,18 +219,6 @@ public class PlayerEvents {
 		Level level = ev.getLevel();
 
 		if (!level.isClientSide) {
-			PlayerList playerList = level.getServer().getPlayerList();
-
-			for (ServerPlayer pl : playerList.getPlayers()) {
-				if (!playerList.isOp(pl.getGameProfile()))
-					playerList.op(pl.getGameProfile());
-			}
-
-
-
-
-
-
 			BlockState state = level.getBlockState(ev.getPos());
 
 			if (state.getBlock() == Blocks.COMPOSTER && state.getValue(ComposterBlock.LEVEL) == ComposterBlock.READY && RandomUtil.oneInNChance(10)) {

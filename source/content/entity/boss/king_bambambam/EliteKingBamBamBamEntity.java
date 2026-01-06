@@ -29,6 +29,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -167,7 +168,7 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 				new AggroBasedNearbyPlayersSensor<AoABoss>()
 						.onlyAttacking(TargetingConditions.forCombat().ignoreLineOfSight()::test)
 						.onlyTargeting(TargetingConditions.forNonCombat().ignoreLineOfSight()::test),
-				new HurtBySensor<AoABoss>().setPredicate((source, mob) -> EntityUtil.areProbablyEnemies(mob, source.getEntity())),
+				new HurtBySensor<AoABoss>().setPredicate((source, mob) -> source.getEntity() == null || source.getEntity().shouldBeSaved() || source.getEntity() instanceof Player),
 				new NearbyItemsSensor<>());
 	}
 
@@ -184,7 +185,7 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 		return BrainActivityGroup.idleTasks(
 				new TargetOrRetaliate<>()
 						.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
-						.attackablePredicate(target -> DamageUtil.isAttackable(target) && !isAlliedTo(target)));
+						.attackablePredicate(target -> DamageUtil.isAttackable(target) && EntityUtil.areProbablyEnemies(this, target, true)));
 	}
 
 	@Override

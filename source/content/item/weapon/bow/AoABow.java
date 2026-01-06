@@ -101,7 +101,7 @@ public class AoABow extends BowItem implements ArrowFiringWeapon {
 		ItemStack ammo = projectileItems.isEmpty() ? shooter instanceof Player pl ? getDefaultCreativeAmmo(pl, weapon) : Items.ARROW.getDefaultInstance() : projectileItems.getFirst();
 		boolean infiniteAmmo = (shooter instanceof Player pl && pl.hasInfiniteMaterials()) || EnchantmentUtil.hasEnchantment(level, weapon, Enchantments.INFINITY);
 
-		fireArrows(weapon, this, ammo, projectileItems, level, shooter, velocity, getBowDamage(weapon), infiniteAmmo);
+		fireArrows(weapon, this, ammo, projectileItems, level, shooter, velocity / 3f, getBowDamage(weapon), infiniteAmmo);
 	}
 
 	@Override

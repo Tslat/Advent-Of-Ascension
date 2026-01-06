@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.weapon.sniper;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,11 +20,6 @@ import java.util.List;
 public class Crystaneer extends AoASniper {
 	public Crystaneer(Item.Properties properties) {
 		super(properties);
-	}
-
-	@Override
-	public ResourceLocation getScopeTexture(ItemStack stack) {
-		return AERIAL;
 	}
 
 	@Override

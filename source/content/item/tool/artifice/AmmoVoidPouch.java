@@ -62,7 +62,12 @@ public class AmmoVoidPouch extends ArtificeItem {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag tooltipFlag) {
-        Reference2IntMap<Item> contents = stack.get(AoADataComponents.AMMO_VOID_POUCH).contents();
+        AmmoVoidPouchComponent component = stack.get(AoADataComponents.AMMO_VOID_POUCH);
+
+        if (component == null)
+            return;
+
+        Reference2IntMap<Item> contents = component.contents();
 
         if (contents.isEmpty()) {
             tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));

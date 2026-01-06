@@ -28,15 +28,12 @@ import net.tslat.aoa3.content.item.misc.WornBook;
 import net.tslat.aoa3.content.item.tool.pickaxe.OccultPickaxe;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.util.RegistryUtil;
-import net.tslat.tme.api.scheduling.TickScheduler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.OptionalDouble;
 
 public final class ClientOperations {
-	public static final TickScheduler SCHEDULER = TickScheduler.createForClient();
-
 	public static Level getLevel() {
 		return Minecraft.getInstance().level;
 	}

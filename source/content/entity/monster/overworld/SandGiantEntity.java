@@ -195,9 +195,9 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 			if (entity.level().getDifficulty() == Difficulty.PEACEFUL)
 				return false;
 
-			LivingEntity target = entity.getTarget();
+			LivingEntity target = this.entity.getTarget();
 
-			return VALID_TARGET.test(target);
+			return target != null && VALID_TARGET.test(target);
 		}
 
 		@Override
@@ -205,7 +205,9 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 			if (!super.canContinueToUse())
 				return false;
 
-			return VALID_TARGET.test(this.entity.getTarget());
+			LivingEntity target = this.entity.getTarget();
+
+			return target != null && VALID_TARGET.test(target);
 		}
 
 		@Override
@@ -228,7 +230,7 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 			super.tick();
 
 			if (hasChargedUp()) {
-				LivingEntity target = entity.getTarget();
+				LivingEntity target = this.entity.getTarget();
 				Vec3 center = this.entity.position();
 				List<Vec3> positions = new ObjectArrayList<>(90);
 

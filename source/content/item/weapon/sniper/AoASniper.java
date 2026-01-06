@@ -34,10 +34,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class AoASniper extends AoAGun {
-	public static final ResourceLocation BASIC = AdventOfAscension.id("textures/gui/overlay/scope/basic.png");
-	public static final ResourceLocation CLASSIC = AdventOfAscension.id("textures/gui/overlay/scope/classic.png");
-	public static final ResourceLocation MOA = AdventOfAscension.id("textures/gui/overlay/scope/moa.png");
-	public static final ResourceLocation AERIAL = AdventOfAscension.id("textures/gui/overlay/scope/aerial.png");
+	public static final ResourceLocation BASIC_SCOPE = AdventOfAscension.id("textures/gui/overlay/scope/basic.png");
+	public static final ResourceLocation CLASSIC_SCOPE = AdventOfAscension.id("textures/gui/overlay/scope/classic.png");
+	public static final ResourceLocation MOA_SCOPE = AdventOfAscension.id("textures/gui/overlay/scope/moa.png");
+	public static final ResourceLocation AERIAL_SCOPE = AdventOfAscension.id("textures/gui/overlay/scope/aerial.png");
 
 	public AoASniper(Item.Properties properties) {
 		super(properties);

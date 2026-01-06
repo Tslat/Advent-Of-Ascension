@@ -19,6 +19,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
+import net.tslat.aoa3.util.WorldUtil;
 import org.jetbrains.annotations.Nullable;
 
 public class KillzoneBlock extends Block {
@@ -61,7 +63,7 @@ public class KillzoneBlock extends Block {
 
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-		if (!level.isClientSide() && entity instanceof ServerPlayer pl && !pl.isSpectator() && !pl.isCreative()) {
+		if (!level.isClientSide() && entity instanceof ServerPlayer pl && !pl.isSpectator() && !pl.isCreative() && WorldUtil.isWorld(level, AoADimensions.NOWHERE)) {
 			pl.setHealth(0.1f);
 			pl.hurt(pl.damageSources().fellOutOfWorld(), 100);
 			pl.setDeltaMovement(Vec3.ZERO);

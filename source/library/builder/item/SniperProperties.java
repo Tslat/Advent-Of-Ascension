@@ -18,7 +18,7 @@ public interface SniperProperties extends GunProperties {
     class Builder implements SniperProperties {
         protected final GunProperties gunProperties;
 
-        protected ResourceLocation scope = AoASniper.BASIC;
+        protected ResourceLocation scope = AoASniper.BASIC_SCOPE;
         protected float zoomStrength = 1f;
 
         private Builder(GunProperties gunStats) {

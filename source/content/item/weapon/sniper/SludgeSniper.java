@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.weapon.sniper;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
@@ -11,19 +10,14 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.content.entity.projectile.base.WeaponProjectile;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.tme.api.object.builder.EffectBuilder;
 import net.tslat.tme.api.object.RayTrace;
+import net.tslat.tme.api.object.builder.EffectBuilder;
 
 import java.util.List;
 
 public class SludgeSniper extends AoASniper {
 	public SludgeSniper(Item.Properties properties) {
 		super(properties);
-	}
-
-	@Override
-	public ResourceLocation getScopeTexture(ItemStack stack) {
-		return CLASSIC;
 	}
 
 	@Override

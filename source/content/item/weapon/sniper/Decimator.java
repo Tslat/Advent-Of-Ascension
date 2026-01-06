@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.weapon.sniper;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -19,11 +18,6 @@ import java.util.List;
 public class Decimator extends AoASniper {
 	public Decimator(Item.Properties properties) {
 		super(properties);
-	}
-
-	@Override
-	public ResourceLocation getScopeTexture(ItemStack stack) {
-		return CLASSIC;
 	}
 
 	@Override
