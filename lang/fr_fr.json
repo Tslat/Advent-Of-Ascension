@@ -4159,7 +4159,7 @@
   "items.aoa3.description.stickler.desc.2": "La bombe explose au bout de 5 secondes",
   "items.aoa3.description.thrownWeapon": "Arme jetable",
   "items.aoa3.description.thrownWeapon.throwRate": "Cadence de lancer : %1$s/sec",
-  "items.aoa3.description.vulcane.cost": "Peut être utilisé avec au moins 50 de Rage accumulée",
+  "items.aoa3.description.vulcane.cost": "Peut être utilisé quand %1$s de Rage a été accumulée",
   "items.aoa3.description.vulcane.gracePeriod": "Ne peut être utilisé que si un coup a été pris dans les 5 dernières secondes",
   "jukebox_song.aoa3.caverns": "c_enthusiast_x2 - caverns",
   "jukebox_song.aoa3.outlaw": "Firch - outlaw",
