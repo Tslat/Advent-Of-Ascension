@@ -57,6 +57,7 @@ public class PlayerHaloRenderLayer extends RenderLayer<AbstractClientPlayer, Pla
 						green = 1;
 					}
 					case SUPER_DONATOR -> red = 1;
+					case CRAZY_DONATOR -> green = 1;
 					case STAFF -> {
 						red = 0.6f;
 						green = 1;
