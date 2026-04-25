@@ -24,6 +24,9 @@ public final class ServerConfig {
 	public final ModConfigSpec.ConfigValue<String> databaseUsername;
 	public final ModConfigSpec.ConfigValue<String> databasePassword;
 
+	public final ModConfigSpec.BooleanValue haloSyncEnabled;
+	public final ModConfigSpec.IntValue haloSyncInterval;
+
 	public ServerConfig(ModConfigSpec.Builder configBuilder) {
 		configBuilder.comment("AoA server-side configuration options").push("general_settings");
 
@@ -119,6 +122,20 @@ public final class ServerConfig {
 				.comment("The password to use along with the databaseUsername for leaderboard database connection. You shouldn't need to change this.", "NOTE: If setting your own password, be aware this will be stored in easily accessible plaintext. Use a throwaway password.")
 				.translation("config.aoa3.server.databasePassword")
 				.define("databasePassword", "Password");
+
+		configBuilder.pop();
+
+		configBuilder.comment("AoA player halo configuration options").push("player_halo_settings");
+
+		haloSyncEnabled = configBuilder
+				.comment("Enable sync with the online resource containing player halo database", "NOTE: Disabling the feature will lead to missing player halo information")
+				.translation("config.aoa3.server.haloSyncEnabled")
+				.define("haloSyncEnabled", true);
+
+		haloSyncInterval = configBuilder
+				.comment("Delay in minutes between two consecutive player halo syncs")
+				.translation("config.aoa3.server.haloSyncInterval")
+				.defineInRange("haloSyncInterval", 60, 1, 525960);
 
 		configBuilder.pop();
 	}

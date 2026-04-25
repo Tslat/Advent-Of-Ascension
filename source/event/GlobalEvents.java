@@ -13,6 +13,7 @@ import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.tslat.aoa3.advent.AoAResourceCaching;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.content.world.event.AoAWorldEventManager;
 import net.tslat.aoa3.content.world.spawner.AoACustomSpawner;
@@ -59,7 +60,9 @@ public final class GlobalEvents {
 	}
 
 	private static void serverStarting(final ServerStartingEvent ev) {
-		AoAScheduler.scheduleAsync(1, TimeUnit.SECONDS, new UpdateHalosMapTask());
+        if (AoAConfigs.SERVER.haloSyncEnabled.getAsBoolean()) {
+		    AoAScheduler.scheduleAsync(1, TimeUnit.SECONDS, new UpdateHalosMapTask());
+        }
 	}
 
 	private static void serverStarted(final ServerStartedEvent ev) {

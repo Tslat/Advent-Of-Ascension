@@ -1867,6 +1867,8 @@
   "config.aoa3.server.easyCorruptedTravellers": "Easier Corrupted Travellers",
   "config.aoa3.server.fastProjectileCalculations": "Fast Projectile Calculations",
   "config.aoa3.server.globalXpModifier": "Global Xp Modifier",
+  "config.aoa3.server.haloSyncEnabled": "Halo Sync Enabled",
+  "config.aoa3.server.haloSyncInterval": "Halo Sync Interval",
   "config.aoa3.server.maxLeaderboardThreads": "Max Leaderboard Threads",
   "config.aoa3.server.multiplayerBossHealthBonus": "Multiplayer Boss Health Bonus",
   "config.aoa3.server.nowhereHardcoreBossDeaths": "Nowhere Hardcore Boss Deaths",

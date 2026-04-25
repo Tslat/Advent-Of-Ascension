@@ -1867,6 +1867,8 @@
   "config.aoa3.server.easyCorruptedTravellers": "Voyageurs corrompus faciles",
   "config.aoa3.server.fastProjectileCalculations": "Calculs rapides pour projectiles",
   "config.aoa3.server.globalXpModifier": "Modificateur d'exp global",
+  "config.aoa3.server.haloSyncEnabled": "Halo Sync Enabled",
+  "config.aoa3.server.haloSyncInterval": "Halo Sync Interval",
   "config.aoa3.server.maxLeaderboardThreads": "Max de fils dans les classements",
   "config.aoa3.server.multiplayerBossHealthBonus": "Boost de vie des boss en multijoueur",
   "config.aoa3.server.nowhereHardcoreBossDeaths": "Mort contre les boss de Nullepart en Hardcore",

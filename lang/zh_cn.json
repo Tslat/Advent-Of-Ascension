@@ -1867,6 +1867,8 @@
   "config.aoa3.server.easyCorruptedTravellers": "简化饥饿的旅行家",
   "config.aoa3.server.fastProjectileCalculations": "快速弹射物计算",
   "config.aoa3.server.globalXpModifier": "全局经验获取倍率",
+  "config.aoa3.server.haloSyncEnabled": "Halo Sync Enabled",
+  "config.aoa3.server.haloSyncInterval": "Halo Sync Interval",
   "config.aoa3.server.maxLeaderboardThreads": "最大排行榜线程数",
   "config.aoa3.server.multiplayerBossHealthBonus": "多人游戏Boss最大生命值加成",
   "config.aoa3.server.nowhereHardcoreBossDeaths": "虚无Boss战真实死亡",
